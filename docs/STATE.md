@@ -11,7 +11,7 @@
 
 **Current slice:** S0 — Scaffold
 **Next action:** Write `composer.json` with PSR-4 autoloading for `TUNET\Volumina\` mapped to `src/`.
-**Blocked on:** nothing
+**Blocked on:** the first `git push` to `origin` is pending. Git Credential Manager opens a GUI login that a non-interactive session cannot complete; the user must run `git push -u origin main` once. Local work is not blocked by this.
 **Last updated:** 2026-09-03, TUNET
 
 **File scope for this slice** — do not open files outside this list:
