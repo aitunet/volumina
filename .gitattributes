@@ -1,0 +1,17 @@
+# Normalise everything to LF in the repository and in the working copy,
+# matching end_of_line = lf in .editorconfig.
+* text=auto eol=lf
+
+# Binaries: never touch.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.svg  text eol=lf
+*.mp3  binary
+*.m4a  binary
+*.m4b  binary
+*.ogg  binary
+*.mo   binary
+*.zip  binary
