@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP standards and static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-lock
+
+      # composer install once composer.lock is committed; this machine has no
+      # Composer, so the lock does not exist yet.
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress --prefer-dist
+
+      - name: Coding standards
+        run: composer run phpcs
+
+      - name: Static analysis
+        run: composer run phpstan
+
+  js:
+    name: JavaScript tooling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package manifest
+        run: npm run lint:pkg-json
+
+      # lint:js, lint:css and build join this job in S3, when the first block
+      # ships. Running them over an empty source tree only produces noise.
+
+  # The PHPUnit job lands in S1, together with the first test.

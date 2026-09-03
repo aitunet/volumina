@@ -1,0 +1,13 @@
+# Static analysis. The WordPress stubs and the phpstan-wordpress extension are
+# loaded automatically by phpstan/extension-installer; do not include them here
+# as well or PHPStan reports a duplicate.
+parameters:
+	level: 6
+
+	paths:
+		- src
+		- volumina.php
+		- uninstall.php
+
+	# src/ is empty until S1 adds the post types. PHPStan is happy with an empty
+	# directory and starts analysing it the moment the first class lands.
