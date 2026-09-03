@@ -10,8 +10,8 @@
 ## Right now
 
 **Current slice:** S0 — Scaffold
-**Next action:** Write `composer.json` with PSR-4 autoloading for `TUNET\Volumina\` mapped to `src/`.
-**Blocked on:** the first `git push` to `origin` is pending. Git Credential Manager opens a GUI login that a non-interactive session cannot complete; the user must run `git push -u origin main` once. Local work is not blocked by this.
+**Next action:** Write `package.json` with `@wordpress/scripts`.
+**Blocked on:** no PHP, no Composer and no Docker on this machine. `composer validate`, `composer lint`, PHPStan and `wp-env start` cannot run locally, so S0 cannot be verified here. Authoring continues; verification waits for the CI workflow (S0.11) or for the user to install PHP 8.1+, Composer and Docker Desktop.
 **Last updated:** 2026-09-03, TUNET
 
 **File scope for this slice** — do not open files outside this list:
@@ -32,7 +32,7 @@ Progress: 0 of 6 slices complete.
 
 - [x] `docs/` created: `STATE.md`, `HISTORY.md`, `decisions.md`, `backlog.md`, `api.md` — **first; every later task needs somewhere to be recorded**
 - [x] Repository, `.gitignore`, `.editorconfig`
-- [ ] `composer.json` with PSR-4 autoloading for `TUNET\Volumina\`
+- [ ] `composer.json` with PSR-4 autoloading for `TUNET\Volumina\` — **written, not yet verified**: needs `composer validate` and a committed `composer.lock`
 - [ ] `package.json` with `@wordpress/scripts`
 - [ ] `volumina.php` plugin header and bootstrap
 - [ ] `readme.txt` skeleton
