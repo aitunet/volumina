@@ -45,3 +45,20 @@ if ( ! is_readable( $volumina_autoloader ) ) {
 require_once $volumina_autoloader;
 
 unset( $volumina_autoloader );
+
+/**
+ * Bundled translations. Plugins hosted on WordPress.org receive their
+ * translations automatically, but the shipped es_ES and pt_BR files live in
+ * /languages and still need loading. On `init`, never earlier: loading a text
+ * domain too soon is a notice in WordPress 6.7 and later.
+ */
+add_action(
+	'init',
+	static function (): void {
+		load_plugin_textdomain(
+			'volumina',
+			false,
+			dirname( plugin_basename( PLUGIN_FILE ) ) . '/languages'
+		);
+	}
+);

@@ -39,6 +39,7 @@
 		"packages-update": "wp-scripts packages-update",
 		"env": "wp-env",
 		"env:start": "wp-env start",
-		"env:stop": "wp-env stop"
+		"env:stop": "wp-env stop",
+		"make-pot": "wp-env run --env-cwd=wp-content/plugins/volumina cli wp i18n make-pot . languages/volumina.pot --domain=volumina --exclude=node_modules,vendor,build,tests"
 	}
 }
