@@ -9,9 +9,9 @@
 
 ## Right now
 
-**Current slice:** S0 — Scaffold
-**Next action:** Write `package.json` with `@wordpress/scripts`.
-**Blocked on:** no PHP, no Composer and no Docker on this machine. `composer validate`, `composer lint`, PHPStan and `wp-env start` cannot run locally, so S0 cannot be verified here. Authoring continues; verification waits for the CI workflow (S0.11) or for the user to install PHP 8.1+, Composer and Docker Desktop.
+**Current slice:** S0 — Scaffold. 11 of 12 tasks done and green in CI; the twelfth cannot be run here.
+**Next action:** install Docker Desktop, then `npm run env:start` and confirm the plugin activates with zero PHP notices. That is the last thing standing between S0 and done. If Docker is not going to happen on this machine, the call is the user’s: close S0 on CI evidence alone and open S1, or leave S0 open.
+**Blocked on:** Docker. `wp-env start` has never run, so the runtime half of the S0 verification is unproven. PHP and Composer are also absent locally, but CI covers both: `composer validate --strict`, PHPCS and PHPStan level 6 all pass on GitHub.
 **Last updated:** 2026-09-03, TUNET
 
 **File scope for this slice** — do not open files outside this list:
@@ -32,18 +32,18 @@ Progress: 0 of 6 slices complete.
 
 - [x] `docs/` created: `STATE.md`, `HISTORY.md`, `decisions.md`, `backlog.md`, `api.md` — **first; every later task needs somewhere to be recorded**
 - [x] Repository, `.gitignore`, `.editorconfig`
-- [ ] `composer.json` with PSR-4 autoloading for `TUNET\Volumina\` — **written, not yet verified**: needs `composer validate` and a committed `composer.lock`
-- [ ] `package.json` with `@wordpress/scripts`
-- [ ] `volumina.php` plugin header and bootstrap
-- [ ] `readme.txt` skeleton
-- [ ] `uninstall.php` skeleton
-- [ ] `wp-env` configuration
-- [ ] PHPCS with WordPress standards
-- [ ] PHPStan level 6
-- [ ] GitHub Actions: lint and tests on push
-- [ ] i18n wiring and `.pot` generation script
+- [x] `composer.json` with PSR-4 autoloading for `TUNET\Volumina\`
+- [x] `package.json` with `@wordpress/scripts`
+- [x] `volumina.php` plugin header and bootstrap
+- [x] `readme.txt` skeleton
+- [x] `uninstall.php` skeleton
+- [ ] `wp-env` configuration — **written, never run**: no Docker on this machine
+- [x] PHPCS with WordPress standards
+- [x] PHPStan level 6
+- [x] GitHub Actions: lint on push. The PHPUnit job joins in S1, with the first test
+- [x] i18n wiring. `languages/volumina.pot` is not generated yet: `make-pot` needs Docker
 
-**Verification:** `wp-env start` runs, plugin active, zero PHP notices, CI green.
+**Verification:** `wp-env start` runs, plugin active, zero PHP notices, CI green. CI is green on `6b6b8b3` (composer validate --strict, PHPCS, PHPStan level 6, npm ci, lint:pkg-json). The `wp-env` half is unproven.
 Axe and block/classic theme checks are not applicable to this slice: it produces no front-end output.
 
 ## S1 — One audiobook, end to end
