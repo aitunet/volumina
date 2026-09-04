@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S1 — One audiobook, end to end.
-**Next action:** the `volumina_genre` and `volumina_series` taxonomies.
+**Next action:** the admin book editor: the six meta fields on the book screen.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` itself has never run, but a local WordPress on SQLite covers the runtime checks that Docker was needed for.
 **Last updated:** 2026-09-03, TUNET
 
@@ -50,8 +50,8 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 
 - [x] `volumina_book` CPT with meta
 - [x] `volumina_chapter` CPT with meta
-- [ ] `volumina_genre` and `volumina_series` taxonomies
-- [ ] Progress table with migration and version tracking
+- [x] `volumina_genre` and `volumina_series` taxonomies
+- [x] Progress table with migration and version tracking
 - [ ] Admin: book editor
 - [ ] Admin: chapter list with drag ordering
 - [ ] Admin: attach audio from the media library

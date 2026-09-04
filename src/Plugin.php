@@ -30,6 +30,7 @@ final class Plugin {
 		PostTypes\Book::class,
 		PostTypes\Chapter::class,
 		PostTypes\Taxonomies::class,
+		Storage\Migrator::class,
 	);
 
 	/**
