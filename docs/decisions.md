@@ -77,3 +77,33 @@ disposable instead.
 
 **Consequence.** A class in `Support/` that mentions a book, a chapter or a player is
 in the wrong directory.
+
+## 2026-09-03 — Local development runs on portable PHP and SQLite, not Docker
+
+**Decision.** The documented environment stays `wp-env`, and `.wp-env.json` is
+kept, but development and verification on this machine run on a portable PHP
+8.3 with `composer.phar` and WP-CLI under `C:\Users\mage2\tools`, against a
+WordPress installed with the official SQLite database integration drop-in at
+`C:\Users\mage2\tools\wp-site`, with the repository joined to it by a directory
+junction.
+
+**Why.** Docker Desktop needs administrator rights and WSL, and this machine has
+neither. Waiting for Docker would have meant writing every slice blind, since the
+verification of S1 onwards is "it renders on the front end". Portable PHP needs no
+elevation, and the SQLite drop-in removes the need for a database server.
+
+**Consequence.** `wp-env start` remains unproven, and anything specific to it is
+unverified. Everything else is testable locally: `composer lint`, WP-CLI, plugin
+activation, front-end rendering, `.pot` generation. Nothing of this lives in the
+repository, so a machine with Docker can ignore it entirely and use `wp-env`.
+
+## 2026-09-03 — The Composer lock is resolved for PHP 8.1, not for the local PHP
+
+**Decision.** `config.platform.php` is `8.1` in `composer.json`.
+
+**Why.** The lock was generated on PHP 8.3. Without pinning the platform, Composer
+could select packages requiring 8.2 or later, and `composer install` would then
+fail on the 8.1 that the plugin declares and that CI runs.
+
+**Consequence.** The lock always matches the declared minimum. Raising the minimum
+PHP version means changing both the header and this setting, and regenerating the lock.
