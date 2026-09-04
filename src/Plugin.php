@@ -28,6 +28,7 @@ final class Plugin {
 	 */
 	private const COMPONENTS = array(
 		PostTypes\Book::class,
+		PostTypes\Chapter::class,
 	);
 
 	/**

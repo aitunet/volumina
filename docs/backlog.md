@@ -18,6 +18,17 @@
 - Podcast-style RSS feed per book.
 - Additional shipped translations beyond `es_ES` and `pt_BR`.
 
+## Noticed while building, deliberately not done
+
+- Chapter ordering and parenthood use the `volumina_order` and `volumina_book_id` meta
+  that the data model in `CLAUDE.md` specifies. The idiomatic WordPress alternative
+  is `post_parent` plus `menu_order`, which sorts without a meta query. Worth
+  revisiting if chapter queries ever show up in profiling; it is a schema change,
+  so it needs an entry in `docs/decisions.md` before anyone touches it.
+- Deleting or trashing a book leaves its chapters behind. They should follow it.
+- Chapters have no front end of their own by design, so a stray direct URL 404s.
+  Fine for now; worth a friendly redirect to the parent book later.
+
 ## Belongs to `volumina-pro`, not here
 
 - Selling, carts, checkout, coupons, tax.
