@@ -2,7 +2,13 @@
 	"name": "tunet/volumina",
 	"description": "Audiobook player and library for WordPress.",
 	"type": "wordpress-plugin",
-	"keywords": ["wordpress", "plugin", "audiobook", "audio", "player"],
+	"keywords": [
+		"wordpress",
+		"plugin",
+		"audiobook",
+		"audio",
+		"player"
+	],
 	"homepage": "https://tunetdesign.com",
 	"license": "GPL-2.0-or-later",
 	"authors": [
@@ -38,7 +44,10 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"phpstan/extension-installer": true
 		},
-		"sort-packages": true
+		"sort-packages": true,
+		"platform": {
+			"php": "8.1"
+		}
 	},
 	"minimum-stability": "stable",
 	"prefer-stable": true,

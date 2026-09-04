@@ -28,12 +28,10 @@ jobs:
           tools: composer
 
       - name: Validate composer.json
-        run: composer validate --strict --no-check-lock
+        run: composer validate --strict
 
-      # composer install once composer.lock is committed; this machine has no
-      # Composer, so the lock does not exist yet.
       - name: Install dependencies
-        run: composer update --no-interaction --no-progress --prefer-dist
+        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Coding standards
         run: composer run phpcs
