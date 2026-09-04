@@ -54,10 +54,6 @@ final class Book implements Registrable {
 			'attributes'            => __( 'Audiobook Attributes', 'volumina' ),
 			'insert_into_item'      => __( 'Insert into audiobook', 'volumina' ),
 			'uploaded_to_this_item' => __( 'Uploaded to this audiobook', 'volumina' ),
-			'featured_image'        => __( 'Cover', 'volumina' ),
-			'set_featured_image'    => __( 'Set cover', 'volumina' ),
-			'remove_featured_image' => __( 'Remove cover', 'volumina' ),
-			'use_featured_image'    => __( 'Use as cover', 'volumina' ),
 			'item_published'        => __( 'Audiobook published.', 'volumina' ),
 			'item_updated'          => __( 'Audiobook updated.', 'volumina' ),
 			'menu_name'             => _x( 'Audiobooks', 'admin menu', 'volumina' ),
@@ -79,7 +75,7 @@ final class Book implements Registrable {
 				),
 				'menu_icon'       => 'dashicons-book-alt',
 				'menu_position'   => 20,
-				'supports'        => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+				'supports'        => array( 'title', 'editor', 'excerpt', 'author', 'revisions' ),
 				'capability_type' => 'post',
 				'map_meta_cap'    => true,
 				'hierarchical'    => false,
@@ -111,6 +107,24 @@ final class Book implements Registrable {
 				)
 			);
 		}
+	}
+
+	/**
+	 * The meta keys this post type owns, each mapped to its type.
+	 *
+	 * The admin iterates this rather than repeating the list, so a key can
+	 * never exist in one place and be forgotten in the other.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function meta_keys(): array {
+		$keys = array();
+
+		foreach ( self::meta_schema() as $key => $args ) {
+			$keys[ $key ] = $args['type'];
+		}
+
+		return $keys;
 	}
 
 	/**

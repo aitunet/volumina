@@ -26,6 +26,9 @@
   revisiting if chapter queries ever show up in profiling; it is a schema change,
   so it needs an entry in `docs/decisions.md` before anyone touches it.
 - Deleting or trashing a book leaves its chapters behind. They should follow it.
+- The book has no featured image, by decision: `volumina_cover_id` is the single
+  cover. If a theme or a block later needs a real featured image, mirroring it into
+  `_thumbnail_id` is the follow-up, and it is a schema decision, not a tweak.
 - Chapters have no front end of their own by design, so a stray direct URL 404s.
   Fine for now; worth a friendly redirect to the parent book later.
 
