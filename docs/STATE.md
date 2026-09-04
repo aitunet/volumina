@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S0 — Scaffold, complete. Next slice is S1.
-**Next action:** open S1 with the `volumina_book` CPT and its meta.
+**Current slice:** S1 — One audiobook, end to end.
+**Next action:** the `volumina_chapter` CPT, child of a book, with its meta.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` itself has never run, but a local WordPress on SQLite covers the runtime checks that Docker was needed for.
 **Last updated:** 2026-09-03, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`docs/` (`STATE.md`, `HISTORY.md`, `decisions.md`, `backlog.md`, `api.md`), `.gitignore`, `.editorconfig`, `composer.json`, `package.json`, `volumina.php`, `readme.txt`, `uninstall.php`, `phpcs.xml`, `phpstan.neon`, `.wp-env.json`, `.github/workflows/`
+`volumina.php`, `src/Plugin.php`, `src/Support/`, `src/PostTypes/`, `src/Storage/`, `src/Admin/`, `templates/`, `tests/php/`
 
 ---
 
@@ -48,7 +48,7 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 
 ## S1 — One audiobook, end to end
 
-- [ ] `volumina_book` CPT with meta
+- [x] `volumina_book` CPT with meta
 - [ ] `volumina_chapter` CPT with meta
 - [ ] `volumina_genre` and `volumina_series` taxonomies
 - [ ] Progress table with migration and version tracking

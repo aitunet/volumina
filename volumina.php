@@ -62,3 +62,8 @@ add_action(
 		);
 	}
 );
+
+/**
+ * Everything else is wired by the Plugin class. This file stays a bootstrap.
+ */
+Plugin::boot();
