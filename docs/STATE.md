@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S1 — One audiobook, end to end.
-**Next action:** the minimal front-end template, the last task in S1.
-**Blocked on:** nothing. Docker is still absent, so `wp-env` itself has never run, but a local WordPress on SQLite covers the runtime checks that Docker was needed for.
+**Current slice:** S2 — The player. This is the product.
+**Next action:** the audio streaming endpoint, with HTTP range request support. It comes first because every other item in S2 plays through it.
+**Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`volumina.php`, `src/Plugin.php`, `src/Support/`, `src/PostTypes/`, `src/Storage/`, `src/Admin/`, `templates/`, `tests/php/`, `assets/`
+`src/Player/`, `src/Api/`, `src/Storage/`, `src/Support/`, `src/Frontend/`, `templates/`, `tests/php/`, `assets/`
 
 ---
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 1 of 6 slices complete.
+Progress: 2 of 6 slices complete.
 
 ---
 
@@ -55,9 +55,9 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 - [x] Admin: book editor
 - [x] Admin: chapter list with drag ordering
 - [x] Admin: attach audio from the media library
-- [ ] Minimal front-end template
+- [x] Minimal front-end template
 
-**Verification:** a hand-entered audiobook renders on the front end with chapters in order.
+**Verification:** met. A hand-entered audiobook renders on the front end with its chapters in order, its cover, and a running time the chapters add up to, in Twenty Twenty-Five (block) and Twenty Twenty-One (classic), at 390px and 1280px. Zero axe violations against WCAG 2.1 AA over the plugin's own output, and no horizontal overflow. The first PHPUnit tests ship with it: 20 tests over `Support\Duration`.
 
 ## S2 — The player
 

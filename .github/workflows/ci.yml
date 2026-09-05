@@ -39,6 +39,9 @@ jobs:
       - name: Static analysis
         run: composer run phpstan
 
+      - name: Unit tests
+        run: composer run phpunit
+
   js:
     name: JavaScript tooling
     runs-on: ubuntu-latest
@@ -55,10 +58,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Package manifest
-        run: npm run lint:pkg-json
+      - name: Lint
+        run: npm run lint
 
-      # lint:js, lint:css and build join this job in S3, when the first block
-      # ships. Running them over an empty source tree only produces noise.
-
-  # The PHPUnit job lands in S1, together with the first test.
+      # build joins this job in S3, when the first block ships. There is
+      # nothing for @wordpress/scripts to bundle until then.

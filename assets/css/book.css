@@ -1,0 +1,82 @@
+/**
+ * The audiobook on its single page.
+ *
+ * Layout only. No colour is declared for any text, so every pair inherits the
+ * active theme's palette and its contrast along with it — which is why this
+ * looks at home in a block theme and in a classic one without knowing which
+ * it is in. Mobile first: the rows wrap before they shrink.
+ */
+
+.volumina-book {
+	margin-block: 1.5em;
+}
+
+.volumina-book-cover {
+	margin-block-end: 1.5em;
+}
+
+.volumina-book-cover img {
+	max-width: 100%;
+	height: auto;
+}
+
+/*
+ * One grid for the whole list rather than one per pair, so the labels line up
+ * in a column instead of each row finding its own margin.
+ */
+.volumina-book-details {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr);
+	gap: 0.5em 1em;
+	margin-block: 0 2em;
+}
+
+.volumina-book-detail {
+	display: contents;
+}
+
+.volumina-book-detail dt {
+	margin: 0;
+	font-weight: 600;
+}
+
+.volumina-book-detail dd {
+	margin: 0;
+}
+
+.volumina-book-heading {
+	margin-block-end: 0.5em;
+}
+
+.volumina-chapter-list {
+	margin: 0;
+	padding-inline-start: 1.5em;
+}
+
+/*
+ * The row inside the item, not the item itself: making the <li> a flex
+ * container costs it its list marker, and a chapter list with no numbers is
+ * not a chapter list.
+ */
+.volumina-chapter-item {
+	padding-block: 0.5em;
+	border-block-end: 1px solid;
+
+	/* Falls back to the full-strength text colour where color-mix is absent. */
+	border-color: color-mix(in srgb, currentcolor 25%, transparent);
+}
+
+.volumina-chapter-item:last-child {
+	border-block-end: 0;
+}
+
+.volumina-chapter-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 0.25em 1em;
+}
+
+.volumina-chapter-time {
+	font-variant-numeric: tabular-nums;
+}

@@ -107,3 +107,39 @@ fail on the 8.1 that the plugin declares and that CI runs.
 
 **Consequence.** The lock always matches the declared minimum. Raising the minimum
 PHP version means changing both the header and this setting, and regenerating the lock.
+
+## 2026-09-05 — The minimal front end renders through `the_content`, not a template file
+
+**Decision.** A single book's cover, details and chapter list are appended to its
+content by a filter, from `src/Frontend/BookContent.php` and the internal partial
+`templates/book.php`. There is no `single-volumina_book.php`, no theme override
+path and no filter on the output.
+
+**Why.** S1 has to prove the data model on the front end in both a block theme and
+a classic one. A template file has to have an opinion about the page around it,
+and the two theme families disagree about what that page is; a content filter has
+none, so the same code lands correctly inside whatever wrapper the theme provides.
+Verified against Twenty Twenty-Five and Twenty Twenty-One.
+
+**Consequence.** `src/Frontend/` joins the directories listed in `CLAUDE.md`. The
+blocks in S3 are the real presentation layer and will supersede this. Nothing here
+is an extension point on purpose: the public API is written in S4, and an
+extension point invented early is a promise made by accident — one that would have
+to be broken when the blocks arrive.
+
+## 2026-09-05 — The unit suite loads no WordPress
+
+**Decision.** `phpunit.xml.dist` runs plain PHPUnit over `tests/php` with a
+bootstrap that defines `ABSPATH` and loads the Composer autoloader, nothing more.
+Only code that depends on PHP alone is tested there.
+
+**Why.** The WordPress test suite needs a database server and, in practice, the
+`wp-env` that this machine cannot run. Waiting for it would mean shipping S1 with
+no tests at all. Meanwhile the code that does call WordPress is exercised against
+a real running install, which is stronger evidence than a mock of the very thing
+under test.
+
+**Consequence.** Coverage is honest but narrow: `Support/` is unit tested, the rest
+is verified by hand against a running WordPress and recorded in `docs/HISTORY.md`.
+When a machine with Docker appears, a WordPress integration suite is the follow-up,
+and it does not invalidate anything here.
