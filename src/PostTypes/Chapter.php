@@ -150,6 +150,31 @@ final class Chapter implements Registrable {
 	}
 
 	/**
+	 * The position a chapter would take at the end of a book.
+	 *
+	 * Counted from the highest position already in use rather than from the
+	 * number of chapters, so a book whose numbering has gaps does not hand the
+	 * same position to two chapters.
+	 *
+	 * @param int $book_id Book to append to.
+	 * @param int $ignore   Chapter to leave out of the count, normally the one
+	 *                      being saved.
+	 */
+	public static function next_order( int $book_id, int $ignore = 0 ): int {
+		$highest = 0;
+
+		foreach ( self::for_book( $book_id ) as $chapter ) {
+			if ( $chapter->ID === $ignore ) {
+				continue;
+			}
+
+			$highest = max( $highest, (int) get_post_meta( $chapter->ID, 'volumina_order', true ) );
+		}
+
+		return $highest + 1;
+	}
+
+	/**
 	 * Registers the chapter's meta.
 	 */
 	public function register_meta(): void {

@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S1 — One audiobook, end to end.
-**Next action:** attaching audio to a chapter from the media library.
+**Next action:** the minimal front-end template, the last task in S1.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` itself has never run, but a local WordPress on SQLite covers the runtime checks that Docker was needed for.
 **Last updated:** 2026-09-05, TUNET
 
@@ -54,7 +54,7 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 - [x] Progress table with migration and version tracking
 - [x] Admin: book editor
 - [x] Admin: chapter list with drag ordering
-- [ ] Admin: attach audio from the media library
+- [x] Admin: attach audio from the media library
 - [ ] Minimal front-end template
 
 **Verification:** a hand-entered audiobook renders on the front end with chapters in order.

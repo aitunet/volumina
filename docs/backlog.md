@@ -31,6 +31,13 @@
   `_thumbnail_id` is the follow-up, and it is a schema decision, not a tweak.
 - Chapters have no front end of their own by design, so a stray direct URL 404s.
   Fine for now; worth a friendly redirect to the parent book later.
+- The chapter screen picks its book from a plain select listing every book. That
+  is right for a library of tens and wrong for one of hundreds. If it ever needs
+  to scale, the replacement is a search-backed control, not a truncated list: a
+  select that silently omits books is worse than a long one.
+- Chapter positions are contiguous only because the reorder endpoint renumbers
+  the whole book. Deleting a chapter leaves a gap until the next drag. Harmless,
+  since order is only ever compared, never counted on to be dense.
 
 ## Belongs to `volumina-pro`, not here
 

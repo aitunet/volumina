@@ -33,6 +33,7 @@ final class Plugin {
 		Storage\Migrator::class,
 		Admin\BookMetaBox::class,
 		Admin\ChapterList::class,
+		Admin\ChapterMetaBox::class,
 	);
 
 	/**

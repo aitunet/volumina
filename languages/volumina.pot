@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T12:18:42+00:00\n"
+"POT-Creation-Date: 2026-09-05T12:46:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -160,6 +160,85 @@ msgstr ""
 
 #: src/Admin/ChapterList.php:240
 msgid "Order saved."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:58
+msgid "Chapter details"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:96
+msgid "Choose an audio file"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:97
+msgid "Use this file"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:98
+#: src/Admin/ChapterMetaBox.php:353
+msgid "No audio file chosen yet."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:139
+msgid "Book"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:146
+msgid "— Not part of a book yet —"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:150
+msgid "(untitled book)"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:164
+msgid "A chapter belongs to one book. Choose it and the chapter joins the end of that book, ready to be dragged into place from the book screen."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:177
+msgid "Audio file"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:192
+msgid "Choose audio file"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:193
+msgid "Remove audio file"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:198
+msgid "Only audio files can be attached. The running time is read from the file."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:211
+msgid "Running time"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:222
+msgid "In whole seconds. Filled in from the audio file; correct it here if the file is wrong."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:241
+msgid "Position"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:247
+msgid "Not placed yet"
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:256
+msgid "Reorder the chapters on the book screen."
+msgstr ""
+
+#: src/Admin/ChapterMetaBox.php:261
+msgid "Chapters are ordered on the book screen."
+msgstr ""
+
+#. translators: 1: audio file name, 2: running time such as 1:02:05.
+#: src/Admin/ChapterMetaBox.php:364
+#, php-format
+msgid "%1$s (%2$s)"
 msgstr ""
 
 #: src/PostTypes/Book.php:41
@@ -344,19 +423,19 @@ msgstr ""
 msgid "One chapter of an audiobook."
 msgstr ""
 
-#: src/PostTypes/Chapter.php:186
+#: src/PostTypes/Chapter.php:211
 msgid "ID of the book this chapter belongs to."
 msgstr ""
 
-#: src/PostTypes/Chapter.php:192
+#: src/PostTypes/Chapter.php:217
 msgid "Attachment ID of the audio file."
 msgstr ""
 
-#: src/PostTypes/Chapter.php:198
+#: src/PostTypes/Chapter.php:223
 msgid "Running time in whole seconds."
 msgstr ""
 
-#: src/PostTypes/Chapter.php:204
+#: src/PostTypes/Chapter.php:229
 msgid "Position within the book, counting from one."
 msgstr ""
 
