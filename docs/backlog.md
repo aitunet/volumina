@@ -35,6 +35,15 @@
   is right for a library of tens and wrong for one of hundreds. If it ever needs
   to scale, the replacement is a search-backed control, not a truncated list: a
   select that silently omits books is worse than a long one.
+- Audio is served from `?volumina_audio={id}` rather than a pretty URL. A rewrite
+  rule would be prettier and friendlier to a CDN, at the cost of a flush that, when
+  it does not happen, makes the plugin look broken on activation. Revisit when there
+  is a reason beyond tidiness.
+- The player restores a position across page loads; it does not keep audio playing
+  through a navigation. Nothing short of a persistent frame or a single-page shell
+  can, and neither belongs in a plugin that has to sit inside anyone's theme.
+- A guest's position lives only in their own browser. Carrying it to an account on
+  sign-in would be a nice touch and needs a decision about whose value wins.
 - Chapter positions are contiguous only because the reorder endpoint renumbers
   the whole book. Deleting a chapter leaves a gap until the next drag. Harmless,
   since order is only ever compared, never counted on to be dense.

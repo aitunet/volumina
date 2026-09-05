@@ -35,6 +35,8 @@ final class Plugin {
 		Admin\ChapterList::class,
 		Admin\ChapterMetaBox::class,
 		Player\Stream::class,
+		Player\Player::class,
+		Api\ProgressRoute::class,
 		Frontend\BookContent::class,
 	);
 

@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S2 — The player. This is the product.
-**Next action:** the player itself — markup, chapter navigation, speed, skips and the sleep timer.
+**Next action:** close S2 — a long-book listening run across sessions, then the slice verification.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
@@ -62,15 +62,15 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 ## S2 — The player
 
 - [x] Audio streaming endpoint with HTTP range request support
-- [ ] Chapter navigation
-- [ ] Position saved per listener, restored on return
-- [ ] Playback speed control
-- [ ] 15/30-second skip
-- [ ] Sleep timer
-- [ ] Persists across page navigation
-- [ ] Full keyboard navigation
-- [ ] Screen reader labels and states
-- [ ] AA contrast on every text pair
+- [x] Chapter navigation
+- [x] Position saved per listener, restored on return
+- [x] Playback speed control
+- [x] 15/30-second skip
+- [x] Sleep timer
+- [x] Persists across page navigation — the chapter and the position survive a navigation and are restored on the next page. Audio itself cannot continue through a document load; nothing short of a persistent frame can, and that does not belong in a plugin that sits inside someone else's theme.
+- [x] Full keyboard navigation
+- [x] Screen reader labels and states
+- [x] AA contrast on every text pair
 - [ ] Mobile layout verified on a real phone
 
 **Verification:** a nine-hour book listened across three sessions on a phone resumes correctly every time; zero axe violations.

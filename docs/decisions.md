@@ -143,3 +143,33 @@ under test.
 is verified by hand against a running WordPress and recorded in `docs/HISTORY.md`.
 When a machine with Docker appears, a WordPress integration suite is the follow-up,
 and it does not invalidate anything here.
+
+## 2026-09-05 — Audio is a query variable, not a rewrite rule
+
+**Decision.** The streaming endpoint answers `?volumina_audio={chapter}`. Every
+audio URL in the plugin is built by `Player\Stream::url()`.
+
+**Why.** A rewrite rule has to be flushed, and a flush that does not happen is a
+plugin that looks broken the moment it is activated. The query variable needs no
+flush, no `.htaccess`, and no cooperation from the host. Nothing about range
+requests, caching or access control is any different either way.
+
+**Consequence.** URLs are less pretty and less CDN-friendly. `Stream::url()` is
+the single seam S4 needs for the `volumina_chapter_audio_url` filter, so Pro can
+replace these with signed, expiring URLs without touching anything else. Pretty
+URLs are in `docs/backlog.md`.
+
+## 2026-09-05 — A guest's listening position stays in their own browser
+
+**Decision.** `wp_volumina_progress` holds rows for signed-in listeners only.
+Everyone else is remembered by `localStorage`, and the REST route answers 401.
+
+**Why.** Storing a guest's position server side means inventing an identifier for
+someone who never asked to be identified, and then keeping it. A listening
+position is not worth a tracking cookie, and the table's primary key is
+`(user_id, book_id)` precisely because a listener is a user.
+
+**Consequence.** A guest who changes browser loses their place; a signed-in
+listener does not. The account is treated as the truth when both exist, because
+it is the only one that can be right on a second device. Carrying a guest's
+position into an account at sign-in is in `docs/backlog.md`.

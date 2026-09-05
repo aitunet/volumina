@@ -10,7 +10,9 @@
  *
  * @var WP_Post             $book     The book being shown.
  * @var array<int, WP_Post> $chapters Its chapters, in order.
- * @var array<string, string> $details Labelled details, already formatted.
+ * @var array<string, string> $details  Labelled details, already formatted.
+ * @var string                $player   The player markup, or an empty string.
+ * @var array<int, int>       $playable IDs of chapters the player can reach.
  */
 
 declare( strict_types = 1 );
@@ -53,6 +55,11 @@ $volumina_cover = (int) get_post_meta( $book->ID, 'volumina_cover_id', true );
 		</dl>
 	<?php endif; ?>
 
+	<?php
+	// Built by Player::render(), which escaped it. It is markup by intent.
+	echo $player; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+
 	<h2 class="volumina-book-heading"><?php esc_html_e( 'Chapters', 'volumina' ); ?></h2>
 
 	<?php if ( array() === $chapters ) : ?>
@@ -69,7 +76,15 @@ $volumina_cover = (int) get_post_meta( $book->ID, 'volumina_cover_id', true );
 				<li class="volumina-chapter-item">
 					<span class="volumina-chapter-row">
 						<span class="volumina-chapter-name">
-							<?php echo esc_html( get_the_title( $volumina_chapter ) ); ?>
+							<?php if ( in_array( (int) $volumina_chapter->ID, $playable, true ) ) : ?>
+								<button
+									type="button"
+									class="volumina-chapter-play"
+									data-volumina-play="<?php echo esc_attr( (string) (int) $volumina_chapter->ID ); ?>"
+								><?php echo esc_html( get_the_title( $volumina_chapter ) ); ?></button>
+							<?php else : ?>
+								<?php echo esc_html( get_the_title( $volumina_chapter ) ); ?>
+							<?php endif; ?>
 						</span>
 						<?php if ( $volumina_seconds > 0 ) : ?>
 							<time

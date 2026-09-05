@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T13:25:23+00:00\n"
+"POT-Creation-Date: 2026-09-05T14:49:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -68,7 +68,7 @@ msgid "Who reads the book aloud."
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:230
-#: src/Frontend/BookContent.php:129
+#: src/Frontend/BookContent.php:148
 msgid "Publisher"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgid "Who published this recording."
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:234
-#: src/Frontend/BookContent.php:135
+#: src/Frontend/BookContent.php:154
 msgid "ISBN"
 msgstr ""
 
@@ -110,9 +110,9 @@ msgid "Chosen from the media library."
 msgstr ""
 
 #: src/Admin/ChapterList.php:57
-#: src/Frontend/BookContent.php:123
+#: src/Frontend/BookContent.php:142
 #: src/PostTypes/Chapter.php:58
-#: templates/book.php:56
+#: templates/book.php:63
 msgid "Chapters"
 msgstr ""
 
@@ -216,7 +216,7 @@ msgid "Only audio files can be attached. The running time is read from the file.
 msgstr ""
 
 #: src/Admin/ChapterMetaBox.php:211
-#: src/Frontend/BookContent.php:119
+#: src/Frontend/BookContent.php:138
 msgid "Running time"
 msgstr ""
 
@@ -246,8 +246,104 @@ msgstr ""
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: src/Frontend/BookContent.php:113
+#: src/Api/ProgressRoute.php:109
+msgid "Listening positions are only kept for people who are signed in."
+msgstr ""
+
+#: src/Api/ProgressRoute.php:119
+#: src/Api/ProgressRoute.php:127
+msgid "No such audiobook."
+msgstr ""
+
+#: src/Api/ProgressRoute.php:178
+msgid "That chapter is not part of that audiobook."
+msgstr ""
+
+#: src/Api/ProgressRoute.php:193
+msgid "The listening position could not be saved."
+msgstr ""
+
+#: src/Frontend/BookContent.php:132
 msgid "Narrated by"
+msgstr ""
+
+#: src/Player/Player.php:93
+#: templates/player.php:91
+msgid "Play"
+msgstr ""
+
+#: src/Player/Player.php:94
+msgid "Pause"
+msgstr ""
+
+#. translators: %s: chapter title.
+#: src/Player/Player.php:96
+#, php-format
+msgid "Playing %s"
+msgstr ""
+
+#. translators: %s: chapter title.
+#: src/Player/Player.php:98
+#, php-format
+msgid "Paused in %s"
+msgstr ""
+
+#. translators: 1: elapsed time, 2: total time, both as h:mm:ss.
+#: src/Player/Player.php:100
+#, php-format
+msgid "%1$s of %2$s"
+msgstr ""
+
+#. translators: %s: playback speed, such as 1.5.
+#: src/Player/Player.php:102
+#, php-format
+msgid "Speed %s times normal"
+msgstr ""
+
+#. translators: %s: a length of time, such as 30 minutes.
+#: src/Player/Player.php:104
+#, php-format
+msgid "Sleep timer set for %s"
+msgstr ""
+
+#: src/Player/Player.php:105
+msgid "Playback will stop at the end of this chapter"
+msgstr ""
+
+#: src/Player/Player.php:106
+msgid "Sleep timer off"
+msgstr ""
+
+#: src/Player/Player.php:107
+msgid "Sleep timer finished. Playback stopped."
+msgstr ""
+
+#: src/Player/Player.php:108
+msgid "End of the audiobook"
+msgstr ""
+
+#: src/Player/Player.php:109
+msgid "Ready to carry on where you left off. Press play."
+msgstr ""
+
+#: src/Player/Player.php:110
+msgid "Your place could not be saved to your account. It is kept in this browser."
+msgstr ""
+
+#: src/Player/Player.php:235
+msgid "Off"
+msgstr ""
+
+#. translators: %s: a number of minutes.
+#: src/Player/Player.php:244
+#, php-format
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Player/Player.php:252
+msgid "End of chapter"
 msgstr ""
 
 #: src/PostTypes/Book.php:41
@@ -557,11 +653,61 @@ msgid "Series"
 msgstr ""
 
 #. translators: %s: book title.
-#: templates/book.php:37
+#: templates/book.php:39
 #, php-format
 msgid "Cover of %s"
 msgstr ""
 
-#: templates/book.php:60
+#: templates/book.php:67
 msgid "This audiobook has no chapters yet."
+msgstr ""
+
+#: templates/player.php:41
+msgid "Audiobook player"
+msgstr ""
+
+#: templates/player.php:52
+msgid "Now playing"
+msgstr ""
+
+#: templates/player.php:69
+msgid "Previous chapter"
+msgstr ""
+
+#. translators: %d: a number of seconds.
+#: templates/player.php:78
+#, php-format
+msgid "Back %d second"
+msgid_plural "Back %d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: a number of seconds.
+#: templates/player.php:100
+#, php-format
+msgid "Forward %d second"
+msgid_plural "Forward %d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/player.php:109
+msgid "Next chapter"
+msgstr ""
+
+#: templates/player.php:115
+msgid "Position in this chapter"
+msgstr ""
+
+#: templates/player.php:136
+msgid "Speed"
+msgstr ""
+
+#. translators: %s: a playback speed, such as 1.5.
+#: templates/player.php:147
+#, php-format
+msgid "%s×"
+msgstr ""
+
+#: templates/player.php:158
+msgid "Sleep timer"
 msgstr ""

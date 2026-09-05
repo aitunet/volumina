@@ -10,6 +10,7 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\Frontend;
 
 use TUNET\Volumina\PostTypes\Book;
+use TUNET\Volumina\Player\Player;
 use TUNET\Volumina\PostTypes\Chapter;
 use TUNET\Volumina\Support\Duration;
 use TUNET\Volumina\Support\Registrable;
@@ -86,12 +87,30 @@ final class BookContent implements Registrable {
 	private static function render( WP_Post $book ): string {
 		$chapters = Chapter::for_book( $book->ID );
 		$details  = self::details( $book, $chapters );
+		$player   = Player::render( $book, $chapters );
+		$playable = self::playable_ids( $chapters );
 
 		ob_start();
 
 		require plugin_dir_path( PLUGIN_FILE ) . 'templates/book.php';
 
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * The IDs of the chapters the player can actually move to.
+	 *
+	 * @param array<int, WP_Post> $chapters Chapters in order.
+	 * @return array<int, int>
+	 */
+	private static function playable_ids( array $chapters ): array {
+		$ids = array();
+
+		foreach ( Player::playable( $chapters ) as $chapter ) {
+			$ids[] = (int) $chapter['id'];
+		}
+
+		return $ids;
 	}
 
 	/**
