@@ -34,6 +34,7 @@ final class Plugin {
 		Admin\BookMetaBox::class,
 		Admin\ChapterList::class,
 		Admin\ChapterMetaBox::class,
+		Player\Stream::class,
 		Frontend\BookContent::class,
 	);
 

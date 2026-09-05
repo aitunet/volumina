@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S2 — The player. This is the product.
-**Next action:** the audio streaming endpoint, with HTTP range request support. It comes first because every other item in S2 plays through it.
+**Next action:** the player itself — markup, chapter navigation, speed, skips and the sleep timer.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
@@ -61,7 +61,7 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 
 ## S2 — The player
 
-- [ ] Audio streaming endpoint with HTTP range request support
+- [x] Audio streaming endpoint with HTTP range request support
 - [ ] Chapter navigation
 - [ ] Position saved per listener, restored on return
 - [ ] Playback speed control
