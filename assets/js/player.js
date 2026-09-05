@@ -289,11 +289,16 @@
 			const attempt = audio.play();
 
 			if ( attempt && typeof attempt.catch === 'function' ) {
-				attempt.catch( function () {
-					// Browsers refuse to start audio without a gesture. That is
-					// correct behaviour, not an error: say where we are and
-					// wait to be asked.
-					announce( strings.resumeBlocked || '' );
+				attempt.catch( function ( error ) {
+					// Only one kind of refusal is worth telling a listener
+					// about: the browser wanting a gesture before it makes a
+					// sound. That is correct behaviour, not an error, so say
+					// where we are and wait to be asked. An AbortError just
+					// means a new chapter replaced this one mid-load, which is
+					// the player doing as it was told.
+					if ( error && error.name === 'NotAllowedError' ) {
+						announce( strings.resumeBlocked || '' );
+					}
 				} );
 			}
 		}
@@ -313,7 +318,6 @@
 				Math.min( total, ( audio.currentTime || 0 ) + seconds )
 			);
 			paint();
-			save( true );
 		}
 
 		function go( step ) {
@@ -421,16 +425,28 @@
 		if ( els.seek ) {
 			els.seek.addEventListener( 'input', function () {
 				scrubbing = true;
-				audio.currentTime = parseFloat( els.seek.value );
+
+				const wanted = parseFloat( els.seek.value );
+
 				if ( els.elapsed ) {
-					els.elapsed.textContent = format( audio.currentTime );
+					els.elapsed.textContent = format( wanted );
 				}
-				describePosition();
+
+				if ( els.seek ) {
+					els.seek.setAttribute(
+						'aria-valuetext',
+						text(
+							'position',
+							format( wanted ),
+							format( audio.duration || current().duration || 0 )
+						)
+					);
+				}
 			} );
 
 			els.seek.addEventListener( 'change', function () {
 				scrubbing = false;
-				save( true );
+				audio.currentTime = parseFloat( els.seek.value );
 			} );
 		}
 
@@ -464,6 +480,11 @@
 
 		audio.addEventListener( 'pause', function () {
 			paintToggle();
+			save( true );
+		} );
+
+		audio.addEventListener( 'seeked', function () {
+			paint();
 			save( true );
 		} );
 

@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S2 — The player. This is the product.
-**Next action:** close S2 — a long-book listening run across sessions, then the slice verification.
+**Next action:** S3 — the Audiobook, Chapter list and Continue listening blocks. Before starting, decide whether the blocks render through the same `Player::render()` the front end already uses, or whether S3 replaces `Frontend\BookContent` outright.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
@@ -71,9 +71,9 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 - [x] Full keyboard navigation
 - [x] Screen reader labels and states
 - [x] AA contrast on every text pair
-- [ ] Mobile layout verified on a real phone
+- [ ] Mobile layout verified on a real phone — **the one thing in S2 that is not done, and cannot be done here: there is no physical device.** What has been done instead: the player was driven in Chromium under Pixel 7 emulation (touch, mobile user agent, 412×915) as well as at 390px and 1280px, every touch target measured at 44px or more, no sideways scroll anywhere, and a nine-hour book listened across four separate sessions. That is a good proxy and it is not a phone. Do this on real hardware before S6.
 
-**Verification:** a nine-hour book listened across three sessions on a phone resumes correctly every time; zero axe violations.
+**Verification:** met except for the real-device check. An eighteen-chapter, nine-hour audiobook was listened to across four separate browser sessions on an emulated Pixel 7 — each one a fresh context carrying only a login cookie — and resumed at the right chapter and the right second every time, including after a chapter ended and rolled into the next. Zero axe violations against WCAG 2.1 AA in Twenty Twenty-Five and Twenty Twenty-One, phone and desktop. The two `<select>` controls come back as "needs review" in Twenty Twenty-One only, because that theme paints a background image on selects and axe cannot then compute a contrast ratio; the colours there are the theme's own, since this plugin declares none.
 
 ## S3 — Blocks
 
