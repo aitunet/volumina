@@ -37,7 +37,9 @@ final class Plugin {
 		Player\Stream::class,
 		Player\Player::class,
 		Api\ProgressRoute::class,
+		Frontend\Assets::class,
 		Frontend\BookContent::class,
+		Blocks\Registry::class,
 	);
 
 	/**

@@ -47,6 +47,15 @@
 - Chapter positions are contiguous only because the reorder endpoint renumbers
   the whole book. Deleting a chapter leaves a gap until the next drag. Harmless,
   since order is only ever compared, never counted on to be dense.
+- A chapter play button is 34px tall on a phone, because it is styled as a line of
+  text rather than as a control. That clears WCAG 2.2 AA's 24px minimum and it is
+  under the 44px the transport controls hold themselves to. Measured in Twenty
+  Twenty-One at 390px; the same in every theme, since the height comes from the
+  line box. Worth revisiting with a padded hit area that does not turn the chapter
+  list into a column of boxes.
+- `build/` is git-ignored, so a clone has no blocks until `npm run build` runs.
+  That is right for the repository and wrong for the plugin directory, which
+  receives built files. The release packaging in S6 has to include it.
 
 ## Belongs to `volumina-pro`, not here
 

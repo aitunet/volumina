@@ -23,3 +23,6 @@ Thumbs.db
 # Release artefacts
 /dist/
 /*.zip
+
+# Browser test artefacts, written by the Playwright MCP server
+/.playwright-mcp/

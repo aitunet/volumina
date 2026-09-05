@@ -123,4 +123,57 @@ final class Progress {
 
 		return false !== $result;
 	}
+
+	/**
+	 * The books a listener has most recently been in, newest first.
+	 *
+	 * Rows outlive the books they point at — a deleted or unpublished book
+	 * leaves its bookmarks behind — so more rows are read than are wanted and
+	 * the caller keeps the ones that still resolve.
+	 *
+	 * @param int $user_id Listener.
+	 * @param int $limit   How many rows to return, at most.
+	 * @return array<int, array{book_id: int, chapter_id: int, position_seconds: int, updated_at: string}>
+	 */
+	public static function recent( int $user_id, int $limit = 5 ): array {
+		global $wpdb;
+
+		$limit = max( 1, min( 50, $limit ) );
+
+		if ( $user_id <= 0 ) {
+			return array();
+		}
+
+		$table = ProgressTable::table_name();
+
+		// The table name is built from $wpdb->prefix and a constant, never from
+		// input, which is why it can be interpolated; every value is prepared.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT book_id, chapter_id, position_seconds, updated_at FROM {$table} WHERE user_id = %d ORDER BY updated_at DESC LIMIT %d",
+				$user_id,
+				$limit
+			),
+			ARRAY_A
+		);
+
+		if ( ! is_array( $rows ) ) {
+			return array();
+		}
+
+		$out = array();
+
+		foreach ( $rows as $row ) {
+			$out[] = array(
+				'book_id'          => (int) $row['book_id'],
+				'chapter_id'       => (int) $row['chapter_id'],
+				'position_seconds' => (int) $row['position_seconds'],
+				'updated_at'       => (string) $row['updated_at'],
+			);
+		}
+
+		return $out;
+	}
 }

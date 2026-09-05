@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "volumina/audiobook",
+	"title": "Audiobook",
+	"category": "media",
+	"icon": "book-alt",
+	"description": "An audiobook with its cover, details, player and chapters.",
+	"keywords": [ "audiobook", "audio", "player", "book" ],
+	"textdomain": "volumina",
+	"usesContext": [ "postId" ],
+	"attributes": {
+		"bookId": {
+			"type": "number",
+			"default": 0
+		},
+		"showCover": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDetails": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPlayer": {
+			"type": "boolean",
+			"default": true
+		},
+		"showChapters": {
+			"type": "boolean",
+			"default": true
+		},
+		"showHeading": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": [ "volumina-book", "volumina-player" ],
+	"viewScript": "volumina-player"
+}

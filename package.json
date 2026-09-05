@@ -24,15 +24,24 @@
 		"node": ">=20"
 	},
 	"devDependencies": {
+		"@wordpress/block-editor": "^17.0.0",
+		"@wordpress/blocks": "^15.27.0",
+		"@wordpress/components": "^40.0.0",
+		"@wordpress/core-data": "^7.54.0",
+		"@wordpress/data": "^10.54.0",
+		"@wordpress/editor": "^14.54.0",
 		"@wordpress/env": "^11.14.0",
-		"@wordpress/scripts": "^34.2.0"
+		"@wordpress/html-entities": "^4.54.0",
+		"@wordpress/i18n": "^6.27.0",
+		"@wordpress/scripts": "^34.2.0",
+		"@wordpress/server-side-render": "^6.30.0"
 	},
 	"scripts": {
-		"build": "wp-scripts build",
-		"start": "wp-scripts start",
+		"build": "wp-scripts build --webpack-src-dir=blocks --output-path=build",
+		"start": "wp-scripts start --webpack-src-dir=blocks --output-path=build",
 		"format": "wp-scripts format",
 		"lint": "npm run lint:js && npm run lint:css && npm run lint:pkg-json",
-		"lint:js": "wp-scripts lint-js",
+		"lint:js": "wp-scripts lint-js ./assets ./blocks",
 		"lint:css": "wp-scripts lint-style",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"test:e2e": "wp-scripts test-playwright",

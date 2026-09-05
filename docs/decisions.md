@@ -193,3 +193,35 @@ changed in one place. `RenderOnce` is generic scaffolding and knows nothing abou
 audiobooks, so it leaves with `src/Support/`. The chapter list renders chapter
 names as plain text and the player upgrades to buttons only the ones it can
 actually reach, because a chapter list can appear on a page that has no player.
+
+## 2026-09-05 — The `@wordpress/*` editor packages join as dev dependencies
+
+**Decision.** `@wordpress/blocks`, `block-editor`, `components`, `data`,
+`core-data`, `editor`, `i18n`, `html-entities` and `server-side-render` are
+installed as dev dependencies. None of them is bundled: `wp-scripts` turns every
+one of them into a reference to the `wp.*` global that WordPress already ships,
+which is what the generated `index.asset.php` files list as script dependencies.
+
+**Why.** ESLint cannot check an import it cannot resolve, and without them the
+lint run fails on every block file with `import/no-unresolved`. Reason enough on
+its own; they also give the editor code real definitions to check against.
+
+**Consequence.** `node_modules` grows and `npm ci` takes longer. The shipped
+plugin does not change by a single byte: the built bundles contain none of it.
+
+## 2026-09-05 — A block asks for an asset by handle, it does not enqueue one
+
+**Decision.** `Frontend\Assets` registers every front-end handle on `init` and
+enqueues nothing. `block.json` names the handles it needs in `style` and
+`viewScript`; the content filter enqueues them on a book page.
+
+**Why.** Until now a book page was the only place this plugin drew, so enqueueing
+on `is_singular()` was the whole story. A block can put a player on any page on
+the site, and it can only ask for a handle that already exists. Registering on
+`init` rather than `wp_enqueue_scripts` also covers the editor, which renders
+these blocks through the REST API and never reaches a front-end enqueue hook.
+
+**Consequence.** WordPress loads the player's script and stylesheet only on pages
+that actually contain a block that asks for them, which is better than the
+alternative and better than what a book page did before. `Player::settings()` is
+public because the handle it belongs to is now registered somewhere else.

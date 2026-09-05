@@ -80,3 +80,65 @@
 .volumina-chapter-time {
 	font-variant-numeric: tabular-nums;
 }
+
+/*
+ * Continue listening. It can sit in a sidebar or across a page, so the items
+ * are a column that never assumes how wide it is.
+ */
+.volumina-continue-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.volumina-continue-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 1em;
+	padding-block: 0.75em;
+	border-block-end: 1px solid;
+
+	/* Falls back to the full-strength text colour where color-mix is absent. */
+	border-color: color-mix(in srgb, currentcolor 25%, transparent);
+}
+
+.volumina-continue-item:last-child {
+	border-block-end: 0;
+}
+
+.volumina-continue-cover {
+	flex: 0 0 auto;
+}
+
+.volumina-continue-cover img {
+	display: block;
+	width: 4em;
+	height: auto;
+}
+
+.volumina-continue-text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15em;
+	min-width: 0;
+}
+
+.volumina-continue-title {
+	font-weight: 600;
+}
+
+.volumina-continue-place {
+	font-size: 0.9em;
+	font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Only an editor ever sees this: a block that has not been told which book it
+ * is about renders nothing at all for a reader.
+ */
+.volumina-block-empty {
+	padding: 1em;
+	border: 1px dashed;
+	border-color: color-mix(in srgb, currentcolor 40%, transparent);
+	text-align: center;
+}

@@ -14,9 +14,6 @@ use TUNET\Volumina\Support\Registrable;
 use TUNET\Volumina\Support\RenderOnce;
 use WP_Post;
 
-use const TUNET\Volumina\PLUGIN_FILE;
-use const TUNET\Volumina\VERSION;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -59,12 +56,7 @@ final class BookContent implements Registrable {
 			return;
 		}
 
-		wp_enqueue_style(
-			'volumina-book',
-			plugins_url( 'assets/css/book.css', PLUGIN_FILE ),
-			array(),
-			VERSION
-		);
+		wp_enqueue_style( Assets::BOOK );
 	}
 
 	/**

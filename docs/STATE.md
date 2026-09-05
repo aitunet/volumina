@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S3 — Blocks.
-**Next action:** the Audiobook block — `blocks/audiobook/block.json`, a PHP render callback in `src/Blocks/` that calls `Frontend\Audiobook::render()`, and an editor preview. Then the Chapter list block, then Continue listening. The renderer, the shared templates and `Support\RenderOnce` they all build on are already in place; see `docs/decisions.md`, 2026-09-05.
+**Current slice:** S4 — Access layer and public API.
+**Next action:** `AccessManager` and the `AccessProvider` interface, then `PublicProvider` and `ManualProvider`. The audio URL filter has a seam waiting for it in `Player\Stream::url()`, and `docs/api.md` is written as each extension point is created, not after.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`blocks/`, `src/Blocks/`, `src/Frontend/`, `src/Player/`, `src/Support/`, `templates/`, `assets/`, `tests/php/`, `package.json`, `webpack.config.js`
+`src/Access/`, `src/Player/`, `src/Api/`, `src/Admin/`, `src/Support/`, `docs/api.md`, `tests/php/`
 
 ---
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 2 of 6 slices complete.
+Progress: 3 of 6 slices complete.
 
 ---
 
@@ -77,13 +77,13 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 
 ## S3 — Blocks
 
-- [ ] Audiobook block
-- [ ] Chapter list block
-- [ ] Continue listening block
-- [ ] Editor previews match front end
-- [ ] No jQuery, no front-end framework
+- [x] Audiobook block
+- [x] Chapter list block
+- [x] Continue listening block
+- [x] Editor previews match front end
+- [x] No jQuery, no front-end framework
 
-**Verification:** all three blocks correct in Twenty Twenty-Five and in one classic theme.
+**Verification:** met. All three blocks render correctly in Twenty Twenty-Five and in Twenty Twenty-One, at 390px and 1280px, with zero axe violations against WCAG 2.1 AA over the plugin's own output and no sideways scroll. Twenty Twenty-One returns the same "needs review" contrast results as in S2, for the same reason: it paints background images on selects and buttons, and the colours are its own. Every preview in the editor is the server's own render, so a change to a block's settings changes the preview the same way it changes the page. No jQuery and no front-end framework: the two front-end scripts are plain ES2015+, and the editor scripts import nothing but the `wp.*` globals WordPress already ships.
 
 ## S4 — Access layer and public API
 

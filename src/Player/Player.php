@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Player;
 
+use TUNET\Volumina\Frontend\Assets;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
 use TUNET\Volumina\Storage\Progress;
@@ -17,7 +18,6 @@ use TUNET\Volumina\Support\Registrable;
 use WP_Post;
 
 use const TUNET\Volumina\PLUGIN_FILE;
-use const TUNET\Volumina\VERSION;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -56,30 +56,18 @@ final class Player implements Registrable {
 			return;
 		}
 
-		wp_enqueue_style(
-			'volumina-player',
-			plugins_url( 'assets/css/player.css', PLUGIN_FILE ),
-			array(),
-			VERSION
-		);
-
-		wp_enqueue_script(
-			'volumina-player',
-			plugins_url( 'assets/js/player.js', PLUGIN_FILE ),
-			array(),
-			VERSION,
-			true
-		);
-
-		wp_localize_script( 'volumina-player', 'voluminaPlayer', self::settings() );
+		wp_enqueue_style( Assets::PLAYER );
+		wp_enqueue_script( Assets::PLAYER );
 	}
 
 	/**
 	 * Everything the script needs that is not specific to one book.
 	 *
+	 * Public because `Frontend\Assets` registers the handle these belong to.
+	 *
 	 * @return array<string, mixed>
 	 */
-	private static function settings(): array {
+	public static function settings(): array {
 		return array(
 			'restUrl'     => rest_url( 'volumina/v1/progress/' ),
 			'nonce'       => wp_create_nonce( 'wp_rest' ),
@@ -129,6 +117,7 @@ final class Player implements Registrable {
 			'book'     => (int) $book->ID,
 			'title'    => get_the_title( $book ),
 			'url'      => (string) get_permalink( $book ),
+			'cover'    => self::cover_url( (int) $book->ID ),
 			'chapters' => $playable,
 			'resume'   => self::resume( (int) $book->ID ),
 		);
@@ -138,6 +127,26 @@ final class Player implements Registrable {
 		require plugin_dir_path( PLUGIN_FILE ) . 'templates/player.php';
 
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * The book's cover, small, for a guest's Continue listening list.
+	 *
+	 * The account list reads the cover from the book. A guest's list is built
+	 * by their own browser, which has no way to ask, so the player carries it.
+	 *
+	 * @param int $book_id The book.
+	 */
+	private static function cover_url( int $book_id ): string {
+		$cover = (int) get_post_meta( $book_id, 'volumina_cover_id', true );
+
+		if ( $cover <= 0 ) {
+			return '';
+		}
+
+		$image = wp_get_attachment_image_url( $cover, 'thumbnail' );
+
+		return is_string( $image ) ? $image : '';
 	}
 
 	/**

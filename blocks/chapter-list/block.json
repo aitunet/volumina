@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "volumina/chapter-list",
+	"title": "Chapter list",
+	"category": "media",
+	"icon": "editor-ol",
+	"description": "The chapters of an audiobook, in order.",
+	"keywords": [ "audiobook", "chapters", "list", "book" ],
+	"textdomain": "volumina",
+	"usesContext": [ "postId" ],
+	"attributes": {
+		"bookId": {
+			"type": "number",
+			"default": 0
+		},
+		"showDurations": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "volumina-book"
+}

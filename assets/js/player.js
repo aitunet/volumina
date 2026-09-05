@@ -226,6 +226,7 @@
 				book: data.book,
 				title: data.title || '',
 				url: data.url || '',
+				cover: data.cover || '',
 				chapter: current().id,
 				chapterTitle: current().title,
 				position: Math.floor( audio.currentTime || 0 ),
