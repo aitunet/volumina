@@ -10,9 +10,9 @@
 ## Right now
 
 **Current slice:** S1 — One audiobook, end to end.
-**Next action:** the chapter list on the book screen, with drag ordering.
+**Next action:** attaching audio to a chapter from the media library.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` itself has never run, but a local WordPress on SQLite covers the runtime checks that Docker was needed for.
-**Last updated:** 2026-09-03, TUNET
+**Last updated:** 2026-09-05, TUNET
 
 **File scope for this slice** — do not open files outside this list:
 `volumina.php`, `src/Plugin.php`, `src/Support/`, `src/PostTypes/`, `src/Storage/`, `src/Admin/`, `templates/`, `tests/php/`, `assets/`
@@ -53,7 +53,7 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 - [x] `volumina_genre` and `volumina_series` taxonomies
 - [x] Progress table with migration and version tracking
 - [x] Admin: book editor
-- [ ] Admin: chapter list with drag ordering
+- [x] Admin: chapter list with drag ordering
 - [ ] Admin: attach audio from the media library
 - [ ] Minimal front-end template
 

@@ -10,6 +10,8 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\PostTypes;
 
 use TUNET\Volumina\Support\Registrable;
+use WP_Post;
+use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -79,6 +81,72 @@ final class Chapter implements Registrable {
 				'hierarchical'       => false,
 			)
 		);
+	}
+
+	/**
+	 * The chapters of a book, in reading order.
+	 *
+	 * Sorted on `volumina_order`, with the post ID as the tie-break so that two
+	 * chapters sharing a number still come back in a stable sequence instead of
+	 * whatever order the database felt like.
+	 *
+	 * The sort happens in PHP rather than in SQL on purpose. Ordering by a meta
+	 * key inside `WP_Query` joins on that key, and a chapter that has never been
+	 * given a position has no row to join to, so it would drop out of its own
+	 * book without a sound. A book has tens of chapters and the query has already
+	 * primed the meta cache, so sorting here costs nothing and cannot lose one.
+	 *
+	 * @param int $book_id Book to fetch the chapters of.
+	 * @return array<int, WP_Post>
+	 */
+	public static function for_book( int $book_id ): array {
+		if ( $book_id <= 0 ) {
+			return array();
+		}
+
+		$query = new WP_Query(
+			array(
+				'post_type'      => self::POST_TYPE,
+				'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+				// A book has tens of chapters, not thousands.
+				'posts_per_page' => -1, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
+				'orderby'        => 'ID',
+				'order'          => 'ASC',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => 'volumina_book_id',
+						'value'   => $book_id,
+						'compare' => '=',
+						'type'    => 'NUMERIC',
+					),
+				),
+				'no_found_rows'  => true,
+			)
+		);
+
+		/**
+		 * WP_Query returns posts when no `fields` argument narrows the result.
+		 *
+		 * @var array<int, WP_Post> $posts
+		 */
+		$posts = $query->posts;
+
+		usort(
+			$posts,
+			static function ( WP_Post $first, WP_Post $second ): int {
+				$first_order  = (int) get_post_meta( $first->ID, 'volumina_order', true );
+				$second_order = (int) get_post_meta( $second->ID, 'volumina_order', true );
+
+				// Position zero means not placed yet. Those belong at the end, where
+				// an editor will find them, not at the top pretending to be chapter one.
+				$first_order  = $first_order > 0 ? $first_order : PHP_INT_MAX;
+				$second_order = $second_order > 0 ? $second_order : PHP_INT_MAX;
+
+				return $first_order !== $second_order ? $first_order <=> $second_order : $first->ID <=> $second->ID;
+			}
+		);
+
+		return $posts;
 	}
 
 	/**

@@ -1,0 +1,60 @@
+/**
+ * Chapter list on the audiobook editing screen.
+ */
+
+.volumina-chapters {
+	margin: 0 0 1em;
+	padding: 0;
+	list-style: none;
+}
+
+.volumina-chapter {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border: 1px solid #dcdcde;
+	border-bottom: none;
+	background: #fff;
+}
+
+.volumina-chapter:last-child {
+	border-bottom: 1px solid #dcdcde;
+}
+
+.volumina-chapter.is-dragging {
+	opacity: 0.5;
+}
+
+.volumina-chapter-handle {
+	flex: 0 0 auto;
+	width: 10px;
+	height: 18px;
+	cursor: grab;
+	background-image: radial-gradient(circle, #8c8f94 1px, transparent 1px);
+	background-size: 5px 5px;
+}
+
+.volumina-chapter-title {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.volumina-chapter-duration {
+	flex: 0 0 auto;
+	color: #50575e;
+	font-variant-numeric: tabular-nums;
+}
+
+.volumina-chapter-move {
+	flex: 0 0 auto;
+	display: flex;
+	gap: 4px;
+}
+
+.volumina-chapters-status:empty {
+	display: none;
+}

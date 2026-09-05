@@ -32,6 +32,7 @@ final class Plugin {
 		PostTypes\Taxonomies::class,
 		Storage\Migrator::class,
 		Admin\BookMetaBox::class,
+		Admin\ChapterList::class,
 	);
 
 	/**

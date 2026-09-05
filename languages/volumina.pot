@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-04T01:05:11+00:00\n"
+"POT-Creation-Date: 2026-09-05T12:18:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -37,4 +37,433 @@ msgstr ""
 #. Author URI of the plugin
 #: volumina.php
 msgid "https://tunetdesign.com"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:54
+msgid "Audiobook details"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:149
+msgid "Choose a cover"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:150
+msgid "Use this cover"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:169
+msgid "Choose cover"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:170
+msgid "Remove cover"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:226
+msgid "Narrator"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:227
+msgid "Who reads the book aloud."
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:230
+msgid "Publisher"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:231
+msgid "Who published this recording."
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:234
+msgid "ISBN"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:235
+msgid "Of this edition, if it has one."
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:238
+msgid "Language"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:239
+msgid "The language it is read in, as a locale code such as es_ES."
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:242
+msgid "Total duration"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:243
+msgid "In whole seconds. Leave at zero and the chapters will answer for it."
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:246
+msgid "Cover"
+msgstr ""
+
+#: src/Admin/BookMetaBox.php:247
+msgid "Chosen from the media library."
+msgstr ""
+
+#: src/Admin/ChapterList.php:57
+#: src/PostTypes/Chapter.php:58
+msgid "Chapters"
+msgstr ""
+
+#: src/Admin/ChapterList.php:101
+msgid "The order could not be saved."
+msgstr ""
+
+#. translators: 1: new position of the chapter, 2: total number of chapters.
+#: src/Admin/ChapterList.php:103
+#, php-format
+msgid "Moved to position %1$d of %2$d."
+msgstr ""
+
+#: src/Admin/ChapterList.php:126
+msgid "This book has no chapters yet."
+msgstr ""
+
+#: src/Admin/ChapterList.php:139
+msgid "Drag a chapter to move it, or use the arrows. The order is saved as soon as you change it."
+msgstr ""
+
+#: src/Admin/ChapterList.php:154
+msgid "(untitled chapter)"
+msgstr ""
+
+#. translators: %s: chapter title.
+#: src/Admin/ChapterList.php:184
+#, php-format
+msgid "Move %s up"
+msgstr ""
+
+#: src/Admin/ChapterList.php:185
+msgid "Up"
+msgstr ""
+
+#. translators: %s: chapter title.
+#: src/Admin/ChapterList.php:191
+#, php-format
+msgid "Move %s down"
+msgstr ""
+
+#: src/Admin/ChapterList.php:192
+msgid "Down"
+msgstr ""
+
+#: src/Admin/ChapterList.php:211
+msgid "You cannot edit this book."
+msgstr ""
+
+#: src/Admin/ChapterList.php:240
+msgid "Order saved."
+msgstr ""
+
+#: src/PostTypes/Book.php:41
+msgctxt "post type general name"
+msgid "Audiobooks"
+msgstr ""
+
+#: src/PostTypes/Book.php:42
+msgctxt "post type singular name"
+msgid "Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:43
+msgid "Add Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:44
+msgid "Add New Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:45
+msgid "Edit Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:46
+msgid "New Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:47
+msgid "View Audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:48
+msgid "View Audiobooks"
+msgstr ""
+
+#: src/PostTypes/Book.php:49
+msgid "Search Audiobooks"
+msgstr ""
+
+#: src/PostTypes/Book.php:50
+msgid "No audiobooks found."
+msgstr ""
+
+#: src/PostTypes/Book.php:51
+msgid "No audiobooks found in Trash."
+msgstr ""
+
+#: src/PostTypes/Book.php:52
+msgid "All Audiobooks"
+msgstr ""
+
+#: src/PostTypes/Book.php:53
+msgid "Audiobook Archives"
+msgstr ""
+
+#: src/PostTypes/Book.php:54
+msgid "Audiobook Attributes"
+msgstr ""
+
+#: src/PostTypes/Book.php:55
+msgid "Insert into audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:56
+msgid "Uploaded to this audiobook"
+msgstr ""
+
+#: src/PostTypes/Book.php:57
+msgid "Audiobook published."
+msgstr ""
+
+#: src/PostTypes/Book.php:58
+msgid "Audiobook updated."
+msgstr ""
+
+#: src/PostTypes/Book.php:59
+msgctxt "admin menu"
+msgid "Audiobooks"
+msgstr ""
+
+#: src/PostTypes/Book.php:60
+msgid "Audiobook Link"
+msgstr ""
+
+#: src/PostTypes/Book.php:61
+msgid "A link to an audiobook."
+msgstr ""
+
+#: src/PostTypes/Book.php:68
+msgid "An audiobook and the metadata that describes it."
+msgstr ""
+
+#: src/PostTypes/Book.php:142
+msgid "Who reads the book."
+msgstr ""
+
+#: src/PostTypes/Book.php:148
+msgid "Who published the recording."
+msgstr ""
+
+#: src/PostTypes/Book.php:154
+msgid "ISBN of the edition, if it has one."
+msgstr ""
+
+#: src/PostTypes/Book.php:160
+msgid "Language the book is read in, as a locale code such as es_ES."
+msgstr ""
+
+#: src/PostTypes/Book.php:166
+msgid "Total running time in whole seconds."
+msgstr ""
+
+#: src/PostTypes/Book.php:172
+msgid "Attachment ID of the cover image."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:48
+msgctxt "post type general name"
+msgid "Chapters"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:49
+msgctxt "post type singular name"
+msgid "Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:50
+msgid "Add Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:51
+msgid "Add New Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:52
+msgid "Edit Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:53
+msgid "New Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:54
+msgid "View Chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:55
+msgid "Search Chapters"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:56
+msgid "No chapters found."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:57
+msgid "No chapters found in Trash."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:59
+msgid "Insert into chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:60
+msgid "Uploaded to this chapter"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:61
+msgid "Chapter published."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:62
+msgid "Chapter updated."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:63
+msgctxt "admin menu"
+msgid "Chapters"
+msgstr ""
+
+#: src/PostTypes/Chapter.php:70
+msgid "One chapter of an audiobook."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:186
+msgid "ID of the book this chapter belongs to."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:192
+msgid "Attachment ID of the audio file."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:198
+msgid "Running time in whole seconds."
+msgstr ""
+
+#: src/PostTypes/Chapter.php:204
+msgid "Position within the book, counting from one."
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:51
+msgid "What kind of book it is."
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:69
+msgid "The series the book belongs to, if any."
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:90
+msgctxt "taxonomy general name"
+msgid "Genres"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:91
+msgctxt "taxonomy singular name"
+msgid "Genre"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:92
+msgid "Search Genres"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:93
+msgid "All Genres"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:94
+msgid "Parent Genre"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:95
+msgid "Parent Genre:"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:96
+msgid "Edit Genre"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:97
+msgid "Update Genre"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:98
+msgid "Add New Genre"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:99
+msgid "New Genre Name"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:100
+msgid "No genres found."
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:101
+msgid "Genres"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:112
+msgctxt "taxonomy general name"
+msgid "Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:113
+msgctxt "taxonomy singular name"
+msgid "Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:114
+msgid "Search Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:115
+msgid "All Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:116
+msgid "Parent Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:117
+msgid "Parent Series:"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:118
+msgid "Edit Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:119
+msgid "Update Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:120
+msgid "Add New Series"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:121
+msgid "New Series Name"
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:122
+msgid "No series found."
+msgstr ""
+
+#: src/PostTypes/Taxonomies.php:123
+msgid "Series"
 msgstr ""

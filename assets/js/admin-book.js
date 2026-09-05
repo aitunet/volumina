@@ -7,24 +7,24 @@
 	'use strict';
 
 	document.addEventListener( 'DOMContentLoaded', function () {
-		var root = document.getElementById( 'volumina-cover-field' );
+		const root = document.getElementById( 'volumina-cover-field' );
 
 		if ( ! root || ! window.wp || ! window.wp.media ) {
 			return;
 		}
 
-		var input = root.querySelector( '[data-volumina-cover-input]' );
-		var preview = root.querySelector( '[data-volumina-cover-preview]' );
-		var select = root.querySelector( '[data-volumina-cover-select]' );
-		var clear = root.querySelector( '[data-volumina-cover-clear]' );
-		var frame = null;
+		const input = root.querySelector( '[data-volumina-cover-input]' );
+		const preview = root.querySelector( '[data-volumina-cover-preview]' );
+		const select = root.querySelector( '[data-volumina-cover-select]' );
+		const clear = root.querySelector( '[data-volumina-cover-clear]' );
+		let frame = null;
 
 		if ( ! input || ! preview || ! select || ! clear ) {
 			return;
 		}
 
 		function show( attachment ) {
-			var url = attachment.url;
+			let url = attachment.url;
 
 			if ( attachment.sizes && attachment.sizes.medium ) {
 				url = attachment.sizes.medium.url;
@@ -32,7 +32,7 @@
 
 			preview.textContent = '';
 
-			var image = document.createElement( 'img' );
+			const image = document.createElement( 'img' );
 			image.src = url;
 			image.alt = attachment.alt || '';
 			image.style.maxWidth = '200px';
@@ -52,7 +52,11 @@
 				} );
 
 				frame.on( 'select', function () {
-					var attachment = frame.state().get( 'selection' ).first().toJSON();
+					const attachment = frame
+						.state()
+						.get( 'selection' )
+						.first()
+						.toJSON();
 
 					input.value = attachment.id;
 					show( attachment );
@@ -69,4 +73,4 @@
 			preview.textContent = '';
 		} );
 	} );
-}() );
+} )();
