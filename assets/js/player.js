@@ -122,22 +122,57 @@
 			return chapters[ index ];
 		}
 
+		/**
+		 * Turns chapter names into buttons, but only the ones this player can
+		 * reach. A chapter list can appear on a page with no player at all, and
+		 * a button that plays nothing is worse than plain text.
+		 */
+		function upgradeChapterNames() {
+			document
+				.querySelectorAll( '[data-volumina-chapter]' )
+				.forEach( function ( name ) {
+					if ( name.dataset.voluminaUpgraded ) {
+						return;
+					}
+
+					const id = parseInt( name.dataset.voluminaChapter, 10 );
+
+					if ( ! chapters.some( ( chapter ) => chapter.id === id ) ) {
+						return;
+					}
+
+					const button = document.createElement( 'button' );
+					button.type = 'button';
+					button.className = 'volumina-chapter-play';
+					button.dataset.voluminaPlay = String( id );
+					button.textContent = name.textContent.trim();
+
+					name.textContent = '';
+					name.appendChild( button );
+					name.dataset.voluminaUpgraded = 'true';
+				} );
+		}
+
 		function markList() {
-			const items = document.querySelectorAll( '[data-volumina-play]' );
+			document
+				.querySelectorAll( '[data-volumina-play]' )
+				.forEach( function ( button ) {
+					const id = parseInt( button.dataset.voluminaPlay, 10 );
 
-			items.forEach( function ( button ) {
-				const isCurrent =
-					parseInt( button.dataset.voluminaPlay, 10 ) ===
-					current().id;
+					if ( ! chapters.some( ( chapter ) => chapter.id === id ) ) {
+						return;
+					}
 
-				button.setAttribute(
-					'aria-current',
-					isCurrent ? 'true' : 'false'
-				);
-				button
-					.closest( 'li' )
-					?.classList.toggle( 'is-playing', isCurrent );
-			} );
+					const isCurrent = id === current().id;
+
+					button.setAttribute(
+						'aria-current',
+						isCurrent ? 'true' : 'false'
+					);
+					button
+						.closest( 'li' )
+						?.classList.toggle( 'is-playing', isCurrent );
+				} );
 		}
 
 		function describePosition() {
@@ -188,11 +223,24 @@
 
 		function remember( playing ) {
 			local.write( bookKey, {
+				book: data.book,
+				title: data.title || '',
+				url: data.url || '',
 				chapter: current().id,
+				chapterTitle: current().title,
 				position: Math.floor( audio.currentTime || 0 ),
 				playing: !! playing,
 				updated: Date.now(),
 			} );
+
+			// A guest's Continue listening block has no server to ask, so the
+			// browser keeps its own index of the books that have been started.
+			const started = local.read( 'volumina:books' ) || { books: [] };
+
+			if ( ! started.books.includes( data.book ) ) {
+				started.books.push( data.book );
+				local.write( 'volumina:books', started );
+			}
 		}
 
 		function sync() {
@@ -276,6 +324,7 @@
 				els.now.textContent = current().title;
 			}
 
+			upgradeChapterNames();
 			markList();
 			mediaSession();
 			paint();

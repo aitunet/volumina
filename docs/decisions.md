@@ -173,3 +173,23 @@ position is not worth a tracking cookie, and the table's primary key is
 listener does not. The account is treated as the truth when both exist, because
 it is the only one that can be right on a second device. Carrying a guest's
 position into an account at sign-in is in `docs/backlog.md`.
+
+## 2026-09-05 — One renderer serves both the content filter and the blocks
+
+**Decision.** `Frontend\Audiobook` is the only place an audiobook becomes markup.
+The single book page reaches it through `the_content`; the S3 blocks call it
+directly with options. The templates `book.php` and `chapters.php` are shared and
+internal, not theme override points. `Frontend\BookContent` stays and stands down
+whenever a block has already rendered the same book, through `Support\RenderOnce`.
+
+**Why.** The alternative considered was to let S3 replace `BookContent` outright.
+It cannot: a classic theme has no block template for a custom post type, so a
+book page in one would render empty. Keeping both without a shared renderer means
+two code paths for one object, and the first anyone hears about the drift is a
+bug report saying the block looks wrong.
+
+**Consequence.** The block callbacks are thin. Anything visible on a book page is
+changed in one place. `RenderOnce` is generic scaffolding and knows nothing about
+audiobooks, so it leaves with `src/Support/`. The chapter list renders chapter
+names as plain text and the player upgrades to buttons only the ones it can
+actually reach, because a chapter list can appear on a page that has no player.

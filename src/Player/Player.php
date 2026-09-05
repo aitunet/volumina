@@ -127,6 +127,8 @@ final class Player implements Registrable {
 
 		$data = array(
 			'book'     => (int) $book->ID,
+			'title'    => get_the_title( $book ),
+			'url'      => (string) get_permalink( $book ),
 			'chapters' => $playable,
 			'resume'   => self::resume( (int) $book->ID ),
 		);

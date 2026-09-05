@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T15:00:09+00:00\n"
+"POT-Creation-Date: 2026-09-05T20:45:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -68,7 +68,7 @@ msgid "Who reads the book aloud."
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:230
-#: src/Frontend/BookContent.php:148
+#: src/Frontend/Audiobook.php:109
 msgid "Publisher"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgid "Who published this recording."
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:234
-#: src/Frontend/BookContent.php:154
+#: src/Frontend/Audiobook.php:115
 msgid "ISBN"
 msgstr ""
 
@@ -110,9 +110,9 @@ msgid "Chosen from the media library."
 msgstr ""
 
 #: src/Admin/ChapterList.php:57
-#: src/Frontend/BookContent.php:142
+#: src/Frontend/Audiobook.php:103
 #: src/PostTypes/Chapter.php:58
-#: templates/book.php:63
+#: templates/book.php:65
 msgid "Chapters"
 msgstr ""
 
@@ -216,7 +216,7 @@ msgid "Only audio files can be attached. The running time is read from the file.
 msgstr ""
 
 #: src/Admin/ChapterMetaBox.php:211
-#: src/Frontend/BookContent.php:138
+#: src/Frontend/Audiobook.php:99
 msgid "Running time"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 msgid "The listening position could not be saved."
 msgstr ""
 
-#: src/Frontend/BookContent.php:132
+#: src/Frontend/Audiobook.php:93
 msgid "Narrated by"
 msgstr ""
 
@@ -330,19 +330,19 @@ msgstr ""
 msgid "Your place could not be saved to your account. It is kept in this browser."
 msgstr ""
 
-#: src/Player/Player.php:235
+#: src/Player/Player.php:237
 msgid "Off"
 msgstr ""
 
 #. translators: %s: a number of minutes.
-#: src/Player/Player.php:244
+#: src/Player/Player.php:246
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Player/Player.php:252
+#: src/Player/Player.php:254
 msgid "End of chapter"
 msgstr ""
 
@@ -653,12 +653,12 @@ msgid "Series"
 msgstr ""
 
 #. translators: %s: book title.
-#: templates/book.php:39
+#: templates/book.php:37
 #, php-format
 msgid "Cover of %s"
 msgstr ""
 
-#: templates/book.php:67
+#: templates/chapters.php:29
 msgid "This audiobook has no chapters yet."
 msgstr ""
 

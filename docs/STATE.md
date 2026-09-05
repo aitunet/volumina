@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S2 — The player. This is the product.
-**Next action:** S3 — the Audiobook, Chapter list and Continue listening blocks. Before starting, decide whether the blocks render through the same `Player::render()` the front end already uses, or whether S3 replaces `Frontend\BookContent` outright.
+**Current slice:** S3 — Blocks.
+**Next action:** the Audiobook block — `blocks/audiobook/block.json`, a PHP render callback in `src/Blocks/` that calls `Frontend\Audiobook::render()`, and an editor preview. Then the Chapter list block, then Continue listening. The renderer, the shared templates and `Support\RenderOnce` they all build on are already in place; see `docs/decisions.md`, 2026-09-05.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-05, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`src/Player/`, `src/Api/`, `src/Storage/`, `src/Support/`, `src/Frontend/`, `templates/`, `tests/php/`, `assets/`
+`blocks/`, `src/Blocks/`, `src/Frontend/`, `src/Player/`, `src/Support/`, `templates/`, `assets/`, `tests/php/`, `package.json`, `webpack.config.js`
 
 ---
 
