@@ -3,7 +3,7 @@
  * Plugin Name:       Volumina
  * Plugin URI:        https://tunetdesign.com/volumina
  * Description:       Audiobook player and library. Publish audiobooks with chapters, remembered position, playback speed and a sleep timer.
- * Version:           0.1.0
+ * Version:           1.0.0
  * Requires at least: 6.6
  * Requires PHP:      8.1
  * Author:            TUNET
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Plugin version. Kept in step with the header above and with readme.txt.
  */
-const VERSION = '0.1.0';
+const VERSION = '1.0.0';
 
 /**
  * Absolute path to this file, so other code never guesses it.

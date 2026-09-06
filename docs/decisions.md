@@ -343,3 +343,22 @@ with a default has this trap.
 existing book keeps what it had, which is the half that matters: a setting
 changed today must not reach back and take a published book away from its
 listeners.
+
+## 2026-09-06 — What ships is decided by `.distignore`, not by what is in git
+
+**Decision.** The release zip is built from `.distignore`: everything except the
+development tooling, the block sources that have already been compiled into
+`build/`, the documents written for whoever works on this, and the directory
+art. `vendor/` is rebuilt with `composer install --no-dev` in a staging copy, so
+what ships is the autoloader and nothing else.
+
+**Why.** A plugin zip carrying `CLAUDE.md`, `docs/`, `tests/`, PHPUnit and PHPCS
+is a plugin that puts a few megabytes of somebody else's business on every
+server that installs it. The first build of the zip also carried `.claude/` and
+nineteen Playwright artefacts, which is exactly the kind of thing that gets in
+when nobody looks: the list is checked by opening the zip, not by trusting it.
+
+**Consequence.** 93 files, and the plugin has no production dependency beyond
+PHP itself. `wp dist-archive` would do the same job and is the tool to use where
+it can be installed; this machine cannot reach the network, so a small script in
+the scratch directory does it with the same rules.

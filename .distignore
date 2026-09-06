@@ -1,0 +1,58 @@
+# What never reaches the plugin directory.
+#
+# The zip that ships is the plugin, not the workshop it was built in. Anything
+# here is either a development tool, a source that has already been compiled
+# into build/, or a document written for whoever works on this — none of which
+# belongs on somebody's server.
+#
+# Used by `wp dist-archive`.
+
+# Version control and CI
+.git
+.github
+.gitignore
+.gitattributes
+.distignore
+.editorconfig
+
+# Development tooling
+node_modules
+vendor/bin
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpcs.xml
+phpstan.neon
+phpunit.xml.dist
+.phpcs.cache
+.phpunit.result.cache
+.wp-env.json
+.wp-env.override.json
+
+# Block sources: build/ is what ships
+blocks
+
+# Written for whoever works on this, not for whoever installs it
+CLAUDE.md
+docs
+tests
+
+# Directory assets live in SVN's assets/, never in the plugin
+.wordpress-org
+
+# Session and test scaffolding that appears while working
+.claude
+.playwright-mcp
+.env
+.env.local
+*.log
+
+# Editors, OS and release artefacts
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+dist
+*.zip
+.gitkeep

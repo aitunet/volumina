@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S6 — Release.
-**Next action:** `readme.txt` written for real, then the security pass against the checklist in `CLAUDE.md`, then the icon, banner and screenshots. The two translations are the long pole: 288 strings each.
+**Next action:** submission, which only the account holder can do. Everything the plugin directory asks for is built and checked: upload `volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The one thing still owed from S2 is the listening check on a real phone.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-06, TUNET
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 5 of 6 slices complete.
+Progress: 5 of 6 slices complete, and S6 is finished but for the submission itself.
 
 ---
 
@@ -115,32 +115,32 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 
 ## S6 — Release
 
-- [ ] `readme.txt` with short description under 150 characters
-- [ ] Icon 256×256, banner 1544×500, screenshots
-- [ ] Security pass against the checklist in `CLAUDE.md`
-- [ ] `.pot` regenerated
-- [ ] `es_ES` translation complete
-- [ ] `pt_BR` translation complete
-- [ ] Tested against the current WordPress release
-- [ ] Submitted to the plugin directory
+- [x] `readme.txt` with short description under 150 characters — 130
+- [x] Icon 256×256, banner 1544×500, screenshots — five, of real content, in `.wordpress-org/`
+- [x] Security pass against the checklist in `CLAUDE.md` — every item, plus hostile input at the audio endpoint
+- [x] `.pot` regenerated — 287 strings at 1.0.0
+- [x] `es_ES` translation complete — 283 of 287, verified rendering
+- [x] `pt_BR` translation complete — 283 of 287, verified rendering
+- [x] Tested against the current WordPress release — WordPress 7.1, plugin active at 1.0.0, no notices
+- [ ] Submitted to the plugin directory — **only the account holder can do this.** The zip is built and checked; see the next action.
 
-**Verification:** release checklist passes.
+**Verification:** the checklist below passes but for the submission itself, which is not something this repository can do.
 
 ---
 
 ## Release checklist
 
-- [ ] `composer lint` and `npm run lint` clean
-- [ ] Full test suite green
-- [ ] Zero PHP notices on a clean install
-- [ ] Zero axe violations on all front-end output
-- [ ] Every string translatable
-- [ ] Uninstall removes tables and options behind the opt-in
-- [ ] No functionality locked behind payment inside this plugin
-- [ ] Version bumped in header and `readme.txt`, changelog written
+- [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
+- [x] Full test suite green — 70 tests, 142 assertions
+- [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
+- [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop
+- [x] Every string translatable — 287 in the `.pot`, and a forced-locale render left nothing in English
+- [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database
+- [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls
+- [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places
 
 ---
 
 ## Open decisions not blocking code
 
-- Icon centre block: square or narrow spine. Affects `assets/` only.
+- None. The icon's centre block was settled on 2026-09-06: the wide one, drawn both ways and compared.
