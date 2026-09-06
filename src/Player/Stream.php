@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Player;
 
+use TUNET\Volumina\Access\AccessManager;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
 use TUNET\Volumina\Support\ByteRange;
@@ -71,7 +72,23 @@ final class Stream implements Registrable {
 	 * @param int $chapter_id Chapter to play.
 	 */
 	public static function url( int $chapter_id ): string {
-		return add_query_arg( self::QUERY_VAR, $chapter_id, home_url( '/' ) );
+		$url = add_query_arg( self::QUERY_VAR, $chapter_id, home_url( '/' ) );
+
+		/**
+		 * Filters the URL a chapter's audio is served from.
+		 *
+		 * Every audio URL the plugin emits passes through here, so an
+		 * extension can serve the file from somewhere else — a signed,
+		 * expiring URL, or a CDN. Whatever comes back is used as it stands.
+		 *
+		 * Replacing the URL does not replace the access check: this plugin's
+		 * own endpoint still asks `AccessManager` on every request, and a
+		 * substitute endpoint is responsible for asking too.
+		 *
+		 * @param string $url        The URL of this plugin's own endpoint.
+		 * @param int    $chapter_id The chapter being played.
+		 */
+		return (string) apply_filters( 'volumina_chapter_audio_url', $url, $chapter_id );
 	}
 
 	/**
@@ -155,9 +172,10 @@ final class Stream implements Registrable {
 	/**
 	 * Whether the current visitor may listen to this book.
 	 *
-	 * Provisional on purpose. S4 replaces the body of this method with a call
-	 * into `AccessManager`, which is where the real answer will live; the
-	 * shape of the question does not change, so nothing else has to.
+	 * Every byte of audio this plugin sends passes through here, and it asks
+	 * `AccessManager` rather than deciding anything itself. A URL is not a
+	 * permission: the answer is worked out again on every request, including
+	 * every range request of the same file.
 	 *
 	 * @param int $book_id The book the chapter belongs to.
 	 */
@@ -166,11 +184,7 @@ final class Stream implements Registrable {
 			return false;
 		}
 
-		if ( 'publish' === get_post_status( $book_id ) ) {
-			return true;
-		}
-
-		return current_user_can( 'read_post', $book_id );
+		return AccessManager::instance()->can_listen( $book_id );
 	}
 
 	/**

@@ -225,3 +225,64 @@ these blocks through the REST API and never reaches a front-end enqueue hook.
 that actually contain a block that asks for them, which is better than the
 alternative and better than what a book page did before. `Player::settings()` is
 public because the handle it belongs to is now registered somewhere else.
+
+## 2026-09-06 — A refusal denies, a grant allows, silence is not consent
+
+**Decision.** `AccessProvider::can_listen()` answers `true`, `false` or `null`.
+`AccessManager` combines them with one rule: a single refusal denies, otherwise a
+single grant allows, otherwise the answer is no. Providers are asked in
+registration order and the questioning stops at the first refusal.
+
+**Why.** Two providers that disagree have to be settled by something, and the
+alternatives are worse. First-answer-wins makes registration order load-bearing,
+which is exactly the kind of promise this plugin cannot keep across releases.
+Grant-only, with no way to refuse, leaves an extension unable to express a
+suspended account or a region it may not serve.
+
+Default deny matters more than the rest of it: a restricted book whose provider
+failed to load has to be silent, not open.
+
+**Consequence.** A provider must return `null`, not `false`, when its own
+condition is simply not met — `false` is a veto over everybody. The interface
+documentation says so twice, and both shipped providers are written that way.
+`volumina_can_listen` filters the final answer for what a provider cannot say.
+
+## 2026-09-06 — Grants live in a table, and the mode lives on the book
+
+**Decision.** `wp_volumina_grants` holds `(user_id, book_id, granted_at,
+granted_by)` with `(user_id, book_id)` as the primary key and an index on
+`book_id`. A book's access mode is a meta, `volumina_access`, holding `public`
+or `restricted`, and a book with nothing stored reads as public.
+
+**Why.** Both directions of the grants relation get asked in earnest: the audio
+endpoint asks whether this person may hear this book, and an admin screen asks
+who may hear it at all. A serialised array in post meta answers the first and
+scans every book for the second, and two grants written at once would clobber
+each other. Schema version 2.
+
+The mode is a meta rather than a second table because it belongs to the book,
+one value per book, edited by hand on the book screen — which is what post meta
+is for. It is public API so Pro marks a book as its own without inventing a
+field, and an unrecognised value sanitises to `public`: a typo should not take a
+published book away from its listeners.
+
+**Consequence.** `uninstall.php` has two tables to drop instead of one. Every
+book that existed before this meta did is public, which is what it already was.
+
+## 2026-09-06 — An extension may not name a Volumina class at file scope
+
+**Decision.** `docs/api.md` requires extensions to declare their classes from
+inside the registration hook, or on `plugins_loaded` at the earliest, and the
+documented example is written that way.
+
+**Why.** Found by running it. WordPress loads active plugins in alphabetical
+order by path, and `volumina-subscribers/…` sorts before `volumina/…` because
+`-` precedes `/`. The first version of the example plugin said
+`implements AccessProvider` at the top of its entry file and took the whole site
+down with a fatal error: the interface did not exist yet. Every plugin named
+`volumina-something` — which is to say every plugin anybody writes for this one,
+starting with Pro — hits this.
+
+**Consequence.** One `require_once` inside the hook. It also means an extension
+survives Volumina being deactivated instead of fataling, which is worth having
+on its own.

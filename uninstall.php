@@ -16,13 +16,16 @@ namespace TUNET\Volumina;
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 /*
- * Filled in when the settings screen exists (S5) and the progress table exists
- * (S1). Until then there is nothing to remove, and the opt-in is the only gate
- * that matters:
+ * The opt-in itself arrives with the settings screen in S5. Until that setting
+ * can be turned on, this file removes nothing, which is the safe half of the
+ * behaviour and the half worth having first:
  *
  *   if ( '1' !== get_option( 'volumina_delete_data_on_uninstall' ) ) {
  *       return;
  *   }
  *
- * Then drop wp_volumina_progress and delete every volumina_* option.
+ * Then drop both tables — wp_volumina_progress and wp_volumina_grants — and
+ * delete every volumina_* option. Whenever a table joins the schema it joins
+ * this list too; a table left behind by an uninstall is a table nobody knows
+ * to look for.
  */

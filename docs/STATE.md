@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S4 — Access layer and public API.
-**Next action:** `AccessManager` and the `AccessProvider` interface, then `PublicProvider` and `ManualProvider`. The audio URL filter has a seam waiting for it in `Player\Stream::url()`, and `docs/api.md` is written as each extension point is created, not after.
+**Current slice:** S5 — Admin polish.
+**Next action:** the settings screen, through `Admin\ScreenRegistry` — the registry exists and has been proven from outside, so S5's screens are its first real consumers. The uninstall opt-in belongs to that screen, and `uninstall.php` is waiting for it with both tables named.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
-**Last updated:** 2026-09-05, TUNET
+**Last updated:** 2026-09-06, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`src/Access/`, `src/Player/`, `src/Api/`, `src/Admin/`, `src/Support/`, `docs/api.md`, `tests/php/`
+`src/Admin/`, `src/Support/`, `src/Storage/`, `assets/`, `uninstall.php`, `tests/php/`
 
 ---
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 3 of 6 slices complete.
+Progress: 4 of 6 slices complete.
 
 ---
 
@@ -87,15 +87,17 @@ Axe and block/classic theme checks are not applicable to this slice: it produces
 
 ## S4 — Access layer and public API
 
-- [ ] `AccessManager`
-- [ ] `AccessProvider` interface
-- [ ] `PublicProvider` and `ManualProvider`
-- [ ] `volumina_register_access_providers` action
-- [ ] `volumina_chapter_audio_url` filter
-- [ ] Admin screen registry
-- [ ] `docs/api.md` written
+- [x] `AccessManager`
+- [x] `AccessProvider` interface
+- [x] `PublicProvider` and `ManualProvider`
+- [x] `volumina_register_access_providers` action
+- [x] `volumina_chapter_audio_url` filter
+- [x] Admin screen registry
+- [x] `docs/api.md` written
 
-**Verification:** a throwaway test plugin registers its own provider and grants access without touching internals.
+**Verification:** met. A throwaway plugin, installed on the local WordPress and outside this repository, registered its own provider and let a subscriber with no row in the grants table hear a restricted book — a real 206 over HTTP with the range honoured, not a manager merely saying yes. It also added its own screen under Audiobooks and rewrote the audio URL through the filter. Deactivated, the same listener got the locked notice and a 404 from the audio endpoint. It touched nothing internal, and the exercise found a real defect in the documented example: see the load-order rule in `docs/api.md`.
+
+Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books carry a `volumina_access` meta that reads as public when it is not set.
 
 ## S5 — Admin polish
 

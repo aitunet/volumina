@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Api;
 
+use TUNET\Volumina\Access\AccessManager;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
 use TUNET\Volumina\Storage\Progress;
@@ -95,9 +96,10 @@ final class ProgressRoute implements Registrable {
 	/**
 	 * Whether the request may touch a listening position at all.
 	 *
-	 * Being signed in is not enough: the book has to be one this person can
-	 * actually read, or the route would confirm that a private book exists to
-	 * anyone willing to guess its ID.
+	 * Being signed in is not enough: the book has to be one this person may
+	 * actually listen to, or the route would confirm that a book they cannot
+	 * hear exists to anyone willing to guess its ID. It asks `AccessManager`
+	 * rather than repeating a rule that lives somewhere else.
 	 *
 	 * @param WP_REST_Request $request The request.
 	 * @return true|WP_Error
@@ -121,7 +123,7 @@ final class ProgressRoute implements Registrable {
 			);
 		}
 
-		if ( 'publish' !== get_post_status( $book_id ) && ! current_user_can( 'read_post', $book_id ) ) {
+		if ( ! AccessManager::instance()->can_listen( $book_id ) ) {
 			return new WP_Error(
 				'volumina_no_such_book',
 				__( 'No such audiobook.', 'volumina' ),

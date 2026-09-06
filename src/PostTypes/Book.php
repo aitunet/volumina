@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\PostTypes;
 
+use TUNET\Volumina\Access\Mode;
 use TUNET\Volumina\Support\Registrable;
 
 defined( 'ABSPATH' ) || exit;
@@ -166,6 +167,12 @@ final class Book implements Registrable {
 				'description'       => __( 'Total running time in whole seconds.', 'volumina' ),
 				'default'           => 0,
 				'sanitize_callback' => 'absint',
+			),
+			'volumina_access'         => array(
+				'type'              => 'string',
+				'description'       => __( 'Who may listen: public, or restricted to listeners who have been granted it.', 'volumina' ),
+				'default'           => Mode::PUBLIC,
+				'sanitize_callback' => array( Mode::class, 'sanitize' ),
 			),
 			'volumina_cover_id'       => array(
 				'type'              => 'integer',

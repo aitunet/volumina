@@ -28,8 +28,11 @@ final class Migrator implements Registrable {
 	 *
 	 * Bump it whenever the schema changes, and record why in
 	 * `docs/decisions.md`.
+	 *
+	 * 1: the progress table.
+	 * 2: the grants table.
 	 */
-	public const DB_VERSION = '1';
+	public const DB_VERSION = '2';
 
 	/**
 	 * Option holding the version currently installed.
@@ -54,6 +57,7 @@ final class Migrator implements Registrable {
 		}
 
 		ProgressTable::install();
+		GrantsTable::install();
 
 		update_option( self::OPTION, self::DB_VERSION, true );
 	}

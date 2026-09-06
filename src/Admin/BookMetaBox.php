@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Admin;
 
+use TUNET\Volumina\Access\Mode;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Registrable;
 use WP_Post;
@@ -113,6 +114,8 @@ final class BookMetaBox implements Registrable {
 
 			if ( 'volumina_cover_id' === $key ) {
 				$this->render_cover_field( $key, (int) $value );
+			} elseif ( Mode::META_KEY === $key ) {
+				$this->render_access_field( $key, (string) $value );
 			} elseif ( 'integer' === $type ) {
 				printf(
 					'<input type="number" min="0" step="1" class="small-text" id="%1$s" name="%1$s" value="%2$s" />',
@@ -135,6 +138,34 @@ final class BookMetaBox implements Registrable {
 		}
 
 		echo '</tbody></table>';
+	}
+
+	/**
+	 * Renders the access mode chooser.
+	 *
+	 * A radio pair rather than a select: there are two of them, they are not
+	 * obviously interchangeable, and one of them takes the book away from
+	 * everybody who is not on a list. That is worth reading before choosing.
+	 *
+	 * @param string $key     Meta key.
+	 * @param string $current The mode stored, if any.
+	 */
+	private function render_access_field( string $key, string $current ): void {
+		$current = Mode::sanitize( $current );
+
+		echo '<fieldset>';
+
+		foreach ( Mode::labels() as $volumina_mode => $volumina_label ) {
+			printf(
+				'<label style="display:block"><input type="radio" name="%1$s" value="%2$s"%3$s /> %4$s</label>',
+				esc_attr( $key ),
+				esc_attr( $volumina_mode ),
+				checked( $current, $volumina_mode, false ),
+				esc_html( $volumina_label )
+			);
+		}
+
+		echo '</fieldset>';
 	}
 
 	/**
@@ -208,6 +239,13 @@ final class BookMetaBox implements Registrable {
 				continue;
 			}
 
+			if ( Mode::META_KEY === $key ) {
+				// Not a free-text field: anything that is not a mode this
+				// plugin knows becomes the open one, never the closed one.
+				update_post_meta( $post_id, $key, Mode::sanitize( sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) ) );
+				continue;
+			}
+
 			update_post_meta( $post_id, $key, sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) );
 		}
 	}
@@ -241,6 +279,10 @@ final class BookMetaBox implements Registrable {
 			'volumina_total_duration' => array(
 				'label'       => __( 'Total duration', 'volumina' ),
 				'description' => __( 'In whole seconds. Leave at zero and the chapters will answer for it.', 'volumina' ),
+			),
+			'volumina_access'         => array(
+				'label'       => __( 'Who can listen', 'volumina' ),
+				'description' => __( 'A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back.', 'volumina' ),
 			),
 			'volumina_cover_id'       => array(
 				'label'       => __( 'Cover', 'volumina' ),

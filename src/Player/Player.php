@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Player;
 
+use TUNET\Volumina\Access\AccessManager;
 use TUNET\Volumina\Frontend\Assets;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
@@ -113,6 +114,13 @@ final class Player implements Registrable {
 			return '';
 		}
 
+		// A player whose every button leads to a 403 is worse than no player.
+		// The audio endpoint asks this same question again on every request;
+		// this is about telling the truth on the page, not about security.
+		if ( ! AccessManager::instance()->can_listen( (int) $book->ID ) ) {
+			return self::locked_notice();
+		}
+
 		$data = array(
 			'book'     => (int) $book->ID,
 			'title'    => get_the_title( $book ),
@@ -127,6 +135,23 @@ final class Player implements Registrable {
 		require plugin_dir_path( PLUGIN_FILE ) . 'templates/player.php';
 
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * What to say instead of a player nobody here can use.
+	 *
+	 * Two different sentences, because they are two different situations: one
+	 * has something to do about it and the other does not.
+	 */
+	private static function locked_notice(): string {
+		$message = is_user_logged_in()
+			? __( 'This audiobook is not available on your account.', 'volumina' )
+			: __( 'Sign in to listen to this audiobook.', 'volumina' );
+
+		return sprintf(
+			'<p class="volumina-locked">%s</p>',
+			esc_html( $message )
+		);
 	}
 
 	/**
