@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Frontend;
 
+use TUNET\Volumina\Admin\Settings;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Registrable;
 use TUNET\Volumina\Support\RenderOnce;
@@ -56,6 +57,12 @@ final class BookContent implements Registrable {
 			return;
 		}
 
+		// Nothing to style when nothing is appended. A site placing the block
+		// itself gets the same stylesheet from the block, where it belongs.
+		if ( ! Settings::get( 'append_to_content' ) ) {
+			return;
+		}
+
 		wp_enqueue_style( Assets::BOOK );
 	}
 
@@ -66,6 +73,12 @@ final class BookContent implements Registrable {
 	 */
 	public function append( string $content ): string {
 		if ( ! is_singular( Book::POST_TYPE ) || ! in_the_loop() || ! is_main_query() ) {
+			return $content;
+		}
+
+		// A site that places the Audiobook block itself can turn this off, and
+		// then a book page is whatever its author put on it.
+		if ( ! Settings::get( 'append_to_content' ) ) {
 			return $content;
 		}
 

@@ -80,7 +80,7 @@ final class ScreenRegistry implements Registrable {
 				continue;
 			}
 
-			add_submenu_page(
+			$hook = add_submenu_page(
 				self::PARENT,
 				$screen->title(),
 				$screen->menu_title(),
@@ -90,6 +90,12 @@ final class ScreenRegistry implements Registrable {
 					$this->draw( $screen );
 				}
 			);
+
+			// `load-{page}` is the one moment the screen object exists and is
+			// still accepting tabs. By the time the page renders it is too late.
+			if ( is_string( $hook ) && $screen instanceof HasHelp ) {
+				add_action( 'load-' . $hook, array( $screen, 'help' ) );
+			}
 		}
 	}
 

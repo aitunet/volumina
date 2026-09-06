@@ -13,6 +13,7 @@ use TUNET\Volumina\Access\AccessManager;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
 use TUNET\Volumina\Support\ByteRange;
+use TUNET\Volumina\Support\Logger;
 use TUNET\Volumina\Support\Registrable;
 
 defined( 'ABSPATH' ) || exit;
@@ -129,6 +130,18 @@ final class Stream implements Registrable {
 		$book_id = (int) get_post_meta( $chapter_id, 'volumina_book_id', true );
 
 		if ( ! $this->can_listen( $book_id ) ) {
+			// Worth a line: "my customer says they cannot listen" is the
+			// support question this plugin will be asked most often, and this
+			// is the only place that knows the answer.
+			Logger::info(
+				__( 'A listener was turned away from a chapter.', 'volumina' ),
+				array(
+					'chapter' => $chapter_id,
+					'book'    => $book_id,
+					'user'    => get_current_user_id(),
+				)
+			);
+
 			return null;
 		}
 
@@ -153,6 +166,17 @@ final class Stream implements Registrable {
 		$real = realpath( $path );
 
 		if ( false === $real || ! is_file( $real ) || ! is_readable( $real ) ) {
+			// The chapter says there is a file and there is not. Somebody
+			// deleted it from the server, or a migration left it behind.
+			Logger::error(
+				__( 'A chapter\'s audio file is missing or unreadable.', 'volumina' ),
+				array(
+					'chapter'    => $chapter_id,
+					'attachment' => $attachment_id,
+					'path'       => (string) $path,
+				)
+			);
+
 			return null;
 		}
 

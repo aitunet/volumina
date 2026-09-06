@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Storage;
 
+use TUNET\Volumina\Support\Logger;
 use TUNET\Volumina\Support\Registrable;
 
 defined( 'ABSPATH' ) || exit;
@@ -60,5 +61,22 @@ final class Migrator implements Registrable {
 		GrantsTable::install();
 
 		update_option( self::OPTION, self::DB_VERSION, true );
+
+		// Recorded on `init` rather than here. The logger is configured from a
+		// setting on `init`, and asking WordPress for a translated string
+		// before then earns a notice of its own.
+		add_action(
+			'init',
+			static function () use ( $installed ) {
+				Logger::info(
+					__( 'The database was brought up to date.', 'volumina' ),
+					array(
+						'from' => '' === $installed ? 'none' : $installed,
+						'to'   => self::DB_VERSION,
+					)
+				);
+			},
+			20
+		);
 	}
 }

@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S5 — Admin polish.
-**Next action:** the settings screen, through `Admin\ScreenRegistry` — the registry exists and has been proven from outside, so S5's screens are its first real consumers. The uninstall opt-in belongs to that screen, and `uninstall.php` is waiting for it with both tables named.
+**Current slice:** S6 — Release.
+**Next action:** `readme.txt` written for real, then the security pass against the checklist in `CLAUDE.md`, then the icon, banner and screenshots. The two translations are the long pole: 288 strings each.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-06, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`src/Admin/`, `src/Support/`, `src/Storage/`, `assets/`, `uninstall.php`, `tests/php/`
+`readme.txt`, `assets/`, `languages/`, `volumina.php`, and any file the security pass turns up
 
 ---
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 4 of 6 slices complete.
+Progress: 5 of 6 slices complete.
 
 ---
 
@@ -101,15 +101,17 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 
 ## S5 — Admin polish
 
-- [ ] Settings screen
-- [ ] Log screen
-- [ ] Help tabs on every screen
-- [ ] Description text under every field
-- [ ] One-time setup wizard
-- [ ] Presentational Pro screen: screenshots and illustrations only. The directory's Detailed Plugin Guidelines forbid shipping functionality that is locked and unlocked by paying, so no real code sits disabled waiting for a licence
-- [ ] Screens that do not apply are not registered
+- [x] Settings screen
+- [x] Log screen
+- [x] Help tabs on every screen
+- [x] Description text under every field
+- [x] One-time setup wizard
+- [x] Presentational Pro screen: screenshots and illustrations only. The directory's Detailed Plugin Guidelines forbid shipping functionality that is locked and unlocked by paying, so no real code sits disabled waiting for a licence
+- [x] Screens that do not apply are not registered
 
-**Verification:** a first-time user publishes an audiobook without reading documentation.
+**Verification:** met. From a clean install: the notice offers setup, setup asks two questions and then disappears for good — its URL answers 403 afterwards, because the page is never registered. A new audiobook screen shows seven fields each with its own explanation and four help tabs, and the empty chapter list explains what a chapter is and offers "Add a chapter", which lands on a chapter form with the book already chosen. Settings saves with a confirmation; the Log screen appears the moment logging is on; the Pro screen carries zero inputs and zero disabled controls.
+
+`uninstall.php` was run both ways against a copy of the database — nothing touched with the opt-in off, everything gone with it on — and the copy restored.
 
 ## S6 — Release
 

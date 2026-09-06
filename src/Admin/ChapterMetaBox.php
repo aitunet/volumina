@@ -110,12 +110,38 @@ final class ChapterMetaBox implements Registrable {
 
 		echo '<table class="form-table" role="presentation"><tbody>';
 
-		$this->render_book_row( (int) get_post_meta( $post->ID, 'volumina_book_id', true ) );
+		$this->render_book_row( $this->chosen_book( $post ) );
 		$this->render_audio_row( (int) get_post_meta( $post->ID, 'volumina_attachment_id', true ) );
 		$this->render_duration_row( (int) get_post_meta( $post->ID, 'volumina_duration', true ) );
 		$this->render_position_row( $post );
 
 		echo '</tbody></table>';
+	}
+
+	/**
+	 * Which book this chapter belongs to, or is about to.
+	 *
+	 * A chapter opened from a book's own screen arrives with that book in the
+	 * URL, and preselecting it is the difference between "Add a chapter" being
+	 * a link that works and one that drops somebody into a form asking a
+	 * question they have already answered. It is only ever a preselection: what
+	 * is saved is what the select says when the form is submitted.
+	 *
+	 * @param WP_Post $post The chapter being edited.
+	 */
+	private function chosen_book( WP_Post $post ): int {
+		$stored = (int) get_post_meta( $post->ID, 'volumina_book_id', true );
+
+		if ( $stored > 0 ) {
+			return $stored;
+		}
+
+		// Reading a query argument to preselect a control decides nothing and
+		// saves nothing, which is why it needs no nonce of its own.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$from_url = isset( $_GET['volumina_book_id'] ) ? absint( wp_unslash( $_GET['volumina_book_id'] ) ) : 0;
+
+		return Book::POST_TYPE === get_post_type( $from_url ) ? $from_url : 0;
 	}
 
 	/**

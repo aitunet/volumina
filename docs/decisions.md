@@ -286,3 +286,60 @@ starting with Pro — hits this.
 **Consequence.** One `require_once` inside the hook. It also means an extension
 survives Volumina being deactivated instead of fataling, which is worth having
 on its own.
+
+## 2026-09-06 — Settings live in one option, and the log lives in another
+
+**Decision.** All four settings share a single option, `volumina_settings`, and
+the form posts to `options.php` so WordPress does the nonce, the capability and
+the redirect. The log is a separate non-autoloaded option holding at most two
+hundred entries, newest first.
+
+**Why.** A screenful of settings read on nearly every request should be one row
+and one sanitize callback, not fifteen of each. `options.php` is the flow the
+directory's reviewers expect and the one least likely to be got wrong.
+
+The log is an option rather than a table because it records **notable events** —
+a listener turned away, a file gone missing, a schema brought up to date — and
+not requests. Two events in the same instant can lose one of each other, since
+this reads, appends and writes back. That is the trade for needing no table, and
+it is the right trade at this volume. If it ever wants to record something that
+happens on every request, it wants a table, and `Support\Logger` should not be
+the thing that grows into one.
+
+**Consequence.** `Support\Settings\Group` sanitises the whole option in one
+place, and a key nobody declared never reaches the database. A setting missing
+from a posted form keeps its default rather than being coerced from nothing —
+found by a test, which is exactly what it was written for.
+
+## 2026-09-06 — A screen that does not apply is never registered
+
+**Decision.** The log screen exists only while logging is on; the setup screen
+only until setup is finished; the Pro screen only where Pro is not installed.
+Not hidden, not greyed out — not registered, so the page 404s or 403s if
+somebody reaches for its URL.
+
+**Why.** A plugin that fills the sidebar with pages that explain why they are
+empty is a plugin that feels bigger than it is. It also means the capability
+check and the applies check are the same gate, rather than a menu that hides
+something still reachable.
+
+**Consequence.** `Screen::applies()` is part of the published contract, and both
+of the plugin's own conditional screens exercise it. Turning logging off makes
+its screen disappear mid-session, which is the intended behaviour and worth
+knowing before it surprises somebody.
+
+## 2026-09-06 — A registered default is not an empty value
+
+**Decision.** `Admin\Settings::apply_default_mode()` asks `metadata_exists()`,
+never `get_post_meta()`, to decide whether a book has chosen an access mode.
+
+**Why.** Found by running it. `volumina_access` is registered with a default, so
+`get_post_meta()` returns `public` for a book that has no row at all, and the
+check "has this book already got one?" was true for every book. New books
+silently kept `public` however the site default was set. Any registered meta
+with a default has this trap.
+
+**Consequence.** The site default now reaches new books and only new books. An
+existing book keeps what it had, which is the half that matters: a setting
+changed today must not reach back and take a published book away from its
+listeners.

@@ -123,7 +123,7 @@ final class ChapterList implements Registrable {
 		if ( array() === $chapters ) {
 			printf(
 				'<p>%s</p>',
-				esc_html__( 'This book has no chapters yet.', 'volumina' )
+				esc_html__( 'This book has no chapters yet. A chapter is a title and an audio file; add them in the order they should be heard, and drag them afterwards if you change your mind.', 'volumina' )
 			);
 		} else {
 			echo '<ol class="volumina-chapters">';
@@ -141,7 +141,46 @@ final class ChapterList implements Registrable {
 		}
 
 		echo '<p class="volumina-chapters-status" role="status" aria-live="polite"></p>';
+
+		$this->render_add_link( $post );
+
 		echo '</div>';
+	}
+
+	/**
+	 * The way out of an empty chapter list.
+	 *
+	 * A book that has never been saved has no ID for a chapter to belong to,
+	 * so there is nothing to link to yet and saying so is better than a link
+	 * that would make an orphan. Once the book exists, this is the only thing
+	 * on the screen that tells somebody what to do next, which is why it is
+	 * here rather than in the documentation nobody is going to read.
+	 *
+	 * @param WP_Post $post The book being edited.
+	 */
+	private function render_add_link( WP_Post $post ): void {
+		if ( 'auto-draft' === $post->post_status ) {
+			printf(
+				'<p class="description">%s</p>',
+				esc_html__( 'Save this audiobook first, and you can add its chapters here.', 'volumina' )
+			);
+
+			return;
+		}
+
+		printf(
+			'<p><a class="button" href="%1$s">%2$s</a></p>',
+			esc_url(
+				add_query_arg(
+					array(
+						'post_type'        => Chapter::POST_TYPE,
+						'volumina_book_id' => (int) $post->ID,
+					),
+					admin_url( 'post-new.php' )
+				)
+			),
+			esc_html__( 'Add a chapter', 'volumina' )
+		);
 	}
 
 	/**
