@@ -57,6 +57,10 @@
   That is right for the repository and wrong for the plugin directory, which
   receives built files. The release packaging in S6 has to include it.
 
+- A multi-range request (`Range: bytes=0-1,5-10`) is answered with the first range
+  as a single-part 206 rather than a multipart/byteranges body. No browser sends
+  one, and a media element never will, so this is correctness rather than a bug
+  anybody will meet. Answering 200 and ignoring the header would also be right.
 ## Belongs to `volumina-pro`, not here
 
 - Selling, carts, checkout, coupons, tax.

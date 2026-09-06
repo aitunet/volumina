@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S6 — Release.
-**Next action:** submission, which only the account holder can do. Everything the plugin directory asks for is built and checked: upload `volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The one thing still owed from S2 is the listening check on a real phone.
+**Next action:** the checks that need a person and real hardware, listed under "Left for the account holder" below. Then submission: upload `volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-06, TUNET
 
@@ -117,7 +117,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 
 - [x] `readme.txt` with short description under 150 characters — 130
 - [x] Icon 256×256, banner 1544×500, screenshots — five, of real content, in `.wordpress-org/`
-- [x] Security pass against the checklist in `CLAUDE.md` — every item, plus hostile input at the audio endpoint
+- [x] Security pass against the checklist in `CLAUDE.md` — every item, and then a real audit: stored XSS in every editable field, a `</script>` break-out through the player payload, a valid nonce in a subscriber's hands, six SQL payloads through every id, an attachment pointed outside uploads, blocks asked for a draft book, a crafted settings form, and range header abuse. Nothing gave way. See `docs/HISTORY.md`, 2026-09-06.
 - [x] `.pot` regenerated — 287 strings at 1.0.0
 - [x] `es_ES` translation complete — 283 of 287, verified rendering
 - [x] `pt_BR` translation complete — 283 of 287, verified rendering
@@ -140,6 +140,29 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 - [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places
 
 ---
+
+## Left for the account holder
+
+Everything that can be verified on this machine has been. These cannot be, and
+none of them is a formality:
+
+- **Listen on a real phone.** Owed since S2. A nine-hour book, across two
+  sessions, with the screen locked and the lock-screen controls used. Emulation
+  got the layout and the touch targets right; it cannot tell you whether the
+  audio survives a phone call, a backgrounded tab or a change of network.
+- **Install on real hosting.** This ran on portable PHP 8.3 and SQLite. A shared
+  host means MySQL, a different PHP build, `open_basedir`, and an object cache.
+  The one to watch is the audio endpoint: some hosts buffer or strip range
+  requests at the proxy, and that is where a nine-hour book stops resuming.
+- **Real audio files.** Every test here used one 30-minute WAV. Try an MP3, an
+  M4A, a 200 MB file and a file with an unusual sample rate, and check the
+  running time WordPress reads out of each.
+- **A second real person.** Give somebody a restricted book, have them listen,
+  take it away, and confirm they are turned out.
+- **PHP 8.1 and 8.2.** The floor is declared as 8.1 and nothing here has run on
+  anything but 8.3.
+- **Test the exact zip.** Install `volumina-1.0.0.zip` on a clean site rather
+  than the symlinked working copy this was all developed against.
 
 ## Open decisions not blocking code
 
