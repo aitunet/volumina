@@ -70,7 +70,8 @@ Code, comments, commit messages and source strings in **English**. Shipped trans
 
 ```
 volumina_book      CPT   one audiobook
-  meta: narrator, publisher, isbn, language, total_duration, cover_id
+  meta: narrator, publisher, isbn, language, total_duration
+  cover: the featured image (_thumbnail_id)
   tax:  volumina_genre, volumina_series
 
 volumina_chapter   CPT   one chapter, child of a book

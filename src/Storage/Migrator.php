@@ -35,8 +35,9 @@ final class Migrator implements Registrable {
 	 *
 	 * 1: the progress table.
 	 * 2: the grants table.
+	 * 3: covers moved from `volumina_cover_id` to the featured image.
 	 */
-	public const DB_VERSION = '2';
+	public const DB_VERSION = '3';
 
 	/**
 	 * Option holding the version currently installed.
@@ -88,6 +89,41 @@ final class Migrator implements Registrable {
 	}
 
 	/**
+	 * Moves each book's cover from `volumina_cover_id` to the featured image.
+	 *
+	 * Idempotent: a book that already has a featured image keeps it, and the
+	 * old meta is removed either way so this never runs twice for one book.
+	 * A direct query rather than WP_Query, because this runs on
+	 * `plugins_loaded`, before the post type is registered.
+	 */
+	private static function move_covers_to_featured_image(): void {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s",
+				'volumina_cover_id'
+			)
+		);
+
+		if ( ! is_array( $rows ) ) {
+			return;
+		}
+
+		foreach ( $rows as $row ) {
+			$book_id = (int) $row->post_id;
+			$cover   = (int) $row->meta_value;
+
+			if ( $cover > 0 && (int) get_post_thumbnail_id( $book_id ) <= 0 ) {
+				update_post_meta( $book_id, '_thumbnail_id', $cover );
+			}
+
+			delete_post_meta( $book_id, 'volumina_cover_id' );
+		}
+	}
+
+	/**
 	 * Runs the migrations if the installed version is behind.
 	 */
 	public function maybe_migrate(): void {
@@ -99,6 +135,7 @@ final class Migrator implements Registrable {
 
 		ProgressTable::install();
 		GrantsTable::install();
+		self::move_covers_to_featured_image();
 
 		update_option( self::OPTION, self::DB_VERSION, true );
 

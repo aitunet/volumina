@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php foreach ( $items as $volumina_item ) : ?>
 			<?php
 			$volumina_book  = $volumina_item['book'];
-			$volumina_cover = $covers ? (int) get_post_meta( $volumina_book->ID, 'volumina_cover_id', true ) : 0;
+			$volumina_cover = $covers ? \TUNET\Volumina\PostTypes\Book::cover_id( $volumina_book->ID ) : 0;
 			?>
 			<li class="volumina-continue-item">
 				<?php if ( $volumina_cover > 0 ) : ?>

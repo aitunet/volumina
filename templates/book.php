@@ -19,7 +19,7 @@ declare( strict_types = 1 );
 
 defined( 'ABSPATH' ) || exit;
 
-$volumina_cover = $show['cover'] ? (int) get_post_meta( $book->ID, 'volumina_cover_id', true ) : 0;
+$volumina_cover = $show['cover'] ? \TUNET\Volumina\PostTypes\Book::cover_id( $book->ID ) : 0;
 
 ?>
 <div class="volumina-book">

@@ -211,7 +211,16 @@
 			const playing = ! audio.paused && ! audio.ended;
 
 			if ( els.icon ) {
-				els.icon.textContent = playing ? '⏸' : '▶';
+				els.icon
+					.querySelectorAll( '[data-volumina-icon]' )
+					.forEach( function ( icon ) {
+						// An attribute, not the property: an <svg> has no .hidden.
+						icon.toggleAttribute(
+							'hidden',
+							icon.dataset.voluminaIcon !==
+								( playing ? 'pause' : 'play' )
+						);
+					} );
 			}
 
 			if ( els.label ) {

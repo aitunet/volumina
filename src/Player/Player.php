@@ -163,7 +163,7 @@ final class Player implements Registrable {
 	 * @param int $book_id The book.
 	 */
 	private static function cover_url( int $book_id ): string {
-		$cover = (int) get_post_meta( $book_id, 'volumina_cover_id', true );
+		$cover = Book::cover_id( $book_id );
 
 		if ( $cover <= 0 ) {
 			return '';

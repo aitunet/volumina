@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Volumina 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/volumina\n"
+"Report-Msgid-Bugs-To: https://tunetdesign.com\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T18:10:57+00:00\n"
+"POT-Creation-Date: 2026-09-11T17:58:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -55,84 +55,59 @@ msgstr ""
 msgid "Public books"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:55
+#: src/Admin/BookMetaBox.php:51
 msgid "Audiobook details"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:180
-msgid "Choose a cover"
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:181
-msgid "Use this cover"
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:200
-msgid "Choose cover"
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:201
-msgid "Remove cover"
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:264
+#: src/Admin/BookMetaBox.php:195
 msgid "Narrator"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:265
+#: src/Admin/BookMetaBox.php:196
 msgid "Who reads the book aloud."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:268
+#: src/Admin/BookMetaBox.php:199
 #: src/Frontend/Audiobook.php:109
 msgid "Publisher"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:269
+#: src/Admin/BookMetaBox.php:200
 msgid "Who published this recording."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:272
+#: src/Admin/BookMetaBox.php:203
 #: src/Frontend/Audiobook.php:115
 msgid "ISBN"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:273
+#: src/Admin/BookMetaBox.php:204
 msgid "Of this edition, if it has one."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:276
+#: src/Admin/BookMetaBox.php:207
 msgid "Language"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:277
+#: src/Admin/BookMetaBox.php:208
 msgid "The language it is read in, as a locale code such as es_ES."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:280
+#: src/Admin/BookMetaBox.php:211
 msgid "Total duration"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:281
+#: src/Admin/BookMetaBox.php:212
 msgid "In whole seconds. Leave at zero and the chapters will answer for it."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:284
+#: src/Admin/BookMetaBox.php:215
 #: src/Admin/PostScreenHelp.php:87
 msgid "Who can listen"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:285
+#: src/Admin/BookMetaBox.php:216
 msgid "A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back."
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:288
-#: blocks/audiobook/index.js:26
-msgid "Cover"
-msgstr ""
-
-#: src/Admin/BookMetaBox.php:289
-msgid "Chosen from the media library."
 msgstr ""
 
 #: src/Admin/ChapterList.php:57
@@ -648,7 +623,7 @@ msgid "Narrated by"
 msgstr ""
 
 #: src/Player/Player.php:82
-#: templates/player.php:91
+#: templates/player.php:94
 msgid "Play"
 msgstr ""
 
@@ -742,123 +717,136 @@ msgstr ""
 msgid "A chapter's audio file is missing or unreadable."
 msgstr ""
 
-#: src/PostTypes/Book.php:42
+#: src/PostTypes/Book.php:43
 msgctxt "post type general name"
 msgid "Audiobooks"
 msgstr ""
 
-#: src/PostTypes/Book.php:43
+#: src/PostTypes/Book.php:44
 msgctxt "post type singular name"
 msgid "Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:44
+#: src/PostTypes/Book.php:45
 msgid "Add Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:45
+#: src/PostTypes/Book.php:46
 msgid "Add New Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:46
+#: src/PostTypes/Book.php:47
 msgid "Edit Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:47
+#: src/PostTypes/Book.php:48
 msgid "New Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:48
+#: src/PostTypes/Book.php:49
 msgid "View Audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:49
+#: src/PostTypes/Book.php:50
 msgid "View Audiobooks"
 msgstr ""
 
-#: src/PostTypes/Book.php:50
+#: src/PostTypes/Book.php:51
 msgid "Search Audiobooks"
 msgstr ""
 
-#: src/PostTypes/Book.php:51
+#: src/PostTypes/Book.php:52
 msgid "No audiobooks found."
 msgstr ""
 
-#: src/PostTypes/Book.php:52
+#: src/PostTypes/Book.php:53
 msgid "No audiobooks found in Trash."
 msgstr ""
 
-#: src/PostTypes/Book.php:53
+#: src/PostTypes/Book.php:54
 msgid "All Audiobooks"
 msgstr ""
 
-#: src/PostTypes/Book.php:54
+#: src/PostTypes/Book.php:55
 msgid "Audiobook Archives"
 msgstr ""
 
-#: src/PostTypes/Book.php:55
+#: src/PostTypes/Book.php:56
 msgid "Audiobook Attributes"
 msgstr ""
 
-#: src/PostTypes/Book.php:56
+#: src/PostTypes/Book.php:57
 msgid "Insert into audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:57
+#: src/PostTypes/Book.php:58
 msgid "Uploaded to this audiobook"
 msgstr ""
 
-#: src/PostTypes/Book.php:58
+#: src/PostTypes/Book.php:59
 msgid "Audiobook published."
 msgstr ""
 
-#: src/PostTypes/Book.php:59
+#: src/PostTypes/Book.php:60
 msgid "Audiobook updated."
 msgstr ""
 
-#: src/PostTypes/Book.php:60
+#: src/PostTypes/Book.php:61
 msgctxt "admin menu"
 msgid "Audiobooks"
 msgstr ""
 
-#: src/PostTypes/Book.php:61
+#: src/PostTypes/Book.php:62
+msgctxt "the featured image of an audiobook"
+msgid "Cover"
+msgstr ""
+
+#: src/PostTypes/Book.php:63
+msgid "Set cover"
+msgstr ""
+
+#: src/PostTypes/Book.php:64
+msgid "Remove cover"
+msgstr ""
+
+#: src/PostTypes/Book.php:65
+msgid "Use as cover"
+msgstr ""
+
+#: src/PostTypes/Book.php:66
 msgid "Audiobook Link"
 msgstr ""
 
-#: src/PostTypes/Book.php:62
+#: src/PostTypes/Book.php:67
 msgid "A link to an audiobook."
 msgstr ""
 
-#: src/PostTypes/Book.php:69
+#: src/PostTypes/Book.php:74
 msgid "An audiobook and the metadata that describes it."
 msgstr ""
 
-#: src/PostTypes/Book.php:143
+#: src/PostTypes/Book.php:217
 msgid "Who reads the book."
 msgstr ""
 
-#: src/PostTypes/Book.php:149
+#: src/PostTypes/Book.php:223
 msgid "Who published the recording."
 msgstr ""
 
-#: src/PostTypes/Book.php:155
+#: src/PostTypes/Book.php:229
 msgid "ISBN of the edition, if it has one."
 msgstr ""
 
-#: src/PostTypes/Book.php:161
+#: src/PostTypes/Book.php:235
 msgid "Language the book is read in, as a locale code such as es_ES."
 msgstr ""
 
-#: src/PostTypes/Book.php:167
+#: src/PostTypes/Book.php:241
 msgid "Total running time in whole seconds."
 msgstr ""
 
-#: src/PostTypes/Book.php:173
+#: src/PostTypes/Book.php:247
 msgid "Who may listen: public, or restricted to listeners who have been granted it."
-msgstr ""
-
-#: src/PostTypes/Book.php:179
-msgid "Attachment ID of the cover image."
 msgstr ""
 
 #: src/PostTypes/Chapter.php:48
@@ -1052,7 +1040,7 @@ msgstr ""
 msgid "Series"
 msgstr ""
 
-#: src/Storage/Migrator.php:72
+#: src/Storage/Migrator.php:149
 msgid "The database was brought up to date."
 msgstr ""
 
@@ -1093,33 +1081,37 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:100
+#: templates/player.php:103
 #, php-format
 msgid "Forward %d second"
 msgid_plural "Forward %d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/player.php:109
+#: templates/player.php:112
 msgid "Next chapter"
 msgstr ""
 
-#: templates/player.php:115
+#: templates/player.php:118
 msgid "Position in this chapter"
 msgstr ""
 
-#: templates/player.php:136
+#: templates/player.php:139
 msgid "Speed"
 msgstr ""
 
 #. translators: %s: a playback speed, such as 1.5.
-#: templates/player.php:147
+#: templates/player.php:150
 #, php-format
 msgid "%s×"
 msgstr ""
 
-#: templates/player.php:158
+#: templates/player.php:161
 msgid "Sleep timer"
+msgstr ""
+
+#: blocks/audiobook/index.js:26
+msgid "Cover"
 msgstr ""
 
 #: blocks/audiobook/index.js:27

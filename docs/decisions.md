@@ -382,3 +382,23 @@ PHPCS-ignored, never shipped. The script refuses to package a `build/` older
 than `blocks/`, and checks the staged list against its own short deny-list
 before zipping, so a mistake in `.distignore` fails loudly instead of shipping.
 `wp dist-archive` remains the tool to use where it can be installed.
+
+## 2026-09-11 — The cover is the featured image
+
+**Decision.** A book's cover is its post thumbnail (`_thumbnail_id`), set from
+the featured-image panel WordPress already has, relabelled "Cover". The
+`volumina_cover_id` meta and the plugin's own media picker are gone. Schema
+version 3 moves every existing cover across, once, and deletes the old meta.
+`Book::cover_id()` is the one place the cover is read.
+
+**Why.** The account holder asked for it after using the plugin: a second
+picker in a meta box, for something every WordPress editor already knows how
+to set in the sidebar, was a thing to learn for no gain. It also gives the
+cover to everything that understands featured images for free — themes,
+archive templates, REST `featured_media`, the block editor's own preview.
+
+**Consequence.** `CLAUDE.md`'s data model listed `cover_id` among the book's
+meta; it no longer exists. One admin script fewer (`admin-book.js`), six
+strings fewer, four new labels. Anything outside the plugin that wrote
+`volumina_cover_id` directly would now be writing to nothing — it was never
+in `docs/api.md`, so nothing documented did.

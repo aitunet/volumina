@@ -61,18 +61,6 @@ msgstr "Livros públicos"
 msgid "Audiobook details"
 msgstr "Detalhes do audiolivro"
 
-#: src/Admin/BookMetaBox.php:180
-msgid "Choose a cover"
-msgstr "Escolher uma capa"
-
-#: src/Admin/BookMetaBox.php:181
-msgid "Use this cover"
-msgstr "Usar esta capa"
-
-#: src/Admin/BookMetaBox.php:200
-msgid "Choose cover"
-msgstr "Escolher capa"
-
 #: src/Admin/BookMetaBox.php:201
 msgid "Remove cover"
 msgstr "Remover capa"
@@ -132,10 +120,6 @@ msgstr "Um livro restrito continua aparecendo no site com seus capítulos e sua 
 #: blocks/audiobook/index.js:26
 msgid "Cover"
 msgstr "Capa"
-
-#: src/Admin/BookMetaBox.php:289
-msgid "Chosen from the media library."
-msgstr "Escolhida na biblioteca de mídia."
 
 #: src/Admin/ChapterList.php:57
 #: src/Admin/PostScreenHelp.php:80
@@ -859,10 +843,6 @@ msgstr "Duração total em segundos inteiros."
 msgid "Who may listen: public, or restricted to listeners who have been granted it."
 msgstr "Quem pode ouvir: público, ou restrito a quem recebeu o livro."
 
-#: src/PostTypes/Book.php:179
-msgid "Attachment ID of the cover image."
-msgstr "ID do anexo da imagem de capa."
-
 #: src/PostTypes/Chapter.php:48
 msgctxt "post type general name"
 msgid "Chapters"
@@ -1264,3 +1244,16 @@ msgstr "continuar"
 msgctxt "block keyword"
 msgid "listening"
 msgstr "ouvir"
+
+#: src/PostTypes/Book.php
+msgctxt "the featured image of an audiobook"
+msgid "Cover"
+msgstr "Capa"
+
+#: src/PostTypes/Book.php
+msgid "Set cover"
+msgstr "Definir capa"
+
+#: src/PostTypes/Book.php
+msgid "Use as cover"
+msgstr "Usar como capa"

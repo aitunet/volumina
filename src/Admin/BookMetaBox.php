@@ -14,9 +14,6 @@ use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Registrable;
 use WP_Post;
 
-use const TUNET\Volumina\PLUGIN_FILE;
-use const TUNET\Volumina\VERSION;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -43,7 +40,6 @@ final class BookMetaBox implements Registrable {
 	public function register(): void {
 		add_action( 'add_meta_boxes_' . Book::POST_TYPE, array( $this, 'add_meta_box' ) );
 		add_action( 'save_post_' . Book::POST_TYPE, array( $this, 'save' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
 	/**
@@ -57,33 +53,6 @@ final class BookMetaBox implements Registrable {
 			Book::POST_TYPE,
 			'normal',
 			'high'
-		);
-	}
-
-	/**
-	 * Loads the media frame and the cover picker on the book screen only.
-	 *
-	 * @param string $hook_suffix Current admin page.
-	 */
-	public function enqueue( string $hook_suffix ): void {
-		if ( 'post.php' !== $hook_suffix && 'post-new.php' !== $hook_suffix ) {
-			return;
-		}
-
-		$screen = get_current_screen();
-
-		if ( null === $screen || Book::POST_TYPE !== $screen->post_type ) {
-			return;
-		}
-
-		wp_enqueue_media();
-
-		wp_enqueue_script(
-			'volumina-admin-book',
-			plugins_url( 'assets/js/admin-book.js', PLUGIN_FILE ),
-			array(),
-			VERSION,
-			true
 		);
 	}
 
@@ -112,9 +81,7 @@ final class BookMetaBox implements Registrable {
 			);
 			echo '<td>';
 
-			if ( 'volumina_cover_id' === $key ) {
-				$this->render_cover_field( $key, (int) $value );
-			} elseif ( Mode::META_KEY === $key ) {
+			if ( Mode::META_KEY === $key ) {
 				$this->render_access_field( $key, (string) $value );
 			} elseif ( 'integer' === $type ) {
 				printf(
@@ -166,42 +133,6 @@ final class BookMetaBox implements Registrable {
 		}
 
 		echo '</fieldset>';
-	}
-
-	/**
-	 * Renders the cover picker.
-	 *
-	 * @param string $key      Meta key.
-	 * @param int    $cover_id Currently chosen attachment, or zero.
-	 */
-	private function render_cover_field( string $key, int $cover_id ): void {
-		printf(
-			'<div id="volumina-cover-field" data-frame-title="%1$s" data-frame-button="%2$s">',
-			esc_attr__( 'Choose a cover', 'volumina' ),
-			esc_attr__( 'Use this cover', 'volumina' )
-		);
-
-		echo '<div data-volumina-cover-preview>';
-
-		if ( $cover_id > 0 ) {
-			echo wp_kses_post( wp_get_attachment_image( $cover_id, 'medium' ) );
-		}
-
-		echo '</div>';
-
-		printf(
-			'<input type="hidden" id="%1$s" name="%1$s" value="%2$d" data-volumina-cover-input />',
-			esc_attr( $key ),
-			(int) $cover_id
-		);
-
-		printf(
-			'<p><button type="button" class="button" data-volumina-cover-select>%1$s</button> <button type="button" class="button-link" data-volumina-cover-clear>%2$s</button></p>',
-			esc_html__( 'Choose cover', 'volumina' ),
-			esc_html__( 'Remove cover', 'volumina' )
-		);
-
-		echo '</div>';
 	}
 
 	/**
@@ -283,10 +214,6 @@ final class BookMetaBox implements Registrable {
 			'volumina_access'         => array(
 				'label'       => __( 'Who can listen', 'volumina' ),
 				'description' => __( 'A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back.', 'volumina' ),
-			),
-			'volumina_cover_id'       => array(
-				'label'       => __( 'Cover', 'volumina' ),
-				'description' => __( 'Chosen from the media library.', 'volumina' ),
 			),
 		);
 	}

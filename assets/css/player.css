@@ -74,9 +74,10 @@
 	 * 44px is the smallest target most people can hit reliably on a phone.
 	 * Everything else about this player can move; this cannot.
 	 */
-	min-width: 44px;
-	min-height: 44px;
-	padding: 0 0.6em;
+	width: 44px;
+	height: 44px;
+	flex: none;
+	padding: 0;
 	border: 1px solid;
 	border-color: color-mix(in srgb, currentcolor 45%, transparent);
 	border-radius: 999px;
@@ -98,11 +99,47 @@
 }
 
 .volumina-button-primary {
-	min-width: 56px;
-	min-height: 56px;
+	width: 56px;
+	height: 56px;
 	border-width: 2px;
 	border-color: currentcolor;
-	font-size: 1.2em;
+}
+
+/*
+ * Drawn icons rather than glyphs: a font decides how wide ▶ and ⏸ are, and
+ * on most systems they differ, so the button used to change size on every
+ * press. An SVG is the same size whatever the font.
+ */
+.volumina-icon {
+	display: block;
+	width: 22px;
+	height: 22px;
+	fill: currentcolor;
+}
+
+.volumina-button-primary .volumina-icon {
+	width: 28px;
+	height: 28px;
+}
+
+.volumina-icon-skip {
+	width: 30px;
+	height: 30px;
+}
+
+.volumina-icon-skip text {
+	font-family: inherit;
+	font-size: 8px;
+	font-weight: 700;
+	fill: currentcolor;
+}
+
+.volumina-toggle-icon {
+	display: block;
+}
+
+.volumina-icon[hidden] {
+	display: none;
 }
 
 .volumina-player-range {

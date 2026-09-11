@@ -59,6 +59,10 @@ final class Book implements Registrable {
 			'item_published'        => __( 'Audiobook published.', 'volumina' ),
 			'item_updated'          => __( 'Audiobook updated.', 'volumina' ),
 			'menu_name'             => _x( 'Audiobooks', 'admin menu', 'volumina' ),
+			'featured_image'        => _x( 'Cover', 'the featured image of an audiobook', 'volumina' ),
+			'set_featured_image'    => __( 'Set cover', 'volumina' ),
+			'remove_featured_image' => __( 'Remove cover', 'volumina' ),
+			'use_featured_image'    => __( 'Use as cover', 'volumina' ),
 			'item_link'             => __( 'Audiobook Link', 'volumina' ),
 			'item_link_description' => __( 'A link to an audiobook.', 'volumina' ),
 		);
@@ -77,7 +81,7 @@ final class Book implements Registrable {
 				),
 				'menu_icon'       => self::menu_icon(),
 				'menu_position'   => 20,
-				'supports'        => array( 'title', 'editor', 'excerpt', 'author', 'revisions' ),
+				'supports'        => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
 				'capability_type' => 'post',
 				'map_meta_cap'    => true,
 				'hierarchical'    => false,
@@ -139,6 +143,21 @@ final class Book implements Registrable {
 
 		wp_add_inline_style( 'wp-admin', $css );
 	}
+	/**
+	 * The book's cover: its featured image.
+	 *
+	 * The cover is the post thumbnail, so it lives where WordPress keeps every
+	 * other featured image and is set from the panel every editor already
+	 * knows. Books from before schema version 3 kept it in
+	 * `volumina_cover_id`; the migration moved those across.
+	 *
+	 * @param int $book_id The book.
+	 * @return int Attachment ID, or zero when the book has no cover.
+	 */
+	public static function cover_id( int $book_id ): int {
+		return (int) get_post_thumbnail_id( $book_id );
+	}
+
 	/**
 	 * Registers the book's meta.
 	 *
@@ -228,12 +247,6 @@ final class Book implements Registrable {
 				'description'       => __( 'Who may listen: public, or restricted to listeners who have been granted it.', 'volumina' ),
 				'default'           => Mode::PUBLIC,
 				'sanitize_callback' => array( Mode::class, 'sanitize' ),
-			),
-			'volumina_cover_id'       => array(
-				'type'              => 'integer',
-				'description'       => __( 'Attachment ID of the cover image.', 'volumina' ),
-				'default'           => 0,
-				'sanitize_callback' => 'absint',
 			),
 		);
 	}

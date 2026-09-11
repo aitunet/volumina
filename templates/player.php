@@ -65,12 +65,12 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 
 	<div class="volumina-player-transport" data-volumina-transport hidden>
 		<button type="button" class="volumina-button" data-volumina-action="previous">
-			<span aria-hidden="true">&#9198;</span>
+			<svg class="volumina-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6h2v12H6zM18 6l-9 6 9 6z"/></svg>
 			<span class="volumina-sr"><?php esc_html_e( 'Previous chapter', 'volumina' ); ?></span>
 		</button>
 
 		<button type="button" class="volumina-button" data-volumina-action="back">
-			<span aria-hidden="true"><?php echo esc_html( (string) Player::SKIP_BACK ); ?></span>
+			<svg class="volumina-icon volumina-icon-skip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="12" y="16" text-anchor="middle"><?php echo esc_html( (string) Player::SKIP_BACK ); ?></text></svg>
 			<span class="volumina-sr">
 				<?php
 				printf(
@@ -87,12 +87,15 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 			class="volumina-button volumina-button-primary"
 			data-volumina-action="toggle"
 		>
-			<span aria-hidden="true" data-volumina-toggle-icon>&#9654;</span>
+			<span class="volumina-toggle-icon" aria-hidden="true" data-volumina-toggle-icon>
+				<svg class="volumina-icon" viewBox="0 0 24 24" focusable="false" data-volumina-icon="play"><path d="M8 5v14l11-7z"/></svg>
+				<svg class="volumina-icon" viewBox="0 0 24 24" focusable="false" data-volumina-icon="pause" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+			</span>
 			<span class="volumina-sr" data-volumina-toggle-label><?php esc_html_e( 'Play', 'volumina' ); ?></span>
 		</button>
 
 		<button type="button" class="volumina-button" data-volumina-action="forward">
-			<span aria-hidden="true"><?php echo esc_html( (string) Player::SKIP_FORWARD ); ?></span>
+			<svg class="volumina-icon volumina-icon-skip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="12" y="16" text-anchor="middle"><?php echo esc_html( (string) Player::SKIP_FORWARD ); ?></text></svg>
 			<span class="volumina-sr">
 				<?php
 				printf(
@@ -105,7 +108,7 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 		</button>
 
 		<button type="button" class="volumina-button" data-volumina-action="next">
-			<span aria-hidden="true">&#9197;</span>
+			<svg class="volumina-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 6h2v12h-2zM6 6l9 6-9 6z"/></svg>
 			<span class="volumina-sr"><?php esc_html_e( 'Next chapter', 'volumina' ); ?></span>
 		</button>
 	</div>
