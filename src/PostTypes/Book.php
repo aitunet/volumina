@@ -32,6 +32,7 @@ final class Book implements Registrable {
 	public function register(): void {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_action( 'init', array( $this, 'register_meta' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'style_menu_icon' ) );
 	}
 
 	/**
@@ -87,27 +88,57 @@ final class Book implements Registrable {
 	/**
 	 * The admin menu icon: five spines on a shelf, the plugin's own mark.
 	 *
-	 * The same drawing as the directory icon, reduced to one colour, because
-	 * WordPress repaints an SVG menu icon to match the admin colour scheme and
-	 * only the shapes survive. Handed over as a data URI, which is the form
-	 * `register_post_type()` accepts for an SVG.
+	 * The same drawing as the directory icon. WordPress repaints an SVG menu
+	 * icon to match the admin colour scheme, so at rest it is one colour and
+	 * only the shapes survive; the active entry gets the icon in its own
+	 * colours through style_menu_icon(). Handed over as a data URI, which is
+	 * the form `register_post_type()` accepts for an SVG.
 	 *
 	 * @return string
 	 */
 	private static function menu_icon(): string {
+		return self::menu_icon_uri( '#a7aaad', '#a7aaad', '#a7aaad' );
+	}
+
+	/**
+	 * Draws the mark in the colours given and encodes it as a data URI.
+	 *
+	 * @param string $spines The four narrow spines.
+	 * @param string $middle The wide spine in the centre.
+	 * @param string $shelf  The shelf underneath.
+	 * @return string
+	 */
+	private static function menu_icon_uri( string $spines, string $middle, string $shelf ): string {
 		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
-			. '<rect x="2.6" y="8.6" width="1.8" height="6.4" rx="0.5" fill="#a7aaad"/>'
-			. '<rect x="5.1" y="5.4" width="2" height="9.6" rx="0.5" fill="#a7aaad"/>'
-			. '<rect x="7.9" y="3.2" width="4" height="11.8" rx="0.7" fill="#a7aaad"/>'
-			. '<rect x="12.6" y="6.5" width="2" height="8.5" rx="0.5" fill="#a7aaad"/>'
-			. '<rect x="15.4" y="9.8" width="2" height="5.2" rx="0.5" transform="rotate(14 15.4 15)" fill="#a7aaad"/>'
-			. '<rect x="3.2" y="16.2" width="13.6" height="1.1" rx="0.55" fill="#a7aaad"/>'
+			. '<rect x="2.6" y="8.6" width="1.8" height="6.4" rx="0.5" fill="' . $spines . '"/>'
+			. '<rect x="5.1" y="5.4" width="2" height="9.6" rx="0.5" fill="' . $spines . '"/>'
+			. '<rect x="7.9" y="3.2" width="4" height="11.8" rx="0.7" fill="' . $middle . '"/>'
+			. '<rect x="12.6" y="6.5" width="2" height="8.5" rx="0.5" fill="' . $spines . '"/>'
+			. '<rect x="15.4" y="9.8" width="2" height="5.2" rx="0.5" transform="rotate(14 15.4 15)" fill="' . $spines . '"/>'
+			. '<rect x="3.2" y="16.2" width="13.6" height="1.1" rx="0.55" fill="' . $shelf . '"/>'
 			. '</svg>';
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- The data URI form register_post_type() expects for an SVG icon.
 		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
+	/**
+	 * Gives the active menu entry the icon in its own colours.
+	 *
+	 * WordPress paints SVG menu icons in the scheme's single icon colour and
+	 * sets that as an inline style, so a stylesheet rule has to be important
+	 * to be seen. Only the current entry is coloured: the rest of the menu
+	 * stays in the scheme's colour, as every other icon does.
+	 */
+	public function style_menu_icon(): void {
+		$css = sprintf(
+			'#adminmenu #menu-posts-%1$s.current .wp-menu-image, #adminmenu #menu-posts-%1$s.wp-has-current-submenu .wp-menu-image { background-image: url("%2$s") !important; }',
+			self::POST_TYPE,
+			self::menu_icon_uri( '#e0a83a', '#f0e8db', '#c9cdd4' )
+		);
+
+		wp_add_inline_style( 'wp-admin', $css );
+	}
 	/**
 	 * Registers the book's meta.
 	 *
