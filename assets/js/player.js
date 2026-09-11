@@ -371,7 +371,10 @@
 		}
 
 		function nudge( seconds ) {
-			const total = audio.duration || current().duration || 0;
+			// Unknown length means no upper clamp: the element clamps to its own
+			// duration once it knows it, whereas clamping to zero here would
+			// turn a forward skip pressed before the metadata arrives into nothing.
+			const total = audio.duration || current().duration || Infinity;
 			audio.currentTime = Math.max(
 				0,
 				Math.min( total, ( audio.currentTime || 0 ) + seconds )

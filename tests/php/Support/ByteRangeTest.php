@@ -87,6 +87,42 @@ final class ByteRangeTest extends TestCase {
 	}
 
 	/**
+	 * A well-formed Range header is a range request even when it happens to
+	 * cover the whole file, and the answer must say 206.
+	 *
+	 * Chrome opens every media file with `bytes=0-`. Answered with a 200, it
+	 * decides the server cannot do ranges and will not seek past what it has
+	 * already downloaded — the forward-skip button stops working while the
+	 * back-skip button, inside the buffer, still does.
+	 *
+	 * @dataProvider requested_cases
+	 *
+	 * @param string $header    The header a client sent.
+	 * @param bool   $requested Whether it counts as a range request.
+	 */
+	public function test_whether_a_range_was_requested( string $header, bool $requested ): void {
+		$this->assertSame( $requested, ByteRange::requested( $header ) );
+	}
+
+	/**
+	 * Headers and whether they ask for a range at all.
+	 *
+	 * @return array<string, array{string, bool}>
+	 */
+	public function requested_cases(): array {
+		return array(
+			"the whole file, as Chrome asks" => array( "bytes=0-", true ),
+			"an explicit slice"             => array( "bytes=100-199", true ),
+			"a suffix"                      => array( "bytes=-100", true ),
+			"padded"                        => array( "  bytes=0-  ", true ),
+			"no header"                     => array( "", false ),
+			"blank"                         => array( "   ", false ),
+			"nonsense"                      => array( "chunks=0-", false ),
+			"not a range at all"            => array( "bytes", false ),
+		);
+	}
+
+	/**
 	 * An empty file has no bytes to slice, so every range is the whole of it.
 	 */
 	public function test_an_empty_file_is_never_a_partial_response(): void {

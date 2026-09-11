@@ -81,3 +81,10 @@
   are code, WP-CLI (`wp eval 'TUNET\Volumina\Storage\Grants::grant( $user, $book );'`)
   or an extension. A "Listeners" box on the book screen — search a user, add,
   remove — is the obvious shape. Noted in the user guide until it exists.
+- **A block template for single audiobooks.** Twenty Twenty-Five's single
+  template prints "Written by … in" with an empty terms list under an
+  audiobook's title, because it was written for posts. The plugin could
+  register its own `single-volumina_book` template (`register_block_template`,
+  WordPress 6.7+) with title, cover, details, player and chapters, and skip the
+  post byline. Until then the theme's template is used as it is, with the
+  featured image withheld so the cover shows once.

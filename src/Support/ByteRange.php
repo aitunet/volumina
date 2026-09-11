@@ -21,6 +21,27 @@ defined( 'ABSPATH' ) || exit;
 final class ByteRange {
 
 	/**
+	 * A single byte range, with anything after a comma ignored.
+	 */
+	private const SYNTAX = '/^bytes=(\d*)-(\d*)(?:\s*,.*)?$/';
+
+	/**
+	 * Whether the header asks for a range at all.
+	 *
+	 * The distinction matters even when the range covers the whole file: a
+	 * client that asked for `bytes=0-` and is answered 200 rather than 206
+	 * concludes the server cannot do ranges, and Chrome then refuses to seek
+	 * past what it has already downloaded. RFC 9110 asks for 206 on any
+	 * satisfiable range, whole file or not.
+	 *
+	 * @param string $header The raw header value, or an empty string.
+	 * @return bool
+	 */
+	public static function requested( string $header ): bool {
+		return 1 === preg_match( self::SYNTAX, trim( $header ) );
+	}
+
+	/**
 	 * Resolves a `Range` header against a known file size.
 	 *
 	 * Only a single range is honoured. Answering a multi-range request with
@@ -45,7 +66,7 @@ final class ByteRange {
 			return array( 0, $last );
 		}
 
-		if ( 1 !== preg_match( '/^bytes=(\d*)-(\d*)(?:\s*,.*)?$/', trim( $header ), $matches ) ) {
+		if ( 1 !== preg_match( self::SYNTAX, trim( $header ), $matches ) ) {
 			return array( 0, $last );
 		}
 

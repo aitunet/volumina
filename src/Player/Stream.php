@@ -228,7 +228,8 @@ final class Stream implements Registrable {
 			exit;
 		}
 
-		$range = ByteRange::parse( $this->requested_range( $etag, $modified ), $size );
+		$header = $this->requested_range( $etag, $modified );
+		$range  = ByteRange::parse( $header, $size );
 
 		if ( null === $range ) {
 			$this->headers( $mime, $etag, $modified );
@@ -243,7 +244,11 @@ final class Stream implements Registrable {
 		$this->headers( $mime, $etag, $modified );
 		header( 'Content-Length: ' . $length );
 
-		if ( $length !== $size ) {
+		// A range that was asked for is answered as a range, even when it is
+		// the whole file. Chrome opens every media file with `bytes=0-`; a 200
+		// there tells it the server cannot do ranges, and from then on it will
+		// not seek past what it has downloaded.
+		if ( ByteRange::requested( $header ) ) {
 			header( sprintf( 'Content-Range: bytes %d-%d/%d', $start, $end, $size ) );
 			status_header( 206 );
 		} else {

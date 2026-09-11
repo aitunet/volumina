@@ -37,6 +37,7 @@ final class BookContent implements Registrable {
 	 */
 	public function register(): void {
 		add_filter( 'the_content', array( $this, 'append' ) );
+		add_filter( 'post_thumbnail_html', array( $this, 'withhold_theme_cover' ), 10, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
@@ -64,6 +65,38 @@ final class BookContent implements Registrable {
 		}
 
 		wp_enqueue_style( Assets::BOOK );
+	}
+
+	/**
+	 * Keeps the theme from showing the cover a second time.
+	 *
+	 * The cover is the featured image, so a theme prints it at the top of the
+	 * page, large, and the audiobook appended below prints it again, small,
+	 * beside the details. The small one is the book's own; the theme's is
+	 * withheld — only on the book's page, only for the book itself, and only
+	 * while the audiobook is being appended. A page whose author placed the
+	 * Audiobook block by hand is left alone: the block's own settings decide
+	 * whether a cover shows, and the theme's may be the one they kept.
+	 *
+	 * @param string $html    The image the theme is about to print.
+	 * @param int    $post_id The post it belongs to.
+	 */
+	public function withhold_theme_cover( string $html, int $post_id ): string {
+		if ( ! is_singular( Book::POST_TYPE ) || $post_id !== get_queried_object_id() ) {
+			return $html;
+		}
+
+		if ( ! Settings::get( 'append_to_content' ) ) {
+			return $html;
+		}
+
+		$book = get_post( $post_id );
+
+		if ( $book instanceof WP_Post && has_block( 'volumina/audiobook', $book ) ) {
+			return $html;
+		}
+
+		return '';
 	}
 
 	/**
