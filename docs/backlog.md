@@ -72,3 +72,12 @@
 
 - DRM of any kind. Browser audio cannot be truly protected; promising it is a lie
   that gets punished in reviews.
+
+## Found 2026-09-11, while writing the user guide
+
+- **A screen for granting a restricted book by hand.** `Storage\Grants` and
+  `ManualProvider` exist and work, but nothing in the admin calls
+  `Grants::grant()`: the only ways to give a listener a restricted book today
+  are code, WP-CLI (`wp eval 'TUNET\Volumina\Storage\Grants::grant( $user, $book );'`)
+  or an extension. A "Listeners" box on the book screen — search a user, add,
+  remove — is the obvious shape. Noted in the user guide until it exists.

@@ -74,7 +74,7 @@ final class Book implements Registrable {
 					'slug'       => 'audiobook',
 					'with_front' => false,
 				),
-				'menu_icon'       => 'dashicons-book-alt',
+				'menu_icon'       => self::menu_icon(),
 				'menu_position'   => 20,
 				'supports'        => array( 'title', 'editor', 'excerpt', 'author', 'revisions' ),
 				'capability_type' => 'post',
@@ -82,6 +82,30 @@ final class Book implements Registrable {
 				'hierarchical'    => false,
 			)
 		);
+	}
+
+	/**
+	 * The admin menu icon: five spines on a shelf, the plugin's own mark.
+	 *
+	 * The same drawing as the directory icon, reduced to one colour, because
+	 * WordPress repaints an SVG menu icon to match the admin colour scheme and
+	 * only the shapes survive. Handed over as a data URI, which is the form
+	 * `register_post_type()` accepts for an SVG.
+	 *
+	 * @return string
+	 */
+	private static function menu_icon(): string {
+		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
+			. '<rect x="2.6" y="8.6" width="1.8" height="6.4" rx="0.5" fill="#a7aaad"/>'
+			. '<rect x="5.1" y="5.4" width="2" height="9.6" rx="0.5" fill="#a7aaad"/>'
+			. '<rect x="7.9" y="3.2" width="4" height="11.8" rx="0.7" fill="#a7aaad"/>'
+			. '<rect x="12.6" y="6.5" width="2" height="8.5" rx="0.5" fill="#a7aaad"/>'
+			. '<rect x="15.4" y="9.8" width="2" height="5.2" rx="0.5" transform="rotate(14 15.4 15)" fill="#a7aaad"/>'
+			. '<rect x="3.2" y="16.2" width="13.6" height="1.1" rx="0.55" fill="#a7aaad"/>'
+			. '</svg>';
+
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- The data URI form register_post_type() expects for an SVG icon.
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
 	/**

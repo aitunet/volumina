@@ -12,6 +12,9 @@ namespace TUNET\Volumina\Storage;
 use TUNET\Volumina\Support\Logger;
 use TUNET\Volumina\Support\Registrable;
 
+use const TUNET\Volumina\PLUGIN_FILE;
+use const TUNET\Volumina\VERSION;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -41,10 +44,47 @@ final class Migrator implements Registrable {
 	public const OPTION = 'volumina_db_version';
 
 	/**
+	 * Option holding the plugin version whose rewrite rules are in place.
+	 */
+	public const REWRITE_OPTION = 'volumina_rewrite_version';
+
+	/**
 	 * Adds the hooks.
 	 */
 	public function register(): void {
 		add_action( 'plugins_loaded', array( $this, 'maybe_migrate' ) );
+		add_action( 'init', array( $this, 'maybe_flush_rewrites' ), 99 );
+
+		// Deactivating and activating again leaves the version in place but may
+		// well have rebuilt the rules without this plugin in between. Forget
+		// the version on activation so the next request rebuilds them.
+		register_activation_hook(
+			PLUGIN_FILE,
+			static function (): void {
+				delete_option( self::REWRITE_OPTION );
+			}
+		);
+	}
+
+	/**
+	 * Rebuilds the rewrite rules once per plugin version.
+	 *
+	 * The book post type brings permalinks with it, and WordPress only learns
+	 * of them when the rules are rebuilt. Without this, a fresh install answers
+	 * 404 for every audiobook until somebody saves the permalink settings. It
+	 * runs late on `init`, after the post types are registered, because the
+	 * rules are rebuilt from whatever is registered at that moment. Keyed on
+	 * the plugin version for the same reason the schema check is not tied to
+	 * activation: files get replaced without the plugin ever being deactivated.
+	 * Activation itself forgets the version, so that case is covered too.
+	 */
+	public function maybe_flush_rewrites(): void {
+		if ( VERSION === get_option( self::REWRITE_OPTION, '' ) ) {
+			return;
+		}
+
+		flush_rewrite_rules( false );
+		update_option( self::REWRITE_OPTION, VERSION, true );
 	}
 
 	/**

@@ -76,6 +76,7 @@ foreach (
 		'volumina_settings',
 		'volumina_log',
 		'volumina_db_version',
+		'volumina_rewrite_version',
 		'volumina_setup_done',
 	) as $volumina_option
 ) {
