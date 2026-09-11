@@ -11,7 +11,7 @@
 
 **Current slice:** S6 — Release.
 **Next action:** the checks that need a person and real hardware, listed under "Left for the account holder" below. Then submission: upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The zip is rebuilt at any time with `php bin/build-release.php` (pass `--composer="php /path/to/composer.phar"` where Composer is not on the PATH); `dist/` is git-ignored, so a fresh clone builds it rather than finding it.
-**Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
+**Blocked on:** nothing. A second real environment now exists: `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) with the zip installed and five sample audiobooks seeded; the account holder is trying an upload of their own there next. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-11, TUNET
 
 **File scope for this slice** — do not open files outside this list:
@@ -151,17 +151,17 @@ none of them is a formality:
   sessions, with the screen locked and the lock-screen controls used. Emulation
   got the layout and the touch targets right; it cannot tell you whether the
   audio survives a phone call, a backgrounded tab or a change of network.
-- **Install on real hosting.** This ran on portable PHP 8.3 and SQLite. A shared
-  host means MySQL, a different PHP build, `open_basedir`, and an object cache.
-  The one to watch is the audio endpoint: some hosts buffer or strip range
-  requests at the proxy, and that is where a nine-hour book stops resuming.
-- **Real audio files.** Every test here used one 30-minute WAV. Try an MP3, an
+- **Install on real hosting.** Local by Flywheel (nginx, MySQL, PHP 8.2) is
+  now covered, range requests included. A shared host still is not: a
+  different PHP build, `open_basedir`, an object cache, and a proxy that may
+  buffer or strip range requests, which is where a nine-hour book stops
+  resuming.
+- **Real audio files.** Every test here used generated WAV — one 30-minute file, then 24 short ones. Try an MP3, an
   M4A, a 200 MB file and a file with an unusual sample rate, and check the
   running time WordPress reads out of each.
 - **A second real person.** Give somebody a restricted book, have them listen,
   take it away, and confirm they are turned out.
-- **PHP 8.1 and 8.2.** The floor is declared as 8.1 and nothing here has run on
-  anything but 8.3.
+- **PHP 8.1.** The floor is declared as 8.1; 8.2 and 8.3 have now run it.
 
 ## Open decisions not blocking code
 
