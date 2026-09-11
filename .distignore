@@ -5,7 +5,8 @@
 # into build/, or a document written for whoever works on this — none of which
 # belongs on somebody's server.
 #
-# Used by `wp dist-archive`.
+# Used by `wp dist-archive`, and by `bin/build-release.php` where that is not
+# installed. Both read the same list.
 
 # Version control and CI
 .git
@@ -16,6 +17,7 @@
 .editorconfig
 
 # Development tooling
+bin
 node_modules
 vendor/bin
 composer.json

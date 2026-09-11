@@ -10,12 +10,12 @@
 ## Right now
 
 **Current slice:** S6 — Release.
-**Next action:** the checks that need a person and real hardware, listed under "Left for the account holder" below. Then submission: upload `volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted.
+**Next action:** the checks that need a person and real hardware, listed under "Left for the account holder" below. Then submission: upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The zip is rebuilt at any time with `php bin/build-release.php` (pass `--composer="php /path/to/composer.phar"` where Composer is not on the PATH); `dist/` is git-ignored, so a fresh clone builds it rather than finding it.
 **Blocked on:** nothing. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
-**Last updated:** 2026-09-06, TUNET
+**Last updated:** 2026-09-11, TUNET
 
 **File scope for this slice** — do not open files outside this list:
-`readme.txt`, `assets/`, `languages/`, `volumina.php`, and any file the security pass turns up
+`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`, and any file the security pass turns up
 
 ---
 
@@ -122,6 +122,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 - [x] `es_ES` translation complete — 283 of 287, verified rendering
 - [x] `pt_BR` translation complete — 283 of 287, verified rendering
 - [x] Tested against the current WordPress release — WordPress 7.1, plugin active at 1.0.0, no notices
+- [x] Release zip built by a script that lives in the repository — `bin/build-release.php`, from `.distignore`; 91 files, opened and read, and installed from the zip itself on the local WordPress: active, both tables, all three blocks, a book page rendered, a 206 from the audio endpoint, no `debug.log`
 - [ ] Submitted to the plugin directory — **only the account holder can do this.** The zip is built and checked; see the next action.
 
 **Verification:** the checklist below passes but for the submission itself, which is not something this repository can do.
@@ -161,8 +162,6 @@ none of them is a formality:
   take it away, and confirm they are turned out.
 - **PHP 8.1 and 8.2.** The floor is declared as 8.1 and nothing here has run on
   anything but 8.3.
-- **Test the exact zip.** Install `volumina-1.0.0.zip` on a clean site rather
-  than the symlinked working copy this was all developed against.
 
 ## Open decisions not blocking code
 

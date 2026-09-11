@@ -362,3 +362,23 @@ when nobody looks: the list is checked by opening the zip, not by trusting it.
 PHP itself. `wp dist-archive` would do the same job and is the tool to use where
 it can be installed; this machine cannot reach the network, so a small script in
 the scratch directory does it with the same rules.
+
+## 2026-09-11 — The release build script lives in the repository
+
+**Decision.** `bin/build-release.php` builds the zip. It reads `.distignore`,
+stages into `dist/volumina/`, rebuilds `vendor/` there with `--no-dev`, and
+writes `dist/volumina-<version>.zip`. It supersedes the scratch-directory
+script mentioned on 2026-09-06.
+
+**Why.** That script went with its session, and so did the zip, which sat at
+the repository root where `.gitignore` discards it. A release artefact that
+cannot be rebuilt from a clone is not reproducible, and a build that nobody
+can rerun is a build nobody can check. Keeping the script in `bin/` — itself
+excluded from the zip — means the same 91 files come out on any machine with
+PHP and Composer.
+
+**Consequence.** `dist/` is a build directory like `build/`: git-ignored,
+PHPCS-ignored, never shipped. The script refuses to package a `build/` older
+than `blocks/`, and checks the staged list against its own short deny-list
+before zipping, so a mistake in `.distignore` fails loudly instead of shipping.
+`wp dist-archive` remains the tool to use where it can be installed.
