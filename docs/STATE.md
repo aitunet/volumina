@@ -9,13 +9,16 @@
 
 ## Right now
 
-**Current slice:** S6 — Release.
-**Next action:** the checks that need a person and real hardware, listed under "Left for the account holder" below. Then submission: upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The zip is rebuilt at any time with `php bin/build-release.php` (pass `--composer="php /path/to/composer.phar"` where Composer is not on the PATH); `dist/` is git-ignored, so a fresh clone builds it rather than finding it.
-**Blocked on:** nothing. A second real environment now exists: `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) with the zip installed and five sample audiobooks seeded; the account holder is trying an upload of their own there next. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; a local WordPress on SQLite covers the runtime checks, and the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
+**Current slice:** S6 — Release, held by one open bug.
+**Next action:** **the forward-skip (+30 s) button still does nothing for the account holder on `testing-site.local`, after the 206 fix in `33d07b3`.** Back 15 s works. Start here, in this order:
+1. Rule out caching before touching code. Scripts are enqueued with `?ver=1.0.0` and that version has not changed across today's edits, so the account holder's browser may still hold the old `player.js`; the audio itself is sent with `Cache-Control: private, max-age=3600`, so a 200 answered before the fix can be replayed from the media cache for an hour. Ask for a hard reload (or DevTools › Network › "Disable cache") and which browser it is. Consider `filemtime()` versions under `SCRIPT_DEBUG`, or bumping to 1.0.1, so a retest cannot be stale.
+2. Then look with the account holder's DevTools, Network tab, at the `?volumina_audio=` request: status must be **206** with `Content-Range: bytes 0-N/N`; and in the console `document.querySelector('[data-volumina-audio]').seekable.end(0)` must equal the duration. If it is 206 and seekable is full and +30 still fails, the bug is in `nudge()` / the click path and not in the server.
+3. Do not verify playback through the automation browser: its tab is hidden and Chrome loads no media there (see `docs/HISTORY.md`, 2026-09-11). `curl` for the server, a person in a visible tab for the player.
+Then the remaining hardware checks and submission: upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The zip is rebuilt at any time with `php bin/build-release.php` (pass `--composer="php /path/to/composer.phar"` where Composer is not on the PATH); `dist/` is git-ignored.
+**Blocked on:** nothing but the bug above. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree; the zip matches. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
 **Last updated:** 2026-09-11, TUNET
-
 **File scope for this slice** — do not open files outside this list:
-`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`, and any file the security pass turns up
+`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`, and for the open bug `assets/js/player.js`, `templates/player.php`, `src/Player/Stream.php`, `src/Support/ByteRange.php`
 
 ---
 
@@ -24,7 +27,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 5 of 6 slices complete, and S6 is finished but for the submission itself.
+Progress: 5 of 6 slices complete. S6 is finished but for one open bug found by the account holder (forward skip) and the submission itself.
 
 ---
 
