@@ -422,3 +422,26 @@ for strings, and data belongs in an inline script.
 `window.voluminaContinue`. `player.js` still coerces the two skip lengths
 with `Number()` at the top, as a second layer, because the cost is one line
 and the failure was silent.
+
+## 2026-09-14 — v1.0 grows by one slice before submission
+
+**Decision.** The account holder chose, on being asked, to add three things
+to 1.0 before it is submitted rather than ship them as 1.1: an eye-catching
+Pro screen, a welcome page, and a basic customisable audiobook template in
+free with the seam Pro's templates will build on. They form a seventh slice,
+S7 — Presentation, placed between S6's release checks and the submission.
+Nothing else enters; the backlog rule stands for everything but these three.
+
+**Why.** The plugin is not yet in the directory, so there is no user to
+break and no review cycle to wait for; the account holder wants first
+impressions — the Pro screen, the welcome page, the look of a book page — in
+the first version people see. Reopening scope once, deliberately, on the
+owner's call, with the decision written down, is what `CLAUDE.md` asks for
+when scope changes; adding features quietly mid-slice is what it forbids.
+
+**Consequence.** `docs/STATE.md` carries S7 with its own file scope and
+done-when. The submission checkbox in S6 waits for S7. Each of the three
+begins with a design pass agreed with the account holder before any code,
+and every screen stays purely presentational where the directory requires
+it: the Pro screen shows and tells, it never disables real code. The `.pot`,
+`es_ES` and `pt_BR` are regenerated and the zip rebuilt at the end of S7.
