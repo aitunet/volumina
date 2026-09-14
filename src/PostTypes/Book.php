@@ -79,7 +79,8 @@ final class Book implements Registrable {
 					'slug'       => 'audiobook',
 					'with_front' => false,
 				),
-				'menu_icon'       => self::menu_icon(),
+				// No icon from WordPress: style_menu_icon() draws it, see there.
+				'menu_icon'       => 'none',
 				'menu_position'   => 20,
 				'supports'        => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
 				'capability_type' => 'post',
@@ -90,22 +91,9 @@ final class Book implements Registrable {
 	}
 
 	/**
-	 * The admin menu icon: five spines on a shelf, the plugin's own mark.
-	 *
-	 * The same drawing as the directory icon. WordPress repaints an SVG menu
-	 * icon to match the admin colour scheme, so at rest it is one colour and
-	 * only the shapes survive; the active entry gets the icon in its own
-	 * colours through style_menu_icon(). Handed over as a data URI, which is
-	 * the form `register_post_type()` accepts for an SVG.
-	 *
-	 * @return string
-	 */
-	private static function menu_icon(): string {
-		return self::menu_icon_uri( '#a7aaad', '#a7aaad', '#a7aaad' );
-	}
-
-	/**
 	 * Draws the mark in the colours given and encodes it as a data URI.
+	 *
+	 * The same drawing as the directory icon: five spines on a shelf.
 	 *
 	 * @param string $spines The four narrow spines.
 	 * @param string $middle The wide spine in the centre.
@@ -127,18 +115,36 @@ final class Book implements Registrable {
 	}
 
 	/**
-	 * Gives the active menu entry the icon in its own colours.
+	 * Draws the menu icon: the scheme's colour at rest, its own when it matters.
 	 *
-	 * WordPress paints SVG menu icons in the scheme's single icon colour and
-	 * sets that as an inline style, so a stylesheet rule has to be important
-	 * to be seen. Only the current entry is coloured: the rest of the menu
-	 * stays in the scheme's colour, as every other icon does.
+	 * Not an SVG handed to `register_post_type()`. WordPress repaints those
+	 * with svg-painter.js, which writes an inline `!important` style that no
+	 * stylesheet can beat, so an active entry could never show the icon in
+	 * its own colours — and in the Modern scheme the painter's rest and
+	 * hover colours are #f3f1f1 and #fff, a change nobody can see.
+	 *
+	 * Instead the entry gets `menu_icon => 'none'`, which leaves the
+	 * `dashicons-before` box empty, and the icon is drawn on its `::before`:
+	 * at rest a one-colour mask filled with `currentColor`, so every colour
+	 * scheme's own rule for `div.wp-menu-image:before` colours it exactly
+	 * like the dashicons around it; on hover, focus, an open submenu and the
+	 * current entry, the mark in its own colours — amber spines, the cream
+	 * centre, a light shelf — as a background image. The painter never sees
+	 * it: it only looks at elements whose own background is an SVG.
 	 */
 	public function style_menu_icon(): void {
+		$entry = '#adminmenu #menu-posts-' . self::POST_TYPE;
+		$box   = ' div.wp-menu-image::before';
+		$mask  = self::menu_icon_uri( '#000', '#000', '#000' );
+		$own   = self::menu_icon_uri( '#e0a83a', '#f0e8db', '#c9cdd4' );
+
 		$css = sprintf(
-			'#adminmenu #menu-posts-%1$s.current .wp-menu-image, #adminmenu #menu-posts-%1$s.wp-has-current-submenu .wp-menu-image { background-image: url("%2$s") !important; }',
-			self::POST_TYPE,
-			self::menu_icon_uri( '#e0a83a', '#f0e8db', '#c9cdd4' )
+			'%1$s%2$s { content: ""; background-color: currentColor; -webkit-mask: url("%3$s") center / 20px 20px no-repeat; mask: url("%3$s") center / 20px 20px no-repeat; }'
+			. ' %1$s:hover%2$s, %1$s a:focus%2$s, %1$s.opensub%2$s, %1$s.current%2$s, %1$s.wp-has-current-submenu%2$s { background: url("%4$s") center / 20px 20px no-repeat; -webkit-mask: none; mask: none; }',
+			$entry,
+			$box,
+			$mask,
+			$own
 		);
 
 		wp_add_inline_style( 'wp-admin', $css );

@@ -9,16 +9,13 @@
 
 ## Right now
 
-**Current slice:** S6 — Release, held by one open bug.
-**Next action:** **the forward-skip (+30 s) button still does nothing for the account holder on `testing-site.local`, after the 206 fix in `33d07b3`.** Back 15 s works. Start here, in this order:
-1. Rule out caching before touching code. Scripts are enqueued with `?ver=1.0.0` and that version has not changed across today's edits, so the account holder's browser may still hold the old `player.js`; the audio itself is sent with `Cache-Control: private, max-age=3600`, so a 200 answered before the fix can be replayed from the media cache for an hour. Ask for a hard reload (or DevTools › Network › "Disable cache") and which browser it is. Consider `filemtime()` versions under `SCRIPT_DEBUG`, or bumping to 1.0.1, so a retest cannot be stale.
-2. Then look with the account holder's DevTools, Network tab, at the `?volumina_audio=` request: status must be **206** with `Content-Range: bytes 0-N/N`; and in the console `document.querySelector('[data-volumina-audio]').seekable.end(0)` must equal the duration. If it is 206 and seekable is full and +30 still fails, the bug is in `nudge()` / the click path and not in the server.
-3. Do not verify playback through the automation browser: its tab is hidden and Chrome loads no media there (see `docs/HISTORY.md`, 2026-09-11). `curl` for the server, a person in a visible tab for the player.
-Then the remaining hardware checks and submission: upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, and put the contents of `.wordpress-org/` into SVN's `assets/` once the repository is granted. The zip is rebuilt at any time with `php bin/build-release.php` (pass `--composer="php /path/to/composer.phar"` where Composer is not on the PATH); `dist/` is git-ignored.
-**Blocked on:** nothing but the bug above. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree; the zip matches. Docker is still absent, so `wp-env` and the WordPress integration test suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` only. See `docs/decisions.md`.
-**Last updated:** 2026-09-11, TUNET
+**Current slice:** S6 — Release. Two bugs fixed today, both awaiting the account holder's own eyes.
+**Next action:** the account holder hard-reloads `testing-site.local` and confirms two things: (1) **the +30 s button jumps forward** on the book page — it was `wp_localize_script()` turning `30` into `"30"`, fixed in `852dd0c` and verified here with a real click in a Playwright Chromium; (2) **the Audiobooks menu icon** shows the scheme's colour at rest and its own colours (amber, cream, light shelf) on hover, focus and when active — it is now drawn on the `::before` of an empty `menu_icon => 'none'` box, out of svg-painter's reach; verified in a simulation on WP 7.1's own admin CSS and painter, because no admin login is available to this session. Both files are deployed to the Local site. If either fails for the account holder, get their DevTools view before touching code again.
+Then rebuild the zip (`php bin/build-release.php`, `--composer="php /path/to/composer.phar"` where Composer is not on the PATH — note it already needs rebuilding: the code changed after `dist/volumina-1.0.0.zip` was last built), the remaining hardware checks below, and the submission: upload the zip at wordpress.org/plugins/developers/add/, then put `.wordpress-org/` into SVN's `assets/` once the repository is granted.
+**Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
+**Last updated:** 2026-09-14, TUNET
 **File scope for this slice** — do not open files outside this list:
-`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`, and for the open bug `assets/js/player.js`, `templates/player.php`, `src/Player/Stream.php`, `src/Support/ByteRange.php`
+`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`; and if either fix above fails, `assets/js/player.js`, `src/Frontend/Assets.php`, `src/Player/Player.php`, `src/PostTypes/Book.php`
 
 ---
 
@@ -27,7 +24,7 @@ Then the remaining hardware checks and submission: upload `dist/volumina-1.0.0.z
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 5 of 6 slices complete. S6 is finished but for one open bug found by the account holder (forward skip) and the submission itself.
+Progress: 5 of 6 slices complete. S6 is finished but for the account holder's confirmation of two fixes made today (forward skip, menu icon) and the submission itself.
 
 ---
 

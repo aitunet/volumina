@@ -88,3 +88,24 @@
   WordPress 6.7+) with title, cover, details, player and chapters, and skip the
   post byline. Until then the theme's template is used as it is, with the
   featured image withheld so the cover shows once.
+
+## Asked for 2026-09-14, by the account holder
+
+- **A Pro screen that catches the eye.** The presentational Pro screen (S5)
+  is correct but plain. Make it attractive: a hero, the mark, screenshots or
+  illustrations of what Pro adds, one clear call to action. Still purely
+  presentational — the directory forbids shipping locked functionality.
+- **Templates and player styling, free and Pro.** Free: one basic audiobook
+  template, customisable in the basics (which details show, where the cover
+  sits, the accent colour through the theme's palette). Pro: a set of
+  featured templates with advanced customisation — colours, typography,
+  layouts and styles for the Audiobook block and the player. This pairs with
+  the single-audiobook block template noted on 2026-09-11; the free template
+  is the foundation Pro's templates build on, through a documented filter or
+  a template registry in `docs/api.md`. Needs a design pass before code: what
+  is "basic" and what is "advanced" has to be decided once, not per release.
+- **A welcome page.** One screen shown after activation — what the plugin is,
+  what it is not (no store, no DRM), the three steps to a first audiobook, a
+  link to the setup and to the guide. Distinct from the setup wizard, which
+  asks questions; this one explains. Registered through the screen registry
+  so Pro can add its own section.
