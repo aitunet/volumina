@@ -139,7 +139,10 @@ final class Book implements Registrable {
 		$own   = self::menu_icon_uri( '#e0a83a', '#f0e8db', '#c9cdd4' );
 
 		$css = sprintf(
-			'%1$s%2$s { content: ""; background-color: currentColor; -webkit-mask: url("%3$s") center / 20px 20px no-repeat; mask: url("%3$s") center / 20px 20px no-repeat; }'
+			// No transition: WordPress fades `:before` over 100 ms, and while the
+			// mask is already gone the fading fill shows as a pale box behind
+			// the coloured mark. The swap is instant instead.
+			'%1$s%2$s { content: ""; background-color: currentColor; -webkit-mask: url("%3$s") center / 20px 20px no-repeat; mask: url("%3$s") center / 20px 20px no-repeat; transition: none; }'
 			. ' %1$s:hover%2$s, %1$s a:focus%2$s, %1$s.opensub%2$s, %1$s.current%2$s, %1$s.wp-has-current-submenu%2$s { background: url("%4$s") center / 20px 20px no-repeat; -webkit-mask: none; mask: none; }',
 			$entry,
 			$box,
