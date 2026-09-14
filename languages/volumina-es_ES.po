@@ -1,5 +1,3 @@
-# Copyright (C) 2026 TUNET
-# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Volumina 1.0.0\n"
@@ -9,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es_ES\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "POT-Creation-Date: 2026-09-06T18:10:57+00:00\n"
 "PO-Revision-Date: 2026-09-06 18:12+0000\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: hand translation, WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
 
@@ -57,66 +55,65 @@ msgstr "Restringido — solo quienes lo hayan recibido"
 msgid "Public books"
 msgstr "Libros públicos"
 
-#: src/Admin/BookMetaBox.php:55
+#: src/Admin/BookMetaBox.php:51
 msgid "Audiobook details"
 msgstr "Detalles del audiolibro"
 
-#: src/Admin/BookMetaBox.php:201
+#: src/PostTypes/Book.php:64
 msgid "Remove cover"
 msgstr "Quitar portada"
 
-#: src/Admin/BookMetaBox.php:264
+#: src/Admin/BookMetaBox.php:195
 msgid "Narrator"
 msgstr "Narrador"
 
-#: src/Admin/BookMetaBox.php:265
+#: src/Admin/BookMetaBox.php:196
 msgid "Who reads the book aloud."
 msgstr "Quién lee el libro en voz alta."
 
-#: src/Admin/BookMetaBox.php:268
+#: src/Admin/BookMetaBox.php:199
 #: src/Frontend/Audiobook.php:109
 msgid "Publisher"
 msgstr "Editorial"
 
-#: src/Admin/BookMetaBox.php:269
+#: src/Admin/BookMetaBox.php:200
 msgid "Who published this recording."
 msgstr "Quién publicó esta grabación."
 
-#: src/Admin/BookMetaBox.php:272
+#: src/Admin/BookMetaBox.php:203
 #: src/Frontend/Audiobook.php:115
 msgid "ISBN"
 msgstr "ISBN"
 
-#: src/Admin/BookMetaBox.php:273
+#: src/Admin/BookMetaBox.php:204
 msgid "Of this edition, if it has one."
 msgstr "De esta edición, si tiene."
 
-#: src/Admin/BookMetaBox.php:276
+#: src/Admin/BookMetaBox.php:207
 msgid "Language"
 msgstr "Idioma"
 
-#: src/Admin/BookMetaBox.php:277
+#: src/Admin/BookMetaBox.php:208
 msgid "The language it is read in, as a locale code such as es_ES."
 msgstr "El idioma en que está leído, como código de configuración regional, por ejemplo es_ES."
 
-#: src/Admin/BookMetaBox.php:280
+#: src/Admin/BookMetaBox.php:211
 msgid "Total duration"
 msgstr "Duración total"
 
-#: src/Admin/BookMetaBox.php:281
+#: src/Admin/BookMetaBox.php:212
 msgid "In whole seconds. Leave at zero and the chapters will answer for it."
 msgstr "En segundos enteros. Déjalo en cero y responderán por él los capítulos."
 
-#: src/Admin/BookMetaBox.php:284
+#: src/Admin/BookMetaBox.php:215
 #: src/Admin/PostScreenHelp.php:87
 msgid "Who can listen"
 msgstr "Quién puede escuchar"
 
-#: src/Admin/BookMetaBox.php:285
+#: src/Admin/BookMetaBox.php:216
 msgid "A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back."
 msgstr "Un libro restringido sigue apareciendo en el sitio con sus capítulos y su portada. Solo se retiene el audio."
 
-#: src/Admin/BookMetaBox.php:288
 #: blocks/audiobook/index.js:26
 msgid "Cover"
 msgstr "Portada"
@@ -380,63 +377,31 @@ msgstr "Un capítulo es un título, un archivo de audio y un lugar dentro de un 
 msgid "The running time is in whole seconds. Leave it at zero if you do not know it; the player still works, and the chapter simply shows no time next to it."
 msgstr "La duración va en segundos enteros. Déjala en cero si no la sabes; el reproductor sigue funcionando y el capítulo simplemente no muestra ningún tiempo al lado."
 
-#: src/Admin/ProScreen.php:38
+#: src/Admin/ProScreen.php:47
 msgid "Volumina Pro"
 msgstr "Volumina Pro"
 
-#: src/Admin/ProScreen.php:45
+#: src/Admin/ProScreen.php:54
 msgid "Pro"
 msgstr "Pro"
 
-#: src/Admin/ProScreen.php:71
-msgid "Volumina publishes audiobooks and plays them. Volumina Pro is a separate plugin, for selling them."
-msgstr "Volumina publica audiolibros y los reproduce. Volumina Pro es un plugin aparte, para venderlos."
-
-#: src/Admin/ProScreen.php:84
+#: src/Admin/ProScreen.php:140
 msgid "What it does not do"
 msgstr "Lo que no hace"
 
-#: src/Admin/ProScreen.php:85
+#: src/Admin/ProScreen.php:141
 msgid "It does not protect audio from being copied, and neither does anything else. A browser has to be able to play a file to play it, and a file a browser can play can be saved. Pro signs its URLs so they expire, which discourages passing a link around; anyone who tells you they can do more than that is selling you something that does not exist."
 msgstr "No impide que se copie el audio, y nada lo impide. Un navegador tiene que poder reproducir un archivo para reproducirlo, y un archivo que un navegador puede reproducir se puede guardar. Pro firma sus URLs para que caduquen, lo que desanima a pasar un enlace de mano en mano; quien te diga que puede hacer más que eso te está vendiendo algo que no existe."
 
-#: src/Admin/ProScreen.php:91
-msgid "Read more at tunetdesign.com"
-msgstr "Más información en tunetdesign.com"
-
-#: src/Admin/ProScreen.php:105
-msgid "Selling"
-msgstr "Venta"
-
-#: src/Admin/ProScreen.php:106
-msgid "WooCommerce and Easy Digital Downloads decide who may listen, through the access providers this plugin already asks."
-msgstr "WooCommerce y Easy Digital Downloads deciden quién puede escuchar, a través de los proveedores de acceso que este plugin ya consulta."
-
-#: src/Admin/ProScreen.php:109
-msgid "Signed audio URLs"
-msgstr "URLs de audio firmadas"
-
-#: src/Admin/ProScreen.php:110
-msgid "Links that expire, so one shared address does not become a public library."
-msgstr "Enlaces que caducan, para que una dirección compartida no se convierta en una biblioteca pública."
-
-#: src/Admin/ProScreen.php:113
+#: src/Admin/ProScreen.php:190
 msgid "Series and bundles"
 msgstr "Series y packs"
 
-#: src/Admin/ProScreen.php:114
-msgid "Sell a series as one purchase, and give listeners everything in it."
-msgstr "Vende una serie como una sola compra y da a quien escucha todo lo que contiene."
-
-#: src/Admin/ProScreen.php:117
+#: src/Admin/ProScreen.php:200
 msgid "Listening reports"
 msgstr "Informes de escucha"
 
-#: src/Admin/ProScreen.php:118
-msgid "Which books are finished, which are abandoned, and where."
-msgstr "Qué libros se terminan, cuáles se abandonan y por dónde."
-
-#: src/Admin/ScreenRegistry.php:114
+#: src/Admin/ScreenRegistry.php:120
 msgid "You are not allowed to view this page."
 msgstr "No tienes permiso para ver esta página."
 
@@ -607,24 +572,24 @@ msgid "Choose an audiobook to list the chapters of."
 msgstr "Elige un audiolibro para listar sus capítulos."
 
 #. translators: %s: chapter title.
-#: src/Frontend/Assets.php:107
+#: src/Frontend/Assets.php:129
 #, php-format
 msgid "In %s"
 msgstr "En %s"
 
 #. translators: %s: a position in a chapter, as h:mm:ss.
 #. translators: %s: a position, as h:mm:ss.
-#: src/Frontend/Assets.php:109
+#: src/Frontend/Assets.php:131
 #: templates/continue.php:66
 #, php-format
 msgid "at %s"
 msgstr "en %s"
 
-#: src/Frontend/Assets.php:110
+#: src/Frontend/Assets.php:132
 msgid "Carry on listening"
 msgstr "Seguir escuchando"
 
-#: src/Frontend/Assets.php:111
+#: src/Frontend/Assets.php:133
 #: templates/continue.php:79
 msgid "Nothing started yet. Books you begin will appear here."
 msgstr "Todavía no has empezado nada. Los libros que empieces aparecerán aquí."
@@ -634,7 +599,7 @@ msgid "Narrated by"
 msgstr "Narrado por"
 
 #: src/Player/Player.php:82
-#: templates/player.php:91
+#: templates/player.php:94
 msgid "Play"
 msgstr "Reproducir"
 
@@ -728,118 +693,118 @@ msgstr "Alguien no pudo escuchar un capítulo."
 msgid "A chapter's audio file is missing or unreadable."
 msgstr "Falta el archivo de audio de un capítulo o no se puede leer."
 
-#: src/PostTypes/Book.php:42
+#: src/PostTypes/Book.php:43
 msgctxt "post type general name"
 msgid "Audiobooks"
 msgstr "Audiolibros"
 
-#: src/PostTypes/Book.php:43
+#: src/PostTypes/Book.php:44
 msgctxt "post type singular name"
 msgid "Audiobook"
 msgstr "Audiolibro"
 
-#: src/PostTypes/Book.php:44
+#: src/PostTypes/Book.php:45
 msgid "Add Audiobook"
 msgstr "Añadir audiolibro"
 
-#: src/PostTypes/Book.php:45
+#: src/PostTypes/Book.php:46
 msgid "Add New Audiobook"
 msgstr "Añadir nuevo audiolibro"
 
-#: src/PostTypes/Book.php:46
+#: src/PostTypes/Book.php:47
 msgid "Edit Audiobook"
 msgstr "Editar audiolibro"
 
-#: src/PostTypes/Book.php:47
+#: src/PostTypes/Book.php:48
 msgid "New Audiobook"
 msgstr "Nuevo audiolibro"
 
-#: src/PostTypes/Book.php:48
+#: src/PostTypes/Book.php:49
 msgid "View Audiobook"
 msgstr "Ver audiolibro"
 
-#: src/PostTypes/Book.php:49
+#: src/PostTypes/Book.php:50
 msgid "View Audiobooks"
 msgstr "Ver audiolibros"
 
-#: src/PostTypes/Book.php:50
+#: src/PostTypes/Book.php:51
 msgid "Search Audiobooks"
 msgstr "Buscar audiolibros"
 
-#: src/PostTypes/Book.php:51
+#: src/PostTypes/Book.php:52
 msgid "No audiobooks found."
 msgstr "No se han encontrado audiolibros."
 
-#: src/PostTypes/Book.php:52
+#: src/PostTypes/Book.php:53
 msgid "No audiobooks found in Trash."
 msgstr "No se han encontrado audiolibros en la papelera."
 
-#: src/PostTypes/Book.php:53
+#: src/PostTypes/Book.php:54
 msgid "All Audiobooks"
 msgstr "Todos los audiolibros"
 
-#: src/PostTypes/Book.php:54
+#: src/PostTypes/Book.php:55
 msgid "Audiobook Archives"
 msgstr "Archivos de audiolibros"
 
-#: src/PostTypes/Book.php:55
+#: src/PostTypes/Book.php:56
 msgid "Audiobook Attributes"
 msgstr "Atributos del audiolibro"
 
-#: src/PostTypes/Book.php:56
+#: src/PostTypes/Book.php:57
 msgid "Insert into audiobook"
 msgstr "Insertar en el audiolibro"
 
-#: src/PostTypes/Book.php:57
+#: src/PostTypes/Book.php:58
 msgid "Uploaded to this audiobook"
 msgstr "Subido a este audiolibro"
 
-#: src/PostTypes/Book.php:58
+#: src/PostTypes/Book.php:59
 msgid "Audiobook published."
 msgstr "Audiolibro publicado."
 
-#: src/PostTypes/Book.php:59
+#: src/PostTypes/Book.php:60
 msgid "Audiobook updated."
 msgstr "Audiolibro actualizado."
 
-#: src/PostTypes/Book.php:60
+#: src/PostTypes/Book.php:61
 msgctxt "admin menu"
 msgid "Audiobooks"
 msgstr "Audiolibros"
 
-#: src/PostTypes/Book.php:61
+#: src/PostTypes/Book.php:66
 msgid "Audiobook Link"
 msgstr "Enlace del audiolibro"
 
-#: src/PostTypes/Book.php:62
+#: src/PostTypes/Book.php:67
 msgid "A link to an audiobook."
 msgstr "Un enlace a un audiolibro."
 
-#: src/PostTypes/Book.php:69
+#: src/PostTypes/Book.php:74
 msgid "An audiobook and the metadata that describes it."
 msgstr "Un audiolibro y los metadatos que lo describen."
 
-#: src/PostTypes/Book.php:143
+#: src/PostTypes/Book.php:226
 msgid "Who reads the book."
 msgstr "Quién lee el libro."
 
-#: src/PostTypes/Book.php:149
+#: src/PostTypes/Book.php:232
 msgid "Who published the recording."
 msgstr "Quién publicó la grabación."
 
-#: src/PostTypes/Book.php:155
+#: src/PostTypes/Book.php:238
 msgid "ISBN of the edition, if it has one."
 msgstr "ISBN de la edición, si tiene."
 
-#: src/PostTypes/Book.php:161
+#: src/PostTypes/Book.php:244
 msgid "Language the book is read in, as a locale code such as es_ES."
 msgstr "Idioma en que está leído el libro, como código de configuración regional, por ejemplo es_ES."
 
-#: src/PostTypes/Book.php:167
+#: src/PostTypes/Book.php:250
 msgid "Total running time in whole seconds."
 msgstr "Duración total en segundos enteros."
 
-#: src/PostTypes/Book.php:173
+#: src/PostTypes/Book.php:256
 msgid "Who may listen: public, or restricted to listeners who have been granted it."
 msgstr "Quién puede escuchar: público, o restringido a quienes lo hayan recibido."
 
@@ -1034,7 +999,7 @@ msgstr "No se han encontrado series."
 msgid "Series"
 msgstr "Series"
 
-#: src/Storage/Migrator.php:72
+#: src/Storage/Migrator.php:149
 msgid "The database was brought up to date."
 msgstr "La base de datos se ha puesto al día."
 
@@ -1075,32 +1040,32 @@ msgstr[0] "Atrás %d segundo"
 msgstr[1] "Atrás %d segundos"
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:100
+#: templates/player.php:103
 #, php-format
 msgid "Forward %d second"
 msgid_plural "Forward %d seconds"
 msgstr[0] "Adelante %d segundo"
 msgstr[1] "Adelante %d segundos"
 
-#: templates/player.php:109
+#: templates/player.php:112
 msgid "Next chapter"
 msgstr "Capítulo siguiente"
 
-#: templates/player.php:115
+#: templates/player.php:118
 msgid "Position in this chapter"
 msgstr "Posición en este capítulo"
 
-#: templates/player.php:136
+#: templates/player.php:139
 msgid "Speed"
 msgstr "Velocidad"
 
 #. translators: %s: a playback speed, such as 1.5.
-#: templates/player.php:147
+#: templates/player.php:150
 #, php-format
 msgid "%s×"
 msgstr "%s×"
 
-#: templates/player.php:158
+#: templates/player.php:161
 msgid "Sleep timer"
 msgstr "Temporizador de apagado"
 
@@ -1245,15 +1210,63 @@ msgctxt "block keyword"
 msgid "listening"
 msgstr "escuchar"
 
-#: src/PostTypes/Book.php
+#: src/PostTypes/Book.php:62
 msgctxt "the featured image of an audiobook"
 msgid "Cover"
 msgstr "Portada"
 
-#: src/PostTypes/Book.php
+#: src/PostTypes/Book.php:63
 msgid "Set cover"
 msgstr "Elegir portada"
 
-#: src/PostTypes/Book.php
+#: src/PostTypes/Book.php:65
 msgid "Use as cover"
 msgstr "Usar como portada"
+
+#: src/Admin/ProScreen.php:122
+msgid "Coming soon"
+msgstr "Próximamente"
+
+#: src/Admin/ProScreen.php:126
+msgid "Sell your audiobooks with the player you already have. A separate plugin; Volumina stays free."
+msgstr "Vende tus audiolibros con el reproductor que ya tienes. Un plugin aparte; Volumina sigue siendo gratuito."
+
+#: src/Admin/ProScreen.php:157
+msgid "Tell me when it is ready"
+msgstr "Avísame cuando esté listo"
+
+#: src/Admin/ProScreen.php:158
+msgid "(opens tunetdesign.com in a new tab)"
+msgstr "(abre tunetdesign.com en una pestaña nueva)"
+
+#: src/Admin/ProScreen.php:180
+msgid "Sell with WooCommerce and EDD"
+msgstr "Vende con WooCommerce y EDD"
+
+#: src/Admin/ProScreen.php:181
+msgid "Whoever buys, listens. Nothing more to set up."
+msgstr "Quien compra, escucha. No hay nada más que configurar."
+
+#: src/Admin/ProScreen.php:185
+msgid "Audio links that expire"
+msgstr "Enlaces de audio que caducan"
+
+#: src/Admin/ProScreen.php:186
+msgid "Signed URLs: a shared link stops working within hours."
+msgstr "URLs firmadas: un enlace compartido deja de funcionar en cuestión de horas."
+
+#: src/Admin/ProScreen.php:191
+msgid "Sell a whole series in one purchase."
+msgstr "Vende una serie entera en una sola compra."
+
+#: src/Admin/ProScreen.php:195
+msgid "Templates and styles"
+msgstr "Plantillas y estilos"
+
+#: src/Admin/ProScreen.php:196
+msgid "Featured templates, colours, typography and layouts for the block and the player."
+msgstr "Plantillas destacadas, colores, tipografía y disposiciones para el bloque y el reproductor."
+
+#: src/Admin/ProScreen.php:201
+msgid "Which books get finished, which get abandoned, and at which chapter."
+msgstr "Qué libros se terminan, cuáles se abandonan y en qué capítulo."

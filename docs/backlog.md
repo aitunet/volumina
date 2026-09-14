@@ -109,3 +109,28 @@
   link to the setup and to the guide. Distinct from the setup wizard, which
   asks questions; this one explains. Registered through the screen registry
   so Pro can add its own section.
+
+> The three above entered 1.0 on 2026-09-14 as S7 — Presentation. See `docs/decisions.md`.
+
+## Asked for 2026-09-14, by the account holder, while S7 was in flight
+
+- **An animated directory icon.** The mark in motion: the shelf appears, then
+  the five spines rise from it like a volume meter. The directory takes
+  `icon-256x256.gif` and `icon-128x128.gif`, so an animated GIF is allowed
+  (banners are PNG or JPG only). Two better routes than a GIF: `icon.svg`
+  with a CSS animation inside it — the directory accepts `icon.svg` and
+  renders it as an `<img>`, where CSS and SMIL animation run and scripts do
+  not; crisp at every size, and the PNG stays as the required fallback — or
+  the same animated SVG on the welcome page (S7) and as the player's
+  "playing" indicator, where it is seen far more often than in a search
+  result. Whichever, it plays once and stops: a looping icon in the plugin
+  list is a distraction, and the directory's tiles are seen dozens at a time.
+  Not in S7: S7 was in flight when it was asked for.
+- **A guided tour of the admin.** Three or four steps, once, dismissible,
+  through WordPress's own pointers (`wp-pointer`, stored per user in
+  `dismissed_wp_pointers`): the menu entry, the audiobook screen, the
+  chapter list, the blocks. Native, no dependency. Doubt worth settling
+  first: S5 already ships a setup wizard, help tabs and a description under
+  every field, and S7 adds a welcome page with the three steps to a first
+  audiobook; a fourth onboarding layer is one more thing every new user has
+  to dismiss. Decide after the welcome page exists and has been looked at.

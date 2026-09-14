@@ -9,11 +9,11 @@
 
 ## Right now
 
-**Current slice:** S7 — Presentation, the last before submission. First task: the Pro screen, starting with its design.
-**Next action:** design pass for the Pro screen with the account holder — what Pro adds, how it is shown, the call to action — then build it. After S7: the account holder's checks (real phone, real hosting) and the submission — upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, then `.wordpress-org/` into SVN's `assets/`. Rebuild the zip with `php bin/build-release.php` (`--composer="php /path/to/composer.phar"` where Composer is not on the PATH) after any change.
+**Current slice:** S7 — Presentation, the last before submission. The Pro screen is built, verified and translated; the direction (dark hero, cards and note in the admin's own style) was confirmed by the account holder on 2026-09-14.
+**Next action:** the account holder looks at the Pro screen in their own admin — Audiobooks → Pro on `testing-site.local`, already deployed — and says yes or asks for changes. Then the welcome page: a design pass with them first (what it says, the three steps, where it lives in the menu), then code. After S7: the account holder's checks (real phone, real hosting) and the submission — upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, then `.wordpress-org/` into SVN's `assets/`. Rebuild the zip with `php bin/build-release.php` (`--composer="php /path/to/composer.phar"` where Composer is not on the PATH) after any change.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-14, TUNET
+**Last updated:** 2026-09-14, TUNET, Pro screen done
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -133,7 +133,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 
 Three things the account holder wants in the first version people see. Each begins with a design pass agreed with them, then code. Order: Pro screen, welcome page, template.
 
-- [ ] **Pro screen, eye-catching.** Purely presentational: a hero, the mark, what Pro adds shown with illustrations or screenshots, one call to action. Zero inputs, zero disabled controls — the directory forbids locked functionality.
+- [x] **Pro screen, eye-catching.** Purely presentational: a hero, the mark, what Pro adds shown with illustrations or screenshots, one call to action. Zero inputs, zero disabled controls — the directory forbids locked functionality. Built and verified 2026-09-14: dark hero, five illustrated cards, the note, one call to action as a link; zero axe violations in the real admin, phone layout checked, translated. Awaiting the account holder's look at the real screen.
 - [ ] **Welcome page.** Shown once after activation, reachable later from the menu: what the plugin is and is not (no store, no DRM), three steps to a first audiobook, links to the setup and the guide. Registered through the screen registry so Pro can add a section.
 - [ ] **Basic audiobook template, customisable, with the seam for Pro's.** One free template for a book page — which details show, where the cover sits, an accent from the theme's palette — and a documented registry or filter in `docs/api.md` through which Pro registers its featured templates with advanced styling. Settle the shape of "basic" versus "advanced" once, in the design pass.
 - [ ] `.pot` regenerated, `es_ES` and `pt_BR` complete for every new string, zip rebuilt.

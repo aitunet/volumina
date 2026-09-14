@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Volumina 1.0.0\n"
-"Report-Msgid-Bugs-To: https://tunetdesign.com\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/volumina\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-11T17:58:08+00:00\n"
+"POT-Creation-Date: 2026-09-14T22:57:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -369,63 +369,79 @@ msgstr ""
 msgid "The running time is in whole seconds. Leave it at zero if you do not know it; the player still works, and the chapter simply shows no time next to it."
 msgstr ""
 
-#: src/Admin/ProScreen.php:38
+#: src/Admin/ProScreen.php:47
 msgid "Volumina Pro"
 msgstr ""
 
-#: src/Admin/ProScreen.php:45
+#: src/Admin/ProScreen.php:54
 msgid "Pro"
 msgstr ""
 
-#: src/Admin/ProScreen.php:71
-msgid "Volumina publishes audiobooks and plays them. Volumina Pro is a separate plugin, for selling them."
+#: src/Admin/ProScreen.php:122
+msgid "Coming soon"
 msgstr ""
 
-#: src/Admin/ProScreen.php:84
+#: src/Admin/ProScreen.php:126
+msgid "Sell your audiobooks with the player you already have. A separate plugin; Volumina stays free."
+msgstr ""
+
+#: src/Admin/ProScreen.php:140
 msgid "What it does not do"
 msgstr ""
 
-#: src/Admin/ProScreen.php:85
+#: src/Admin/ProScreen.php:141
 msgid "It does not protect audio from being copied, and neither does anything else. A browser has to be able to play a file to play it, and a file a browser can play can be saved. Pro signs its URLs so they expire, which discourages passing a link around; anyone who tells you they can do more than that is selling you something that does not exist."
 msgstr ""
 
-#: src/Admin/ProScreen.php:91
-msgid "Read more at tunetdesign.com"
+#: src/Admin/ProScreen.php:157
+msgid "Tell me when it is ready"
 msgstr ""
 
-#: src/Admin/ProScreen.php:105
-msgid "Selling"
+#: src/Admin/ProScreen.php:158
+msgid "(opens tunetdesign.com in a new tab)"
 msgstr ""
 
-#: src/Admin/ProScreen.php:106
-msgid "WooCommerce and Easy Digital Downloads decide who may listen, through the access providers this plugin already asks."
+#: src/Admin/ProScreen.php:180
+msgid "Sell with WooCommerce and EDD"
 msgstr ""
 
-#: src/Admin/ProScreen.php:109
-msgid "Signed audio URLs"
+#: src/Admin/ProScreen.php:181
+msgid "Whoever buys, listens. Nothing more to set up."
 msgstr ""
 
-#: src/Admin/ProScreen.php:110
-msgid "Links that expire, so one shared address does not become a public library."
+#: src/Admin/ProScreen.php:185
+msgid "Audio links that expire"
 msgstr ""
 
-#: src/Admin/ProScreen.php:113
+#: src/Admin/ProScreen.php:186
+msgid "Signed URLs: a shared link stops working within hours."
+msgstr ""
+
+#: src/Admin/ProScreen.php:190
 msgid "Series and bundles"
 msgstr ""
 
-#: src/Admin/ProScreen.php:114
-msgid "Sell a series as one purchase, and give listeners everything in it."
+#: src/Admin/ProScreen.php:191
+msgid "Sell a whole series in one purchase."
 msgstr ""
 
-#: src/Admin/ProScreen.php:117
+#: src/Admin/ProScreen.php:195
+msgid "Templates and styles"
+msgstr ""
+
+#: src/Admin/ProScreen.php:196
+msgid "Featured templates, colours, typography and layouts for the block and the player."
+msgstr ""
+
+#: src/Admin/ProScreen.php:200
 msgid "Listening reports"
 msgstr ""
 
-#: src/Admin/ProScreen.php:118
-msgid "Which books are finished, which are abandoned, and where."
+#: src/Admin/ProScreen.php:201
+msgid "Which books get finished, which get abandoned, and at which chapter."
 msgstr ""
 
-#: src/Admin/ScreenRegistry.php:114
+#: src/Admin/ScreenRegistry.php:120
 msgid "You are not allowed to view this page."
 msgstr ""
 
@@ -596,24 +612,24 @@ msgid "Choose an audiobook to list the chapters of."
 msgstr ""
 
 #. translators: %s: chapter title.
-#: src/Frontend/Assets.php:107
+#: src/Frontend/Assets.php:129
 #, php-format
 msgid "In %s"
 msgstr ""
 
 #. translators: %s: a position in a chapter, as h:mm:ss.
 #. translators: %s: a position, as h:mm:ss.
-#: src/Frontend/Assets.php:109
+#: src/Frontend/Assets.php:131
 #: templates/continue.php:66
 #, php-format
 msgid "at %s"
 msgstr ""
 
-#: src/Frontend/Assets.php:110
+#: src/Frontend/Assets.php:132
 msgid "Carry on listening"
 msgstr ""
 
-#: src/Frontend/Assets.php:111
+#: src/Frontend/Assets.php:133
 #: templates/continue.php:79
 msgid "Nothing started yet. Books you begin will appear here."
 msgstr ""
@@ -825,27 +841,27 @@ msgstr ""
 msgid "An audiobook and the metadata that describes it."
 msgstr ""
 
-#: src/PostTypes/Book.php:217
+#: src/PostTypes/Book.php:226
 msgid "Who reads the book."
 msgstr ""
 
-#: src/PostTypes/Book.php:223
+#: src/PostTypes/Book.php:232
 msgid "Who published the recording."
 msgstr ""
 
-#: src/PostTypes/Book.php:229
+#: src/PostTypes/Book.php:238
 msgid "ISBN of the edition, if it has one."
 msgstr ""
 
-#: src/PostTypes/Book.php:235
+#: src/PostTypes/Book.php:244
 msgid "Language the book is read in, as a locale code such as es_ES."
 msgstr ""
 
-#: src/PostTypes/Book.php:241
+#: src/PostTypes/Book.php:250
 msgid "Total running time in whole seconds."
 msgstr ""
 
-#: src/PostTypes/Book.php:247
+#: src/PostTypes/Book.php:256
 msgid "Who may listen: public, or restricted to listeners who have been granted it."
 msgstr ""
 
