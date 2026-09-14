@@ -79,7 +79,7 @@ final class Assets implements Registrable {
 			true
 		);
 
-		wp_localize_script( self::PLAYER, 'voluminaPlayer', Player::settings() );
+		self::hand_over( self::PLAYER, 'voluminaPlayer', Player::settings() );
 
 		wp_register_script(
 			self::CONTINUE,
@@ -89,7 +89,29 @@ final class Assets implements Registrable {
 			true
 		);
 
-		wp_localize_script( self::CONTINUE, 'voluminaContinue', self::continue_settings() );
+		self::hand_over( self::CONTINUE, 'voluminaContinue', self::continue_settings() );
+	}
+
+	/**
+	 * Gives a script its settings with their types intact.
+	 *
+	 * Not `wp_localize_script()`: that function was written for translated
+	 * strings and casts every scalar to a string on the way out, so a skip of
+	 * `30` arrives as `"30"`, and `currentTime + "30"` in JavaScript is a
+	 * concatenation that moves nothing. `wp_json_encode()` keeps an integer an
+	 * integer and a boolean a boolean, and escapes `/`, so a `</script>` inside
+	 * a translated string cannot close the tag.
+	 *
+	 * @param string               $handle Script handle.
+	 * @param string               $name   Global the script reads.
+	 * @param array<string, mixed> $data   What it reads.
+	 */
+	private static function hand_over( string $handle, string $name, array $data ): void {
+		wp_add_inline_script(
+			$handle,
+			sprintf( 'window.%s = %s;', $name, wp_json_encode( $data ) ),
+			'before'
+		);
 	}
 
 	/**

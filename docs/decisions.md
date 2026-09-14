@@ -402,3 +402,23 @@ meta; it no longer exists. One admin script fewer (`admin-book.js`), six
 strings fewer, four new labels. Anything outside the plugin that wrote
 `volumina_cover_id` directly would now be writing to nothing — it was never
 in `docs/api.md`, so nothing documented did.
+
+## 2026-09-14 — Script settings are handed over as JSON, never localised
+
+**Decision.** Anything a script reads from the page that is not a translated
+string — numbers, booleans, URLs, nonces — is printed with
+`wp_add_inline_script()` and `wp_json_encode()`, through `Assets::hand_over()`.
+`wp_localize_script()` is not used for settings anywhere in the plugin.
+
+**Why.** `wp_localize_script()` casts every scalar to a string. The forward
+skip reached the player as `"30"`, `currentTime + "30"` concatenated instead
+of adding, and the button did nothing for three days while the server was
+suspected. `canSync` and `continue.js`'s `active` flag carried the same
+defect, latent. `wp_json_encode()` keeps the types the PHP declared, and
+WordPress's own documentation for `wp_localize_script()` says as much: it is
+for strings, and data belongs in an inline script.
+
+**Consequence.** Scripts may trust the types in `window.voluminaPlayer` and
+`window.voluminaContinue`. `player.js` still coerces the two skip lengths
+with `Number()` at the top, as a second layer, because the cost is one line
+and the failure was silent.

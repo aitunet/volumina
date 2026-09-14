@@ -14,6 +14,10 @@
 	const settings = window.voluminaPlayer || {};
 	const strings = settings.strings || {};
 	const SAVE_EVERY = 10000;
+	// Numbers, whatever the page handed over: a skip that arrives as a
+	// string would be concatenated onto the position rather than added.
+	const SKIP_BACK = Number( settings.skipBack ) || 15;
+	const SKIP_FORWARD = Number( settings.skipForward ) || 30;
 
 	function text( key, ...values ) {
 		let out = strings[ key ] || '';
@@ -470,10 +474,10 @@
 					toggle();
 					break;
 				case 'back':
-					nudge( -( settings.skipBack || 15 ) );
+					nudge( -SKIP_BACK );
 					break;
 				case 'forward':
-					nudge( settings.skipForward || 30 );
+					nudge( SKIP_FORWARD );
 					break;
 				case 'previous':
 					go( -1 );
@@ -623,12 +627,12 @@
 				case 'j':
 				case 'ArrowLeft':
 					event.preventDefault();
-					nudge( -( settings.skipBack || 15 ) );
+					nudge( -SKIP_BACK );
 					break;
 				case 'l':
 				case 'ArrowRight':
 					event.preventDefault();
-					nudge( settings.skipForward || 30 );
+					nudge( SKIP_FORWARD );
 					break;
 				case 'p':
 					event.preventDefault();
@@ -647,8 +651,8 @@
 				pause: () => audio.pause(),
 				previoustrack: () => go( -1 ),
 				nexttrack: () => go( 1 ),
-				seekbackward: () => nudge( -( settings.skipBack || 15 ) ),
-				seekforward: () => nudge( settings.skipForward || 30 ),
+				seekbackward: () => nudge( -SKIP_BACK ),
+				seekforward: () => nudge( SKIP_FORWARD ),
 			};
 
 			Object.keys( handlers ).forEach( function ( action ) {
