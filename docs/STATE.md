@@ -9,13 +9,13 @@
 
 ## Right now
 
-**Current slice:** S6 — Release. Two bugs fixed today, both awaiting the account holder's own eyes.
-**Next action:** the account holder hard-reloads `testing-site.local` and confirms two things: (1) **the +30 s button jumps forward** on the book page — it was `wp_localize_script()` turning `30` into `"30"`, fixed in `852dd0c` and verified here with a real click in a Playwright Chromium; (2) **the Audiobooks menu icon** shows the scheme's colour at rest and its own colours (amber, cream, light shelf) on hover, focus and when active — it is now drawn on the `::before` of an empty `menu_icon => 'none'` box, out of svg-painter's reach; verified in a simulation on WP 7.1's own admin CSS and painter, because no admin login is available to this session. Both files are deployed to the Local site. If either fails for the account holder, get their DevTools view before touching code again.
-Then rebuild the zip (`php bin/build-release.php`, `--composer="php /path/to/composer.phar"` where Composer is not on the PATH — note it already needs rebuilding: the code changed after `dist/volumina-1.0.0.zip` was last built), the remaining hardware checks below, and the submission: upload the zip at wordpress.org/plugins/developers/add/, then put `.wordpress-org/` into SVN's `assets/` once the repository is granted.
+**Current slice:** S6 — Release. Everything this machine can do is done; what is left is in the account holder's hands.
+**Next action:** the account holder's checks and the submission — listen on a real phone, install on real hosting (both under "Left for the account holder" below), then upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/ and, once the repository is granted, put `.wordpress-org/` into SVN's `assets/`. The zip was rebuilt after the last code change (`f9c39ca`) and matches the working tree; rebuild with `php bin/build-release.php` (`--composer="php /path/to/composer.phar"` where Composer is not on the PATH) after any further change. Both bugs from 2026-09-11/14 — the +30 skip and the menu icon — are fixed and confirmed by the account holder in their own browser.
+**Pending decision:** the account holder raised three ideas on 2026-09-14 (an eye-catching Pro screen, free/Pro templates with player styling, a welcome page). They are in `docs/backlog.md`. Whether they go before the 1.0 submission or become the first post-1.0 slice is their call; each one starts with a design pass, not with code.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
 **Last updated:** 2026-09-14, TUNET
 **File scope for this slice** — do not open files outside this list:
-`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`; and if either fix above fails, `assets/js/player.js`, `src/Frontend/Assets.php`, `src/Player/Player.php`, `src/PostTypes/Book.php`
+`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
 ---
 
@@ -24,7 +24,7 @@ Then rebuild the zip (`php bin/build-release.php`, `--composer="php /path/to/com
 **v1.0 is finished when every slice below is checked and the release checklist passes.**
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 5 of 6 slices complete. S6 is finished but for the account holder's confirmation of two fixes made today (forward skip, menu icon) and the submission itself.
+Progress: 5 of 6 slices complete. S6 is finished but for the checks only the account holder can make and the submission itself.
 
 ---
 
