@@ -36,6 +36,7 @@ final class Plugin {
 		Admin\ScreenRegistry::class,
 		Admin\Screens::class,
 		Admin\SetupNotice::class,
+		Admin\WelcomeRedirect::class,
 		Admin\PostScreenHelp::class,
 		Admin\BookMetaBox::class,
 		Admin\ChapterList::class,

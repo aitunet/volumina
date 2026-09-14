@@ -41,6 +41,7 @@ final class Screens implements Registrable {
 		$registry->add( new SettingsScreen() );
 		$registry->add( new LogScreen() );
 		$registry->add( new SetupScreen() );
+		$registry->add( new WelcomeScreen() );
 		$registry->add( new ProScreen() );
 	}
 }

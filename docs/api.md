@@ -210,6 +210,35 @@ moment `get_current_screen()` is available and still accepting tabs, `enqueue()`
 enough for a stylesheet to print in the head rather than trail in the footer after the
 page has been drawn unstyled. Nothing a screen enqueues reaches any other screen.
 
+### `volumina_welcome_sections`
+
+Action. Fires while the welcome page — Audiobooks → Welcome, and where a new site lands
+once after activation — is being drawn, with its `Sections` as the only argument. Add
+a section and it is drawn after the plugin's own, as a heading and whatever the
+callable echoes.
+
+```php
+add_action( 'volumina_welcome_sections', function ( $sections ) {
+	$sections->add( 'my-plugin', __( 'What My Plugin adds', 'my-plugin' ), function () {
+		echo '<p>' . esc_html__( 'Selling is on. Every purchase grants its book.', 'my-plugin' ) . '</p>';
+	} );
+} );
+```
+
+`TUNET\Volumina\Admin\Sections` is plain PHP: sections come back in the order they were
+added; an id names one section only, so adding an id again replaces that section where
+it stands; an empty id throws. The id becomes part of the section's `id` attribute, so
+prefix it with your own slug. The callable is responsible for escaping everything it
+echoes.
+
+```php
+final class Sections {
+	public function add( string $id, string $title, callable $render ): void;
+	public function has( string $id ): bool;
+	public function all(): array;   // [ { id, title, render }, … ] in order
+}
+```
+
 ### `volumina_register_admin_screens`
 
 Action. Fires on `admin_menu`, with the `ScreenRegistry` as its only argument. Screens

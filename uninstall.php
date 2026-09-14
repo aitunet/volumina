@@ -82,3 +82,8 @@ foreach (
 ) {
 	delete_option( $volumina_option );
 }
+
+// The welcome redirect's minute-long transient, in case it is still there.
+delete_transient( 'volumina_welcome_redirect' );
+
+delete_transient( 'volumina_welcome_redirect' );

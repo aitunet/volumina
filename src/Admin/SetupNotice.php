@@ -64,6 +64,10 @@ final class SetupNotice implements Registrable {
 			return true;
 		}
 
-		return str_contains( $screen_id, 'volumina' ) && ! str_contains( $screen_id, 'volumina-setup' );
+		// Not on the setup screen, which is where the notice sends people, and not
+		// on the welcome page, whose hero already says this.
+		return str_contains( $screen_id, 'volumina' )
+			&& ! str_contains( $screen_id, 'volumina-setup' )
+			&& ! str_contains( $screen_id, WelcomeScreen::SLUG );
 	}
 }
