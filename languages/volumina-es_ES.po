@@ -442,6 +442,7 @@ msgstr "Ajustes de Volumina"
 
 #: src/Admin/SettingsScreen.php:43
 #: src/Admin/SetupScreen.php:208
+#: src/Admin/WelcomeScreen.php:251
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -495,6 +496,7 @@ msgstr "Volumina está instalado y todavía no se ha configurado. Son dos pregun
 
 #: src/Admin/SetupNotice.php:53
 #: src/Admin/SetupScreen.php:51
+#: src/Admin/WelcomeScreen.php:165
 msgid "Set up Volumina"
 msgstr "Configurar Volumina"
 
@@ -1236,6 +1238,7 @@ msgid "Tell me when it is ready"
 msgstr "Avísame cuando esté listo"
 
 #: src/Admin/ProScreen.php:158
+#: src/Admin/WelcomeScreen.php:242
 msgid "(opens tunetdesign.com in a new tab)"
 msgstr "(abre tunetdesign.com en una pestaña nueva)"
 
@@ -1270,3 +1273,116 @@ msgstr "Plantillas destacadas, colores, tipografía y disposiciones para el bloq
 #: src/Admin/ProScreen.php:201
 msgid "Which books get finished, which get abandoned, and at which chapter."
 msgstr "Qué libros se terminan, cuáles se abandonan y en qué capítulo."
+
+#: src/Admin/WelcomeScreen.php:53
+msgid "Welcome to Volumina"
+msgstr "Bienvenido a Volumina"
+
+#: src/Admin/WelcomeScreen.php:60
+msgid "Welcome"
+msgstr "Bienvenida"
+
+#: src/Admin/WelcomeScreen.php:101
+msgid "Three steps to your first audiobook"
+msgstr "Tres pasos hasta tu primer audiolibro"
+
+#: src/Admin/WelcomeScreen.php:102
+msgid "What it is, and what it is not"
+msgstr "Lo que es, y lo que no es"
+
+#: src/Admin/WelcomeScreen.php:103
+msgid "Where to go next"
+msgstr "Por dónde seguir"
+
+#: src/Admin/WelcomeScreen.php:141
+msgid "Publish audiobooks on your site and give listeners a real listening experience: chapters, a position that is remembered, playback speed, a sleep timer."
+msgstr "Publica audiolibros en tu sitio y dale a quien escucha una experiencia de verdad: capítulos, una posición que se recuerda, velocidad de reproducción, temporizador de sueño."
+
+#: src/Admin/WelcomeScreen.php:145
+#: src/Admin/WelcomeScreen.php:172
+msgid "Add an audiobook"
+msgstr "Añadir un audiolibro"
+
+#: src/Admin/WelcomeScreen.php:147
+msgid "Set up Volumina — two questions"
+msgstr "Configurar Volumina: dos preguntas"
+
+#: src/Admin/WelcomeScreen.php:162
+msgid "Set it up"
+msgstr "Configúralo"
+
+#: src/Admin/WelcomeScreen.php:163
+msgid "Two questions: who may listen by default, and whether to keep a log. It takes a minute."
+msgstr "Dos preguntas: quién puede escuchar por defecto y si se guarda un registro. Lleva un minuto."
+
+#: src/Admin/WelcomeScreen.php:165
+msgid "Done."
+msgstr "Hecho."
+
+#: src/Admin/WelcomeScreen.php:169
+msgid "Add an audiobook and its chapters"
+msgstr "Añade un audiolibro y sus capítulos"
+
+#: src/Admin/WelcomeScreen.php:170
+msgid "Title, cover, narrator and the rest on one screen. Each chapter is one audio file from the media library; drag the list to put them in order."
+msgstr "Título, portada, narrador y el resto en una sola pantalla. Cada capítulo es un archivo de audio de la biblioteca de medios; arrastra la lista para ordenarlos."
+
+#: src/Admin/WelcomeScreen.php:176
+msgid "Put it on a page"
+msgstr "Ponlo en una página"
+
+#: src/Admin/WelcomeScreen.php:177
+msgid "Every audiobook has its own page, player included. To place one anywhere else, use the Audiobook, Chapter list and Continue listening blocks in the editor."
+msgstr "Cada audiolibro tiene su propia página, con reproductor. Para ponerlo en cualquier otro sitio, usa los bloques Audiolibro, Lista de capítulos y Seguir escuchando en el editor."
+
+#: src/Admin/WelcomeScreen.php:179
+msgid "All audiobooks"
+msgstr "Todos los audiolibros"
+
+#: src/Admin/WelcomeScreen.php:218
+msgid "It is"
+msgstr "Lo que es"
+
+#: src/Admin/WelcomeScreen.php:219
+msgid "Publishing and playback. A long-form listening experience that music players do not give: chapters, a position remembered for each listener, playback speed, a sleep timer, and blocks for any page."
+msgstr "Publicación y reproducción. Una experiencia de escucha larga que los reproductores de música no dan: capítulos, una posición recordada para cada oyente, velocidad de reproducción, temporizador de sueño y bloques para cualquier página."
+
+#: src/Admin/WelcomeScreen.php:223
+msgid "It is not"
+msgstr "Lo que no es"
+
+#: src/Admin/WelcomeScreen.php:224
+msgid "A store. There is no cart, no checkout and no coupons; selling lives in Volumina Pro, a separate plugin."
+msgstr "Una tienda. No hay carrito, ni pago, ni cupones; vender es cosa de Volumina Pro, un plugin aparte."
+
+#: src/Admin/WelcomeScreen.php:225
+msgid "Nor is it copy protection. A browser has to be able to play a file to play it, so no plugin can stop a file from being saved. Anyone who promises otherwise is selling something that does not exist."
+msgstr "Tampoco es protección contra copia. Un navegador tiene que poder reproducir un archivo para reproducirlo, así que ningún plugin puede impedir que un archivo se guarde. Quien prometa lo contrario está vendiendo algo que no existe."
+
+#: src/Admin/WelcomeScreen.php:238
+msgid "The guide"
+msgstr "La guía"
+
+#: src/Admin/WelcomeScreen.php:239
+msgid "Every screen, every field and the player from the listener's side, step by step."
+msgstr "Cada pantalla, cada campo y el reproductor desde el lado de quien escucha, paso a paso."
+
+#: src/Admin/WelcomeScreen.php:241
+msgid "Read the guide"
+msgstr "Leer la guía"
+
+#: src/Admin/WelcomeScreen.php:246
+msgid "Help, where you are"
+msgstr "Ayuda, donde estés"
+
+#: src/Admin/WelcomeScreen.php:247
+msgid "Every Volumina screen has a Help tab at the top right that explains that screen."
+msgstr "Cada pantalla de Volumina tiene una pestaña Ayuda arriba a la derecha que explica esa pantalla."
+
+#: src/Admin/WelcomeScreen.php:252
+msgid "Who may listen by default, whether to keep a log, and what to remove on uninstall."
+msgstr "Quién puede escuchar por defecto, si se guarda un registro y qué borrar al desinstalar."
+
+#: src/Admin/WelcomeScreen.php:254
+msgid "Open the settings"
+msgstr "Abrir los ajustes"
