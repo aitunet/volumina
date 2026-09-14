@@ -96,6 +96,12 @@ final class ScreenRegistry implements Registrable {
 			if ( is_string( $hook ) && $screen instanceof HasHelp ) {
 				add_action( 'load-' . $hook, array( $screen, 'help' ) );
 			}
+
+			// The same moment serves a stylesheet: `load-{page}` runs before
+			// the head is printed, so what is enqueued here arrives with it.
+			if ( is_string( $hook ) && $screen instanceof HasAssets ) {
+				add_action( 'load-' . $hook, array( $screen, 'enqueue' ) );
+			}
 		}
 	}
 

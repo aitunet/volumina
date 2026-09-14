@@ -26,3 +26,6 @@ Thumbs.db
 
 # Browser test artefacts, written by the Playwright MCP server
 /.playwright-mcp/
+
+# Brainstorming mockups (superpowers visual companion)
+/.superpowers/

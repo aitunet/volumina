@@ -46,6 +46,7 @@ tests
 # Session and test scaffolding that appears while working
 .claude
 .playwright-mcp
+.superpowers
 .env
 .env.local
 *.log

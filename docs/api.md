@@ -189,6 +189,27 @@ The capability is checked twice — once to decide whether to add the page, and 
 the moment of drawing. The check that hid the menu entry is not the one that protects
 the page.
 
+### `HasHelp` and `HasAssets`
+
+Interfaces, `TUNET\Volumina\Admin\HasHelp` and `TUNET\Volumina\Admin\HasAssets`. Both
+are optional additions to `Screen`: a screen that implements neither keeps working
+exactly as it did, which is why they are separate rather than methods of `Screen`.
+
+```php
+interface HasHelp {
+	public function help(): void;     // add help tabs; `Support\Help::add()` does the work
+}
+
+interface HasAssets {
+	public function enqueue(): void;  // wp_enqueue_style() / wp_enqueue_script(); never echo a tag
+}
+```
+
+The registry calls both on `load-{page}`, and only for that page: `help()` at the one
+moment `get_current_screen()` is available and still accepting tabs, `enqueue()` early
+enough for a stylesheet to print in the head rather than trail in the footer after the
+page has been drawn unstyled. Nothing a screen enqueues reaches any other screen.
+
 ### `volumina_register_admin_screens`
 
 Action. Fires on `admin_menu`, with the `ScreenRegistry` as its only argument. Screens
