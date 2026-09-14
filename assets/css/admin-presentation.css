@@ -1,17 +1,18 @@
 /**
- * The Pro screen: a dark hero, then cards and a note in WordPress's own style.
+ * The presentation screens — Pro and Welcome: a dark hero, then cards and a
+ * note in WordPress's own style. One stylesheet, enqueued by each of them.
  *
- * Purely presentational, like the screen itself. Colours: the plugin's ink
+ * Purely presentational, like the screens themselves. Colours: the plugin's ink
  * (#1d2327), amber (#e0a83a) and cream (#f0e8db), on the admin's greys.
  */
 
-.volumina-pro {
+.volumina-presentation {
 	max-width: 1100px;
 }
 
 /* Hero */
 
-.volumina-pro-hero {
+.volumina-hero {
 	display: flex;
 	align-items: center;
 	gap: 28px;
@@ -22,13 +23,13 @@
 	color: #fff;
 }
 
-.volumina-pro-hero img {
+.volumina-hero img {
 	flex: none;
 	width: 96px;
 	height: 96px;
 }
 
-.volumina-pro-hero h1 {
+.volumina-hero h1 {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -41,7 +42,7 @@
 	line-height: 1.2;
 }
 
-.volumina-pro-badge {
+.volumina-badge {
 	padding: 4px 9px;
 	border-radius: 999px;
 	background: #e0a83a;
@@ -52,14 +53,14 @@
 	text-transform: uppercase;
 }
 
-.volumina-pro-hero p {
+.volumina-hero p {
 	max-width: 46em;
 	margin: 0 0 16px;
 	color: #dcdcde;
 	font-size: 15px;
 }
 
-.volumina-pro-cta {
+.volumina-cta {
 	display: inline-block;
 	padding: 9px 16px;
 	border-radius: 4px;
@@ -70,20 +71,20 @@
 	text-decoration: none;
 }
 
-.volumina-pro-cta:hover,
-.volumina-pro-cta:focus {
+.volumina-cta:hover,
+.volumina-cta:focus {
 	background: #f0be5a;
 	color: #1d2327;
 }
 
-.volumina-pro-cta:focus {
+.volumina-cta:focus {
 	outline: none;
 	box-shadow: 0 0 0 2px #1d2327, 0 0 0 4px #f0be5a;
 }
 
 /* Cards */
 
-.volumina-pro-cards {
+.volumina-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	gap: 16px;
@@ -92,7 +93,7 @@
 	list-style: none;
 }
 
-.volumina-pro-card {
+.volumina-card {
 	margin: 0;
 	padding: 20px;
 	border: 1px solid #c3c4c7;
@@ -100,7 +101,7 @@
 	background: #fff;
 }
 
-.volumina-pro-card img {
+.volumina-card img {
 	box-sizing: border-box;
 	width: 64px;
 	height: 64px;
@@ -111,19 +112,19 @@
 	background: #f6f7f7;
 }
 
-.volumina-pro-card h2 {
+.volumina-card h2 {
 	margin: 0 0 6px;
 	font-size: 15px;
 }
 
-.volumina-pro-card p {
+.volumina-card p {
 	margin: 0;
 	color: #50575e;
 }
 
 /* The note */
 
-.volumina-pro-note {
+.volumina-note {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -134,7 +135,7 @@
 	background: #fff;
 }
 
-.volumina-pro-note h2 {
+.volumina-note h2 {
 	margin: 0 0 4px;
 	color: #646970;
 	font-size: 13px;
@@ -142,29 +143,29 @@
 	text-transform: uppercase;
 }
 
-.volumina-pro-note p {
+.volumina-note p {
 	max-width: 60em;
 	margin: 0;
 }
 
-.volumina-pro-note .button {
+.volumina-note .button {
 	flex: none;
 }
 
 @media (max-width: 782px) {
 
-	.volumina-pro-hero,
-	.volumina-pro-note {
+	.volumina-hero,
+	.volumina-note {
 		flex-direction: column;
 		align-items: flex-start;
 	}
 
-	.volumina-pro-hero {
+	.volumina-hero {
 		padding: 24px;
 	}
 
 	/* The admin makes every button 40px tall on a phone; so is this one. */
-	.volumina-pro-cta {
+	.volumina-cta {
 		padding: 11px 16px;
 	}
 }

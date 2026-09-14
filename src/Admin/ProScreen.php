@@ -73,8 +73,8 @@ final class ProScreen implements Screen, HasAssets {
 	 */
 	public function enqueue(): void {
 		wp_enqueue_style(
-			'volumina-admin-pro',
-			plugins_url( 'assets/css/admin-pro.css', PLUGIN_FILE ),
+			'volumina-admin-presentation',
+			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
 			array(),
 			VERSION
 		);
@@ -85,17 +85,17 @@ final class ProScreen implements Screen, HasAssets {
 	 * note about what it will not do. Zero inputs, zero disabled controls.
 	 */
 	public function render(): void {
-		echo '<div class="wrap volumina-pro">';
+		echo '<div class="wrap volumina-presentation">';
 		// Admin notices are inserted after this marker, above the hero.
 		echo '<hr class="wp-header-end">';
 
 		$this->hero();
 
-		echo '<ul class="volumina-pro-cards">';
+		echo '<ul class="volumina-cards">';
 
 		foreach ( $this->cards() as $card ) {
 			printf(
-				'<li class="volumina-pro-card"><img src="%1$s" alt="" width="64" height="64"><h2>%2$s</h2><p>%3$s</p></li>',
+				'<li class="volumina-card"><img src="%1$s" alt="" width="64" height="64"><h2>%2$s</h2><p>%3$s</p></li>',
 				esc_url( $this->image( $card[0] ) ),
 				esc_html( $card[1] ),
 				esc_html( $card[2] )
@@ -113,11 +113,11 @@ final class ProScreen implements Screen, HasAssets {
 	 * The hero: the mark, the name, "coming soon", one promise, the button.
 	 */
 	private function hero(): void {
-		echo '<div class="volumina-pro-hero">';
+		echo '<div class="volumina-hero">';
 		printf( '<img src="%s" alt="" width="96" height="96">', esc_url( $this->image( 'mark' ) ) );
 		echo '<div>';
 		printf(
-			'<h1>%1$s <span class="volumina-pro-badge">%2$s</span></h1>',
+			'<h1>%1$s <span class="volumina-badge">%2$s</span></h1>',
 			esc_html( $this->title() ),
 			esc_html__( 'Coming soon', 'volumina' )
 		);
@@ -125,7 +125,7 @@ final class ProScreen implements Screen, HasAssets {
 			'<p>%s</p>',
 			esc_html__( 'Sell your audiobooks with the player you already have. A separate plugin; Volumina stays free.', 'volumina' )
 		);
-		$this->cta( 'volumina-pro-cta' );
+		$this->cta( 'volumina-cta' );
 		echo '</div>';
 		echo '</div>';
 	}
@@ -134,7 +134,7 @@ final class ProScreen implements Screen, HasAssets {
 	 * What Pro will not do, said plainly, and the button once more.
 	 */
 	private function note(): void {
-		echo '<div class="volumina-pro-note">';
+		echo '<div class="volumina-note">';
 		printf(
 			'<div><h2>%1$s</h2><p>%2$s</p></div>',
 			esc_html__( 'What it does not do', 'volumina' ),
