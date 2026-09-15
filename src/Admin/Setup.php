@@ -31,9 +31,18 @@ final class Setup {
 
 	/**
 	 * Whether the site has been set up.
+	 *
+	 * Recorded on purpose, or implied: the plugin never writes its settings
+	 * option on its own, so a settings row exists only because somebody
+	 * saved the settings form — which is being set up, whether or not the
+	 * record was written at the time.
 	 */
 	public static function finished(): bool {
-		return (bool) get_option( self::DONE_OPTION, false );
+		if ( get_option( self::DONE_OPTION, false ) ) {
+			return true;
+		}
+
+		return false !== get_option( Settings::OPTION, false );
 	}
 
 	/**
