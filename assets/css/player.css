@@ -213,8 +213,13 @@
 	display: none;
 }
 
-/* The chapter list doubles as the chapter navigation. */
-.volumina-chapter-play {
+/*
+ * The chapter list doubles as the chapter navigation: each name is a button
+ * that reads as a link. Four classes deep for the same reason as the accent
+ * above — a theme that paints every button would otherwise turn the list
+ * into a column of dark pills, as Twenty Twenty-One did.
+ */
+.volumina-chapter-list .volumina-chapter-item .volumina-chapter-row .volumina-chapter-play {
 	padding: 0;
 	border: 0;
 	background: none;
@@ -226,7 +231,7 @@
 	cursor: pointer;
 }
 
-.volumina-chapter-play:focus-visible {
+.volumina-chapter-list .volumina-chapter-item .volumina-chapter-row .volumina-chapter-play:focus-visible {
 	outline: 2px solid currentcolor;
 	outline-offset: 2px;
 }
