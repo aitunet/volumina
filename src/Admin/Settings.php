@@ -57,9 +57,23 @@ final class Settings implements Registrable {
 		add_action( 'init', array( $this, 'configure_logger' ) );
 		add_action( 'save_post_' . Book::POST_TYPE, array( $this, 'apply_default_mode' ), 10, 2 );
 
-		// Saving the settings once is what sets the site up.
-		add_action( 'add_option_' . self::OPTION, array( Setup::class, 'finish' ) );
-		add_action( 'update_option_' . self::OPTION, array( Setup::class, 'finish' ) );
+		// Saving the settings once is what sets the site up. The `pre_update`
+		// filter, not the `update_option` action: the action only fires when the
+		// value changed, and saving the form as it stands is a decision too.
+		add_filter( 'pre_update_option_' . self::OPTION, array( $this, 'saved' ) );
+	}
+
+	/**
+	 * Marks the site as set up whenever the settings are saved, changed or
+	 * not, and hands the value on untouched.
+	 *
+	 * @param mixed $value What is being saved.
+	 * @return mixed
+	 */
+	public function saved( $value ) {
+		Setup::finish();
+
+		return $value;
 	}
 
 	/**
