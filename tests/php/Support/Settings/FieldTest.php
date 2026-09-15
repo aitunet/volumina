@@ -97,6 +97,60 @@ final class FieldTest extends TestCase {
 	}
 
 	/**
+	 * Swatches are a choice field too: the value is a key, never a colour,
+	 * and a key nobody offered falls back to the default.
+	 */
+	public function test_swatches_hold_a_key_not_a_colour(): void {
+		$field = new Field(
+			array(
+				'key'     => 'accent',
+				'type'    => 'swatches',
+				'default' => '',
+				'choices' => array(
+					''      => array( 'label' => 'None' ),
+					'amber' => array(
+						'label' => 'Amber',
+						'color' => '#e0a83a',
+					),
+				),
+			)
+		);
+
+		$this->assertSame( 'amber', $field->sanitize( 'amber' ) );
+		$this->assertSame( '', $field->sanitize( '#e0a83a' ) );
+		$this->assertSame( '', $field->sanitize( 'red' ) );
+	}
+
+	/**
+	 * Choices may be a callable, for lists that depend on the theme; it is
+	 * called once, when first needed, and its answer kept.
+	 */
+	public function test_choices_may_be_resolved_late(): void {
+		$calls = 0;
+		$field = new Field(
+			array(
+				'key'     => 'template',
+				'type'    => 'radio',
+				'default' => 'basic',
+				'choices' => static function () use ( &$calls ): array {
+					++$calls;
+
+					return array(
+						'basic' => 'Basic',
+						'paper' => 'Paper',
+					);
+				},
+			)
+		);
+
+		$this->assertSame( 0, $calls );
+		$this->assertSame( 'paper', $field->sanitize( 'paper' ) );
+		$this->assertSame( 'basic', $field->sanitize( 'night' ) );
+		$this->assertSame( array( 'basic', 'paper' ), array_keys( $field->choices() ) );
+		$this->assertSame( 1, $calls );
+	}
+
+	/**
 	 * A field may bring its own rule, and then it is the only one applied.
 	 */
 	public function test_a_custom_rule_wins(): void {

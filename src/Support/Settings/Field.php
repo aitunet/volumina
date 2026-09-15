@@ -34,10 +34,12 @@ final class Field {
 	 *
 	 *     @type string   $key         Required. Key within the option array.
 	 *     @type string   $label       Required. What to call it.
-	 *     @type string   $type        text, textarea, number, checkbox, select or radio.
+	 *     @type string   $type        text, textarea, number, checkbox, select, radio or swatches.
 	 *     @type mixed    $default     What it holds when nobody has chosen.
 	 *     @type string   $description Shown under the control. Every field gets one.
-	 *     @type array    $choices     value => label, for select and radio.
+	 *     @type array    $choices     value => label, for select and radio; value => { label, color }
+	 *                                 for swatches. A callable returning that array is resolved when
+	 *                                 the choices are first needed, for lists that depend on the theme.
 	 *     @type callable $sanitize    Overrides the default for the type.
 	 * }
 	 */
@@ -87,6 +89,19 @@ final class Field {
 	}
 
 	/**
+	 * The choices, resolved: a callable is called once and its answer kept.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function choices(): array {
+		if ( is_callable( $this->args['choices'] ) ) {
+			$this->args['choices'] = (array) call_user_func( $this->args['choices'] );
+		}
+
+		return (array) $this->args['choices'];
+	}
+
+	/**
 	 * What it means for this field to be missing from a form.
 	 *
 	 * A browser sends nothing at all for an unticked checkbox, so absence is
@@ -122,7 +137,8 @@ final class Field {
 
 			case 'select':
 			case 'radio':
-				return array_key_exists( (string) $value, $this->args['choices'] )
+			case 'swatches':
+				return array_key_exists( (string) $value, $this->choices() )
 					? (string) $value
 					: (string) $this->default_value();
 
@@ -178,7 +194,7 @@ final class Field {
 			case 'select':
 				printf( '<select id="%1$s" name="%2$s">', esc_attr( $id ), esc_attr( $name ) );
 
-				foreach ( $this->args['choices'] as $choice => $label ) {
+				foreach ( $this->choices() as $choice => $label ) {
 					printf(
 						'<option value="%1$s"%2$s>%3$s</option>',
 						esc_attr( (string) $choice ),
@@ -193,13 +209,35 @@ final class Field {
 			case 'radio':
 				echo '<fieldset>';
 
-				foreach ( $this->args['choices'] as $choice => $label ) {
+				foreach ( $this->choices() as $choice => $label ) {
 					printf(
 						'<label style="display:block"><input type="radio" name="%1$s" value="%2$s"%3$s /> %4$s</label>',
 						esc_attr( $name ),
 						esc_attr( (string) $choice ),
 						checked( (string) $value, (string) $choice, false ),
 						esc_html( (string) $label )
+					);
+				}
+
+				echo '</fieldset>';
+				break;
+
+			case 'swatches':
+				// Radios with a colour beside each label. The colour is decoration:
+				// the label carries the meaning, so nothing depends on seeing it.
+				echo '<fieldset>';
+
+				foreach ( $this->choices() as $choice => $swatch ) {
+					$color = is_array( $swatch ) ? (string) ( $swatch['color'] ?? '' ) : '';
+					$label = is_array( $swatch ) ? (string) ( $swatch['label'] ?? $choice ) : (string) $swatch;
+
+					printf(
+						'<label style="display:block;margin-bottom:4px"><input type="radio" name="%1$s" value="%2$s"%3$s /> <span aria-hidden="true" style="display:inline-block;width:1em;height:1em;vertical-align:-0.15em;border-radius:50%%;border:1px solid rgba(0,0,0,.25);background:%4$s"></span> %5$s</label>',
+						esc_attr( $name ),
+						esc_attr( (string) $choice ),
+						checked( (string) $value, (string) $choice, false ),
+						esc_attr( '' === $color ? 'transparent' : $color ),
+						esc_html( $label )
 					);
 				}
 
