@@ -9,11 +9,11 @@
 
 ## Right now
 
-**Current slice:** S7 — Presentation, the last before submission. Built, verified, translated, committed, and **accepted by the account holder in full** on 2026-09-14. The release checklist was run again over the final state and passes; the zip was installed from the zip.
-**Next action:** two small things that need the account holder's Chrome session: (1) axe over the settings screen in its card form; (2) screenshots 5 (settings) and 6 (welcome page) retaken at 1440×900 — `.wordpress-org/screenshot-5.png` still shows the old four-setting screen. Then S7 is ticked. After that: the account holder's list at the end of this file — the guide's URL once tunetdesign.com is live, the phone, the hosting, real audio, a second person, PHP 8.1 — and the submission.
+**Current slice:** S7 — Presentation, the last before submission. **Done.** Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: icon (PNG 128 and 256, and the animated `icon.svg`), banner, six screenshots.
+**Next action:** the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-14, TUNET, S7 accepted, release checklist re-run
+**Last updated:** 2026-09-15, TUNET, S7 done; assets complete
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -24,7 +24,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.** S7 was added on 2026-09-14 by decision; see `docs/decisions.md`.
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 6 of 7 slices complete. S6 is done but for the checks only the account holder can make and the submission itself, which now waits for S7.
+Progress: 7 of 7 slices complete. What is left is the account holder's: their own checks, the guide's URL, and the submission.
 
 ---
 
@@ -116,7 +116,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 ## S6 — Release
 
 - [x] `readme.txt` with short description under 150 characters — 130
-- [x] Icon 256×256, banner 1544×500, screenshots — five, of real content, in `.wordpress-org/`
+- [x] Icon 256×256 and 128×128, an animated `icon.svg`, banner 1544×500, screenshots — six, of real content, in `.wordpress-org/`
 - [x] Security pass against the checklist in `CLAUDE.md` — every item, and then a real audit: stored XSS in every editable field, a `</script>` break-out through the player payload, a valid nonce in a subscriber's hands, six SQL payloads through every id, an attachment pointed outside uploads, blocks asked for a draft book, a crafted settings form, and range header abuse. Nothing gave way. See `docs/HISTORY.md`, 2026-09-06.
 - [x] `.pot` regenerated — 287 strings at 1.0.0
 - [x] `es_ES` translation complete — 283 of 287, verified rendering
@@ -134,8 +134,8 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 Three things the account holder wants in the first version people see. Each begins with a design pass agreed with them, then code. Order: Pro screen, welcome page, template.
 
 - [x] **Pro screen, eye-catching.** Purely presentational: a hero, the mark, what Pro adds shown with illustrations or screenshots, one call to action. Zero inputs, zero disabled controls — the directory forbids locked functionality. Built and verified 2026-09-14: dark hero, five illustrated cards, the note, one call to action as a link; zero axe violations in the real admin, phone layout checked, translated. The account holder looked at it in their own admin and said yes on 2026-09-14.
-- [x] **Welcome page.** Shown once after activation, reachable later from the menu: what the plugin is and is not (no store, no DRM), three steps to a first audiobook, links to the setup and the guide. Registered through the screen registry so Pro can add a section. Built and verified 2026-09-14: redirect on activation seen on the Local site, zero axe violations, translated; Pro adds a section through `volumina_welcome_sections`. Awaiting the account holder's look, and the guide URL.
-- [x] **Basic audiobook template, customisable, with the seam for Pro's.** One free template for a book page — which details show, where the cover sits, an accent from the theme's palette — and a documented registry or filter in `docs/api.md` through which Pro registers its featured templates with advanced styling. Settle the shape of "basic" versus "advanced" once, in the design pass. Settled and built 2026-09-14: Basic (cover beside the details) with cover position and accent in Settings and per block; `volumina_register_templates` and the stylesheet contract in `docs/api.md`; a throwaway "Paper" template registered from outside. Awaiting the account holder's look.
+- [x] **Welcome page.** Shown once after activation, reachable later from the menu: what the plugin is and is not (no store, no DRM), three steps to a first audiobook, links to the setup and the guide. Registered through the screen registry so Pro can add a section. Built and verified 2026-09-14: redirect on activation seen on the Local site, zero axe violations, translated; Pro adds a section through `volumina_welcome_sections`. Accepted by the account holder on 2026-09-14.
+- [x] **Basic audiobook template, customisable, with the seam for Pro's.** One free template for a book page — which details show, where the cover sits, an accent from the theme's palette — and a documented registry or filter in `docs/api.md` through which Pro registers its featured templates with advanced styling. Settle the shape of "basic" versus "advanced" once, in the design pass. Settled and built 2026-09-14: Basic (cover beside the details) with cover position and accent in Settings and per block; `volumina_register_templates` and the stylesheet contract in `docs/api.md`; a throwaway "Paper" template registered from outside. Accepted by the account holder on 2026-09-14.
 - [x] `.pot` regenerated — 329 strings — `es_ES` and `pt_BR` complete for every new string, the block editor's JSON generated, zip rebuilt.
 
 **Done when:** all three render correctly in Twenty Twenty-Five and in one classic theme where they touch the front end; the admin screens pass axe; the account holder has looked at each and said yes; the release checklist below still passes.
@@ -149,7 +149,7 @@ Three things the account holder wants in the first version people see. Each begi
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
 - [x] Full test suite green — 118 tests, 231 assertions
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
-- [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen and the welcome page too. The settings screen in its card form awaits its run (Chrome)
+- [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review
 - [x] Every string translatable — 329 in the `.pot`, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
 - [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database, again on 2026-09-14: zero left
 - [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls

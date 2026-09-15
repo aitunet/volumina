@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Volumina">
+  <!--
+    The Volumina mark, drawn once: the shelf comes in, then the five spines rise
+    from it like a volume meter and settle. It plays a single time and stops;
+    with reduced motion it is simply the mark. Same geometry and colours as
+    icon-256x256.png, which stands in where SVG is not shown.
+  -->
+  <style>
+    .shelf { transform-box: fill-box; transform-origin: 50% 50%; transform: scaleX(0); animation: shelf 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards; }
+    .spine { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); animation: rise 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) forwards; }
+    .s1 { animation-delay: 0.45s; }
+    .s2 { animation-delay: 0.58s; }
+    .s3 { animation-delay: 0.71s; }
+    .s4 { animation-delay: 0.84s; }
+    .s5 { animation-delay: 0.97s; }
+    @keyframes shelf { to { transform: scaleX(1); } }
+    @keyframes rise { to { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) {
+      .shelf, .spine { animation: none; transform: none; }
+    }
+  </style>
+  <rect width="256" height="256" fill="#16181d"/>
+  <rect class="shelf" x="44" y="204" width="168" height="9" rx="4.5" fill="#6f7688"/>
+  <rect class="spine s1" x="36" y="112" width="20" height="80" rx="5" fill="#e8b657"/>
+  <rect class="spine s2" x="66" y="72" width="24" height="120" rx="5" fill="#e8b657"/>
+  <rect class="spine s3" x="104" y="44" width="48" height="148" rx="7" fill="#f4ede0"/>
+  <rect class="spine s4" x="164" y="86" width="24" height="106" rx="5" fill="#e8b657"/>
+  <g transform="rotate(14 200 192)">
+    <rect class="spine s5" x="200" y="128" width="22" height="64" rx="5" fill="#e8b657"/>
+  </g>
+</svg>

@@ -127,7 +127,8 @@
   list is a distraction, and the directory's tiles are seen dozens at a time.
   **Scope settled by the account holder on 2026-09-14:** yes, a one-shot
   animation with an end, and for the directory listing only — the plugin
-  search and the plugin page — never in the dashboard. Still outside S7.
+  search and the plugin page — never in the dashboard. **Done 2026-09-15:**
+  `.wordpress-org/icon.svg`, CSS animation, plays once; see HISTORY.
 - **A guided tour of the admin.** Three or four steps, once, dismissible,
   through WordPress's own pointers (`wp-pointer`, stored per user in
   `dismissed_wp_pointers`): the menu entry, the audiobook screen, the
