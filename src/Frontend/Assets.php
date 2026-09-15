@@ -99,8 +99,10 @@ final class Assets implements Registrable {
 	 * strings and casts every scalar to a string on the way out, so a skip of
 	 * `30` arrives as `"30"`, and `currentTime + "30"` in JavaScript is a
 	 * concatenation that moves nothing. `wp_json_encode()` keeps an integer an
-	 * integer and a boolean a boolean, and escapes `/`, so a `</script>` inside
-	 * a translated string cannot close the tag.
+	 * integer and a boolean a boolean; `JSON_HEX_TAG` is what stops a
+	 * `</script>` inside a translated string from closing the tag, and slashes
+	 * stay slashes so the REST address survives anything that rewrites the
+	 * site's host in the page, such as Local's Live Link.
 	 *
 	 * @param string               $handle Script handle.
 	 * @param string               $name   Global the script reads.
@@ -109,7 +111,7 @@ final class Assets implements Registrable {
 	private static function hand_over( string $handle, string $name, array $data ): void {
 		wp_add_inline_script(
 			$handle,
-			sprintf( 'window.%s = %s;', $name, wp_json_encode( $data ) ),
+			sprintf( 'window.%s = %s;', $name, wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES ) ),
 			'before'
 		);
 	}

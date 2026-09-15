@@ -43,8 +43,12 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 	<script type="application/json" data-volumina-chapters>
 		<?php
 		// JSON, not markup. The HEX flags mean a chapter title containing
-		// `</script>` closes nothing it should not.
-		echo wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
+		// `</script>` closes nothing it should not. Slashes stay slashes: a
+		// URL written as `http:\/\/host` is invisible to anything that rewrites
+		// the site's address in the page — Local's Live Link, a proxy, a
+		// search-and-replace on migration — and the audio then points at a
+		// host the listener cannot reach.
+		echo wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES );
 		?>
 	</script>
 
