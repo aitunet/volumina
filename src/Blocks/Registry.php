@@ -95,6 +95,16 @@ final class Registry implements Registrable {
 				$metadata,
 				array( 'render_callback' => array( $renderer, 'render' ) )
 			);
+
+			// The editor script's strings live in `languages/`, in a JSON per
+			// handle written by `bin/make-script-json.php`. Without the path,
+			// WordPress would look only in its own language directory and the
+			// panels would stay in English on a translated site.
+			wp_set_script_translations(
+				generate_block_asset_handle( 'volumina/' . $directory, 'editorScript' ),
+				'volumina',
+				plugin_dir_path( PLUGIN_FILE ) . 'languages'
+			);
 		}
 	}
 }

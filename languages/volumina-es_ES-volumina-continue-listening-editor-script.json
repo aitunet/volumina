@@ -1,0 +1,90 @@
+{
+    "translation-revision-date": "2026-09-15 01:09:38+0000",
+    "generator": "bin/make-script-json.php",
+    "source": "languages/volumina-es_ES.po",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Cover": [
+                "Portada"
+            ],
+            "Details": [
+                "Ficha"
+            ],
+            "Player": [
+                "Reproductor"
+            ],
+            "Chapter list": [
+                "Lista de capítulos"
+            ],
+            "Audiobook": [
+                "Audiolibro"
+            ],
+            "Leave this as it is when the block sits in an audiobook template.": [
+                "Déjalo como está cuando el bloque esté dentro de una plantilla de audiolibro."
+            ],
+            "Parts to show": [
+                "Partes que se muestran"
+            ],
+            "Chapters heading": [
+                "Encabezado de capítulos"
+            ],
+            "Running times": [
+                "Duraciones"
+            ],
+            "How long each chapter runs.": [
+                "Cuánto dura cada capítulo."
+            ],
+            "Continue listening": [
+                "Seguir escuchando"
+            ],
+            "Books to show": [
+                "Libros que mostrar"
+            ],
+            "Covers": [
+                "Portadas"
+            ],
+            "The cover of each book, small.": [
+                "La portada de cada libro, pequeña."
+            ],
+            "The book this page is about": [
+                "El libro del que trata esta página"
+            ],
+            "(no title)": [
+                "(sin título)"
+            ],
+            "None": [
+                "Ninguno"
+            ],
+            "Template": [
+                "Plantilla"
+            ],
+            "Beside the details": [
+                "Al lado de la ficha"
+            ],
+            "Above the details": [
+                "Encima de la ficha"
+            ],
+            "Not shown": [
+                "Sin mostrar"
+            ],
+            "Accent colour": [
+                "Color de acento"
+            ],
+            "Presentation": [
+                "Presentación"
+            ],
+            "Site setting": [
+                "Ajuste del sitio"
+            ],
+            "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text.": [
+                "De la paleta del tema. Colorea el botón de reproducir, la barra de progreso y el capítulo actual, nunca texto."
+            ]
+        }
+    }
+}

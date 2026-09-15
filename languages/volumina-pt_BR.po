@@ -72,7 +72,7 @@ msgid "Who reads the book aloud."
 msgstr "Quem lê o livro em voz alta."
 
 #: src/Admin/BookMetaBox.php:199
-#: src/Frontend/Audiobook.php:109
+#: src/Frontend/Audiobook.php:141
 msgid "Publisher"
 msgstr "Editora"
 
@@ -81,7 +81,7 @@ msgid "Who published this recording."
 msgstr "Quem publicou esta gravação."
 
 #: src/Admin/BookMetaBox.php:203
-#: src/Frontend/Audiobook.php:115
+#: src/Frontend/Audiobook.php:147
 msgid "ISBN"
 msgstr "ISBN"
 
@@ -114,16 +114,18 @@ msgstr "Quem pode ouvir"
 msgid "A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back."
 msgstr "Um livro restrito continua aparecendo no site com seus capítulos e sua capa. Só o áudio fica retido."
 
-#: blocks/audiobook/index.js:26
+#: src/Admin/Settings.php:182
+#: blocks/audiobook/index.js:27
+#: blocks/shared/presentation.js:80
 msgid "Cover"
 msgstr "Capa"
 
 #: src/Admin/ChapterList.php:57
 #: src/Admin/PostScreenHelp.php:80
 #: src/Admin/PostScreenHelp.php:110
-#: src/Frontend/Audiobook.php:103
+#: src/Frontend/Audiobook.php:135
 #: src/PostTypes/Chapter.php:58
-#: templates/book.php:65
+#: templates/book.php:75
 msgid "Chapters"
 msgstr "Capítulos"
 
@@ -236,7 +238,7 @@ msgstr "Só é possível anexar arquivos de áudio. A duração é lida do arqui
 
 #: src/Admin/ChapterMetaBox.php:237
 #: src/Admin/PostScreenHelp.php:94
-#: src/Frontend/Audiobook.php:99
+#: src/Frontend/Audiobook.php:131
 msgid "Running time"
 msgstr "Duração"
 
@@ -271,7 +273,7 @@ msgid "Volumina Log"
 msgstr "Registro do Volumina"
 
 #: src/Admin/LogScreen.php:48
-#: src/Admin/Settings.php:148
+#: src/Admin/Settings.php:207
 msgid "Log"
 msgstr "Registro"
 
@@ -405,34 +407,34 @@ msgstr "Relatórios de escuta"
 msgid "You are not allowed to view this page."
 msgstr "Você não tem permissão para ver esta página."
 
-#: src/Admin/Settings.php:129
+#: src/Admin/Settings.php:153
 #: src/Admin/SetupScreen.php:111
 msgid "New audiobooks are"
 msgstr "Audiolivros novos são"
 
-#: src/Admin/Settings.php:133
+#: src/Admin/Settings.php:157
 msgid "What a book you add from now on starts as. Every book can be changed on its own screen, and changing this never changes a book that already exists."
 msgstr "O que um livro que você adicionar de agora em diante será. Cada livro pode ser alterado na própria tela, e mudar isto nunca muda um livro que já existe."
 
-#: src/Admin/Settings.php:139
+#: src/Admin/Settings.php:163
 #: src/Admin/SetupScreen.php:131
 msgid "Book pages"
 msgstr "Páginas de livro"
 
-#: src/Admin/Settings.php:142
+#: src/Admin/Settings.php:166
 #: src/Admin/SetupScreen.php:136
 msgid "Show the player and the chapters on an audiobook page automatically."
 msgstr "Mostrar automaticamente o reprodutor e os capítulos na página de um audiolivro."
 
-#: src/Admin/Settings.php:151
+#: src/Admin/Settings.php:210
 msgid "Record notable events, such as a listener being turned away or an audio file that has gone missing. Useful when something is wrong and nobody can say quite what."
 msgstr "Registrar eventos dignos de nota, como alguém ser impedido de ouvir ou um arquivo de áudio que sumiu. Útil quando algo está errado e ninguém sabe dizer o quê."
 
-#: src/Admin/Settings.php:157
+#: src/Admin/Settings.php:216
 msgid "On uninstall"
 msgstr "Ao desinstalar"
 
-#: src/Admin/Settings.php:160
+#: src/Admin/Settings.php:219
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr "Excluir as tabelas e as configurações deste plugin quando ele for desinstalado. Desligado significa que, se um dia você reinstalar, quem ouve mantém o seu lugar."
 
@@ -596,7 +598,7 @@ msgstr "Continuar ouvindo"
 msgid "Nothing started yet. Books you begin will appear here."
 msgstr "Você ainda não começou nada. Os livros que começar aparecerão aqui."
 
-#: src/Frontend/Audiobook.php:93
+#: src/Frontend/Audiobook.php:125
 msgid "Narrated by"
 msgstr "Narrado por"
 
@@ -1006,7 +1008,7 @@ msgid "The database was brought up to date."
 msgstr "O banco de dados foi atualizado."
 
 #. translators: %s: book title.
-#: templates/book.php:37
+#: templates/book.php:45
 #, php-format
 msgid "Cover of %s"
 msgstr "Capa de %s"
@@ -1071,42 +1073,42 @@ msgstr "%s×"
 msgid "Sleep timer"
 msgstr "Timer para dormir"
 
-#: blocks/audiobook/index.js:27
+#: blocks/audiobook/index.js:28
 msgid "Details"
 msgstr "Detalhes"
 
-#: blocks/audiobook/index.js:28
+#: blocks/audiobook/index.js:29
 msgid "Player"
 msgstr "Reprodutor"
 
-#: blocks/audiobook/index.js:29
-#: blocks/chapter-list/index.js:26
+#: blocks/audiobook/index.js:30
+#: blocks/chapter-list/index.js:27
 msgid "Chapter list"
 msgstr "Lista de capítulos"
 
-#: blocks/audiobook/index.js:42
+#: blocks/audiobook/index.js:43
 #: blocks/shared/book-select.js:54
 msgid "Audiobook"
 msgstr "Audiolivro"
 
-#: blocks/audiobook/index.js:46
-#: blocks/chapter-list/index.js:30
+#: blocks/audiobook/index.js:47
+#: blocks/chapter-list/index.js:31
 msgid "Leave this as it is when the block sits in an audiobook template."
 msgstr "Deixe como está quando o bloco estiver dentro de um modelo de audiolivro."
 
-#: blocks/audiobook/index.js:53
+#: blocks/audiobook/index.js:54
 msgid "Parts to show"
 msgstr "Partes a mostrar"
 
-#: blocks/audiobook/index.js:69
+#: blocks/audiobook/index.js:70
 msgid "Chapters heading"
 msgstr "Título dos capítulos"
 
-#: blocks/chapter-list/index.js:38
+#: blocks/chapter-list/index.js:39
 msgid "Running times"
 msgstr "Durações"
 
-#: blocks/chapter-list/index.js:39
+#: blocks/chapter-list/index.js:40
 msgid "How long each chapter runs."
 msgstr "Quanto dura cada capítulo."
 
@@ -1386,3 +1388,71 @@ msgstr "Quem pode ouvir por padrão, se um registro é mantido e o que remover a
 #: src/Admin/WelcomeScreen.php:254
 msgid "Open the settings"
 msgstr "Abrir as configurações"
+
+#: src/Admin/Settings.php:129
+msgid "What the template prefers"
+msgstr "O que o modelo preferir"
+
+#: src/Admin/Settings.php:130
+#: blocks/shared/presentation.js:111
+msgid "None"
+msgstr "Nenhuma"
+
+#: src/Admin/Settings.php:172
+#: blocks/shared/presentation.js:65
+msgid "Template"
+msgstr "Modelo"
+
+#: src/Admin/Settings.php:176
+msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own."
+msgstr "Como um audiolivro é disposto e vestido: capa, dados, player e capítulos. O Volumina traz um; uma extensão pode adicionar outros. Um bloco pode escolher o seu."
+
+#: src/Admin/Settings.php:186
+msgid "Where the template puts it"
+msgstr "Onde o modelo a colocar"
+
+#: src/Admin/Settings.php:187
+#: blocks/shared/presentation.js:86
+msgid "Beside the details"
+msgstr "Ao lado dos dados"
+
+#: src/Admin/Settings.php:188
+#: blocks/shared/presentation.js:90
+msgid "Above the details"
+msgstr "Acima dos dados"
+
+#: src/Admin/Settings.php:189
+#: blocks/shared/presentation.js:92
+msgid "Not shown"
+msgstr "Não exibida"
+
+#: src/Admin/Settings.php:191
+msgid "Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room."
+msgstr "Onde a capa fica na página de um audiolivro. Em uma tela estreita, "ao lado" vira "acima" quando não há espaço."
+
+#: src/Admin/Settings.php:197
+#: blocks/shared/presentation.js:105
+msgid "Accent colour"
+msgstr "Cor de destaque"
+
+#: src/Admin/Settings.php:201
+msgid "One colour from your theme's palette for the play button, the progress bar and the current chapter. Never for text, so the theme's contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box."
+msgstr "Uma cor da paleta do seu tema para o botão de reproduzir, a barra de progresso e o capítulo atual. Nunca para texto, então o contraste do tema nunca corre risco. Sem nenhuma, o player se desenha na cor do texto, como recém-instalado."
+
+#: src/Frontend/Templates.php:49
+msgid "Basic"
+msgstr "Básico"
+
+#: blocks/shared/presentation.js:62
+msgid "Presentation"
+msgstr "Apresentação"
+
+#: blocks/shared/presentation.js:68
+#: blocks/shared/presentation.js:83
+#: blocks/shared/presentation.js:110
+msgid "Site setting"
+msgstr "Configuração do site"
+
+#: blocks/shared/presentation.js:118
+msgid "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text."
+msgstr "Da paleta do tema. Colore o botão de reproduzir, a barra de progresso e o capítulo atual, nunca texto."
