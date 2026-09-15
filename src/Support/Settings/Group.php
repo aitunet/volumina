@@ -195,11 +195,20 @@ final class Group {
 			$key = $field->key();
 
 			echo '<tr>';
-			printf(
-				'<th scope="row"><label for="%1$s">%2$s</label></th>',
-				esc_attr( 'volumina-setting-' . $key ),
-				esc_html( $field->label() )
-			);
+
+			// A control that labels itself — a checkbox with its text, radios with
+			// their choices — gets a plain row heading: a second <label> pointed at
+			// it would be read out twice, and pointed at a fieldset would name
+			// nothing.
+			if ( $field->labels_itself() ) {
+				printf( '<th scope="row">%s</th>', esc_html( $field->label() ) );
+			} else {
+				printf(
+					'<th scope="row"><label for="%1$s">%2$s</label></th>',
+					esc_attr( 'volumina-setting-' . $key ),
+					esc_html( $field->label() )
+				);
+			}
 			echo '<td>';
 
 			$field->render(

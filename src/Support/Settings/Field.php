@@ -82,6 +82,14 @@ final class Field {
 	}
 
 	/**
+	 * Whether the control carries its own label, as a checkbox does with the
+	 * text beside it, or a fieldset of radios with each choice.
+	 */
+	public function labels_itself(): bool {
+		return in_array( $this->args['type'], array( 'checkbox', 'radio', 'swatches' ), true );
+	}
+
+	/**
 	 * The section of the screen it belongs to, or empty.
 	 */
 	public function section(): string {
@@ -216,7 +224,9 @@ final class Field {
 				break;
 
 			case 'radio':
-				echo '<fieldset>';
+				// The row heading is plain text for a fieldset, so the group is named
+				// here, for screen readers, and only here.
+				printf( '<fieldset><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
 
 				foreach ( $this->choices() as $choice => $label ) {
 					printf(
@@ -234,7 +244,9 @@ final class Field {
 			case 'swatches':
 				// Radios with a colour beside each label. The colour is decoration:
 				// the label carries the meaning, so nothing depends on seeing it.
-				echo '<fieldset>';
+				// The row heading is plain text for a fieldset, so the group is named
+				// here, for screen readers, and only here.
+				printf( '<fieldset><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
 
 				foreach ( $this->choices() as $choice => $swatch ) {
 					$color = is_array( $swatch ) ? (string) ( $swatch['color'] ?? '' ) : '';
