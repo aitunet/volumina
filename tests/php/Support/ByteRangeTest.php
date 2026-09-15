@@ -111,14 +111,14 @@ final class ByteRangeTest extends TestCase {
 	 */
 	public function requested_cases(): array {
 		return array(
-			"the whole file, as Chrome asks" => array( "bytes=0-", true ),
-			"an explicit slice"             => array( "bytes=100-199", true ),
-			"a suffix"                      => array( "bytes=-100", true ),
-			"padded"                        => array( "  bytes=0-  ", true ),
-			"no header"                     => array( "", false ),
-			"blank"                         => array( "   ", false ),
-			"nonsense"                      => array( "chunks=0-", false ),
-			"not a range at all"            => array( "bytes", false ),
+			'the whole file, as Chrome asks' => array( 'bytes=0-', true ),
+			'an explicit slice'              => array( 'bytes=100-199', true ),
+			'a suffix'                       => array( 'bytes=-100', true ),
+			'padded'                         => array( '  bytes=0-  ', true ),
+			'no header'                      => array( '', false ),
+			'blank'                          => array( '   ', false ),
+			'nonsense'                       => array( 'chunks=0-', false ),
+			'not a range at all'             => array( 'bytes', false ),
 		);
 	}
 

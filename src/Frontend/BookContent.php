@@ -82,7 +82,7 @@ final class BookContent implements Registrable {
 	 * @param int    $post_id The post it belongs to.
 	 */
 	public function withhold_theme_cover( string $html, int $post_id ): string {
-		if ( ! is_singular( Book::POST_TYPE ) || $post_id !== get_queried_object_id() ) {
+		if ( ! is_singular( Book::POST_TYPE ) || get_queried_object_id() !== $post_id ) {
 			return $html;
 		}
 
