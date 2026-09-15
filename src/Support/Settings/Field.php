@@ -41,6 +41,7 @@ final class Field {
 	 *                                 for swatches. A callable returning that array is resolved when
 	 *                                 the choices are first needed, for lists that depend on the theme.
 	 *     @type callable $sanitize    Overrides the default for the type.
+	 *     @type string   $section     Which section of the screen it belongs to; empty for none.
 	 * }
 	 */
 	public function __construct( array $args ) {
@@ -53,6 +54,7 @@ final class Field {
 				'description' => '',
 				'choices'     => array(),
 				'sanitize'    => null,
+				'section'     => '',
 			),
 			$args
 		);
@@ -77,6 +79,13 @@ final class Field {
 	 */
 	public function description(): string {
 		return (string) $this->args['description'];
+	}
+
+	/**
+	 * The section of the screen it belongs to, or empty.
+	 */
+	public function section(): string {
+		return (string) $this->args['section'];
 	}
 
 	/**

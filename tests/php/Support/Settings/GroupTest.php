@@ -144,4 +144,38 @@ final class GroupTest extends TestCase {
 
 		$this->assertSame( $this->group()->defaults(), $clean );
 	}
+
+	/**
+	 * Sections come back in the order the fields first name them, once each,
+	 * and a field with no section names none.
+	 */
+	public function test_sections_in_first_appearance_order(): void {
+		$group = new Group(
+			'volumina_test',
+			array(
+				new Field(
+					array(
+						'key'     => 'a',
+						'section' => 'listening',
+					)
+				),
+				new Field(
+					array(
+						'key'     => 'b',
+						'section' => 'housekeeping',
+					)
+				),
+				new Field(
+					array(
+						'key'     => 'c',
+						'section' => 'listening',
+					)
+				),
+				new Field( array( 'key' => 'd' ) ),
+			)
+		);
+
+		$this->assertSame( array( 'listening', 'housekeeping' ), $group->sections() );
+		$this->assertSame( array(), $this->group()->sections() );
+	}
 }

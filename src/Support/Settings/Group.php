@@ -161,14 +161,37 @@ final class Group {
 	}
 
 	/**
-	 * Draws every field as a form table.
+	 * The sections the fields name, in the order they first appear.
+	 *
+	 * @return array<int, string>
 	 */
-	public function render_table(): void {
+	public function sections(): array {
+		$sections = array();
+
+		foreach ( $this->fields as $field ) {
+			if ( '' !== $field->section() && ! in_array( $field->section(), $sections, true ) ) {
+				$sections[] = $field->section();
+			}
+		}
+
+		return $sections;
+	}
+
+	/**
+	 * Draws the fields as a form table: all of them, or one section's.
+	 *
+	 * @param string $section A section, or empty for every field.
+	 */
+	public function render_table( string $section = '' ): void {
 		$values = $this->all();
 
 		echo '<table class="form-table" role="presentation"><tbody>';
 
 		foreach ( $this->fields as $field ) {
+			if ( '' !== $section && $section !== $field->section() ) {
+				continue;
+			}
+
 			$key = $field->key();
 
 			echo '<tr>';

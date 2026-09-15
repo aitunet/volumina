@@ -215,6 +215,31 @@
 	margin-top: 8px;
 }
 
+/* Settings: one card per section, the form table inside it */
+
+.volumina-settings .volumina-card {
+	margin: 0 0 16px;
+	padding: 16px 20px 8px;
+}
+
+.volumina-settings .volumina-card h2 {
+	margin: 0 0 4px;
+	font-size: 16px;
+}
+
+.volumina-settings-lede {
+	margin: 0 0 4px;
+	color: #646970;
+}
+
+.volumina-settings .form-table {
+	margin-top: 0;
+}
+
+.volumina-settings .form-table th {
+	padding-left: 0;
+}
+
 @media (max-width: 782px) {
 
 	.volumina-hero,

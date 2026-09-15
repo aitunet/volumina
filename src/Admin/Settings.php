@@ -120,6 +120,28 @@ final class Settings implements Registrable {
 	}
 
 	/**
+	 * The sections of the settings screen: id => title and one line about it.
+	 *
+	 * @return array<string, array{title: string, description: string}>
+	 */
+	public static function sections(): array {
+		return array(
+			'listening'    => array(
+				'title'       => __( 'Listening', 'volumina' ),
+				'description' => __( 'Who may listen, and where the player appears.', 'volumina' ),
+			),
+			'presentation' => array(
+				'title'       => __( 'Presentation', 'volumina' ),
+				'description' => __( 'How an audiobook looks on the page. A block can differ from these.', 'volumina' ),
+			),
+			'housekeeping' => array(
+				'title'       => __( 'Housekeeping', 'volumina' ),
+				'description' => __( 'For when something goes wrong, and for when the plugin goes.', 'volumina' ),
+			),
+		);
+	}
+
+	/**
 	 * The accent choices: none, what the template prefers, then the theme's palette.
 	 *
 	 * @return array<string, array{label: string, color?: string}>
@@ -150,6 +172,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'default_access',
+					'section'     => 'listening',
 					'label'       => __( 'New audiobooks are', 'volumina' ),
 					'type'        => 'radio',
 					'default'     => Mode::PUBLIC,
@@ -160,6 +183,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'append_to_content',
+					'section'     => 'listening',
 					'label'       => __( 'Book pages', 'volumina' ),
 					'type'        => 'checkbox',
 					'default'     => true,
@@ -169,6 +193,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'template',
+					'section'     => 'presentation',
 					'label'       => __( 'Template', 'volumina' ),
 					'type'        => 'radio',
 					'default'     => Templates::BASIC,
@@ -179,6 +204,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'cover_position',
+					'section'     => 'presentation',
 					'label'       => __( 'Cover', 'volumina' ),
 					'type'        => 'radio',
 					'default'     => '',
@@ -194,6 +220,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'accent',
+					'section'     => 'presentation',
 					'label'       => __( 'Accent colour', 'volumina' ),
 					'type'        => 'swatches',
 					'default'     => '',
@@ -204,6 +231,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'logging',
+					'section'     => 'housekeeping',
 					'label'       => __( 'Log', 'volumina' ),
 					'type'        => 'checkbox',
 					'default'     => false,
@@ -213,6 +241,7 @@ final class Settings implements Registrable {
 			new Field(
 				array(
 					'key'         => 'delete_data_on_uninstall',
+					'section'     => 'housekeeping',
 					'label'       => __( 'On uninstall', 'volumina' ),
 					'type'        => 'checkbox',
 					'default'     => false,

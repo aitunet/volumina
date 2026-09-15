@@ -11,6 +11,9 @@ namespace TUNET\Volumina\Admin;
 
 use TUNET\Volumina\Support\Help;
 
+use const TUNET\Volumina\PLUGIN_FILE;
+use const TUNET\Volumina\VERSION;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -20,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * redirect are WordPress's own. A settings screen is not the place to reinvent
  * any of them.
  */
-final class SettingsScreen implements Screen, HasHelp {
+final class SettingsScreen implements Screen, HasHelp, HasAssets {
 
 	/**
 	 * The page slug.
@@ -58,7 +61,19 @@ final class SettingsScreen implements Screen, HasHelp {
 	}
 
 	/**
-	 * Draws the screen.
+	 * The presentation stylesheet, shared with the welcome and Pro screens.
+	 */
+	public function enqueue(): void {
+		wp_enqueue_style(
+			'volumina-admin-presentation',
+			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
+			array(),
+			VERSION
+		);
+	}
+
+	/**
+	 * Draws the screen: one card per section, native controls inside.
 	 */
 	public function render(): void {
 		$group = Settings::group();
@@ -66,8 +81,10 @@ final class SettingsScreen implements Screen, HasHelp {
 		// Read again rather than trusting what was read before the save.
 		$group->forget();
 
-		echo '<div class="wrap">';
+		echo '<div class="wrap volumina-presentation volumina-settings">';
 		printf( '<h1>%s</h1>', esc_html( $this->title() ) );
+		// Admin notices are inserted after this marker.
+		echo '<hr class="wp-header-end">';
 
 		// Core prints "Settings saved." on its own pages and not on ours, and
 		// a save with no confirmation is a save the person does not trust.
@@ -93,7 +110,19 @@ final class SettingsScreen implements Screen, HasHelp {
 		echo '<form action="options.php" method="post">';
 
 		settings_fields( $group->option() );
-		$group->render_table();
+
+		$sections = Settings::sections();
+
+		foreach ( $group->sections() as $section ) {
+			printf(
+				'<section class="volumina-card volumina-settings-section"><h2>%1$s</h2><p class="volumina-settings-lede">%2$s</p>',
+				esc_html( $sections[ $section ]['title'] ?? $section ),
+				esc_html( $sections[ $section ]['description'] ?? '' )
+			);
+			$group->render_table( $section );
+			echo '</section>';
+		}
+
 		submit_button();
 
 		echo '</form></div>';
