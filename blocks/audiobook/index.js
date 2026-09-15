@@ -15,6 +15,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 
 import metadata from './block.json';
 import BookSelect from '../shared/book-select';
+import PresentationControls from '../shared/presentation';
 
 /**
  * The parts a listener can be shown, and what to call them.
@@ -74,6 +75,12 @@ function Edit( { attributes, setAttributes } ) {
 						/>
 					) }
 				</PanelBody>
+
+				<PresentationControls
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					cover={ !! attributes.showCover }
+				/>
 			</InspectorControls>
 
 			<div { ...blockProps }>

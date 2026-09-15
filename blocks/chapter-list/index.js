@@ -12,6 +12,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 
 import metadata from './block.json';
 import BookSelect from '../shared/book-select';
+import PresentationControls from '../shared/presentation';
 
 function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
@@ -43,6 +44,11 @@ function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
+
+				<PresentationControls
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+				/>
 			</InspectorControls>
 
 			<div { ...blockProps }>

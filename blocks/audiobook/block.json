@@ -33,6 +33,18 @@
 		"showHeading": {
 			"type": "boolean",
 			"default": true
+		},
+		"template": {
+			"type": "string",
+			"default": ""
+		},
+		"coverPosition": {
+			"type": "string",
+			"default": ""
+		},
+		"accent": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

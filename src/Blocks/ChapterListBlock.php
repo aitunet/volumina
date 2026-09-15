@@ -40,7 +40,14 @@ final class ChapterListBlock {
 		return sprintf(
 			'<div %s>%s</div>',
 			get_block_wrapper_attributes(),
-			Audiobook::chapter_list( $book, ! empty( $attributes['showDurations'] ) )
+			Audiobook::chapter_list(
+				$book,
+				! empty( $attributes['showDurations'] ),
+				array(
+					'template' => (string) ( $attributes['template'] ?? '' ),
+					'accent'   => (string) ( $attributes['accent'] ?? '' ),
+				)
+			)
 		);
 	}
 }

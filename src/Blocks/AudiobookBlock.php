@@ -48,11 +48,14 @@ final class AudiobookBlock {
 		$markup = Audiobook::render(
 			$book,
 			array(
-				'cover'    => ! empty( $attributes['showCover'] ),
-				'details'  => ! empty( $attributes['showDetails'] ),
-				'player'   => ! empty( $attributes['showPlayer'] ),
-				'chapters' => ! empty( $attributes['showChapters'] ),
-				'heading'  => ! empty( $attributes['showHeading'] ),
+				'cover'          => ! empty( $attributes['showCover'] ),
+				'details'        => ! empty( $attributes['showDetails'] ),
+				'player'         => ! empty( $attributes['showPlayer'] ),
+				'chapters'       => ! empty( $attributes['showChapters'] ),
+				'heading'        => ! empty( $attributes['showHeading'] ),
+				'template'       => (string) ( $attributes['template'] ?? '' ),
+				'cover_position' => (string) ( $attributes['coverPosition'] ?? '' ),
+				'accent'         => (string) ( $attributes['accent'] ?? '' ),
 			)
 		);
 

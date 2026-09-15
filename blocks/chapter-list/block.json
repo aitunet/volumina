@@ -17,6 +17,14 @@
 		"showDurations": {
 			"type": "boolean",
 			"default": true
+		},
+		"template": {
+			"type": "string",
+			"default": ""
+		},
+		"accent": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

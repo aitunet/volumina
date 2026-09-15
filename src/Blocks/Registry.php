@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Blocks;
 
+use TUNET\Volumina\Frontend\Templates;
 use TUNET\Volumina\Support\Registrable;
 
 use const TUNET\Volumina\PLUGIN_FILE;
@@ -41,6 +42,36 @@ final class Registry implements Registrable {
 	 */
 	public function register(): void {
 		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'hand_over_templates' ) );
+	}
+
+	/**
+	 * Tells the editor which templates exist, for the presentation panel.
+	 *
+	 * Printed before each block's editor script rather than added to the
+	 * editor's settings: the post editor passes only a fixed list of settings
+	 * on to the block editor, and this would not be in it. Typed JSON, as the
+	 * player's settings are — never `wp_localize_script()`.
+	 */
+	public function hand_over_templates(): void {
+		$templates = array();
+
+		foreach ( Templates::registry()->all() as $id => $template ) {
+			$templates[] = array(
+				'id'    => $id,
+				'label' => $template->label(),
+			);
+		}
+
+		$json = wp_json_encode( $templates, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES );
+
+		foreach ( array_keys( self::BLOCKS ) as $directory ) {
+			wp_add_inline_script(
+				generate_block_asset_handle( 'volumina/' . $directory, 'editorScript' ),
+				'window.voluminaTemplates = ' . $json . ';',
+				'before'
+			);
+		}
 	}
 
 	/**
