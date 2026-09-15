@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T02:12:30+00:00\n"
+"POT-Creation-Date: 2026-09-15T14:08:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -55,58 +55,58 @@ msgstr ""
 msgid "Public books"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:51
+#: src/Admin/BookMetaBox.php:52
 msgid "Audiobook details"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:195
+#: src/Admin/BookMetaBox.php:198
 msgid "Narrator"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:196
+#: src/Admin/BookMetaBox.php:199
 msgid "Who reads the book aloud."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:199
+#: src/Admin/BookMetaBox.php:202
 #: src/Frontend/Audiobook.php:141
 msgid "Publisher"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:200
+#: src/Admin/BookMetaBox.php:203
 msgid "Who published this recording."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:203
+#: src/Admin/BookMetaBox.php:206
 #: src/Frontend/Audiobook.php:147
 msgid "ISBN"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:204
+#: src/Admin/BookMetaBox.php:207
 msgid "Of this edition, if it has one."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:207
+#: src/Admin/BookMetaBox.php:210
 msgid "Language"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:208
+#: src/Admin/BookMetaBox.php:211
 msgid "The language it is read in, as a locale code such as es_ES."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:211
+#: src/Admin/BookMetaBox.php:214
 msgid "Total duration"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:212
-msgid "In whole seconds. Leave at zero and the chapters will answer for it."
+#: src/Admin/BookMetaBox.php:215
+msgid "Leave it at zero and the chapters add up to it. To say otherwise, type it as h:mm:ss, like 9:30:00, or in whole seconds."
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:215
+#: src/Admin/BookMetaBox.php:218
 #: src/Admin/PostScreenHelp.php:87
 msgid "Who can listen"
 msgstr ""
 
-#: src/Admin/BookMetaBox.php:216
+#: src/Admin/BookMetaBox.php:219
 msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
 msgstr ""
 
@@ -233,7 +233,7 @@ msgid "Running time"
 msgstr ""
 
 #: src/Admin/ChapterMetaBox.php:248
-msgid "In whole seconds. Filled in from the audio file; correct it here if the file is wrong."
+msgid "Filled in from the audio file. To correct it, type it as h:mm:ss, like 1:05:09, or in whole seconds."
 msgstr ""
 
 #: src/Admin/ChapterMetaBox.php:267
@@ -263,7 +263,7 @@ msgid "Volumina Log"
 msgstr ""
 
 #: src/Admin/LogScreen.php:48
-#: src/Admin/Settings.php:239
+#: src/Admin/Settings.php:253
 msgid "Log"
 msgstr ""
 
@@ -445,112 +445,112 @@ msgstr ""
 msgid "You are not allowed to view this page."
 msgstr ""
 
-#: src/Admin/Settings.php:134
+#: src/Admin/Settings.php:148
 msgid "Listening"
 msgstr ""
 
-#: src/Admin/Settings.php:135
+#: src/Admin/Settings.php:149
 msgid "Who may listen, and where the player appears."
 msgstr ""
 
-#: src/Admin/Settings.php:138
+#: src/Admin/Settings.php:152
 #: blocks/shared/presentation.js:62
 msgid "Presentation"
 msgstr ""
 
-#: src/Admin/Settings.php:139
+#: src/Admin/Settings.php:153
 msgid "How an audiobook looks on the page. A block can differ from these."
 msgstr ""
 
-#: src/Admin/Settings.php:142
+#: src/Admin/Settings.php:156
 msgid "Housekeeping"
 msgstr ""
 
-#: src/Admin/Settings.php:143
+#: src/Admin/Settings.php:157
 msgid "For when something goes wrong, and for when the plugin goes."
 msgstr ""
 
-#: src/Admin/Settings.php:155
+#: src/Admin/Settings.php:169
 msgid "What the template prefers"
 msgstr ""
 
-#: src/Admin/Settings.php:156
+#: src/Admin/Settings.php:170
 #: blocks/shared/presentation.js:111
 msgid "None"
 msgstr ""
 
-#: src/Admin/Settings.php:180
+#: src/Admin/Settings.php:194
 msgid "New audiobooks are"
 msgstr ""
 
-#: src/Admin/Settings.php:184
+#: src/Admin/Settings.php:198
 msgid "What a book you add from now on starts as. Every book can be changed on its own screen, and changing this never changes a book that already exists."
 msgstr ""
 
-#: src/Admin/Settings.php:191
+#: src/Admin/Settings.php:205
 msgid "Book pages"
 msgstr ""
 
-#: src/Admin/Settings.php:194
+#: src/Admin/Settings.php:208
 msgid "Show the player and the chapters on an audiobook page automatically."
 msgstr ""
 
-#: src/Admin/Settings.php:201
+#: src/Admin/Settings.php:215
 #: blocks/shared/presentation.js:65
 msgid "Template"
 msgstr ""
 
-#: src/Admin/Settings.php:205
+#: src/Admin/Settings.php:219
 msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own."
 msgstr ""
 
-#: src/Admin/Settings.php:212
+#: src/Admin/Settings.php:226
 #: blocks/audiobook/index.js:27
 #: blocks/shared/presentation.js:80
 msgid "Cover"
 msgstr ""
 
-#: src/Admin/Settings.php:216
+#: src/Admin/Settings.php:230
 msgid "Where the template puts it"
 msgstr ""
 
-#: src/Admin/Settings.php:217
+#: src/Admin/Settings.php:231
 #: blocks/shared/presentation.js:86
 msgid "Beside the details"
 msgstr ""
 
-#: src/Admin/Settings.php:218
+#: src/Admin/Settings.php:232
 #: blocks/shared/presentation.js:90
 msgid "Above the details"
 msgstr ""
 
-#: src/Admin/Settings.php:219
+#: src/Admin/Settings.php:233
 #: blocks/shared/presentation.js:92
 msgid "Not shown"
 msgstr ""
 
-#: src/Admin/Settings.php:221
+#: src/Admin/Settings.php:235
 msgid "Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room."
 msgstr ""
 
-#: src/Admin/Settings.php:228
+#: src/Admin/Settings.php:242
 #: blocks/shared/presentation.js:105
 msgid "Accent colour"
 msgstr ""
 
-#: src/Admin/Settings.php:232
+#: src/Admin/Settings.php:246
 msgid "One colour from your theme's palette for the play button, the progress bar and the current chapter. Never for text, so the theme's contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box."
 msgstr ""
 
-#: src/Admin/Settings.php:242
+#: src/Admin/Settings.php:256
 msgid "Record notable events, such as a listener being turned away or an audio file that has gone missing. Useful when something is wrong and nobody can say quite what."
 msgstr ""
 
-#: src/Admin/Settings.php:249
+#: src/Admin/Settings.php:263
 msgid "On uninstall"
 msgstr ""
 
-#: src/Admin/Settings.php:252
+#: src/Admin/Settings.php:266
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr ""
 
@@ -850,27 +850,46 @@ msgstr ""
 msgid "Your place could not be saved to your account. It is kept in this browser."
 msgstr ""
 
-#: src/Player/Player.php:148
+#: src/Player/Player.php:100
+msgid "This chapter's audio could not be loaded. Check the address in the browser's console."
+msgstr ""
+
+#: src/Player/Player.php:101
+#: templates/player.php:181
+msgid "Mute"
+msgstr ""
+
+#: src/Player/Player.php:102
+msgid "Unmute"
+msgstr ""
+
+#. translators: %d: volume as a percentage.
+#: src/Player/Player.php:104
+#, php-format
+msgid "Volume %d%%"
+msgstr ""
+
+#: src/Player/Player.php:153
 msgid "This audiobook is not available on your account."
 msgstr ""
 
-#: src/Player/Player.php:149
+#: src/Player/Player.php:154
 msgid "Sign in to listen to this audiobook."
 msgstr ""
 
-#: src/Player/Player.php:271
+#: src/Player/Player.php:276
 msgid "Off"
 msgstr ""
 
 #. translators: %s: a number of minutes.
-#: src/Player/Player.php:280
+#: src/Player/Player.php:285
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Player/Player.php:288
+#: src/Player/Player.php:293
 msgid "End of chapter"
 msgstr ""
 
@@ -1273,6 +1292,10 @@ msgstr ""
 
 #: templates/player.php:161
 msgid "Sleep timer"
+msgstr ""
+
+#: templates/player.php:184
+msgid "Volume"
 msgstr ""
 
 #: blocks/audiobook/index.js:28

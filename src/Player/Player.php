@@ -97,6 +97,11 @@ final class Player implements Registrable {
 				'finished'      => __( 'End of the audiobook', 'volumina' ),
 				'resumeBlocked' => __( 'Ready to carry on where you left off. Press play.', 'volumina' ),
 				'saveFailed'    => __( 'Your place could not be saved to your account. It is kept in this browser.', 'volumina' ),
+				'loadFailed'    => __( 'This chapter\'s audio could not be loaded. Check the address in the browser\'s console.', 'volumina' ),
+				'mute'          => __( 'Mute', 'volumina' ),
+				'unmute'        => __( 'Unmute', 'volumina' ),
+				/* translators: %d: volume as a percentage. */
+				'volumeSet'     => __( 'Volume %d%%', 'volumina' ),
 			),
 		);
 	}

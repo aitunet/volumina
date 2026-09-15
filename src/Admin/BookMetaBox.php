@@ -11,6 +11,7 @@ namespace TUNET\Volumina\Admin;
 
 use TUNET\Volumina\Access\Mode;
 use TUNET\Volumina\PostTypes\Book;
+use TUNET\Volumina\Support\Duration;
 use TUNET\Volumina\Support\Registrable;
 use WP_Post;
 
@@ -84,8 +85,10 @@ final class BookMetaBox implements Registrable {
 			if ( Mode::META_KEY === $key ) {
 				$this->render_access_field( $key, (string) $value );
 			} elseif ( 'integer' === $type ) {
+				// A running time is typed as seconds or as h:mm:ss, so the field
+				// is text; it is read back by `Duration::parse()`.
 				printf(
-					'<input type="number" min="0" step="1" class="small-text" id="%1$s" name="%1$s" value="%2$s" />',
+					'<input type="text" inputmode="numeric" class="small-text" id="%1$s" name="%1$s" value="%2$s" />',
 					esc_attr( $key ),
 					esc_attr( (string) (int) $value )
 				);
@@ -166,7 +169,7 @@ final class BookMetaBox implements Registrable {
 
 			// Sanitised at the point of access: the value is never held raw.
 			if ( 'integer' === $type ) {
-				update_post_meta( $post_id, $key, absint( wp_unslash( $_POST[ $key ] ) ) );
+				update_post_meta( $post_id, $key, Duration::parse( sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) ) );
 				continue;
 			}
 
@@ -209,7 +212,7 @@ final class BookMetaBox implements Registrable {
 			),
 			'volumina_total_duration' => array(
 				'label'       => __( 'Total duration', 'volumina' ),
-				'description' => __( 'In whole seconds. Leave at zero and the chapters will answer for it.', 'volumina' ),
+				'description' => __( 'Leave it at zero and the chapters add up to it. To say otherwise, type it as h:mm:ss, like 9:30:00, or in whole seconds.', 'volumina' ),
 			),
 			'volumina_access'         => array(
 				'label'       => __( 'Who can listen', 'volumina' ),

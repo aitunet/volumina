@@ -103,6 +103,11 @@
 			status: root.querySelector( '.volumina-player-status' ),
 			icon: root.querySelector( '[data-volumina-toggle-icon]' ),
 			label: root.querySelector( '[data-volumina-toggle-label]' ),
+			volumeRow: root.querySelector( '[data-volumina-volume-row]' ),
+			volume: root.querySelector( '[data-volumina-volume]' ),
+			mute: root.querySelector( '[data-volumina-action="mute"]' ),
+			muteIcon: root.querySelector( '[data-volumina-mute-icon]' ),
+			muteLabel: root.querySelector( '[data-volumina-mute-label]' ),
 		};
 
 		let index = 0;
@@ -361,9 +366,127 @@
 					// the player doing as it was told.
 					if ( error && error.name === 'NotAllowedError' ) {
 						announce( strings.resumeBlocked || '' );
+					} else if ( ! error || error.name !== 'AbortError' ) {
+						reportLoadFailure( error );
 					}
 				} );
 			}
+		}
+
+		/**
+		 * Says, out loud and in the console, that a chapter would not load —
+		 * an address the browser cannot reach, a format it cannot play, a
+		 * server that would not serve it. Silence here is what makes a play
+		 * button look broken.
+		 *
+		 * @param {*} error What the browser said, if anything.
+		 */
+		function reportLoadFailure( error ) {
+			announce( strings.loadFailed || '' );
+
+			if ( window.console && window.console.error ) {
+				window.console.error(
+					'Volumina: the audio could not be loaded.',
+					audio.currentSrc || audio.src,
+					audio.error ? 'code ' + audio.error.code : '',
+					error || ''
+				);
+			}
+		}
+
+		/**
+		 * Volume: a mute button everywhere, and a slider where the page may
+		 * set the volume at all — iOS keeps it for the hardware buttons and
+		 * ignores the property, so there the slider would be a lie.
+		 */
+		const VOLUME_KEY = 'volumina:volume';
+		const iOS =
+			/iP(hone|ad|od)/.test( window.navigator.userAgent ) ||
+			( window.navigator.platform === 'MacIntel' &&
+				window.navigator.maxTouchPoints > 1 );
+
+		function paintVolume() {
+			const muted = audio.muted || audio.volume === 0;
+
+			if ( els.muteIcon ) {
+				els.muteIcon
+					.querySelectorAll( '[data-volumina-icon]' )
+					.forEach( function ( icon ) {
+						icon.toggleAttribute(
+							'hidden',
+							icon.dataset.voluminaIcon !==
+								( muted ? 'muted' : 'sound' )
+						);
+					} );
+			}
+
+			if ( els.mute ) {
+				els.mute.setAttribute(
+					'aria-pressed',
+					muted ? 'true' : 'false'
+				);
+			}
+
+			if ( els.muteLabel ) {
+				els.muteLabel.textContent = muted
+					? strings.unmute || 'Unmute'
+					: strings.mute || 'Mute';
+			}
+
+			if ( els.volume && ! scrubbingVolume ) {
+				els.volume.value = String(
+					Math.round( ( audio.muted ? 0 : audio.volume ) * 100 )
+				);
+			}
+		}
+
+		let scrubbingVolume = false;
+
+		function setVolume( percent ) {
+			const level = Math.max( 0, Math.min( 100, percent ) ) / 100;
+
+			audio.volume = level;
+			audio.muted = level === 0;
+
+			try {
+				window.localStorage.setItem( VOLUME_KEY, String( level ) );
+			} catch {
+				// Remembering the volume is a courtesy, not a requirement.
+			}
+
+			paintVolume();
+		}
+
+		/**
+		 * "Volume 40%": the string carries %d for the number and %% for the
+		 * sign, as a translator expects of it.
+		 *
+		 * @param {number} percent 0 to 100.
+		 * @return {string} The announcement.
+		 */
+		function volumeMessage( percent ) {
+			return ( strings.volumeSet || 'Volume %d%%' )
+				.replace( '%d', String( percent ) )
+				.replace( '%%', '%' );
+		}
+
+		function toggleMute() {
+			if ( audio.muted || audio.volume === 0 ) {
+				audio.muted = false;
+
+				if ( audio.volume === 0 ) {
+					audio.volume = 1;
+				}
+			} else {
+				audio.muted = true;
+			}
+
+			paintVolume();
+			announce(
+				audio.muted
+					? strings.mute || 'Mute'
+					: volumeMessage( Math.round( audio.volume * 100 ) )
+			);
 		}
 
 		function toggle() {
@@ -485,7 +608,49 @@
 				case 'next':
 					go( 1 );
 					break;
+				case 'mute':
+					toggleMute();
+					break;
 			}
+		} );
+
+		if ( els.volume ) {
+			if ( iOS ) {
+				els.volume.hidden = true;
+			} else {
+				els.volume.addEventListener( 'input', function () {
+					scrubbingVolume = true;
+					setVolume( parseFloat( els.volume.value ) );
+					scrubbingVolume = false;
+				} );
+				els.volume.addEventListener( 'change', function () {
+					announce(
+						volumeMessage( parseInt( els.volume.value, 10 ) )
+					);
+				} );
+
+				try {
+					const remembered = parseFloat(
+						window.localStorage.getItem( VOLUME_KEY )
+					);
+
+					if ( remembered >= 0 && remembered <= 1 ) {
+						audio.volume = remembered;
+						audio.muted = remembered === 0;
+					}
+				} catch {
+					// No memory of the volume: full, as the browser starts.
+				}
+			}
+
+			audio.addEventListener( 'volumechange', paintVolume );
+			paintVolume();
+		}
+
+		// A source that never arrives: say so, rather than leaving a play
+		// button that seems to do nothing.
+		audio.addEventListener( 'error', function () {
+			reportLoadFailure( audio.error );
 		} );
 
 		if ( els.seek ) {

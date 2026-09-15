@@ -53,18 +53,47 @@
 			return minutes + ':' + pad( rest );
 		}
 
-		function show( attachment ) {
-			// WordPress reports the length on the attachment as fileLength,
-			// and older records keep it under meta.length instead.
-			let reported = 0;
-
-			if ( attachment.fileLength ) {
-				reported = parseFloat( attachment.fileLength );
-			} else if ( attachment.meta && attachment.meta.length ) {
-				reported = parseFloat( attachment.meta.length );
+		/**
+		 * Seconds out of what the media library reports.
+		 *
+		 * `fileLength` is the running time already formatted — "1:42",
+		 * "30:00", "1:05:09" — not a number, and reading it with parseFloat
+		 * once turned a thirty-minute chapter into thirty seconds.
+		 *
+		 * @param {*} value What was reported.
+		 * @return {number} Whole seconds, or 0.
+		 */
+		function toSeconds( value ) {
+			if ( typeof value === 'number' ) {
+				return Math.max( 0, Math.floor( value ) );
 			}
 
-			const seconds = Math.floor( reported || 0 );
+			if ( typeof value !== 'string' ) {
+				return 0;
+			}
+
+			const parts = value.trim().split( ':' );
+
+			if ( parts.some( ( part ) => part === '' || isNaN( part ) ) ) {
+				return 0;
+			}
+
+			return Math.floor(
+				parts.reduce(
+					( total, part ) => total * 60 + parseFloat( part ),
+					0
+				)
+			);
+		}
+
+		function show( attachment ) {
+			// WordPress reports the length on the attachment as fileLength,
+			// formatted; older records keep it under meta.length, in seconds.
+			let seconds = toSeconds( attachment.fileLength );
+
+			if ( ! seconds && attachment.meta && attachment.meta.length ) {
+				seconds = toSeconds( attachment.meta.length );
+			}
 
 			input.value = attachment.id;
 
@@ -76,7 +105,8 @@
 			// An existing running time is left alone: it may have been
 			// corrected by hand because the file itself is wrong.
 			if ( duration && seconds > 0 && ! parseInt( duration.value, 10 ) ) {
-				duration.value = seconds;
+				// As h:mm:ss, which is how a person reads it; the server reads both.
+				duration.value = format( seconds );
 
 				if ( readable ) {
 					readable.textContent = format( seconds );

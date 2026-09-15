@@ -59,6 +59,38 @@ final class Duration {
 	}
 
 	/**
+	 * Reads a running time typed by a person: whole seconds, or `h:mm:ss`,
+	 * or `m:ss`, or `mm:ss` with any number of minutes. Anything else is 0.
+	 *
+	 * A field that asked for seconds alone made a thirty-minute chapter read
+	 * as "1800" to whoever typed it and as "30" to whoever guessed; both are
+	 * fair ways of saying it, so both are read.
+	 *
+	 * @param string $typed What was typed.
+	 */
+	public static function parse( string $typed ): int {
+		$typed = trim( $typed );
+
+		if ( 1 === preg_match( '/^\d+$/', $typed ) ) {
+			return (int) $typed;
+		}
+
+		if ( 1 !== preg_match( '/^(?:(\d+):)?(\d+):(\d{1,2})$/', $typed, $m ) ) {
+			return 0;
+		}
+
+		$hours   = '' === $m[1] ? 0 : (int) $m[1];
+		$minutes = (int) $m[2];
+		$seconds = (int) $m[3];
+
+		if ( $seconds >= self::MINUTE ) {
+			return 0;
+		}
+
+		return $hours * self::HOUR + $minutes * self::MINUTE + $seconds;
+	}
+
+	/**
 	 * Formats seconds as `h:mm:ss`, or `m:ss` when there is no hour to show.
 	 *
 	 * @param int $seconds Whole seconds. Negative input is treated as zero.

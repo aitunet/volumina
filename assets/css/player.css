@@ -204,6 +204,12 @@
 	min-height: 44px;
 }
 
+/* Volume: a mute button the size of the other buttons, and a short slider. */
+.volumina-player-volume-range {
+	width: 7em;
+	max-width: 100%;
+}
+
 .volumina-player-status {
 	margin: 0.75em 0 0;
 	font-size: 0.9em;

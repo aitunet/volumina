@@ -238,14 +238,14 @@ final class ChapterMetaBox implements Registrable {
 		echo '</label></th><td>';
 
 		printf(
-			'<input type="number" min="0" step="1" class="small-text" id="volumina_duration" name="volumina_duration" value="%1$d" data-volumina-audio-duration /> <span data-volumina-audio-readable>%2$s</span>',
+			'<input type="text" inputmode="numeric" class="small-text" id="volumina_duration" name="volumina_duration" value="%1$d" data-volumina-audio-duration /> <span data-volumina-audio-readable>%2$s</span>',
 			(int) $duration,
 			esc_html( $duration > 0 ? Duration::format( $duration ) : '' )
 		);
 
 		printf(
 			'<p class="description">%s</p>',
-			esc_html__( 'In whole seconds. Filled in from the audio file; correct it here if the file is wrong.', 'volumina' )
+			esc_html__( 'Filled in from the audio file. To correct it, type it as h:mm:ss, like 1:05:09, or in whole seconds.', 'volumina' )
 		);
 
 		echo '</td></tr>';
@@ -329,7 +329,7 @@ final class ChapterMetaBox implements Registrable {
 			$attachment_id = 0;
 		}
 
-		$duration = isset( $_POST['volumina_duration'] ) ? absint( wp_unslash( $_POST['volumina_duration'] ) ) : 0;
+		$duration = isset( $_POST['volumina_duration'] ) ? Duration::parse( sanitize_text_field( wp_unslash( $_POST['volumina_duration'] ) ) ) : 0;
 
 		if ( 0 === $duration ) {
 			$duration = self::duration_of( $attachment_id );

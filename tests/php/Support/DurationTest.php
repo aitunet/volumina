@@ -81,6 +81,42 @@ final class DurationTest extends TestCase {
 	}
 
 	/**
+	 * What a person types is read whichever way they said it.
+	 *
+	 * @dataProvider typed
+	 *
+	 * @param string $typed    What was typed.
+	 * @param int    $expected Seconds.
+	 */
+	public function test_parse( string $typed, int $expected ): void {
+		$this->assertSame( $expected, Duration::parse( $typed ) );
+	}
+
+	/**
+	 * Typed running times and what they mean.
+	 *
+	 * @return array<string, array{0: string, 1: int}>
+	 */
+	public static function typed(): array {
+		return array(
+			'seconds'         => array( '1800', 1800 ),
+			'zero'            => array( '0', 0 ),
+			'm:ss'            => array( '1:42', 102 ),
+			'mm:ss'           => array( '30:00', 1800 ),
+			'many minutes'    => array( '90:00', 5400 ),
+			'h:mm:ss'         => array( '1:05:09', 3909 ),
+			'padded'          => array( '  1:15:00 ', 4500 ),
+			'h:m:s unpadded'  => array( '2:5:9', 7509 ),
+			'empty'           => array( '', 0 ),
+			'words'           => array( 'half an hour', 0 ),
+			'negative'        => array( '-30', 0 ),
+			'seconds over 59' => array( '1:75', 0 ),
+			'decimal'         => array( '1800.5', 0 ),
+			'markup'          => array( '<b>30:00</b>', 0 ),
+		);
+	}
+
+	/**
 	 * The two formats have to agree about how long the thing is.
 	 */
 	public function test_the_two_formats_describe_the_same_duration(): void {

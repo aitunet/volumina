@@ -119,7 +119,8 @@ details*). Ningún campo es obligatorio.
 - **Idioma** (*Language*) — el idioma en que se lee, como código: `es_ES`,
   `es_AR`, `en_US`.
 - **Duración total** (*Total duration*) — **déjalo en 0**. El libro muestra la
-  suma de sus capítulos. Solo se rellena si quieres decir otra cosa.
+  suma de sus capítulos. Solo se rellena si quieres decir otra cosa, y
+  entonces como `h:mm:ss` (`9:30:00`) o en segundos enteros.
 - **Quién puede escuchar** (*Who can listen*) — público o restringido. Más
   abajo se explica qué cambia.
 
@@ -140,8 +141,9 @@ capítulo** (*Chapter details*):
   **Capítulos** en vez de desde el libro, elígelo aquí.
 - **Elegir archivo de audio** (*Choose audio file*) — sube el archivo desde tu
   ordenador o elígelo de la biblioteca. **Solo acepta audio.**
-- **Duración** (*Duration*) — se rellena sola leyendo el archivo. Si queda en
-  0, escríbela a mano en segundos (una hora y cuarto son `4500`).
+- **Duración** (*Duration*) — se rellena sola leyendo el archivo, como
+  `h:mm:ss`. Si queda en 0 o está mal, escríbela a mano: `1:15:00` para una
+  hora y cuarto, `30:00` para media hora, o en segundos enteros (`4500`).
 - **Posición** (*Position*) — informativo. El orden se decide en la pantalla
   del libro.
 
@@ -195,6 +197,7 @@ funciona con lectores de pantalla.
 | **−15 s · +30 s** | Atrás 15 segundos, adelante 30: los saltos con que se escucha un libro, no una canción. |
 | **Posición** | La barra del capítulo actual. Se puede arrastrar; el audio salta cuando sueltas. |
 | **Velocidad** (*Speed*) | Seis velocidades: 0,75, 1, 1,25, 1,5, 1,75 y 2. La voz mantiene el tono. |
+| **Volumen** | Un botón para silenciar y un deslizador. En iPhone y iPad el deslizador no aparece: ahí el volumen lo mandan los botones del aparato. El navegador recuerda el nivel elegido. |
 | **Temporizador de apagado** (*Sleep timer*) | Apaga a los 5, 10, 15, 30, 45 o 60 minutos, o al **fin del capítulo**. Cuando salta, la reproducción se detiene y el sitio lo anuncia. |
 
 ### Dónde se guarda «por dónde iba»
@@ -325,7 +328,8 @@ idioma en su perfil, y el escritorio le hará caso.
 - **El archivo no sube.** Límite del hosting. Conviértelo a MP3 o pide subir el
   límite (`upload_max_filesize`).
 - **La duración sale 0.** WordPress no pudo leer el archivo (pasa con algunos
-  formatos raros). Escríbela a mano en **Duración**, en segundos.
+  formatos raros). Escríbela a mano en **Duración**, como `h:mm:ss` o en
+  segundos.
 - **Salta o no avanza al arrastrar.** Algunos hostings desactivan las
   «peticiones de rango» en su proxy; el audio suena, pero no se puede saltar ni
   retomar. Activa el **Registro** y pregúntale al hosting por *HTTP range

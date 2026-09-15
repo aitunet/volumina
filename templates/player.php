@@ -171,6 +171,29 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 				<?php endforeach; ?>
 			</select>
 		</p>
+
+		<p class="volumina-player-option volumina-player-volume" data-volumina-volume-row>
+			<button type="button" class="volumina-button" data-volumina-action="mute" aria-pressed="false">
+				<span aria-hidden="true" data-volumina-mute-icon>
+					<svg class="volumina-icon" viewBox="0 0 24 24" focusable="false" data-volumina-icon="sound"><path d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a3.5 3.5 0 0 0-2-3.15v6.3a3.5 3.5 0 0 0 2-3.15zM13.5 4.2v2.1a6 6 0 0 1 0 11.4v2.1a8 8 0 0 0 0-15.6z"/></svg>
+					<svg class="volumina-icon" viewBox="0 0 24 24" focusable="false" data-volumina-icon="muted" hidden><path d="M4 9v6h4l5 4V5L8 9H4zm12.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>
+				</span>
+				<span class="volumina-sr" data-volumina-mute-label><?php esc_html_e( 'Mute', 'volumina' ); ?></span>
+			</button>
+			<label class="volumina-sr" for="volumina-volume-<?php echo esc_attr( (string) (int) $data['book'] ); ?>">
+				<?php esc_html_e( 'Volume', 'volumina' ); ?>
+			</label>
+			<input
+				type="range"
+				id="volumina-volume-<?php echo esc_attr( (string) (int) $data['book'] ); ?>"
+				class="volumina-player-range volumina-player-volume-range"
+				data-volumina-volume
+				min="0"
+				max="100"
+				step="1"
+				value="100"
+			/>
+		</p>
 	</div>
 
 	<p class="volumina-player-status" role="status" aria-live="polite"></p>
