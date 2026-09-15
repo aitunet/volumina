@@ -9,11 +9,11 @@
 
 ## Right now
 
-**Current slice:** S7 — Presentation, the last before submission. **Done.** Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: icon (PNG 128 and 256, and the animated `icon.svg`), banner, six screenshots.
+**Current slice:** S7 — Presentation, the last before submission. **Done.** Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
 **Next action:** the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-15, TUNET, S7 done; assets complete
+**Last updated:** 2026-09-15, TUNET, S7 done; the icon a GIF
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -116,7 +116,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 ## S6 — Release
 
 - [x] `readme.txt` with short description under 150 characters — 130
-- [x] Icon 256×256 and 128×128, an animated `icon.svg`, banner 1544×500, screenshots — six, of real content, in `.wordpress-org/`
+- [x] Icon — an animated GIF, 256×256 and 128×128, plays once — banner 1544×500, screenshots — six, of real content, in `.wordpress-org/`
 - [x] Security pass against the checklist in `CLAUDE.md` — every item, and then a real audit: stored XSS in every editable field, a `</script>` break-out through the player payload, a valid nonce in a subscriber's hands, six SQL payloads through every id, an attachment pointed outside uploads, blocks asked for a draft book, a crafted settings form, and range header abuse. Nothing gave way. See `docs/HISTORY.md`, 2026-09-06.
 - [x] `.pot` regenerated — 287 strings at 1.0.0
 - [x] `es_ES` translation complete — 283 of 287, verified rendering

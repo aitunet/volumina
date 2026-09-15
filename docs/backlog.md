@@ -128,7 +128,8 @@
   **Scope settled by the account holder on 2026-09-14:** yes, a one-shot
   animation with an end, and for the directory listing only — the plugin
   search and the plugin page — never in the dashboard. **Done 2026-09-15:**
-  `.wordpress-org/icon.svg`, CSS animation, plays once; see HISTORY.
+  `.wordpress-org/icon-256x256.gif` and 128, drawn by `bin/make-icon-gif.php`,
+  plays once; the last spine leans after all have risen. See HISTORY.
 - **A guided tour of the admin.** Three or four steps, once, dismissible,
   through WordPress's own pointers (`wp-pointer`, stored per user in
   `dismissed_wp_pointers`): the menu entry, the audiobook screen, the
