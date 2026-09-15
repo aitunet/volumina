@@ -109,15 +109,19 @@
  * The accent, where there is one: the play button fills with it and its icon
  * takes the ink that reads on it, chosen server side so the pair meets AA
  * whatever the colour. Everything else keeps drawing in currentcolor.
+ *
+ * Four classes deep on purpose. A theme that paints every button — Twenty
+ * Twenty-One does, with `button:not(:hover):not(:active):not(.has-background)`,
+ * three pseudo-classes and an element — must lose to a colour the site chose.
  */
-.volumina-has-accent .volumina-button-primary {
+.volumina-has-accent .volumina-player .volumina-button.volumina-button-primary {
 	border-color: var(--volumina-accent);
 	background: var(--volumina-accent);
 	color: var(--volumina-accent-ink);
 }
 
-.volumina-has-accent .volumina-button-primary:hover,
-.volumina-has-accent .volumina-button-primary:focus-visible {
+.volumina-has-accent .volumina-player .volumina-button.volumina-button-primary:hover,
+.volumina-has-accent .volumina-player .volumina-button.volumina-button-primary:focus-visible {
 	border-color: currentcolor;
 }
 

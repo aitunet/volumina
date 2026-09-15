@@ -95,7 +95,8 @@ final class Audiobook {
 					'template' => (string) ( $options['template'] ?? '' ),
 					'accent'   => (string) ( $options['accent'] ?? '' ),
 				)
-			)
+			),
+			false
 		);
 
 		ob_start();

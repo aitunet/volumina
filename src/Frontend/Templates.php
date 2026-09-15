@@ -139,15 +139,17 @@ final class Templates {
 	 * `Color::normalize()`, so no value that reaches here can be more than a
 	 * colour.
 	 *
-	 * @param array{template: Template, cover: string, accent: string, ink: string} $resolved From `resolve()`.
+	 * @param array{template: Template, cover: string, accent: string, ink: string} $resolved   From `resolve()`.
+	 * @param bool                                                                  $with_cover Whether this wrapper places a cover; a chapter list alone does not.
 	 * @return array{class: string, style: string}
 	 */
-	public static function attributes( array $resolved ): array {
-		$classes = array(
-			'volumina-template-' . $resolved['template']->id(),
-			'volumina-cover-' . $resolved['cover'],
-		);
+	public static function attributes( array $resolved, bool $with_cover = true ): array {
+		$classes = array( 'volumina-template-' . $resolved['template']->id() );
 		$style   = '';
+
+		if ( $with_cover ) {
+			$classes[] = 'volumina-cover-' . $resolved['cover'];
+		}
 
 		if ( '' !== $resolved['accent'] ) {
 			$classes[] = 'volumina-has-accent';

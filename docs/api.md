@@ -165,6 +165,93 @@ share.
 
 ---
 
+## Presentation
+
+An audiobook — cover, details, player, chapter list — is always drawn by the same
+markup. A **template** dresses it: a stylesheet, plus what it prefers for the two options
+every template shares, where the cover goes and which palette colour is the accent. The
+free plugin ships one template, `basic`; an extension registers more. A site chooses a
+template in Settings, and a block can choose its own.
+
+### `volumina_register_templates`
+
+Action. Fires once, the first time a template is needed, with the `TemplateRegistry` as
+its only argument. Register the stylesheet on `init` and the template in the action:
+
+```php
+add_action( 'init', function () {
+	wp_register_style(
+		'my-plugin-paper',
+		plugins_url( 'paper.css', __FILE__ ),
+		array( 'volumina-book' ),   // build on the base layout; leave this out to replace it
+		'1.0.0'
+	);
+} );
+
+add_action( 'volumina_register_templates', function ( $registry ) {
+	$registry->add( new TUNET\Volumina\Frontend\Template(
+		'my-plugin-paper',                    // a slug; prefix it with yours
+		__( 'Paper', 'my-plugin' ),
+		'my-plugin-paper',                    // the stylesheet handle, enqueued when the template is used
+		array( 'cover' => 'top', 'accent' => 'contrast' )   // its defaults, both optional
+	) );
+} );
+```
+
+`TUNET\Volumina\Frontend\Template` and `TemplateRegistry` are plain PHP. A template's id
+is a slug; its defaults hold only `cover` (`side`, `top` or `none`) and `accent` (a
+palette slug); anything else is dropped. The registry keeps insertion order and one
+template per id, so adding an id again replaces it where it stands. The first template
+registered is what a site starts on, and that is `basic`: do not rely on being first.
+
+```php
+final class Template {
+	public function __construct( string $id, string $label, string $style = '', array $defaults = array() );
+	public function id(): string;
+	public function label(): string;
+	public function style(): string;      // stylesheet handle, or ''
+	public function defaults(): array;    // { cover?, accent? }
+	public static function covers(): array;
+}
+
+final class TemplateRegistry {
+	public function add( Template $template ): void;
+	public function has( string $id ): bool;
+	public function get( string $id ): ?Template;
+	public function first(): ?Template;
+	public function all(): array;         // id => Template, in order
+}
+```
+
+### The stylesheet contract
+
+The wrapper of every rendering — `.volumina-book` on an audiobook,
+`.volumina-chapter-list` on a chapter list drawn alone — carries:
+
+- `volumina-template-{id}`, so a stylesheet can scope every rule to its own template;
+- `volumina-cover-side`, `volumina-cover-top` or `volumina-cover-none`, the resolved
+  cover position (the audiobook only);
+- with an accent, `volumina-has-accent` and two custom properties in its `style`
+  attribute: `--volumina-accent`, the colour as six-digit hex, and
+  `--volumina-accent-ink`, `#000000` or `#ffffff`, whichever contrasts more with it —
+  one of the two always reaches 4.5:1.
+
+Resolution is, lowest to highest: the template's defaults, the site's settings, the
+block's own attributes. The accent is stored as a palette slug everywhere and turned into
+a colour at render time, so it follows the theme; a slug the active theme does not have
+means no accent.
+
+Inside the wrapper the markup is: `.volumina-book-head` holding `.volumina-book-cover`
+and `dl.volumina-book-details`, then the player (`.volumina-player`, see its stylesheet
+for its classes), then `h2.volumina-book-heading` and `ol.volumina-chapter-list` with one
+`li.volumina-chapter-item` per chapter, the one playing marked `is-playing`. These class
+names are part of the contract; the elements' order and nesting are too.
+
+**What a template is not:** behaviour. A template that needs JavaScript or data the
+plugin does not keep is a feature, not a stylesheet, and needs its own hooks.
+
+---
+
 ## Admin
 
 ### `Screen`
