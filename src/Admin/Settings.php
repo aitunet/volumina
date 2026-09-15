@@ -10,6 +10,9 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\Admin;
 
 use TUNET\Volumina\Access\Mode;
+use TUNET\Volumina\Frontend\Palette;
+use TUNET\Volumina\Frontend\Template;
+use TUNET\Volumina\Frontend\Templates;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Logger;
 use TUNET\Volumina\Support\Registrable;
@@ -22,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * What the site has chosen, and what follows from it.
  *
- * Four settings, and every one of them has to earn its place: a setting is a
+ * Seven settings, and every one of them has to earn its place: a setting is a
  * question asked of somebody who wanted to publish an audiobook. Anything with
  * an obviously right answer is not a setting, it is a decision this plugin
  * should have made.
@@ -117,6 +120,27 @@ final class Settings implements Registrable {
 	}
 
 	/**
+	 * The accent choices: none, what the template prefers, then the theme's palette.
+	 *
+	 * @return array<string, array{label: string, color?: string}>
+	 */
+	public static function accent_choices(): array {
+		$choices = array(
+			''     => array( 'label' => __( 'What the template prefers', 'volumina' ) ),
+			'none' => array( 'label' => __( 'None', 'volumina' ) ),
+		);
+
+		foreach ( Palette::colors() as $slug => $color ) {
+			$choices[ $slug ] = array(
+				'label' => $color['name'],
+				'color' => $color['color'],
+			);
+		}
+
+		return $choices;
+	}
+
+	/**
 	 * The settings themselves.
 	 *
 	 * @return array<int, Field>
@@ -140,6 +164,41 @@ final class Settings implements Registrable {
 					'type'        => 'checkbox',
 					'default'     => true,
 					'description' => __( 'Show the player and the chapters on an audiobook page automatically.', 'volumina' ),
+				)
+			),
+			new Field(
+				array(
+					'key'         => 'template',
+					'label'       => __( 'Template', 'volumina' ),
+					'type'        => 'radio',
+					'default'     => Templates::BASIC,
+					'choices'     => array( Templates::class, 'choices' ),
+					'description' => __( 'How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own.', 'volumina' ),
+				)
+			),
+			new Field(
+				array(
+					'key'         => 'cover_position',
+					'label'       => __( 'Cover', 'volumina' ),
+					'type'        => 'radio',
+					'default'     => '',
+					'choices'     => array(
+						''                   => __( 'Where the template puts it', 'volumina' ),
+						Template::COVER_SIDE => __( 'Beside the details', 'volumina' ),
+						Template::COVER_TOP  => __( 'Above the details', 'volumina' ),
+						Template::COVER_NONE => __( 'Not shown', 'volumina' ),
+					),
+					'description' => __( 'Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room.', 'volumina' ),
+				)
+			),
+			new Field(
+				array(
+					'key'         => 'accent',
+					'label'       => __( 'Accent colour', 'volumina' ),
+					'type'        => 'swatches',
+					'default'     => '',
+					'choices'     => array( self::class, 'accent_choices' ),
+					'description' => __( 'One colour from your theme\'s palette for the play button, the progress bar and the current chapter. Never for text, so the theme\'s contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box.', 'volumina' ),
 				)
 			),
 			new Field(

@@ -1,0 +1,162 @@
+<?php
+/**
+ * Templates, on the WordPress side.
+ *
+ * @package TUNET\Volumina
+ */
+
+declare( strict_types = 1 );
+
+namespace TUNET\Volumina\Frontend;
+
+use TUNET\Volumina\Admin\Settings;
+use TUNET\Volumina\Support\Color;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Holds the registry, adds "Basic" to it, lets extensions add theirs, and
+ * works out what one rendering should use.
+ *
+ * Resolution, lowest to highest: the template's own defaults, then the site's
+ * settings, then whatever the caller passes — a block's attributes, say. The
+ * outcome is a template, a cover position, and an accent as a hex colour with
+ * the ink that reads on it, ready for the markup.
+ */
+final class Templates {
+
+	/**
+	 * The free template's id.
+	 */
+	public const BASIC = 'basic';
+
+	/**
+	 * The registry, once built.
+	 *
+	 * @var TemplateRegistry|null
+	 */
+	private static ?TemplateRegistry $registry = null;
+
+	/**
+	 * The registry, with Basic and every extension's templates in it.
+	 */
+	public static function registry(): TemplateRegistry {
+		if ( null === self::$registry ) {
+			self::$registry = new TemplateRegistry();
+			self::$registry->add(
+				new Template(
+					self::BASIC,
+					__( 'Basic', 'volumina' ),
+					Assets::BOOK,
+					array( 'cover' => Template::COVER_SIDE )
+				)
+			);
+
+			/**
+			 * Fires so extensions can register presentation templates.
+			 *
+			 * @param TemplateRegistry $registry The registry to add templates to.
+			 */
+			do_action( 'volumina_register_templates', self::$registry );
+		}
+
+		return self::$registry;
+	}
+
+	/**
+	 * Forgets the registry, so the next request builds it again. For tests.
+	 */
+	public static function reset(): void {
+		self::$registry = null;
+	}
+
+	/**
+	 * Template id => label, for a settings field or a block control.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function choices(): array {
+		$choices = array();
+
+		foreach ( self::registry()->all() as $id => $template ) {
+			$choices[ $id ] = $template->label();
+		}
+
+		return $choices;
+	}
+
+	/**
+	 * What one rendering should use.
+	 *
+	 * @param array<string, string> $overrides `template`, `cover` and `accent`; an empty value defers.
+	 * @return array{template: Template, cover: string, accent: string, ink: string}
+	 */
+	public static function resolve( array $overrides = array() ): array {
+		$registry = self::registry();
+		$wanted   = (string) ( $overrides['template'] ?? '' );
+
+		if ( '' === $wanted ) {
+			$wanted = (string) Settings::get( 'template' );
+		}
+
+		$template = $registry->get( $wanted ) ?? $registry->first() ?? $registry->get( self::BASIC );
+		$defaults = $template->defaults();
+
+		$cover = (string) ( $overrides['cover'] ?? '' );
+
+		if ( '' === $cover ) {
+			$cover = (string) Settings::get( 'cover_position' );
+		}
+
+		if ( '' === $cover || ! in_array( $cover, Template::covers(), true ) ) {
+			$cover = $defaults['cover'] ?? Template::COVER_SIDE;
+		}
+
+		$slug = (string) ( $overrides['accent'] ?? '' );
+
+		if ( '' === $slug ) {
+			$slug = (string) Settings::get( 'accent' );
+		}
+
+		if ( '' === $slug ) {
+			$slug = $defaults['accent'] ?? '';
+		}
+
+		$accent = 'none' === $slug ? '' : Palette::color( $slug );
+
+		return array(
+			'template' => $template,
+			'cover'    => $cover,
+			'accent'   => $accent,
+			'ink'      => Color::ink( $accent ),
+		);
+	}
+
+	/**
+	 * The wrapper's classes and inline style for a resolution.
+	 *
+	 * The style carries two custom properties and nothing else, both from
+	 * `Color::normalize()`, so no value that reaches here can be more than a
+	 * colour.
+	 *
+	 * @param array{template: Template, cover: string, accent: string, ink: string} $resolved From `resolve()`.
+	 * @return array{class: string, style: string}
+	 */
+	public static function attributes( array $resolved ): array {
+		$classes = array(
+			'volumina-template-' . $resolved['template']->id(),
+			'volumina-cover-' . $resolved['cover'],
+		);
+		$style   = '';
+
+		if ( '' !== $resolved['accent'] ) {
+			$classes[] = 'volumina-has-accent';
+			$style     = sprintf( '--volumina-accent:%s;--volumina-accent-ink:%s', $resolved['accent'], $resolved['ink'] );
+		}
+
+		return array(
+			'class' => implode( ' ', $classes ),
+			'style' => $style,
+		);
+	}
+}

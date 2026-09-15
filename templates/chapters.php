@@ -30,7 +30,12 @@ defined( 'ABSPATH' ) || exit;
 
 <?php else : ?>
 
-	<ol class="volumina-chapter-list">
+	<ol
+		class="<?php echo esc_attr( 'volumina-chapter-list' . ( isset( $volumina_wrap['class'] ) ? ' ' . $volumina_wrap['class'] : '' ) ); ?>"
+		<?php if ( ! empty( $volumina_wrap['style'] ) ) : ?>
+			style="<?php echo esc_attr( $volumina_wrap['style'] ); ?>"
+		<?php endif; ?>
+	>
 		<?php
 		foreach ( $chapters as $volumina_chapter ) :
 			$volumina_seconds = (int) get_post_meta( $volumina_chapter->ID, 'volumina_duration', true );

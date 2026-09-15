@@ -31,8 +31,10 @@ final class Audiobook {
 	/**
 	 * Renders a book.
 	 *
-	 * @param WP_Post             $book    The book.
-	 * @param array<string, bool> $options Which parts to include.
+	 * @param WP_Post              $book    The book.
+	 * @param array<string, mixed> $options Which parts to include (`cover`, `details`, `player`, `chapters`,
+	 *                                      `heading`, booleans), and what to dress it in (`template`, `cover_position`,
+	 *                                      `accent`, strings; empty defers to the site's settings).
 	 */
 	public static function render( WP_Post $book, array $options = array() ): string {
 		$show = array_merge(
@@ -43,8 +45,28 @@ final class Audiobook {
 				'chapters' => true,
 				'heading'  => true,
 			),
-			$options
+			array_filter( $options, 'is_bool' )
 		);
+
+		$resolved = Templates::resolve(
+			array(
+				'template' => (string) ( $options['template'] ?? '' ),
+				'cover'    => (string) ( $options['cover_position'] ?? '' ),
+				'accent'   => (string) ( $options['accent'] ?? '' ),
+			)
+		);
+		$wrap     = Templates::attributes( $resolved );
+
+		// A template is a stylesheet; Basic's is the plugin's own. Enqueued here
+		// rather than on a front-end hook, because this also runs for the
+		// editor's preview, which reaches no such hook.
+		if ( '' !== $resolved['template']->style() ) {
+			wp_enqueue_style( $resolved['template']->style() );
+		}
+
+		if ( Template::COVER_NONE === $resolved['cover'] ) {
+			$show['cover'] = false;
+		}
 
 		$chapters = Chapter::for_book( $book->ID );
 		$details  = $show['details'] ? self::details( $book, $chapters ) : array();
@@ -60,12 +82,21 @@ final class Audiobook {
 	/**
 	 * Renders a book's chapter list on its own.
 	 *
-	 * @param WP_Post $book      The book.
-	 * @param bool    $durations Whether to show running times.
+	 * @param WP_Post               $book      The book.
+	 * @param bool                  $durations Whether to show running times.
+	 * @param array<string, string> $options   `template` and `accent`; empty defers to the site's settings.
 	 */
-	public static function chapter_list( WP_Post $book, bool $durations = true ): string {
+	public static function chapter_list( WP_Post $book, bool $durations = true, array $options = array() ): string {
 		$chapters           = Chapter::for_book( $book->ID );
 		$volumina_durations = $durations;
+		$volumina_wrap      = Templates::attributes(
+			Templates::resolve(
+				array(
+					'template' => (string) ( $options['template'] ?? '' ),
+					'accent'   => (string) ( $options['accent'] ?? '' ),
+				)
+			)
+		);
 
 		ob_start();
 

@@ -11,13 +11,35 @@
 	margin-block: 1.5em;
 }
 
+/*
+ * The head: cover and details. Beside each other when the template says so
+ * and there is room — the cover keeps a third of the width and the details
+ * take the rest — and one above the other otherwise. Flex with wrap rather
+ * than a media query, so it is the container's width that decides, which is
+ * what matters inside a narrow column of a wide page.
+ */
+.volumina-book-head {
+	container-type: inline-size;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5em;
+	align-items: flex-start;
+	margin-block-end: 2em;
+}
+
 .volumina-book-cover {
-	margin-block-end: 1.5em;
+	flex: 1 1 100%;
+	margin: 0;
 }
 
 .volumina-book-cover img {
 	max-width: 100%;
 	height: auto;
+}
+
+/* A third of the row, within reason: never a thumbnail, never a poster. */
+.volumina-cover-side .volumina-book-cover {
+	flex: 0 0 clamp(6em, 30%, 14em);
 }
 
 /*
@@ -28,7 +50,30 @@
 	display: grid;
 	grid-template-columns: max-content minmax(0, 1fr);
 	gap: 0.5em 1em;
-	margin-block: 0 2em;
+	margin: 0;
+	flex: 1 1 100%;
+}
+
+.volumina-cover-side .volumina-book-details {
+	flex: 1 1 8em;
+}
+
+/*
+ * Beside a cover in a narrow row — a phone — two columns leave the values no
+ * room, so each label sits above its value instead. The row's own width
+ * decides, not the screen's: the same happens in a narrow column of a wide
+ * page.
+ */
+@container (max-width: 30em) {
+
+	.volumina-cover-side .volumina-book-details {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0;
+	}
+
+	.volumina-cover-side .volumina-book-detail dd {
+		margin-block-end: 0.6em;
+	}
 }
 
 .volumina-book-detail {
@@ -68,6 +113,15 @@
 
 .volumina-chapter-item:last-child {
 	border-block-end: 0;
+}
+
+/*
+ * The accent, where there is one: a mark beside the chapter that is playing.
+ * The text keeps the theme's colour; only the mark takes the accent, so no
+ * pair of text colours is ever this plugin's to get wrong.
+ */
+.volumina-has-accent .volumina-chapter-item.is-playing {
+	box-shadow: -0.6em 0 0 -0.4em var(--volumina-accent);
 }
 
 .volumina-chapter-row {

@@ -22,7 +22,15 @@ defined( 'ABSPATH' ) || exit;
 $volumina_cover = $show['cover'] ? \TUNET\Volumina\PostTypes\Book::cover_id( $book->ID ) : 0;
 
 ?>
-<div class="volumina-book">
+<div
+	class="<?php echo esc_attr( 'volumina-book ' . $wrap['class'] ); ?>"
+	<?php if ( '' !== $wrap['style'] ) : ?>
+		style="<?php echo esc_attr( $wrap['style'] ); ?>"
+	<?php endif; ?>
+>
+
+	<?php // The head: cover and details side by side, or one above the other; the template decides. ?>
+	<div class="volumina-book-head">
 
 	<?php if ( $volumina_cover > 0 ) : ?>
 		<div class="volumina-book-cover">
@@ -53,6 +61,8 @@ $volumina_cover = $show['cover'] ? \TUNET\Volumina\PostTypes\Book::cover_id( $bo
 		</dl>
 	<?php endif; ?>
 
+	</div>
+
 	<?php
 	if ( $show['player'] ) {
 		// Built by Player::render(), which escaped it. It is markup by intent.
@@ -67,6 +77,7 @@ $volumina_cover = $show['cover'] ? \TUNET\Volumina\PostTypes\Book::cover_id( $bo
 
 		<?php
 		$volumina_durations = true;
+		$volumina_wrap      = null; // Inside the book, the wrapper above carries the template.
 		require __DIR__ . '/chapters.php';
 		?>
 	<?php endif; ?>
