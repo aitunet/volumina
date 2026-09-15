@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Volumina — guía para probarlo</title>
+<style>
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+  * { box-sizing: border-box; }
+  html { font-size: 11pt; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif; color: #1d2327; line-height: 1.5; }
+  header { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 2px solid #e0a83a; margin-bottom: 18px; }
+  header .mark { width: 52px; height: 52px; border-radius: 10px; background: #16181d; display: grid; place-items: center; flex: none; }
+  header .mark svg { width: 38px; height: 38px; display: block; }
+  header h1 { margin: 0; font-size: 20pt; line-height: 1.1; }
+  header p { margin: 3px 0 0; color: #50575e; }
+  h2 { font-size: 13pt; margin: 18px 0 6px; padding-top: 4px; }
+  h2 .n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #e0a83a; color: #1d2327; font-size: 10pt; font-weight: 700; margin-right: 8px; vertical-align: 1px; }
+  p, li { margin: 0 0 6px; }
+  ul, ol { padding-left: 20px; margin: 0 0 8px; }
+  li { margin-bottom: 4px; }
+  .ui { font-weight: 600; white-space: nowrap; }
+  .path .sep { color: #8c8f94; margin: 0 3px; }
+  .note { border-left: 4px solid #e0a83a; background: #fbf6ec; padding: 8px 12px; border-radius: 4px; margin: 10px 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; }
+  .checks li { list-style: none; position: relative; padding-left: 22px; }
+  .checks li::before { content: ""; position: absolute; left: 0; top: 4px; width: 12px; height: 12px; border: 1.5px solid #1d2327; border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; font-size: 10pt; margin: 6px 0 10px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid #dcdcde; vertical-align: top; }
+  th { color: #50575e; font-weight: 600; width: 32%; }
+  footer { margin-top: 20px; padding-top: 8px; border-top: 1px solid #dcdcde; color: #8c8f94; font-size: 9pt; }
+  .break { break-before: page; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="mark" aria-hidden="true">
+    <svg viewBox="0 0 256 256"><rect x="36" y="112" width="20" height="80" rx="5" fill="#e8b657"/><rect x="66" y="72" width="24" height="120" rx="5" fill="#e8b657"/><rect x="104" y="44" width="48" height="148" rx="7" fill="#f4ede0"/><rect x="164" y="86" width="24" height="106" rx="5" fill="#e8b657"/><rect x="200" y="128" width="22" height="64" rx="5" fill="#e8b657" transform="rotate(14 200 192)"/><rect x="44" y="204" width="168" height="9" rx="4.5" fill="#6f7688"/></svg>
+  </div>
+  <div>
+    <h1>Volumina — guía para probarlo</h1>
+    <p>Un plugin de WordPress para publicar audiolibros y escucharlos como en una app: capítulos, posición que se recuerda, velocidad, temporizador. Versión 1.0, todavía sin publicar.</p>
+  </div>
+</header>
+
+<p>Gracias por probarlo. No hace falta saber de WordPress más que lo normal: crear entradas y subir imágenes. Todo lo que hace el plugin vive en el menú <span class="ui">Audiolibros</span> del escritorio, y cada pantalla tiene su pestaña <span class="ui">Ayuda</span> arriba a la derecha.</p>
+
+<h2><span class="n">1</span>Instalar</h2>
+<ol>
+  <li>Necesitas un WordPress 6.6 o más nuevo, con PHP 8.1 o más nuevo, en el que puedas instalar plugins.</li>
+  <li><span class="path"><span class="ui">Plugins</span><span class="sep">›</span><span class="ui">Añadir nuevo</span><span class="sep">›</span><span class="ui">Subir plugin</span></span>, elige <span class="ui">volumina-1.0.0.zip</span>, instala y activa.</li>
+  <li>Al activar aterrizas en <span class="ui">Bienvenido a Volumina</span> (queda después en <span class="path"><span class="ui">Escritorio</span><span class="sep">›</span><span class="ui">Bienvenido a Volumina</span></span>). Léela: son los tres pasos que vienen ahora.</li>
+</ol>
+
+<h2><span class="n">2</span>Configurar — dos preguntas</h2>
+<p>Un aviso azul te lleva a <span class="path"><span class="ui">Audiolibros</span><span class="sep">›</span><span class="ui">Ajustes</span></span>. Solo importan dos: si los libros nuevos nacen <em>públicos</em> o <em>restringidos</em>, y si la página de cada libro muestra el reproductor sola. Los valores por defecto (público, sí) son los buenos para probar: pulsa <span class="ui">Guardar cambios</span>, o directamente <span class="ui">Mantener los valores por defecto</span> en el aviso.</p>
+
+<h2><span class="n">3</span>Tu primer audiolibro</h2>
+<ol>
+  <li><span class="path"><span class="ui">Audiolibros</span><span class="sep">›</span><span class="ui">Añadir nuevo audiolibro</span></span>. Título, una descripción en el cuerpo, y en el lateral <span class="ui">Elegir portada</span> (una imagen vertical). Abajo, en <span class="ui">Detalles del audiolibro</span>, el narrador si quieres. Deja <span class="ui">Duración total</span> en 0.</li>
+  <li><span class="ui">Publicar</span>. Hasta que el libro está guardado no se pueden añadir capítulos.</li>
+  <li>En la caja <span class="ui">Capítulos</span>, <span class="ui">Añadir un capítulo</span>. Título, <span class="ui">Elegir archivo de audio</span> (mejor MP3; también M4A, OGG, WAV) y <span class="ui">Publicar</span>. La duración se rellena sola desde el archivo.</li>
+  <li>Repite por cada capítulo. En el libro, arrástralos para ordenarlos: se guarda solo.</li>
+  <li><span class="ui">Ver audiolibro</span>: portada, ficha, reproductor y capítulos, en la página del libro.</li>
+</ol>
+<div class="note">Un capítulo = un archivo. El tamaño máximo por archivo lo decide el hosting, no el plugin; si uno no sube, prueba con MP3 o pídeselo a quien lleve el servidor.</div>
+
+<h2><span class="n">4</span>Escuchar</h2>
+<p>En la página del libro: <span class="ui">reproducir</span>, capítulo anterior y siguiente, <span class="ui">−15 s</span> y <span class="ui">+30 s</span>, la barra de posición, <span class="ui">Velocidad</span> (0,75× a 2×), <span class="ui">Temporizador de apagado</span> (minutos, o «fin del capítulo») y volumen. Escucha un rato, cierra la pestaña, vuelve: debe seguir donde lo dejaste. Con sesión iniciada, tu posición viaja de un dispositivo a otro; sin sesión, se queda en ese navegador.</p>
+
+<h2 class="break"><span class="n">5</span>Qué nos interesa que pruebes</h2>
+<ul class="checks">
+  <li><strong>En el teléfono.</strong> Escucha con la pantalla bloqueada y usa los controles de la pantalla de bloqueo. Cambia de wifi a datos a mitad. Vuelve al día siguiente: ¿retoma donde iba?</li>
+  <li><strong>Un libro largo.</strong> Varios capítulos de más de 30 minutos. Salta adelante y atrás dentro de un capítulo largo: ¿llega al segundo pedido o se queda cargando?</li>
+  <li><strong>Los bloques.</strong> En una página normal, inserta los bloques <span class="ui">Audiolibro</span>, <span class="ui">Lista de capítulos</span> y <span class="ui">Seguir escuchando</span> (escribe «/audiolibro» en el editor). ¿Se ven igual en el editor y en la página?</li>
+  <li><strong>Un libro restringido.</strong> Marca uno como <em>Restringido</em> y ábrelo en una ventana de incógnito: la página se ve, el audio no.</li>
+  <li><strong>El diseño.</strong> En <span class="path"><span class="ui">Audiolibros</span><span class="sep">›</span><span class="ui">Ajustes</span><span class="sep">›</span><span class="ui">Presentación</span></span>, mueve la portada y elige un color de acento. Mira la página del libro en el ordenador y en el móvil.</li>
+  <li><strong>Con tu tema.</strong> Lo que se vea raro con tu tema —tamaños, colores, botones— nos interesa aunque sea culpa del tema.</li>
+  <li><strong>Cualquier cosa que no entiendas.</strong> Un campo que no sepas para qué es, un texto que no ayude, un paso que te haga dudar: eso también es un fallo.</li>
+</ul>
+
+<h2><span class="n">6</span>Cómo contarnos lo que encuentres</h2>
+<table>
+  <tr><th>Qué pasó</th><td>Lo que esperabas y lo que ocurrió, en una o dos frases.</td></tr>
+  <tr><th>Dónde</th><td>La pantalla o la página, y qué pulsaste justo antes.</td></tr>
+  <tr><th>Con qué</th><td>Ordenador o teléfono, y el navegador. Si es un teléfono, cuál.</td></tr>
+  <tr><th>Una captura</th><td>Si el reproductor muestra un mensaje debajo de los controles, cópialo tal cual.</td></tr>
+  <tr><th>El audio</th><td>Si un archivo no se reproduce o su duración sale mal: formato, tamaño y duración real.</td></tr>
+</table>
+
+<div class="note">Lo que Volumina <strong>no</strong> hace, para que no lo busques: no vende (no hay carrito ni pagos; eso es un plugin aparte) y no impide que un audio se copie — ningún reproductor web puede. Lo que sí puede es decidir quién ve el reproductor.</div>
+
+<footer>Volumina 1.0 · TUNET · tunetdesign.com · Esta guía es para la prueba previa a la publicación en el directorio de WordPress.</footer>
+
+</body>
+</html>
