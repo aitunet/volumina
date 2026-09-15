@@ -17,9 +17,9 @@ use const TUNET\Volumina\VERSION;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Where a new site lands after activation, and what the menu calls Welcome.
+ * Where a new site lands after activation, and what Dashboard calls "Welcome to Volumina".
  *
- * It explains; the setup screen asks. What the plugin is and is not, the
+ * It explains; the settings ask. What the plugin is and is not, the
  * three steps to a first audiobook, and where to go next. Nothing here is a
  * form: every control is a link to a screen that already exists.
  *
@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
  * extension can add one of its own — Pro says what it added — without
  * touching this page.
  */
-final class WelcomeScreen implements Screen, HasAssets {
+final class WelcomeScreen implements Screen, HasAssets, HasParent {
 
 	/**
 	 * The page slug.
@@ -54,14 +54,22 @@ final class WelcomeScreen implements Screen, HasAssets {
 	}
 
 	/**
-	 * The menu entry.
+	 * The menu entry, under Dashboard, so it says whose welcome it is.
 	 */
 	public function menu_title(): string {
-		return __( 'Welcome', 'volumina' );
+		return __( 'Welcome to Volumina', 'volumina' );
 	}
 
 	/**
-	 * Who may see it: the same people the setup screen and the settings admit.
+	 * Under Dashboard: where a welcome is expected, and out of the menu
+	 * people work in.
+	 */
+	public function parent(): string {
+		return 'index.php';
+	}
+
+	/**
+	 * Who may see it: the same people the settings admit.
 	 */
 	public function capability(): string {
 		return 'manage_options';
@@ -78,7 +86,7 @@ final class WelcomeScreen implements Screen, HasAssets {
 	 * The page's address.
 	 */
 	public static function url(): string {
-		return admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
+		return admin_url( 'index.php?page=' . self::SLUG );
 	}
 
 	/**
@@ -141,10 +149,10 @@ final class WelcomeScreen implements Screen, HasAssets {
 			esc_html__( 'Publish audiobooks on your site and give listeners a real listening experience: chapters, a position that is remembered, playback speed, a sleep timer.', 'volumina' )
 		);
 
-		if ( SetupScreen::finished() ) {
+		if ( Setup::finished() ) {
 			$this->link( 'volumina-cta', admin_url( 'post-new.php?post_type=' . Book::POST_TYPE ), __( 'Add an audiobook', 'volumina' ) );
 		} else {
-			$this->link( 'volumina-cta', SetupScreen::url(), __( 'Set up Volumina — two questions', 'volumina' ) );
+			$this->link( 'volumina-cta', SettingsScreen::url(), __( 'Open the settings — two of them matter', 'volumina' ) );
 		}
 
 		echo '</div>';
@@ -160,9 +168,9 @@ final class WelcomeScreen implements Screen, HasAssets {
 		$this->step(
 			1,
 			__( 'Set it up', 'volumina' ),
-			__( 'Two questions: who may listen by default, and whether to keep a log. It takes a minute.', 'volumina' ),
-			SetupScreen::finished() ? '' : SetupScreen::url(),
-			SetupScreen::finished() ? __( 'Done.', 'volumina' ) : __( 'Set up Volumina', 'volumina' )
+			__( 'Two settings decide how it behaves: who may listen by default, and whether book pages show the player. Save the settings once, or keep the defaults, and this step is done.', 'volumina' ),
+			Setup::finished() ? '' : SettingsScreen::url(),
+			Setup::finished() ? __( 'Done.', 'volumina' ) : __( 'Open the settings', 'volumina' )
 		);
 		$this->step(
 			2,
@@ -251,7 +259,7 @@ final class WelcomeScreen implements Screen, HasAssets {
 			esc_html__( 'Settings', 'volumina' ),
 			esc_html__( 'Who may listen by default, whether to keep a log, and what to remove on uninstall.', 'volumina' )
 		);
-		$this->link( 'volumina-step-link', admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=volumina-settings' ), __( 'Open the settings', 'volumina' ) );
+		$this->link( 'volumina-step-link', SettingsScreen::url(), __( 'Open the settings', 'volumina' ) );
 		echo '</li>';
 
 		echo '</ul>';

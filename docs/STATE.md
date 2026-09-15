@@ -10,10 +10,10 @@
 ## Right now
 
 **Current slice:** S7 — Presentation, the last before submission. All three tasks are built and verified; the Pro screen and the welcome page were accepted by the account holder, the template awaits their look.
-**Next action:** (1) the account holder looks at the template on `testing-site.local` — a book page, and Audiobooks → Settings for Cover and Accent colour, and the Presentation panel on the Audiobook block — and says yes or asks for changes; (2) they publish `docs/guide-es.md` and the URL goes into `WelcomeScreen::GUIDE_URL`; (3) the tour was judged unnecessary once the welcome page existed — they can overrule. Then S7 closes and the release checklist runs again. After S7: the account holder's checks (real phone, real hosting) and the submission — upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, then `.wordpress-org/` into SVN's `assets/`. Rebuild the zip with `php bin/build-release.php` (`--composer="php /path/to/composer.phar"` where Composer is not on the PATH) after any change.
+**Next action:** (1) the account holder looks at the three changes of the evening on `testing-site.local` — Settings in cards, no Setup entry and the notice with "Keep the defaults", Dashboard → Welcome to Volumina — and says yes; the template they already accepted; (2) they publish `docs/guide-es.md` and the URL goes into `WelcomeScreen::GUIDE_URL`; (3) the tour was judged unnecessary once the welcome page existed — they can overrule. Then S7 closes and the release checklist runs again. After S7: the account holder's checks (real phone, real hosting) and the submission — upload `dist/volumina-1.0.0.zip` at wordpress.org/plugins/developers/add/, then `.wordpress-org/` into SVN's `assets/`. Rebuild the zip with `php bin/build-release.php` (`--composer="php /path/to/composer.phar"` where Composer is not on the PATH) after any change.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-14, TUNET, template done
+**Last updated:** 2026-09-14, TUNET, settings cards, wizard removed, welcome under Dashboard
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -105,7 +105,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 - [x] Log screen
 - [x] Help tabs on every screen
 - [x] Description text under every field
-- [x] One-time setup wizard
+- [x] One-time setup wizard — **removed on 2026-09-14** by decision: the settings are the setup, see `docs/decisions.md`
 - [x] Presentational Pro screen: screenshots and illustrations only. The directory's Detailed Plugin Guidelines forbid shipping functionality that is locked and unlocked by paying, so no real code sits disabled waiting for a licence
 - [x] Screens that do not apply are not registered
 
@@ -136,7 +136,7 @@ Three things the account holder wants in the first version people see. Each begi
 - [x] **Pro screen, eye-catching.** Purely presentational: a hero, the mark, what Pro adds shown with illustrations or screenshots, one call to action. Zero inputs, zero disabled controls — the directory forbids locked functionality. Built and verified 2026-09-14: dark hero, five illustrated cards, the note, one call to action as a link; zero axe violations in the real admin, phone layout checked, translated. The account holder looked at it in their own admin and said yes on 2026-09-14.
 - [x] **Welcome page.** Shown once after activation, reachable later from the menu: what the plugin is and is not (no store, no DRM), three steps to a first audiobook, links to the setup and the guide. Registered through the screen registry so Pro can add a section. Built and verified 2026-09-14: redirect on activation seen on the Local site, zero axe violations, translated; Pro adds a section through `volumina_welcome_sections`. Awaiting the account holder's look, and the guide URL.
 - [x] **Basic audiobook template, customisable, with the seam for Pro's.** One free template for a book page — which details show, where the cover sits, an accent from the theme's palette — and a documented registry or filter in `docs/api.md` through which Pro registers its featured templates with advanced styling. Settle the shape of "basic" versus "advanced" once, in the design pass. Settled and built 2026-09-14: Basic (cover beside the details) with cover position and accent in Settings and per block; `volumina_register_templates` and the stylesheet contract in `docs/api.md`; a throwaway "Paper" template registered from outside. Awaiting the account holder's look.
-- [x] `.pot` regenerated — 336 strings — `es_ES` and `pt_BR` complete for every new string, the block editor's JSON generated, zip rebuilt.
+- [x] `.pot` regenerated — 329 strings — `es_ES` and `pt_BR` complete for every new string, the block editor's JSON generated, zip rebuilt.
 
 **Done when:** all three render correctly in Twenty Twenty-Five and in one classic theme where they touch the front end; the admin screens pass axe; the account holder has looked at each and said yes; the release checklist below still passes.
 

@@ -276,11 +276,11 @@ The capability is checked twice — once to decide whether to add the page, and 
 the moment of drawing. The check that hid the menu entry is not the one that protects
 the page.
 
-### `HasHelp` and `HasAssets`
+### `HasHelp`, `HasAssets` and `HasParent`
 
-Interfaces, `TUNET\Volumina\Admin\HasHelp` and `TUNET\Volumina\Admin\HasAssets`. Both
-are optional additions to `Screen`: a screen that implements neither keeps working
-exactly as it did, which is why they are separate rather than methods of `Screen`.
+Interfaces, `TUNET\Volumina\Admin\HasHelp`, `HasAssets` and `HasParent`. All three are
+optional additions to `Screen`: a screen that implements none keeps working exactly as
+it did, which is why they are separate rather than methods of `Screen`.
 
 ```php
 interface HasHelp {
@@ -290,12 +290,18 @@ interface HasHelp {
 interface HasAssets {
 	public function enqueue(): void;  // wp_enqueue_style() / wp_enqueue_script(); never echo a tag
 }
+
+interface HasParent {
+	public function parent(): string; // a parent menu slug: `index.php`, `tools.php`…; without it, Audiobooks
+}
 ```
 
-The registry calls both on `load-{page}`, and only for that page: `help()` at the one
-moment `get_current_screen()` is available and still accepting tabs, `enqueue()` early
-enough for a stylesheet to print in the head rather than trail in the footer after the
-page has been drawn unstyled. Nothing a screen enqueues reaches any other screen.
+The registry calls the first two on `load-{page}`, and only for that page: `help()` at
+the one moment `get_current_screen()` is available and still accepting tabs, `enqueue()`
+early enough for a stylesheet to print in the head rather than trail in the footer after
+the page has been drawn unstyled. Nothing a screen enqueues reaches any other screen.
+`parent()` puts the screen under another menu — the welcome page sits under Dashboard —
+and its URL then follows that parent (`index.php?page=<slug>`), not `edit.php`.
 
 ### `volumina_welcome_sections`
 

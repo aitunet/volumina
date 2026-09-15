@@ -81,7 +81,7 @@ final class ScreenRegistry implements Registrable {
 			}
 
 			$hook = add_submenu_page(
-				self::PARENT,
+				$screen instanceof HasParent ? $screen->parent() : self::PARENT,
 				$screen->title(),
 				$screen->menu_title(),
 				$screen->capability(),

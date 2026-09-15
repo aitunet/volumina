@@ -48,7 +48,7 @@ final class WelcomeRedirect implements Registrable {
 	 * @param bool $network_wide Whether the activation is for the whole network.
 	 */
 	public function remember( bool $network_wide = false ): void {
-		if ( $network_wide || ( defined( 'WP_CLI' ) && WP_CLI ) || SetupScreen::finished() ) {
+		if ( $network_wide || ( defined( 'WP_CLI' ) && WP_CLI ) || Setup::finished() ) {
 			return;
 		}
 

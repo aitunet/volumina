@@ -9,6 +9,7 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Admin;
 
+use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Help;
 
 use const TUNET\Volumina\PLUGIN_FILE;
@@ -28,8 +29,20 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 	/**
 	 * The page slug.
 	 */
+	public const SLUG = 'volumina-settings';
+
+	/**
+	 * The page slug.
+	 */
 	public function slug(): string {
-		return 'volumina-settings';
+		return self::SLUG;
+	}
+
+	/**
+	 * The page's address.
+	 */
+	public static function url(): string {
+		return admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
 	}
 
 	/**

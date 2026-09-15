@@ -17,7 +17,7 @@ escuchar, retomar y compartir.
 
 1. [Qué es y qué no es](#qué-es-y-qué-no-es)
 2. [El menú Audiolibros](#el-menú-audiolibros)
-3. [Primer arranque](#primer-arranque-la-bienvenida-y-dos-preguntas)
+3. [Primer arranque](#primer-arranque-la-bienvenida-y-dos-ajustes)
 4. [Tu primer audiolibro, paso a paso](#tu-primer-audiolibro-paso-a-paso)
 5. [El reproductor](#el-reproductor-visto-por-quien-escucha)
 6. [Quién puede escuchar](#quién-puede-escuchar)
@@ -55,25 +55,27 @@ escritorio, con el icono de los cinco lomos. Todo el plugin vive ahí.
 | **Añadir nuevo audiolibro** (*Add New Audiobook*) | Crear un libro. Empieza aquí. |
 | **Géneros** y **Series** (*Genres*, *Series*) | Etiquetas para agrupar libros. Funcionan como las categorías de las entradas. |
 | **Capítulos** (*Chapters*) | Todos los capítulos de todos los libros, en una lista. Casi nunca hace falta entrar: los capítulos se manejan desde el libro. |
-| **Ajustes** (*Settings*) | Cuatro ajustes. El plugin funciona sin tocar ninguno. |
-| **Configuración** (*Setup*) | El asistente de dos preguntas. Desaparece cuando lo terminas. |
+| **Ajustes** (*Settings*) | Siete ajustes en tres grupos. El plugin funciona sin tocar ninguno. |
 | **Registro** (*Log*) | Solo aparece si activas el registro en Ajustes. |
-| **Bienvenida** (*Welcome*) | La página que ves al activar el plugin: qué es, los tres pasos y por dónde seguir. Siempre se puede volver a ella. |
 | **Pro** | Una página informativa sobre el plugin de pago. No tiene botones ni funciones bloqueadas; es una descripción. Desaparece cuando Pro está instalado. |
+
+Y fuera de ese menú, en **Escritorio › Bienvenido a Volumina** (*Dashboard ›
+Welcome to Volumina*), la página que ves al activar el plugin: qué es, los tres
+pasos y por dónde seguir. Siempre se puede volver a ella.
 
 Cada pantalla tiene su ayuda en la pestaña **Ayuda** (*Help*) de la esquina
 superior derecha, escrita para esa pantalla en concreto. Si dudas de un campo,
 mira ahí antes que en esta guía.
 
-## Primer arranque: la bienvenida y dos preguntas
+## Primer arranque: la bienvenida y dos ajustes
 
 Al activar el plugin, WordPress te lleva a la página de **Bienvenida**: qué es
 Volumina, qué no es, y los tres pasos hasta el primer audiolibro. Solo ocurre
-la primera vez; después la página sigue en el menú.
+la primera vez; después la página sigue en Escritorio.
 
 El botón de la bienvenida —y un aviso azul en las pantallas del plugin:
-*«Volumina está instalado y todavía no se ha configurado. Son dos
-preguntas»*— te llevan a **Configuración** (*Setup*):
+*«Volumina está instalado. Dos ajustes deciden cómo se comporta»*— te llevan a
+**Ajustes**, donde los dos primeros son los que importan:
 
 - **Los audiolibros nuevos son** (*New audiobooks are*) — cómo nace cada
   libro nuevo: **Público — cualquiera puede escucharlo** o **Restringido —
@@ -83,10 +85,10 @@ preguntas»*— te llevan a **Configuración** (*Setup*):
   mostrar el reproductor y los capítulos automáticamente. Déjalo activado
   salvo que quieras colocar el bloque **Audiolibro** tú mismo en una plantilla.
 
-**Guardar y terminar** (*Save and finish*) guarda y cierra el asistente para
-siempre. **Omitir** (*Skip*) es una opción real: los valores por defecto
-(público, reproductor automático) son los que la mayoría quiere. Las dos
-respuestas siguen en **Ajustes** después.
+Guarda los ajustes una vez y el aviso desaparece para siempre. Si no quieres
+tocar nada, el propio aviso ofrece **Mantener los valores por defecto** (*Keep
+the defaults*), que hace lo mismo: público y reproductor automático son lo que
+la mayoría quiere.
 
 ## Tu primer audiolibro, paso a paso
 
@@ -263,12 +265,32 @@ el sitio (`/genre/novela/`, `/series/clasicos-en-espanol/`), útil para menús.
 
 ## Ajustes y registro
 
-**Audiolibros › Ajustes**. Cuatro ajustes, cada uno con su explicación debajo:
+**Audiolibros › Ajustes**. Siete ajustes en tres grupos, cada uno con su
+explicación debajo.
+
+**Escucha** (*Listening*):
 
 - **Los audiolibros nuevos son** — el valor con que nace un libro nuevo. Nunca
   cambia uno existente.
 - **Páginas de libro** — reproductor y capítulos automáticos en la página del
   libro.
+
+**Presentación** (*Presentation*), cómo se ve un audiolibro en la página:
+
+- **Plantilla** (*Template*) — cómo se dispone y se viste: portada, ficha,
+  reproductor y capítulos. Volumina trae una, *Básica*; una extensión puede
+  añadir más.
+- **Portada** (*Cover*) — al lado de la ficha, encima, o sin mostrar. En una
+  pantalla estrecha, «al lado» pasa a «encima» cuando no cabe.
+- **Color de acento** (*Accent colour*) — un color de la paleta de tu tema para
+  el botón de reproducir, la barra de progreso y el capítulo en curso. Nunca
+  para texto. Sin ninguno, el reproductor se dibuja en el color del texto.
+
+Los tres se pueden cambiar también bloque a bloque, en el panel **Presentación**
+del bloque *Audiolibro*.
+
+**Mantenimiento** (*Housekeeping*):
+
 - **Registro** (*Log*) — activa un registro de sucesos notables. Enciéndelo
   cuando algo falle y apágalo después.
 - **Al desinstalar** (*On uninstall*) — si al **borrar** el plugin (no al

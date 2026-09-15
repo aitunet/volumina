@@ -472,3 +472,21 @@ the screen — needs JavaScript and data the free plugin does not keep. Those
 are Pro features to be built in Pro, with their own hooks, when Pro is built;
 nothing is left "prepared" for them now, because a seam for an unknown feature
 is a guess.
+
+## 2026-09-14 — The setup wizard is gone; the settings are the setup
+
+S5 shipped a two-question wizard, and the account holder, using the plugin, saw what
+it was: the first two settings asked again on a second screen, with a menu entry of
+its own. Asking twice in two places was one place too many.
+
+The settings are the setup now. "Set up" means the settings have been looked at once:
+saved, or kept as they are on purpose through "Keep the defaults" on the notice — a
+nonce-checked admin-post action, since a notice that can be dismissed without answering
+is a notice that comes back. The option name `volumina_setup_done` stays, so a site
+that finished the wizard stays set up. The notice, the welcome page's button and its
+first step all point at the settings.
+
+Also today, the welcome page moved from the Audiobooks menu to Dashboard → "Welcome
+to Volumina", where a welcome is expected and where it does not lengthen the menu people
+work in; and the settings screen took the presentation screens' cards, one per section.
+`HasParent` is the additive interface that lets a screen name its menu.

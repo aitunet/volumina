@@ -40,7 +40,6 @@ final class Screens implements Registrable {
 	public function add( ScreenRegistry $registry ): void {
 		$registry->add( new SettingsScreen() );
 		$registry->add( new LogScreen() );
-		$registry->add( new SetupScreen() );
 		$registry->add( new WelcomeScreen() );
 		$registry->add( new ProScreen() );
 	}

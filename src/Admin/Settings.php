@@ -56,6 +56,10 @@ final class Settings implements Registrable {
 		add_action( 'admin_init', array( $this, 'register_setting' ) );
 		add_action( 'init', array( $this, 'configure_logger' ) );
 		add_action( 'save_post_' . Book::POST_TYPE, array( $this, 'apply_default_mode' ), 10, 2 );
+
+		// Saving the settings once is what sets the site up.
+		add_action( 'add_option_' . self::OPTION, array( Setup::class, 'finish' ) );
+		add_action( 'update_option_' . self::OPTION, array( Setup::class, 'finish' ) );
 	}
 
 	/**
