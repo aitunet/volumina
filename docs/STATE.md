@@ -9,11 +9,11 @@
 
 ## Right now
 
-**Current slice:** S7 — Presentation, the last before submission. Everything in it is built, verified, translated and committed: the Pro screen, the welcome page (under Dashboard), the audiobook template with its registry, the settings in cards, the wizard removed. The account holder accepted the Pro screen, the welcome page and the template; the evening's three changes (settings cards, no Setup, welcome under Dashboard) await their look.
-**Next action:** the account holder's list below, in order — (1) look at the three changes on `testing-site.local`; (2) publish `docs/guide-es.md` and hand over its URL for `WelcomeScreen::GUIDE_URL` — waits for tunetdesign.com, under construction on 2026-09-14; then, on this side, (3) the release checklist run again over the final state, `readme.txt`'s changelog and description brought up to date with the welcome page, the template and the new settings, the zip rebuilt and installed from the zip; then (4) the account holder's hardware and hosting checks; then (5) submission.
+**Current slice:** S7 — Presentation, the last before submission. Built, verified, translated, committed, and **accepted by the account holder in full** on 2026-09-14. The release checklist was run again over the final state and passes; the zip was installed from the zip.
+**Next action:** two small things that need the account holder's Chrome session: (1) axe over the settings screen in its card form; (2) screenshots 5 (settings) and 6 (welcome page) retaken at 1440×900 — `.wordpress-org/screenshot-5.png` still shows the old four-setting screen. Then S7 is ticked. After that: the account holder's list at the end of this file — the guide's URL once tunetdesign.com is live, the phone, the hosting, real audio, a second person, PHP 8.1 — and the submission.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-14, TUNET, settings cards, wizard removed, welcome under Dashboard
+**Last updated:** 2026-09-14, TUNET, S7 accepted, release checklist re-run
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -147,11 +147,11 @@ Three things the account holder wants in the first version people see. Each begi
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 70 tests, 142 assertions
+- [x] Full test suite green — 118 tests, 231 assertions
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
-- [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop
-- [x] Every string translatable — 287 in the `.pot`, and a forced-locale render left nothing in English
-- [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database
+- [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen and the welcome page too. The settings screen in its card form awaits its run (Chrome)
+- [x] Every string translatable — 329 in the `.pot`, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
+- [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database, again on 2026-09-14: zero left
 - [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls
 - [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places
 
