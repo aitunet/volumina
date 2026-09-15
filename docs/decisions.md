@@ -445,3 +445,30 @@ begins with a design pass agreed with the account holder before any code,
 and every screen stays purely presentational where the directory requires
 it: the Pro screen shows and tells, it never disables real code. The `.pot`,
 `es_ES` and `pt_BR` are regenerated and the zip rebuilt at the end of S7.
+
+## 2026-09-14 — Templates: the free plugin ships one, Pro's are stylesheets plus options, through a registry
+
+Decided with the account holder in a visual design pass (`.superpowers/brainstorm/4137-*`).
+
+**The free template is one, "Basic", in the "card" layout**: cover beside the
+details, the player in its box, the chapter list below — the current
+arrangement, kept on purpose because it sits well in any theme. Three things
+about it can be changed: which parts show (already per block), where the
+cover goes (beside, above, none) and an accent colour chosen from the theme's
+palette. The accent colours controls only — the play button, the seek bar,
+the current chapter's marker — never text, so no pair of text colours is
+ever the plugin's to get wrong.
+
+**A Pro template is a stylesheet plus default values for those same
+options**, registered through a template registry the free plugin exposes
+(`volumina_register_templates`). The wrapper carries a class per template and
+the accent as a CSS custom property, which is the whole contract a stylesheet
+needs. Two of the three examples drawn — an editorial serif one and a dark
+one with the cover above — are exactly that.
+
+**What a template is not:** new behaviour. The third example drawn — progress
+per chapter with finished ones ticked, a mini player fixed to the bottom of
+the screen — needs JavaScript and data the free plugin does not keep. Those
+are Pro features to be built in Pro, with their own hooks, when Pro is built;
+nothing is left "prepared" for them now, because a seam for an unknown feature
+is a guess.
