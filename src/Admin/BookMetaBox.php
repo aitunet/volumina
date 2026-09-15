@@ -213,7 +213,7 @@ final class BookMetaBox implements Registrable {
 			),
 			'volumina_access'         => array(
 				'label'       => __( 'Who can listen', 'volumina' ),
-				'description' => __( 'A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back.', 'volumina' ),
+				'description' => __( 'A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line.', 'volumina' ),
 			),
 		);
 	}

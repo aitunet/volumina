@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T01:08:37+00:00\n"
+"POT-Creation-Date: 2026-09-15T01:39:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -107,7 +107,7 @@ msgid "Who can listen"
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:216
-msgid "A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back."
+msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
 msgstr ""
 
 #: src/Admin/ChapterList.php:57

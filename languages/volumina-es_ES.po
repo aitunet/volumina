@@ -110,10 +110,6 @@ msgstr "En segundos enteros. Déjalo en cero y responderán por él los capítul
 msgid "Who can listen"
 msgstr "Quién puede escuchar"
 
-#: src/Admin/BookMetaBox.php:216
-msgid "A restricted book still appears on the site with its chapters and its cover. Only the audio is kept back."
-msgstr "Un libro restringido sigue apareciendo en el sitio con sus capítulos y su portada. Solo se retiene el audio."
-
 #: src/Admin/Settings.php:182
 #: blocks/audiobook/index.js:27
 #: blocks/shared/presentation.js:80
@@ -1456,3 +1452,7 @@ msgstr "Ajuste del sitio"
 #: blocks/shared/presentation.js:118
 msgid "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text."
 msgstr "De la paleta del tema. Colorea el botón de reproducir, la barra de progreso y el capítulo actual, nunca texto."
+
+#: src/Admin/BookMetaBox.php:216
+msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
+msgstr "Un libro restringido sigue apareciendo en el sitio con sus capítulos y su portada; solo se retiene el audio. Quien puede editar el libro siempre puede escucharlo. Dárselo a otros oyentes es cosa de una extensión como Volumina Pro, o de la línea de comandos."
