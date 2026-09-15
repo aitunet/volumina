@@ -10,7 +10,7 @@
 ## Right now
 
 **Current slice:** S7 — Presentation, the last before submission. Everything in it is built, verified, translated and committed: the Pro screen, the welcome page (under Dashboard), the audiobook template with its registry, the settings in cards, the wizard removed. The account holder accepted the Pro screen, the welcome page and the template; the evening's three changes (settings cards, no Setup, welcome under Dashboard) await their look.
-**Next action:** the account holder's list below, in order — (1) look at the three changes on `testing-site.local`; (2) publish `docs/guide-es.md` and hand over its URL for `WelcomeScreen::GUIDE_URL`; then, on this side, (3) the release checklist run again over the final state, `readme.txt`'s changelog and description brought up to date with the welcome page, the template and the new settings, the zip rebuilt and installed from the zip; then (4) the account holder's hardware and hosting checks; then (5) submission.
+**Next action:** the account holder's list below, in order — (1) look at the three changes on `testing-site.local`; (2) publish `docs/guide-es.md` and hand over its URL for `WelcomeScreen::GUIDE_URL` — waits for tunetdesign.com, under construction on 2026-09-14; then, on this side, (3) the release checklist run again over the final state, `readme.txt`'s changelog and description brought up to date with the welcome page, the template and the new settings, the zip rebuilt and installed from the zip; then (4) the account holder's hardware and hosting checks; then (5) submission.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
 **Last updated:** 2026-09-14, TUNET, settings cards, wizard removed, welcome under Dashboard
@@ -180,7 +180,10 @@ none of them is a formality:
 - **The guide's URL.** "Read the guide" on the welcome page points at
   `https://tunetdesign.com/volumina/` until the guide is published; put the
   real address in `WelcomeScreen::GUIDE_URL` before the zip is built for
-  submission.
+  submission. On 2026-09-14 the account holder said the site is still under
+  construction, so the URL waits for its launch. Until then the link lands on
+  the product root, which the plugin header and the Pro screen also point at:
+  **that page should exist before the zip goes to the directory.**
 
 ## Open decisions not blocking code
 
