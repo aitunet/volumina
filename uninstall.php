@@ -78,6 +78,10 @@ foreach (
 		'volumina_db_version',
 		'volumina_rewrite_version',
 		'volumina_setup_done',
+		// WordPress's own hierarchy cache for each taxonomy, which it rebuilds
+		// the moment a term is deleted, so it outlives the loop above.
+		'volumina_genre_children',
+		'volumina_series_children',
 	) as $volumina_option
 ) {
 	delete_option( $volumina_option );
