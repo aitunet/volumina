@@ -42,6 +42,9 @@ for somebody who never asked to be identified.
 * Three blocks: **Audiobook**, **Chapter list** and **Continue listening**, all of
   which render the same markup the book page does.
 * Books that are public, or restricted to listeners you have given them to.
+* A choice of where the cover goes and an accent colour from your theme's palette,
+  for the whole site or for one block; and a template registry an extension can
+  add its own designs to.
 * HTTP range requests, so seeking in a long file works properly and a phone can
   resume mid-chapter without downloading what it already heard.
 
@@ -112,7 +115,9 @@ listener's place in every book.
 
 It is tested against a block theme and a classic one, and it declares no colours of
 its own: every piece of text inherits your theme's palette, and its contrast with
-it. The player is laid out for a phone first and adapts upward.
+it. If you want a colour, pick one of your theme's palette as an accent: it goes on
+the play button, the progress bar and the current chapter, never on text. The player
+is laid out for a phone first and adapts upward.
 
 = Is it accessible? =
 
@@ -133,7 +138,10 @@ one any other developer can use.
 2. The player, with speed, sleep timer and the chapter it is in.
 3. The three blocks in the editor, previewed exactly as the front end renders them.
 4. The audiobook screen, with its chapters ordered by dragging.
-5. Settings: four of them, each one explaining itself.
+5. Settings in three groups, each one explaining itself, with the theme's palette
+   offered as the accent.
+6. The welcome page, under Dashboard: what the plugin is and is not, and three steps
+   to a first audiobook.
 
 == Changelog ==
 
@@ -149,8 +157,11 @@ one any other developer can use.
 * Audiobook, Chapter list and Continue listening blocks.
 * An access layer with a documented provider interface, a chapter audio URL filter
   and an admin screen registry.
-* Settings, a log of notable events, help tabs on every screen, and a one-time
-  setup screen.
+* A Basic template with the cover beside or above the details and an accent colour
+  from the theme's palette, site-wide or per block, and a template registry for
+  extensions.
+* A welcome page under Dashboard, settings in three groups, a log of notable events,
+  and help tabs on every screen.
 * Spanish and Brazilian Portuguese translations.
 
 == Upgrade Notice ==
