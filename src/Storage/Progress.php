@@ -80,6 +80,12 @@ final class Progress {
 			return false;
 		}
 
+		// Clamp the values to what the schema allows, so they match what is stored.
+		// The column is an unsigned 32-bit integer; a position past it
+		// would make the write fail rather than store a large number.
+		$chapter_id = max( 0, $chapter_id );
+		$position   = min( max( 0, $position ), 4294967295 );
+
 		// A custom table has no WordPress API to go through, and a position
 		// that moves every ten seconds is not cache material.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -88,10 +94,8 @@ final class Progress {
 			array(
 				'user_id'          => $user_id,
 				'book_id'          => $book_id,
-				'chapter_id'       => max( 0, $chapter_id ),
-				// The column is an unsigned 32-bit integer; a position past it
-				// would make the write fail rather than store a large number.
-				'position_seconds' => min( max( 0, $position ), 4294967295 ),
+				'chapter_id'       => $chapter_id,
+				'position_seconds' => $position,
 				'updated_at'       => current_time( 'mysql', true ),
 			),
 			array( '%d', '%d', '%d', '%d', '%s' )
@@ -115,7 +119,7 @@ final class Progress {
 		 * @param int $chapter_id The chapter they are in.
 		 * @param int $position   Seconds into that chapter.
 		 */
-		do_action( 'volumina_progress_saved', $user_id, $book_id, max( 0, $chapter_id ), min( max( 0, $position ), 4294967295 ) );
+		do_action( 'volumina_progress_saved', $user_id, $book_id, $chapter_id, $position );
 
 		return true;
 	}
