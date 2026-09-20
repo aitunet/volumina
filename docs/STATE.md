@@ -9,12 +9,12 @@
 
 ## Right now
 
-**Current slice:** S8 — Library block, added 2026-09-20 by decision; see `docs/decisions.md`. **In progress.** S7 — Presentation — is done. Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
-**Next action:** build S8 (below), then the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**Current slice:** S8 — Library block, added 2026-09-20 by decision. **Done**: built test-first, verified in both themes at both widths, translated, zip rebuilt (121 files) and Plugin Check clean but for the deliberate warning; the release contents copied onto `testing-site`. S7 — Presentation — is done. Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
+**Next action:** the account holder adds the Audiobook list block to a page and looks at its panel — the one thing S8 could not be shown from here — then their checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-20, TUNET, security pass, Plugin Check, and the Live Link audio case closed
+**Last updated:** 2026-09-20, TUNET, S8 done — the library block; security pass and Plugin Check earlier the same day
 **File scope for this slice** — do not open files outside this list:
 `blocks/library/`, `blocks/shared/`, `src/Blocks/`, `src/Frontend/Audiobook.php`, `templates/`, `assets/css/book.css`, `docs/api.md`, `readme.txt`, `languages/`, `tests/php/Blocks/`
 
@@ -25,7 +25,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.** S7 was added on 2026-09-14 by decision; see `docs/decisions.md`.
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 7 of 8 slices complete; S8 added 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
+Progress: 8 of 8 slices complete; S8 added and closed 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
 
 ---
 
@@ -123,7 +123,7 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 - [x] `es_ES` translation complete — 283 of 287, verified rendering
 - [x] `pt_BR` translation complete — 283 of 287, verified rendering
 - [x] Tested against the current WordPress release — WordPress 7.1, plugin active at 1.0.0, no notices
-- [x] Release zip built by a script that lives in the repository — `bin/build-release.php`, from `.distignore`; 114 files on 2026-09-20 (91 at first build), opened and read, and installed from the zip itself on the local WordPress: active, both tables, all three blocks, a book page rendered, a 206 from the audio endpoint, no `debug.log`
+- [x] Release zip built by a script that lives in the repository — `bin/build-release.php`, from `.distignore`; 121 files on 2026-09-20 with S8 (91 at first build), opened and read, and installed from the zip itself on the local WordPress: active, both tables, all three blocks, a book page rendered, a 206 from the audio endpoint, no `debug.log`
 - [ ] Submitted to the plugin directory — **only the account holder can do this.** The zip is built and checked; see the next action.
 
 **Verification:** the checklist below passes but for the submission itself, which is not something this repository can do.
@@ -158,11 +158,11 @@ Three things the account holder wants in the first version people see. Each begi
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 133 tests, 247 assertions
+- [x] Full test suite green — 143 tests, 274 assertions
 - [x] Plugin Check (2026-09-20, 1.7, every check including experimental) against the release zip's contents — zero errors; the one warning is `load_plugin_textdomain()`, kept because the shipped translations need it
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
 - [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review
-- [x] Every string translatable — 329 in the `.pot`, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
+- [x] Every string translatable — 347 in the `.pot` after S8, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
 - [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database, again on 2026-09-14: zero left
 - [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls
 - [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places
