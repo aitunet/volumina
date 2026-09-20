@@ -284,6 +284,15 @@ final class Stream implements Registrable {
 			ob_end_clean();
 		}
 
+		// This response is a file, not the page WordPress was about to send,
+		// and it must not carry that page's headers. By now `send_headers`
+		// has run and anything hooked to it has spoken: `Content-Type:
+		// text/html`, `X-Pingback`, and whatever a host adds — Local's Live
+		// Link tags every WordPress page with `X-Local-Host`, and its tunnel
+		// then rewrites the body of any response carrying that tag as text,
+		// which turns an MP3 into U+FFFD soup with a gzip header on top.
+		header_remove();
+
 		header( 'Content-Type: ' . $mime );
 		header( 'Accept-Ranges: bytes' );
 		header( 'Content-Disposition: inline' );
