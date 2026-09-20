@@ -163,6 +163,21 @@ stands.
 substitute is responsible for asking too. A URL nobody checks is a file anybody can
 share.
 
+### `volumina_stream_access`
+
+Filter. Asked by this plugin's own endpoint on every audio request, after `AccessManager`
+has granted the listener the book and before a byte is read.
+
+```php
+apply_filters( 'volumina_stream_access', bool $allowed, int $chapter_id, int $book_id )
+```
+
+Return `false` and the request answers 404, exactly as a chapter that does not exist.
+It is the other half of `volumina_chapter_audio_url`: put a signature and an expiry in
+the URL there, verify them here, and a copied link stops working without a second
+streaming endpoint. It runs for every range of the same file, so keep it cheap; a
+verified signature is one HMAC.
+
 ---
 
 ## Listening

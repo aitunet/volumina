@@ -152,6 +152,23 @@ final class Stream implements Registrable {
 			return null;
 		}
 
+		/**
+		 * Filters whether this request may be served, after access was granted.
+		 *
+		 * Asked on every audio request — every range of the same file — once
+		 * `AccessManager` has said the listener may hear the book. It is for a
+		 * condition on the request rather than on the listener: a signature
+		 * and an expiry in the URL, a device limit, a rate. A refusal answers
+		 * 404 like every other refusal, so nothing is learnt from it.
+		 *
+		 * @param bool $allowed    True: access has been granted.
+		 * @param int  $chapter_id The chapter requested.
+		 * @param int  $book_id    Its book.
+		 */
+		if ( true !== apply_filters( 'volumina_stream_access', true, $chapter_id, $book_id ) ) {
+			return null;
+		}
+
 		$attachment_id = (int) get_post_meta( $chapter_id, 'volumina_attachment_id', true );
 
 		if ( $attachment_id <= 0 || 'attachment' !== get_post_type( $attachment_id ) ) {
