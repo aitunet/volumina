@@ -155,10 +155,14 @@ final class LibraryBlock {
 	/**
 	 * A positive term id, or zero for anything that is not one.
 	 *
+	 * An id is a whole number, whatever carried it: the block's JSON gives an
+	 * integer, the editor's preview request gives a float — REST casts a
+	 * `number` attribute that way — and a form would give a string of digits.
+	 *
 	 * @param mixed $value The attribute's value.
 	 */
 	private static function term_id( $value ): int {
-		if ( ! is_int( $value ) && ! ( is_string( $value ) && ctype_digit( $value ) ) ) {
+		if ( ! is_numeric( $value ) || floor( (float) $value ) !== (float) $value ) {
 			return 0;
 		}
 

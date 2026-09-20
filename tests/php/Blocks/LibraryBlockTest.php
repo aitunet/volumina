@@ -105,6 +105,25 @@ final class LibraryBlockTest extends TestCase {
 	}
 
 	/**
+	 * The editor's preview sends attributes through REST, where a `number`
+	 * comes back as a float. A whole float is the same id as the integer.
+	 */
+	public function test_a_term_id_may_arrive_as_a_float(): void {
+		$args = LibraryBlock::query_args(
+			array(
+				'genre'  => 2.0,
+				'series' => 7.0,
+			)
+		);
+
+		$this->assertSame( 2, $args['tax_query'][0]['terms'] );
+		$this->assertSame( 7, $args['tax_query'][1]['terms'] );
+
+		// A fraction is no id at all.
+		$this->assertArrayNotHasKey( 'tax_query', LibraryBlock::query_args( array( 'genre' => 2.5 ) ) );
+	}
+
+	/**
 	 * A term that is not a positive id is no term.
 	 */
 	public function test_a_bad_term_is_ignored(): void {
