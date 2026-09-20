@@ -56,7 +56,6 @@ const NEVER_SHIPS = array(
 	'.wordpress-org/',
 	'bin/',
 	'CLAUDE.md',
-	'composer.json',
 	'composer.lock',
 	'package.json',
 	'package-lock.json',
@@ -294,7 +293,8 @@ function build(): void {
 	if ( 0 !== $status ) {
 		say( "composer install failed with status $status. Pass --composer=\"php /path/to/composer.phar\" if it is not on the PATH.", true );
 	}
-	unlink( $staging . '/composer.json' );
+	// composer.json stays: the directory asks to see the manifest of whatever
+	// vendor/ holds. The lock is the workshop's and goes.
 	unlink( $staging . '/composer.lock' );
 	remove_tree( $staging . '/vendor/bin' );
 

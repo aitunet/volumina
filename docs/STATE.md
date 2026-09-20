@@ -11,9 +11,10 @@
 
 **Current slice:** S7 — Presentation, the last before submission. **Done.** Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
 **Next action:** the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks.
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-15, TUNET, S7 done; the icon a GIF
+**Last updated:** 2026-09-20, TUNET, security pass and Plugin Check before submission
 **File scope for this slice** — do not open files outside this list (S7's own list is below):
 `readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
 
@@ -117,12 +118,12 @@ Schema version 2: `wp_volumina_grants` joins `wp_volumina_progress`, and books c
 
 - [x] `readme.txt` with short description under 150 characters — 130
 - [x] Icon — an animated GIF, 256×256 and 128×128, plays once — banner 1544×500, screenshots — six, of real content, in `.wordpress-org/`
-- [x] Security pass against the checklist in `CLAUDE.md` — every item, and then a real audit: stored XSS in every editable field, a `</script>` break-out through the player payload, a valid nonce in a subscriber's hands, six SQL payloads through every id, an attachment pointed outside uploads, blocks asked for a draft book, a crafted settings form, and range header abuse. Nothing gave way. See `docs/HISTORY.md`, 2026-09-06.
+- [x] Security pass against the checklist in `CLAUDE.md` — every item, and then a real audit; **repeated on 2026-09-20 over the whole plugin, four fixes, see `docs/HISTORY.md`**: stored XSS in every editable field, a `</script>` break-out through the player payload, a valid nonce in a subscriber's hands, six SQL payloads through every id, an attachment pointed outside uploads, blocks asked for a draft book, a crafted settings form, and range header abuse. Nothing gave way. See `docs/HISTORY.md`, 2026-09-06.
 - [x] `.pot` regenerated — 287 strings at 1.0.0
 - [x] `es_ES` translation complete — 283 of 287, verified rendering
 - [x] `pt_BR` translation complete — 283 of 287, verified rendering
 - [x] Tested against the current WordPress release — WordPress 7.1, plugin active at 1.0.0, no notices
-- [x] Release zip built by a script that lives in the repository — `bin/build-release.php`, from `.distignore`; 91 files, opened and read, and installed from the zip itself on the local WordPress: active, both tables, all three blocks, a book page rendered, a 206 from the audio endpoint, no `debug.log`
+- [x] Release zip built by a script that lives in the repository — `bin/build-release.php`, from `.distignore`; 114 files on 2026-09-20 (91 at first build), opened and read, and installed from the zip itself on the local WordPress: active, both tables, all three blocks, a book page rendered, a 206 from the audio endpoint, no `debug.log`
 - [ ] Submitted to the plugin directory — **only the account holder can do this.** The zip is built and checked; see the next action.
 
 **Verification:** the checklist below passes but for the submission itself, which is not something this repository can do.
@@ -147,7 +148,8 @@ Three things the account holder wants in the first version people see. Each begi
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 118 tests, 231 assertions
+- [x] Full test suite green — 133 tests, 247 assertions
+- [x] Plugin Check (2026-09-20, 1.7, every check including experimental) against the release zip's contents — zero errors; the one warning is `load_plugin_textdomain()`, kept because the shipped translations need it
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
 - [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review
 - [x] Every string translatable — 329 in the `.pot`, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
