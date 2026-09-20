@@ -432,6 +432,13 @@ add_action( 'volumina_register_admin_screens', function ( $registry ) {
 } );
 ```
 
+### `VOLUMINA_PRO_VERSION`
+
+Constant, defined by Volumina Pro in its bootstrap. When it is defined, this plugin's
+presentational "Volumina Pro" screen — the one that says what Pro adds — is not
+registered at all: the real thing has arrived and the advertisement leaves. Nothing else
+reads it. Define it with Pro's version string; do not define it from anything else.
+
 ---
 
 ## A complete example

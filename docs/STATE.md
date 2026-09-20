@@ -9,7 +9,7 @@
 
 ## Right now
 
-**Current slice:** S8 — Library block, added 2026-09-20 by decision. **Done**: built test-first, verified in both themes at both widths, translated, zip rebuilt (121 files) and Plugin Check clean but for the deliberate warning; the release contents copied onto `testing-site`. S7 — Presentation — is done. Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
+**Current slice:** S9 — The API Pro needs, added 2026-09-20. **Done**: `volumina_progress_saved` action, `volumina_stream_access` filter and `VOLUMINA_PRO_VERSION` constant documented in `docs/api.md`, decision recorded in `docs/decisions.md`, zip rebuilt. All earlier slices complete: S8 (Library block), S7 (Presentation), S6 (Release), S5 (Admin polish), S4 (Access layer), S3 (Blocks), S2 (Player), S1 (One audiobook), S0 (Scaffold).
 **Next action:** the account holder's checks — the block's panel was looked at on 2026-09-20 and its one defect fixed — in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
@@ -25,7 +25,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.** S7 was added on 2026-09-14 by decision; see `docs/decisions.md`.
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 8 of 8 slices complete; S8 added and closed 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
+Progress: 9 of 9 slices complete; S9 added 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
 
 ---
 
@@ -152,6 +152,17 @@ Three things the account holder wants in the first version people see. Each begi
 - [x] `.pot` regenerated — 347 entries — `es_ES` and `pt_BR` complete (0 untranslated), editor JSON for the four blocks, zip rebuilt
 
 **Done when:** a page with the block lists the library and each row reaches its book; the checklist below still passes.
+
+---
+
+## S9 — The API Pro needs (added 2026-09-20; see `docs/decisions.md`)
+
+- [x] `volumina_progress_saved` action, verified live
+- [x] `volumina_stream_access` filter, verified live
+- [x] `VOLUMINA_PRO_VERSION` documented (the code was already there)
+- [x] Zip rebuilt
+
+**Done when:** all three are in `api.md` and the release checklist still passes.
 
 ---
 

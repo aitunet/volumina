@@ -546,3 +546,18 @@ whatever theme is on.
 translations and the zip are regenerated. Pro registers blocks of its own
 through WordPress directly — no hook of this plugin is needed for that — and
 improves the shipped ones through the filters above and the template registry.
+
+## 2026-09-20 — S9: three contract additions for Pro, before submission
+
+**Decision.** Volumina gains `volumina_progress_saved` (an action after every saved
+listening position), `volumina_stream_access` (a filter the audio endpoint asks after
+access is granted) and the documented `VOLUMINA_PRO_VERSION` constant. All three are
+contract in `docs/api.md` from this day.
+
+**Why.** Pro's listening reports need to know when a position is saved and the progress
+table is not public; Pro's signed URLs need the endpoint to verify a signature without a
+second streamer; and the presentational Pro screen must leave when Pro is installed.
+Shipping 1.0 without them would mean a 1.0.1 the day Pro appears.
+
+**Consequence.** No new strings, no schema change, no behaviour change for a site
+without Pro. The zip is rebuilt.
