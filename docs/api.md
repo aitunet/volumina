@@ -165,6 +165,24 @@ share.
 
 ---
 
+## Listening
+
+### `volumina_progress_saved`
+
+Action. Fires after a signed-in listener's position has been saved, once per save, with
+the row already written.
+
+```php
+do_action( 'volumina_progress_saved', int $user_id, int $book_id, int $chapter_id, int $position )
+```
+
+The values are the ones stored: `$position` is whole seconds into `$chapter_id`, clamped
+to the table's range. A guest's position never comes through here — it is kept by their
+own browser. This is the one way to follow listening from outside: the progress table
+and `Storage\Progress` are not public.
+
+---
+
 ## Presentation
 
 An audiobook — cover, details, player, chapter list — is always drawn by the same

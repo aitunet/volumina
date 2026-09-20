@@ -97,7 +97,27 @@ final class Progress {
 			array( '%d', '%d', '%d', '%d', '%s' )
 		);
 
-		return false !== $result;
+		if ( false === $result ) {
+			return false;
+		}
+
+		/**
+		 * Fires after a listener's position has been saved.
+		 *
+		 * The row is already written. The values are the ones stored: the
+		 * position clamped to the column's range, the chapter never negative.
+		 * An extension keeping its own record of listening — statistics,
+		 * "finished" flags, notifications — hangs here instead of reading the
+		 * progress table, which is not public.
+		 *
+		 * @param int $user_id    The listener.
+		 * @param int $book_id    The book.
+		 * @param int $chapter_id The chapter they are in.
+		 * @param int $position   Seconds into that chapter.
+		 */
+		do_action( 'volumina_progress_saved', $user_id, $book_id, max( 0, $chapter_id ), min( max( 0, $position ), 4294967295 ) );
+
+		return true;
 	}
 
 	/**
