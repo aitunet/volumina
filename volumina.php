@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Volumina
+ * Plugin Name:       Volumina — Audiobook Player and Library
  * Plugin URI:        https://tunetdesign.com/volumina
  * Description:       Audiobook player and library. Publish audiobooks with chapters, remembered position, playback speed and a sleep timer.
  * Version:           1.0.0

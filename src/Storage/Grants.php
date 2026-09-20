@@ -153,11 +153,15 @@ final class Grants {
 
 		$table = GrantsTable::table_name();
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// Column and table names go through `%i`, which quotes them as
+		// identifiers, so the query carries no interpolation at all.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_col(
 			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"SELECT {$wanted} FROM {$table} WHERE {$known} = %d ORDER BY granted_at DESC LIMIT %d",
+				'SELECT %i FROM %i WHERE %i = %d ORDER BY granted_at DESC LIMIT %d',
+				$wanted,
+				$table,
+				$known,
 				$id,
 				$limit
 			)

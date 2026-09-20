@@ -63,12 +63,10 @@ foreach ( array( 'volumina_genre', 'volumina_series' ) as $volumina_taxonomy ) {
 }
 
 // Both tables. The names are built from the site prefix and a literal, never
-// from input, which is what makes interpolating them safe.
+// from input; `%i` quotes them as identifiers all the same.
 foreach ( array( 'volumina_progress', 'volumina_grants' ) as $volumina_table ) {
-	$volumina_full = $wpdb->prefix . $volumina_table;
-
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	$wpdb->query( "DROP TABLE IF EXISTS {$volumina_full}" );
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+	$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $wpdb->prefix . $volumina_table ) );
 }
 
 foreach (
@@ -88,6 +86,4 @@ foreach (
 }
 
 // The welcome redirect's minute-long transient, in case it is still there.
-delete_transient( 'volumina_welcome_redirect' );
-
 delete_transient( 'volumina_welcome_redirect' );

@@ -16,11 +16,12 @@
 .distignore
 .editorconfig
 
-# Development tooling
+# Development tooling. composer.json is not here on purpose: vendor/ ships with
+# the autoloader, and the directory asks to see the manifest of whatever
+# vendor/ holds.
 bin
 node_modules
 vendor/bin
-composer.json
 composer.lock
 package.json
 package-lock.json
