@@ -171,31 +171,30 @@ Three things the account holder wants in the first version people see. Each begi
 
 ## Left for the account holder
 
-Everything that can be verified on this machine has been. These cannot be, and
-none of them is a formality:
+Updated 2026-09-20 from the account holder's own report:
 
-- **Listen on a real phone.** Owed since S2. A nine-hour book, across two
-  sessions, with the screen locked and the lock-screen controls used. Emulation
-  got the layout and the touch targets right; it cannot tell you whether the
-  audio survives a phone call, a backgrounded tab or a change of network.
-- **Install on real hosting.** Local by Flywheel (nginx, MySQL, PHP 8.2) is
-  now covered, range requests included. A shared host still is not: a
-  different PHP build, `open_basedir`, an object cache, and a proxy that may
-  buffer or strip range requests, which is where a nine-hour book stops
-  resuming.
-- **Real audio files.** Every test here used generated WAV — one 30-minute file, then 24 short ones. Try an MP3, an
-  M4A, a 200 MB file and a file with an unusual sample rate, and check the
-  running time WordPress reads out of each.
-- **A second real person.** Give somebody a restricted book, have them listen,
-  take it away, and confirm they are turned out.
-- **PHP 8.1.** The floor is declared as 8.1; 8.2 and 8.3 have now run it.
-- **The guide's URL.** "Read the guide" on the welcome page points at
-  `https://tunetdesign.com/volumina/` until the guide is published; put the
-  real address in `WelcomeScreen::GUIDE_URL` before the zip is built for
-  submission. On 2026-09-14 the account holder said the site is still under
-  construction, so the URL waits for its launch. Until then the link lands on
-  the product root, which the plugin header and the Pro screen also point at:
-  **that page should exist before the zip goes to the directory.**
+- **Listen on a real phone.** Done: a nine-hour book through Live Link, with the
+  screen locked, plays and resumes.
+- **Real audio files.** MP3s tried and fine. The 200 MB file was never found;
+  **decided:** not pursued — if anybody ever reports a problem with a file that
+  size, it is looked at then.
+- **PHP 8.1.** **Decided:** accepted as declared; 8.2 and 8.3 have run it and
+  nothing in the code is newer than 8.1 (PHPStan is set to 8.1).
+- **A second real person.** The tester's guide exists (`docs/tester-guide-es.html`);
+  whether it was handed out is not recorded.
+
+Still open, and none of it is code:
+
+- **Install on real hosting.** A shared host: a different PHP build,
+  `open_basedir`, an object cache, and a proxy that may buffer or strip range
+  requests, which is where a nine-hour book stops resuming.
+- **The guide's URL.** "Read the guide" points at `https://tunetdesign.com/volumina/`
+  until the site is live; put the real address in `WelcomeScreen::GUIDE_URL`
+  and rebuild the zip. The account holder says the URL is coming soon.
+- **The submission** to the plugin directory.
+
+Meanwhile, work moves to `volumina-pro` — `https://github.com/aitunet/volumina-pro`,
+checked out beside this one — which extends this plugin only through `docs/api.md`.
 
 ## Open decisions not blocking code
 
