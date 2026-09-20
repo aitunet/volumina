@@ -89,7 +89,9 @@ final class Progress {
 				'user_id'          => $user_id,
 				'book_id'          => $book_id,
 				'chapter_id'       => max( 0, $chapter_id ),
-				'position_seconds' => max( 0, $position ),
+				// The column is an unsigned 32-bit integer; a position past it
+				// would make the write fail rather than store a large number.
+				'position_seconds' => min( max( 0, $position ), 4294967295 ),
 				'updated_at'       => current_time( 'mysql', true ),
 			),
 			array( '%d', '%d', '%d', '%d', '%s' )

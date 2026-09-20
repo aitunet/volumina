@@ -97,6 +97,27 @@ final class FieldTest extends TestCase {
 	}
 
 	/**
+	 * A crafted form can send `name[]` where a string was expected. That is
+	 * not a value; it is treated as the field having been left out.
+	 */
+	public function test_an_array_where_a_value_belongs_is_absence(): void {
+		$field = new Field(
+			array(
+				'key'     => 'default_access',
+				'type'    => 'radio',
+				'default' => 'public',
+				'choices' => array(
+					'public'     => 'Public',
+					'restricted' => 'Restricted',
+				),
+			)
+		);
+
+		$this->assertSame( $field->absent(), $field->sanitize( array( 'restricted' ) ) );
+		$this->assertSame( $field->absent(), $field->sanitize( new \stdClass() ) );
+	}
+
+	/**
 	 * Swatches are a choice field too: the value is a key, never a colour,
 	 * and a key nobody offered falls back to the default.
 	 */

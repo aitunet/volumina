@@ -72,7 +72,10 @@ final class Chapter implements Registrable {
 				'publicly_queryable' => false,
 				'show_ui'            => true,
 				'show_in_menu'       => 'edit.php?post_type=' . Book::POST_TYPE,
-				'show_in_rest'       => true,
+				// Not in REST: nothing reads chapters that way, and a public
+				// listing would hand out the chapter titles of every book,
+				// restricted and unpublished ones included.
+				'show_in_rest'       => false,
 				'has_archive'        => false,
 				'rewrite'            => false,
 				'supports'           => array( 'title' ),
@@ -147,6 +150,31 @@ final class Chapter implements Registrable {
 		);
 
 		return $posts;
+	}
+
+	/**
+	 * The chapters of a book that a listener may see.
+	 *
+	 * Published ones. A chapter still in draft is the editors' to see, not
+	 * the public's, so somebody who may edit the book gets every chapter
+	 * `for_book()` returns and can preview the whole thing.
+	 *
+	 * @param int $book_id Book to fetch the chapters of.
+	 * @return array<int, WP_Post>
+	 */
+	public static function for_listener( int $book_id ): array {
+		$chapters = self::for_book( $book_id );
+
+		if ( current_user_can( 'edit_post', $book_id ) ) {
+			return $chapters;
+		}
+
+		return array_values(
+			array_filter(
+				$chapters,
+				static fn( WP_Post $chapter ): bool => 'publish' === $chapter->post_status
+			)
+		);
 	}
 
 	/**

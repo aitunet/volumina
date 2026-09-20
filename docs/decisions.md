@@ -490,3 +490,30 @@ Also today, the welcome page moved from the Audiobooks menu to Dashboard → "We
 to Volumina", where a welcome is expected and where it does not lengthen the menu people
 work in; and the settings screen took the presentation screens' cards, one per section.
 `HasParent` is the additive interface that lets a screen name its menu.
+
+## 2026-09-20 — A chapter's status counts: listeners hear published chapters, editors hear them all
+
+**Decision.** The front end lists, and the audio endpoint serves, only chapters
+whose status is `publish` — unless the visitor may edit the book, in which case
+every chapter that is not in the trash is shown and served, so an author can
+preview a book before it is finished. `Chapter::for_listener()` is that rule;
+`Chapter::for_book()` stays the editors' complete list. A chapter in the trash
+streams for nobody.
+
+**Why.** Until today a chapter's status meant nothing: a draft chapter was listed
+on the public page and its audio answered any request, and so did a chapter that
+had been trashed. The chapter form has a Publish box and a "Save Draft" button,
+and anyone who used them was told one thing by WordPress and given another by
+the plugin. A pre-submission security pass found it and it is the kind of thing
+that reads as a leak of unpublished content, which it is.
+
+**Consequence.** A chapter saved as a draft is invisible to listeners until it is
+published. The account holder's own preview is unchanged, because they edit the
+book. The chapter post type also left the REST API (`show_in_rest` is now
+`false`): nothing read it there, and the endpoint listed every published
+chapter's title to anybody, restricted and unpublished books included.
+
+Also today: putting a chapter into a book takes the right to edit that book,
+not only the chapter, both in the chooser and on save. A contributor could
+otherwise add their own audio to anybody's audiobook, and — with the rule above
+not yet in place — have it listed on the public page at once.

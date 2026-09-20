@@ -129,6 +129,13 @@ final class Stream implements Registrable {
 
 		$book_id = (int) get_post_meta( $chapter_id, 'volumina_book_id', true );
 
+		// A chapter in draft, or in the trash, is the book's editors' to hear
+		// and nobody else's. Being turned away from a chapter that is not yet
+		// published is not the support question the line below is for.
+		if ( 'publish' !== get_post_status( $chapter_id ) && ! current_user_can( 'edit_post', $book_id ) ) {
+			return null;
+		}
+
 		if ( ! $this->can_listen( $book_id ) ) {
 			// Worth a line: "my customer says they cannot listen" is the
 			// support question this plugin will be asked most often, and this

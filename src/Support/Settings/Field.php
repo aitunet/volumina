@@ -145,6 +145,13 @@ final class Field {
 			return call_user_func( $this->args['sanitize'], $value );
 		}
 
+		// A form field arrives as a string or not at all. An array in its
+		// place — `name[]` typed into a crafted form — is nothing to store,
+		// and casting it to a string would only raise a warning.
+		if ( ! is_scalar( $value ) && null !== $value ) {
+			return $this->absent();
+		}
+
 		switch ( $this->args['type'] ) {
 			case 'checkbox':
 				return (bool) $value;

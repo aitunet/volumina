@@ -173,6 +173,12 @@ final class ChapterMetaBox implements Registrable {
 		);
 
 		foreach ( $books as $book ) {
+			// A chapter is put into a book by somebody who may edit that book.
+			// The one it is already in stays listed, so the form can show it.
+			if ( $book->ID !== $book_id && ! current_user_can( 'edit_post', $book->ID ) ) {
+				continue;
+			}
+
 			$title = '' !== $book->post_title ? $book->post_title : __( '(untitled book)', 'volumina' );
 
 			printf(
@@ -321,6 +327,13 @@ final class ChapterMetaBox implements Registrable {
 
 		if ( Book::POST_TYPE !== get_post_type( $book_id ) ) {
 			$book_id = 0;
+		}
+
+		// Putting a chapter into a book changes that book's page, so it takes
+		// the right to edit the book, not only the chapter. Otherwise a
+		// contributor could add their own audio to anybody's audiobook.
+		if ( $book_id > 0 && $book_id !== $was_in_book && ! current_user_can( 'edit_post', $book_id ) ) {
+			$book_id = $was_in_book;
 		}
 
 		$attachment_id = isset( $_POST['volumina_attachment_id'] ) ? absint( wp_unslash( $_POST['volumina_attachment_id'] ) ) : 0;

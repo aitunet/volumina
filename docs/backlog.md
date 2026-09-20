@@ -138,3 +138,13 @@
   every field, and S7 adds a welcome page with the three steps to a first
   audiobook; a fourth onboarding layer is one more thing every new user has
   to dismiss. Decide after the welcome page exists and has been looked at.
+
+## Found 2026-09-20, in the pre-submission security pass
+
+- **The turned-away log line can be written by anyone.** With logging on, every
+  request for a chapter the visitor may not hear writes one row to the
+  `volumina_log` option — one `update_option()` per request, from a guest, with
+  no signature needed. The log is capped at 200 rows, so it cannot grow, but a
+  script hitting a restricted chapter ID in a loop turns every hit into a
+  database write and pushes the real entries out. Worth a throttle: one line per
+  chapter per minute, or per IP, through a transient. Not for 1.0.

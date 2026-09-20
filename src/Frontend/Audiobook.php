@@ -68,7 +68,7 @@ final class Audiobook {
 			$show['cover'] = false;
 		}
 
-		$chapters = Chapter::for_book( $book->ID );
+		$chapters = Chapter::for_listener( $book->ID );
 		$details  = $show['details'] ? self::details( $book, $chapters ) : array();
 		$player   = $show['player'] ? Player::render( $book, $chapters ) : '';
 
@@ -87,7 +87,7 @@ final class Audiobook {
 	 * @param array<string, string> $options   `template` and `accent`; empty defers to the site's settings.
 	 */
 	public static function chapter_list( WP_Post $book, bool $durations = true, array $options = array() ): string {
-		$chapters           = Chapter::for_book( $book->ID );
+		$chapters           = Chapter::for_listener( $book->ID );
 		$volumina_durations = $durations;
 		$volumina_wrap      = Templates::attributes(
 			Templates::resolve(
