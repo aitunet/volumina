@@ -9,14 +9,14 @@
 
 ## Right now
 
-**Current slice:** S7 — Presentation, the last before submission. **Done.** Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
-**Next action:** the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**Current slice:** S8 — Library block, added 2026-09-20 by decision; see `docs/decisions.md`. **In progress.** S7 — Presentation — is done. Built, verified, translated, accepted by the account holder in full, the release checklist re-run over the final state and passing, the zip installed from the zip. The directory assets are complete: the animated GIF icon at 256 and 128 (`bin/make-icon-gif.php` regenerates it), banner, six screenshots.
+**Next action:** build S8 (below), then the account holder's checks, in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
 **Last updated:** 2026-09-20, TUNET, security pass, Plugin Check, and the Live Link audio case closed
-**File scope for this slice** — do not open files outside this list (S7's own list is below):
-`readme.txt`, `assets/`, `languages/`, `volumina.php`, `bin/build-release.php`, `.distignore`
+**File scope for this slice** — do not open files outside this list:
+`blocks/library/`, `blocks/shared/`, `src/Blocks/`, `src/Frontend/Audiobook.php`, `templates/`, `assets/css/book.css`, `docs/api.md`, `readme.txt`, `languages/`, `tests/php/Blocks/`
 
 ---
 
@@ -25,7 +25,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.** S7 was added on 2026-09-14 by decision; see `docs/decisions.md`.
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 7 of 7 slices complete. What is left is the account holder's: their own checks, the guide's URL, and the submission.
+Progress: 7 of 8 slices complete; S8 added 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
 
 ---
 
@@ -142,6 +142,16 @@ Three things the account holder wants in the first version people see. Each begi
 **Done when:** all three render correctly in Twenty Twenty-Five and in one classic theme where they touch the front end; the admin screens pass axe; the account holder has looked at each and said yes; the release checklist below still passes.
 
 **File scope:** `src/Admin/`, `src/Support/` (screen registry only), `src/Blocks/`, `templates/`, `assets/`, `blocks/`, `docs/api.md`, `languages/`, `readme.txt`.
+
+## S8 — Library block (added 2026-09-20, before submission; see `docs/decisions.md`)
+
+- [ ] `volumina/library` block: rows of published books — cover, linked title, narrator, running time; count, order, genre, series, three toggles, presentation panel
+- [ ] Editor preview is the server's render; controls translated
+- [ ] `volumina_library_query`, `volumina_library_item` and `volumina_book_details` in `docs/api.md`
+- [ ] Renders correctly in Twenty Twenty-Five and Twenty Twenty-One, 390px and desktop; zero axe violations
+- [ ] `.pot` regenerated, `es_ES` and `pt_BR` complete, editor JSON, zip rebuilt
+
+**Done when:** a page with the block lists the library and each row reaches its book; the checklist below still passes.
 
 ---
 

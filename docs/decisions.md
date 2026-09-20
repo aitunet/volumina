@@ -517,3 +517,32 @@ Also today: putting a chapter into a book takes the right to edit that book,
 not only the chapter, both in the chooser and on save. A contributor could
 otherwise add their own audio to anybody's audiobook, and — with the rule above
 not yet in place — have it listed on the public page at once.
+
+## 2026-09-20 — v1.0 grows by one more slice: S8, the library block
+
+**Decision.** A fourth block, `volumina/library` ("Audiobook list"), enters 1.0
+before submission, as S8, the same way S7 entered on 2026-09-14. The account
+holder asked for it after the Live Link case closed: the plugin could show one
+book, or the books a listener had started, but not the library itself — a list
+to get from to each book's page.
+
+**What it is.** A server-rendered list of published books in rows — small cover,
+title linked to the book page, "Narrated by X · 9:12:40" beneath — with the
+count, the order (title or newest), an optional genre or series, three toggles
+(covers, narrator, running time) and the same presentation panel the chapter
+list has, so Pro's templates dress it. No pagination: that is in the backlog.
+The account holder chose rows over a grid of covers, and said in the same
+breath that Pro should improve this block; so the block is built with two
+seams, `volumina_library_query` and `volumina_library_item`, and the book page
+gets the seam it was missing, `volumina_book_details`. All three are documented
+in `docs/api.md` and are contract from the day they ship.
+
+**Why not core's Query Loop.** It can list `volumina_book` posts, but it knows
+nothing of narrators, running times or covers as a library shows them, and its
+output is the theme's, not the plugin's; a listener should get the same rows
+whatever theme is on.
+
+**Consequence.** The release checklist is re-run when S8 closes; the `.pot`, both
+translations and the zip are regenerated. Pro registers blocks of its own
+through WordPress directly — no hook of this plugin is needed for that — and
+improves the shipped ones through the filters above and the template registry.
