@@ -28,6 +28,7 @@ $volumina_handles = array(
 	'volumina-audiobook-editor-script',
 	'volumina-chapter-list-editor-script',
 	'volumina-continue-listening-editor-script',
+	'volumina-library-editor-script',
 );
 
 /**

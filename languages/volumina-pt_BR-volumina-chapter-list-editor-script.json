@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-09-15 14:08:33+0000",
+    "translation-revision-date": "2026-09-20 15:47:19+0000",
     "generator": "bin/make-script-json.php",
     "source": "languages/volumina-pt_BR.po",
     "domain": "messages",
@@ -10,8 +10,17 @@
                 "lang": "pt_BR",
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
+            "Narrator": [
+                "Narrador"
+            ],
             "Cover": [
                 "Capa"
+            ],
+            "Running time": [
+                "Duração"
+            ],
+            "Series": [
+                "Séries"
             ],
             "Details": [
                 "Detalhes"
@@ -84,6 +93,24 @@
             ],
             "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text.": [
                 "Da paleta do tema. Colore o botão de reproduzir, a barra de progresso e o capítulo atual, nunca texto."
+            ],
+            "All": [
+                "Todos"
+            ],
+            "Audiobook list": [
+                "Lista de audiolivros"
+            ],
+            "Order": [
+                "Ordem"
+            ],
+            "By title": [
+                "Por título"
+            ],
+            "Newest first": [
+                "Mais recentes primeiro"
+            ],
+            "Genre": [
+                "Gênero"
             ]
         }
     }

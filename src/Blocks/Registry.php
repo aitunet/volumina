@@ -35,6 +35,7 @@ final class Registry implements Registrable {
 		'audiobook'          => AudiobookBlock::class,
 		'chapter-list'       => ChapterListBlock::class,
 		'continue-listening' => ContinueListeningBlock::class,
+		'library'            => LibraryBlock::class,
 	);
 
 	/**

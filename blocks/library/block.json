@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "volumina/library",
+	"title": "Audiobook list",
+	"category": "media",
+	"icon": "book",
+	"description": "The audiobooks on this site, in a list, each leading to its own page.",
+	"keywords": [ "audiobook", "library", "list", "catalogue", "books" ],
+	"textdomain": "volumina",
+	"attributes": {
+		"count": {
+			"type": "number",
+			"default": 12
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "title"
+		},
+		"genre": {
+			"type": "number",
+			"default": 0
+		},
+		"series": {
+			"type": "number",
+			"default": 0
+		},
+		"showCovers": {
+			"type": "boolean",
+			"default": true
+		},
+		"showNarrator": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDuration": {
+			"type": "boolean",
+			"default": true
+		},
+		"template": {
+			"type": "string",
+			"default": ""
+		},
+		"accent": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "volumina-book"
+}

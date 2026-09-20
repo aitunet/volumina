@@ -1,0 +1,117 @@
+{
+    "translation-revision-date": "2026-09-20 15:47:19+0000",
+    "generator": "bin/make-script-json.php",
+    "source": "languages/volumina-pt_BR.po",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Narrator": [
+                "Narrador"
+            ],
+            "Cover": [
+                "Capa"
+            ],
+            "Running time": [
+                "Duração"
+            ],
+            "Series": [
+                "Séries"
+            ],
+            "Details": [
+                "Detalhes"
+            ],
+            "Player": [
+                "Reprodutor"
+            ],
+            "Chapter list": [
+                "Lista de capítulos"
+            ],
+            "Audiobook": [
+                "Audiolivro"
+            ],
+            "Leave this as it is when the block sits in an audiobook template.": [
+                "Deixe como está quando o bloco estiver dentro de um modelo de audiolivro."
+            ],
+            "Parts to show": [
+                "Partes a mostrar"
+            ],
+            "Chapters heading": [
+                "Título dos capítulos"
+            ],
+            "Running times": [
+                "Durações"
+            ],
+            "How long each chapter runs.": [
+                "Quanto dura cada capítulo."
+            ],
+            "Continue listening": [
+                "Continuar ouvindo"
+            ],
+            "Books to show": [
+                "Livros a mostrar"
+            ],
+            "Covers": [
+                "Capas"
+            ],
+            "The cover of each book, small.": [
+                "A capa de cada livro, pequena."
+            ],
+            "The book this page is about": [
+                "O livro de que esta página trata"
+            ],
+            "(no title)": [
+                "(sem título)"
+            ],
+            "None": [
+                "Nenhuma"
+            ],
+            "Template": [
+                "Modelo"
+            ],
+            "Beside the details": [
+                "Ao lado dos dados"
+            ],
+            "Above the details": [
+                "Acima dos dados"
+            ],
+            "Not shown": [
+                "Não exibida"
+            ],
+            "Accent colour": [
+                "Cor de destaque"
+            ],
+            "Presentation": [
+                "Apresentação"
+            ],
+            "Site setting": [
+                "Configuração do site"
+            ],
+            "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text.": [
+                "Da paleta do tema. Colore o botão de reproduzir, a barra de progresso e o capítulo atual, nunca texto."
+            ],
+            "All": [
+                "Todos"
+            ],
+            "Audiobook list": [
+                "Lista de audiolivros"
+            ],
+            "Order": [
+                "Ordem"
+            ],
+            "By title": [
+                "Por título"
+            ],
+            "Newest first": [
+                "Mais recentes primeiro"
+            ],
+            "Genre": [
+                "Gênero"
+            ]
+        }
+    }
+}

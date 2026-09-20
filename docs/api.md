@@ -250,6 +250,62 @@ names are part of the contract; the elements' order and nesting are too.
 **What a template is not:** behaviour. A template that needs JavaScript or data the
 plugin does not keep is a feature, not a stylesheet, and needs its own hooks.
 
+The library block's wrapper, `.volumina-library`, carries the same template class and
+accent properties; inside it, `ul.volumina-library-list` holds one `li.volumina-library-item`
+per book — `.volumina-library-cover`, then `.volumina-library-text` with
+`a.volumina-library-title` and `.volumina-library-lines`.
+
+---
+
+## Blocks
+
+The plugin ships four blocks: Audiobook, Chapter list, Continue listening and Audiobook
+list. An extension adds blocks of its own by registering them with WordPress; nothing
+here is needed for that. To change what the shipped blocks show, three filters. Each
+receives plain text and returns plain text; everything is escaped when printed.
+
+### `volumina_book_details`
+
+```php
+apply_filters( 'volumina_book_details', array $details, WP_Post $book, array $chapters )
+```
+
+The details under a book's cover, on its page and in the Audiobook block: label to
+value, in order — "Narrated by", "Running time", "Chapters", "Publisher", "ISBN",
+those that are not empty. Add a row, reword one, or `unset()` one. `$chapters` are the
+chapters the reader may see.
+
+### `volumina_library_query`
+
+```php
+apply_filters( 'volumina_library_query', array $args, array $attributes )
+```
+
+The `WP_Query` arguments the Audiobook list block is about to run, after its own
+attributes have been applied: post type and status, `posts_per_page`, `orderby` and
+`order`, and a `tax_query` when a genre or series was chosen. Change the order, exclude
+books, add clauses. `$attributes` are the block's, for a filter that wants to know what
+the editor asked for.
+
+### `volumina_library_item`
+
+```php
+apply_filters( 'volumina_library_item', array $item, WP_Post $book, array $attributes )
+```
+
+One row of the Audiobook list block, before it is printed:
+
+| Key     | Type               | What it is                                                   |
+|---------|--------------------|--------------------------------------------------------------|
+| `book`  | `WP_Post`          | The book.                                                    |
+| `title` | `string`           | The linked title.                                            |
+| `url`   | `string`           | Where the title leads.                                       |
+| `cover` | `int`              | Attachment id of the cover, or 0 for none.                   |
+| `lines` | `array<int,string>`| What appears under the title, in order, joined by " · ".    |
+
+Return the row, or only the keys you changed: what comes back is merged over the
+original. A price, "Yours", a badge: append to `lines`. To hide the cover, set it to 0.
+
 ---
 
 ## Admin

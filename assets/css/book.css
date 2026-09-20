@@ -196,3 +196,62 @@
 	border-color: color-mix(in srgb, currentcolor 40%, transparent);
 	text-align: center;
 }
+
+/* The library block: the books in rows, each a way to its own page. */
+.volumina-library-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.volumina-library-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 1em;
+	padding-block: 0.75em;
+	border-block-end: 1px solid;
+
+	/* Falls back to the full-strength text colour where color-mix is absent. */
+	border-color: color-mix(in srgb, currentcolor 25%, transparent);
+}
+
+.volumina-library-item:last-child {
+	border-block-end: 0;
+}
+
+.volumina-library-cover {
+	flex: 0 0 auto;
+	display: block;
+}
+
+.volumina-library-cover img {
+	display: block;
+	width: 4.5em;
+	height: auto;
+}
+
+.volumina-library-text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15em;
+	min-width: 0;
+}
+
+.volumina-library-title {
+	font-weight: 600;
+}
+
+/* The accent, as on the chapter list: a mark, never a text colour. */
+.volumina-has-accent .volumina-library-item {
+	box-shadow: -0.6em 0 0 -0.4em var(--volumina-accent);
+}
+
+.volumina-library-lines {
+	font-size: 0.9em;
+	font-variant-numeric: tabular-nums;
+}
+
+.volumina-library-empty {
+	margin: 0;
+	font-style: italic;
+}

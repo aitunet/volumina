@@ -64,6 +64,7 @@ msgid "Remove cover"
 msgstr "Quitar portada"
 
 #: src/Admin/BookMetaBox.php:198
+#: blocks/library/index.js:136
 msgid "Narrator"
 msgstr "Narrador"
 
@@ -231,6 +232,7 @@ msgstr "Solo se pueden adjuntar archivos de audio. La duración se lee del archi
 #: src/Admin/ChapterMetaBox.php:237
 #: src/Admin/PostScreenHelp.php:94
 #: src/Frontend/Audiobook.php:131
+#: blocks/library/index.js:145
 msgid "Running time"
 msgstr "Duración"
 
@@ -925,6 +927,7 @@ msgid "No series found."
 msgstr "No se han encontrado series."
 
 #: src/PostTypes/Taxonomies.php:123
+#: blocks/library/index.js:116
 msgid "Series"
 msgstr "Series"
 
@@ -1448,3 +1451,65 @@ msgstr "Volumen %d%%"
 #: templates/player.php:184
 msgid "Volume"
 msgstr "Volumen"
+
+#: volumina.php
+msgid "Volumina — Audiobook Player and Library"
+msgstr "Volumina — Reproductor y biblioteca de audiolibros"
+
+#: src/Blocks/LibraryBlock.php:183
+#. translators: %s: the narrator's name.
+msgid "Narrated by %s"
+msgstr "Narrado por %s"
+
+#: templates/library.php:30
+msgid "No audiobooks published yet. Published ones will be listed here."
+msgstr "Todavía no hay audiolibros publicados. Los publicados aparecerán aquí."
+
+#: blocks/library/index.js:59
+msgid "All"
+msgstr "Todos"
+
+#: blocks/library/index.js:76
+msgid "Audiobook list"
+msgstr "Lista de audiolibros"
+
+#: blocks/library/index.js:92
+msgid "Order"
+msgstr "Orden"
+
+#: blocks/library/index.js:97
+msgid "By title"
+msgstr "Por título"
+
+#: blocks/library/index.js:101
+msgid "Newest first"
+msgstr "Más recientes primero"
+
+#: blocks/library/block.json
+msgctxt "block title"
+msgid "Audiobook list"
+msgstr "Lista de audiolibros"
+
+#: blocks/library/block.json
+msgctxt "block description"
+msgid "The audiobooks on this site, in a list, each leading to its own page."
+msgstr "Los audiolibros de este sitio, en una lista, cada uno con enlace a su página."
+
+#: blocks/library/block.json
+msgctxt "block keyword"
+msgid "library"
+msgstr "biblioteca"
+
+#: blocks/library/block.json
+msgctxt "block keyword"
+msgid "catalogue"
+msgstr "catálogo"
+
+#: blocks/library/block.json
+msgctxt "block keyword"
+msgid "books"
+msgstr "libros"
+
+#: blocks/library/index.js:109
+msgid "Genre"
+msgstr "Género"

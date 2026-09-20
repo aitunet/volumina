@@ -39,7 +39,7 @@ for somebody who never asked to be identified.
   publisher, ISBN, language, genres and series.
 * Chapters reordered by dragging.
 * Audio attached from the media library, with the running time read out of the file.
-* Three blocks: **Audiobook**, **Chapter list** and **Continue listening**, all of
+* Four blocks: **Audiobook**, **Chapter list**, **Continue listening** and **Audiobook list**, all of
   which render the same markup the book page does.
 * Books that are public, or restricted to listeners you have given them to.
 * A choice of where the cover goes and an accent colour from your theme's palette,
@@ -100,8 +100,8 @@ listener leaves your site.
 = Do I need to use the blocks? =
 
 No. An audiobook page shows its player and chapters by itself. The blocks are for
-putting an audiobook, a chapter list or a "Continue listening" list anywhere else —
-a landing page, a series page, a sidebar. If you would rather place everything
+putting an audiobook, a chapter list, a "Continue listening" list or the whole library
+anywhere else — a landing page, a series page, a sidebar. If you would rather place everything
 yourself, turn off "Book pages" in Settings and nothing is added automatically.
 
 = What happens to my audiobooks if I delete the plugin? =
@@ -136,7 +136,7 @@ one any other developer can use.
 
 1. An audiobook on the front end: cover, details, player and chapters, on a phone.
 2. The player, with speed, sleep timer and the chapter it is in.
-3. The three blocks in the editor, previewed exactly as the front end renders them.
+3. The four blocks in the editor, previewed exactly as the front end renders them.
 4. The audiobook screen, with its chapters ordered by dragging.
 5. Settings in three groups, each one explaining itself, with the theme's palette
    offered as the accent.
@@ -154,7 +154,7 @@ one any other developer can use.
   30-second skips and a sleep timer.
 * Audio served through the plugin's own endpoint, with HTTP range support and an
   access check on every request.
-* Audiobook, Chapter list and Continue listening blocks.
+* Audiobook, Chapter list, Continue listening and Audiobook list blocks.
 * An access layer with a documented provider interface, a chapter audio URL filter
   and an admin screen registry.
 * A Basic template with the cover beside or above the details and an accent colour

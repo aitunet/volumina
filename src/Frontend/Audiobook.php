@@ -147,7 +147,19 @@ final class Audiobook {
 			$details[ __( 'ISBN', 'volumina' ) ] = $isbn;
 		}
 
-		return $details;
+		/**
+		 * Filters the details shown for a book.
+		 *
+		 * Label to value, in the order they appear on the book page and in
+		 * the Audiobook block; both are plain text and are escaped when
+		 * printed. An extension can add a row — a price, a format, "Yours" —
+		 * reword one, or drop one by unsetting it.
+		 *
+		 * @param array<string, string> $details  Label to value.
+		 * @param WP_Post               $book     The book.
+		 * @param array<int, WP_Post>   $chapters Its chapters, as the reader may see them.
+		 */
+		return (array) apply_filters( 'volumina_book_details', $details, $book, $chapters );
 	}
 
 	/**

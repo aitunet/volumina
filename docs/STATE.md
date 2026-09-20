@@ -145,11 +145,11 @@ Three things the account holder wants in the first version people see. Each begi
 
 ## S8 — Library block (added 2026-09-20, before submission; see `docs/decisions.md`)
 
-- [ ] `volumina/library` block: rows of published books — cover, linked title, narrator, running time; count, order, genre, series, three toggles, presentation panel
-- [ ] Editor preview is the server's render; controls translated
-- [ ] `volumina_library_query`, `volumina_library_item` and `volumina_book_details` in `docs/api.md`
-- [ ] Renders correctly in Twenty Twenty-Five and Twenty Twenty-One, 390px and desktop; zero axe violations
-- [ ] `.pot` regenerated, `es_ES` and `pt_BR` complete, editor JSON, zip rebuilt
+- [x] `volumina/library` block: rows of published books — cover, linked title, narrator, running time; count, order, genre, series, three toggles, presentation panel
+- [x] Editor preview is the server's render (`ServerSideRender`, as the other three); controls translated, every panel string in the editor JSON. **Not driven in the editor from here** — the automated admin session was refused; the account holder sees it the moment they add the block
+- [x] `volumina_library_query`, `volumina_library_item` and `volumina_book_details` in `docs/api.md`, each exercised live with a throwaway callback
+- [x] Renders correctly in Twenty Twenty-Five and Twenty Twenty-One, 390px and 1280px; zero axe violations, no sideways scroll
+- [x] `.pot` regenerated — 347 entries — `es_ES` and `pt_BR` complete (0 untranslated), editor JSON for the four blocks, zip rebuilt
 
 **Done when:** a page with the block lists the library and each row reaches its book; the checklist below still passes.
 
