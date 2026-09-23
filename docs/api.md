@@ -149,10 +149,10 @@ live, not a row to remember to delete.
 
 The names below are contract: renaming one is a major version.
 
-| Name               | Kind            | Holds                                                     |
-| ------------------ | --------------- | --------------------------------------------------------- |
-| `volumina_book`    | post type       | One audiobook. Cover = featured image.                    |
-| `volumina_chapter` | post type       | One chapter; its book is the `book_id` meta.              |
+| Name               | Kind             | Holds                                                     |
+| ------------------ | ---------------- | --------------------------------------------------------- |
+| `volumina_book`    | post type        | One audiobook. Cover = featured image.                    |
+| `volumina_chapter` | post type        | One chapter of a book.                                    |
 | `volumina_genre`   | taxonomy (hier.) | Genres of a book.                                        |
 | `volumina_series`  | taxonomy (hier.) | Series of a book. A series may have sub-series.          |
 
