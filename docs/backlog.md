@@ -148,3 +148,8 @@
   script hitting a restricted chapter ID in a loop turns every hit into a
   database write and pushes the real entries out. Worth a throttle: one line per
   chapter per minute, or per IP, through a transient. Not for 1.0.
+
+## Found 2026-09-23, from `volumina-pro` P2 Task 4 (signed URLs)
+
+- The player could fetch a fresh signed URL when one expires mid-listen (today: reload
+  the page).
