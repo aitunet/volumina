@@ -157,8 +157,16 @@ The names below are contract: renaming one is a major version.
 | `volumina_series`  | taxonomy (hier.) | Series of a book. A series may have sub-series.          |
 
 Read them with core functions — `get_posts()`, `get_the_terms()`, `get_ancestors()` —
-and add meta boxes with `add_meta_boxes_volumina_book`. Their other meta keys are not
-contract, except `Mode::META_KEY` above.
+and add meta boxes with `add_meta_boxes_volumina_book`. A chapter's two links are contract too, read with `get_post_meta( $chapter_id, $key, true )`:
+
+| Meta key                 | On                 | Holds                                             |
+| ------------------------ | ------------------ | ------------------------------------------------- |
+| `volumina_book_id`       | `volumina_chapter` | The book's post ID (integer).                     |
+| `volumina_attachment_id` | `volumina_chapter` | The audio file's attachment ID (integer).         |
+
+The endpoint reads the file with `get_attached_file( $attachment_id )`, so an extension
+that moves a file and updates `_wp_attached_file` (core's `update_attached_file()`) keeps
+it playable. Other meta keys are not contract, except `Mode::META_KEY` above.
 
 ---
 
