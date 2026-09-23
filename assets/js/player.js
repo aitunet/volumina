@@ -101,6 +101,7 @@
 			speed: root.querySelector( '[data-volumina-speed]' ),
 			sleep: root.querySelector( '[data-volumina-sleep]' ),
 			status: root.querySelector( '.volumina-player-status' ),
+			notice: root.querySelector( '[data-volumina-notice]' ),
 			icon: root.querySelector( '[data-volumina-toggle-icon]' ),
 			label: root.querySelector( '[data-volumina-toggle-label]' ),
 			volumeRow: root.querySelector( '[data-volumina-volume-row]' ),
@@ -116,15 +117,50 @@
 		let sleepTimer = null;
 		let stopAfterChapter = false;
 
-		function announce( message ) {
+		let statusClear = null;
+
+		/**
+		 * Tells a screen reader, through the hidden live region, and — only
+		 * when asked — the eye as well, through the visible notice. The
+		 * hidden region empties itself after a few seconds, so nobody
+		 * reading the page later finds stale news in it.
+		 *
+		 * @param {string}             message What to say.
+		 * @param {{visible: boolean}} options visible: also show it.
+		 */
+		function announce( message, options ) {
+			if ( options && options.visible ) {
+				showNotice( message );
+			}
+
 			if ( ! els.status ) {
 				return;
 			}
 
+			window.clearTimeout( statusClear );
 			els.status.textContent = '';
 			window.requestAnimationFrame( function () {
 				els.status.textContent = message;
+				statusClear = window.setTimeout( function () {
+					els.status.textContent = '';
+				}, 5000 );
 			} );
+		}
+
+		/**
+		 * The visible notice, for what a sighted listener must know: without
+		 * it, a play button that does nothing looks broken. An empty message
+		 * hides it; it is cleared as soon as it stops being true.
+		 *
+		 * @param {string} message What to show, or '' to hide.
+		 */
+		function showNotice( message ) {
+			if ( ! els.notice ) {
+				return;
+			}
+
+			els.notice.textContent = message;
+			els.notice.hidden = ! message;
 		}
 
 		function current() {
@@ -315,6 +351,7 @@
 
 		function load( next, position, play ) {
 			index = Math.max( 0, Math.min( chapters.length - 1, next ) );
+			showNotice( '' );
 
 			audio.src = current().src || current().url;
 			audio.load();
@@ -365,7 +402,9 @@
 					// means a new chapter replaced this one mid-load, which is
 					// the player doing as it was told.
 					if ( error && error.name === 'NotAllowedError' ) {
-						announce( strings.resumeBlocked || '' );
+						announce( strings.resumeBlocked || '', {
+							visible: true,
+						} );
 					} else if ( ! error || error.name !== 'AbortError' ) {
 						reportLoadFailure( error );
 					}
@@ -382,7 +421,7 @@
 		 * @param {*} error What the browser said, if anything.
 		 */
 		function reportLoadFailure( error ) {
-			announce( strings.loadFailed || '' );
+			announce( strings.loadFailed || '', { visible: true } );
 
 			if ( window.console && window.console.error ) {
 				window.console.error(
@@ -707,6 +746,11 @@
 			paintToggle();
 			announce( text( 'nowPlaying', current().title ) );
 			save( true );
+		} );
+
+		// Sound is coming out: whatever the notice said has stopped being true.
+		audio.addEventListener( 'playing', function () {
+			showNotice( '' );
 		} );
 
 		audio.addEventListener( 'pause', function () {

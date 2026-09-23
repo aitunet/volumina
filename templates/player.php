@@ -200,5 +200,6 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 		</p>
 	</div>
 
+	<p class="volumina-player-notice" data-volumina-notice hidden></p>
 	<p class="volumina-player-status" role="status" aria-live="polite"></p>
 </section>

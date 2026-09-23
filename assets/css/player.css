@@ -210,12 +210,33 @@
 	max-width: 100%;
 }
 
+/*
+ * What only needs hearing — speed, volume, the chapter, the sleep timer —
+ * goes to a live region that is hidden from sight but not from screen
+ * readers: clipped, never display:none or visibility:hidden, which would
+ * silence it.
+ */
 .volumina-player-status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* What must also be seen: a chapter that will not load, or a browser
+ * waiting for a tap before it plays. */
+.volumina-player-notice {
 	margin: 0.75em 0 0;
 	font-size: 0.9em;
 }
 
-.volumina-player-status:empty {
+.volumina-player-notice[hidden] {
 	display: none;
 }
 
