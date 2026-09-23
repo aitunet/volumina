@@ -173,3 +173,4 @@
 - **2026-09-20** — **S9 opened: the API Pro needs.** `volumina_progress_saved` fires after every successful save with the stored values; verified with a WP-CLI script (fires once, after the row exists; a refused save fires nothing). Documented in `api.md`.
 - **2026-09-20** — `volumina_stream_access`: the endpoint asks it after access is granted and before the file is looked up; a refusal is a 404. Verified with a WP-CLI script through `Stream::resolve()`: refused chapter → null, allowed chapter → a file, arguments `true, 14, 9`.
 - **2026-09-20** — S9 closed: `VOLUMINA_PRO_VERSION` documented (`ProScreen::applies()` already keyed on it), decision recorded, zip rebuilt. Volumina is ready for Pro.
+- **2026-09-22** — `bin/build-release.php` now keeps **one zip only** in `dist/`: it deletes every earlier `volumina-*.zip` before writing the new one. The account holder asked for this so that old builds stop piling up. The same rule went into `volumina-pro`.

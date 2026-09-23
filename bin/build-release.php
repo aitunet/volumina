@@ -308,8 +308,10 @@ function build(): void {
 		}
 	}
 
-	if ( file_exists( $zip ) ) {
-		unlink( $zip );
+	// dist/ holds one zip, the current one: every earlier build goes, whatever
+	// its version, so old builds never pile up beside the one to install.
+	foreach ( (array) glob( $dist . '/' . SLUG . '-*.zip' ) as $old ) {
+		unlink( (string) $old );
 	}
 	$archive = new \ZipArchive();
 	if ( true !== $archive->open( $zip, \ZipArchive::CREATE ) ) {
