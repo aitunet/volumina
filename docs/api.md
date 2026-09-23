@@ -145,6 +145,23 @@ live, not a row to remember to delete.
 
 ---
 
+## Content types
+
+The names below are contract: renaming one is a major version.
+
+| Name               | Kind            | Holds                                                     |
+| ------------------ | --------------- | --------------------------------------------------------- |
+| `volumina_book`    | post type       | One audiobook. Cover = featured image.                    |
+| `volumina_chapter` | post type       | One chapter; its book is the `book_id` meta.              |
+| `volumina_genre`   | taxonomy (hier.) | Genres of a book.                                        |
+| `volumina_series`  | taxonomy (hier.) | Series of a book. A series may have sub-series.          |
+
+Read them with core functions — `get_posts()`, `get_the_terms()`, `get_ancestors()` —
+and add meta boxes with `add_meta_boxes_volumina_book`. Their other meta keys are not
+contract, except `Mode::META_KEY` above.
+
+---
+
 ## Audio
 
 ### `volumina_chapter_audio_url`
