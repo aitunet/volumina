@@ -305,6 +305,13 @@ for its classes), then `h2.volumina-book-heading` and `ol.volumina-chapter-list`
 `li.volumina-chapter-item` per chapter, the one playing marked `is-playing`. These class
 names are part of the contract; the elements' order and nesting are too.
 
+The player, `.volumina-player`, carries `data-volumina-state`: `paused` in the markup and
+whenever nothing is sounding (before the first play, after a pause, at the end), `playing`
+while sound plays. A stylesheet may use it to animate with playback —
+`.volumina-player[data-volumina-state="playing"]` — and must stop every animation under
+`@media (prefers-reduced-motion: reduce)`. `is-playing` on a chapter means "the current
+chapter", sounding or not; `data-volumina-state` means sound.
+
 **What a template is not:** behaviour. A template that needs JavaScript or data the
 plugin does not keep is a feature, not a stylesheet, and needs its own hooks.
 

@@ -255,6 +255,9 @@
 		function paintToggle() {
 			const playing = ! audio.paused && ! audio.ended;
 
+			// For stylesheets: a template may animate while sound plays. See docs/api.md.
+			root.dataset.voluminaState = playing ? 'playing' : 'paused';
+
 			if ( els.icon ) {
 				els.icon
 					.querySelectorAll( '[data-volumina-icon]' )
