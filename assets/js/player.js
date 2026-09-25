@@ -398,6 +398,12 @@
 
 			if ( attempt && typeof attempt.catch === 'function' ) {
 				attempt.catch( function ( error ) {
+					// A rejected play() leaves audio.paused true with no
+					// pause event to repaint from — most reliably after
+					// audio.load() reset it on a chapter change. Repaint
+					// from the audio element's actual state either way.
+					paintToggle();
+
 					// Only one kind of refusal is worth telling a listener
 					// about: the browser wanting a gesture before it makes a
 					// sound. That is correct behaviour, not an error, so say
@@ -692,6 +698,7 @@
 		// A source that never arrives: say so, rather than leaving a play
 		// button that seems to do nothing.
 		audio.addEventListener( 'error', function () {
+			paintToggle();
 			reportLoadFailure( audio.error );
 		} );
 
