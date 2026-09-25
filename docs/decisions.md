@@ -561,3 +561,20 @@ Shipping 1.0 without them would mean a 1.0.1 the day Pro appears.
 
 **Consequence.** No new strings, no schema change, no behaviour change for a site
 without Pro. The zip is rebuilt.
+
+## 2026-09-25 — S10: extensions add tabs to Settings, before submission
+
+**Context.** Volumina Pro has its own "Pro settings" menu entry (signed links, protected
+folder) and P3 adds player styles. Two settings entries under Audiobooks, styled
+separately, is what the account holder asked to avoid. Settings has no extension point:
+only the welcome page does (`volumina_welcome_sections`), and Pro may use only `api.md`.
+
+**Decision.** A public tab registry for Settings, modelled on `Sections`: an action hands
+it to extensions, each tab an id, a title and a render callback; Volumina's own settings
+are the first tab; tabs show only when there are two or more. Added now, before the zip
+goes to the directory, because an API added after 1.0 costs a release on both sides.
+Decided with the account holder.
+
+**Consequence.** An addition, nothing breaks: a site without an extension sees Settings
+exactly as today. Pro drops its "Pro settings" menu entry and draws inside Volumina's
+cards, so it inherits their look instead of copying it.
