@@ -446,6 +446,41 @@ final class Sections {
 }
 ```
 
+### `volumina_settings_tabs`
+
+Action. Fires while Audiobooks → Settings is being drawn, with a `Sections` of its tabs
+as the only argument (the same class as `volumina_welcome_sections`, the same rules).
+Volumina's own settings are the tab `general`, always first; an extension cannot replace
+it. With two tabs or more the screen draws WordPress's tab bar; with one it draws none.
+
+```php
+add_action( 'volumina_settings_tabs', function ( $tabs ) {
+	$tabs->add( 'my-plugin', __( 'My Plugin', 'my-plugin' ), function () {
+		echo '<form action="options.php" method="post">';
+		settings_fields( 'my_plugin_settings' );
+		echo '<section class="volumina-card volumina-settings-section"><h2>' . esc_html__( 'Section', 'my-plugin' ) . '</h2>';
+		echo '<p class="volumina-settings-lede">' . esc_html__( 'What it is for.', 'my-plugin' ) . '</p>';
+		// …fields…
+		echo '</section>';
+		submit_button();
+		echo '</form>';
+	} );
+} );
+```
+
+- A tab's address is `edit.php?post_type=volumina_book&page=volumina-settings&tab=<id>`;
+  `general` has none. An unknown `tab` falls back to `general`.
+- Each tab draws its own form and saves its own option: saving one tab never touches
+  another's settings. `options.php` returns to the page it came from, tab included.
+- Volumina confirms a save ("Settings saved.") at the top of the screen for every tab;
+  a tab does not print its own confirmation. Errors a tab's sanitize callback adds with
+  `add_settings_error()` are shown by the tab itself (`settings_errors( 'my_plugin_settings' )`).
+- The card markup above — `section.volumina-card.volumina-settings-section`, its `h2` and
+  `p.volumina-settings-lede` — is part of this contract, so a tab looks like the rest.
+- The id becomes part of an `id` attribute (`volumina-settings-tab-<id>`): prefix it with
+  your own slug. The callable escapes everything it echoes. The capability is the screen's,
+  `manage_options`.
+
 ### `volumina_register_admin_screens`
 
 Action. Fires on `admin_menu`, with the `ScreenRegistry` as its only argument. Screens

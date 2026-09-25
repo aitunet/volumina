@@ -40,9 +40,13 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 
 	/**
 	 * The page's address.
+	 *
+	 * @param string $tab A tab id, or '' for the page itself (`general`).
 	 */
-	public static function url(): string {
-		return admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
+	public static function url( string $tab = '' ): string {
+		$url = admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
+
+		return '' === $tab || 'general' === $tab ? $url : add_query_arg( 'tab', $tab, $url );
 	}
 
 	/**
@@ -86,13 +90,35 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 	}
 
 	/**
-	 * Draws the screen: one card per section, native controls inside.
+	 * Draws the screen: a tab bar when there is more than one tab, then the
+	 * current tab. Volumina's own settings are the `general` tab, always
+	 * first; an extension adds tabs of its own through `volumina_settings_tabs`.
 	 */
 	public function render(): void {
 		$group = Settings::group();
 
 		// Read again rather than trusting what was read before the save.
 		$group->forget();
+
+		$tabs = new Sections();
+		$tabs->add( 'general', __( 'General', 'volumina' ), array( $this, 'render_general' ) );
+
+		/**
+		 * Fires while the settings screen is being drawn, with its tabs.
+		 *
+		 * Add a tab and it is drawn after the plugin's own. See docs/api.md.
+		 *
+		 * @param Sections $tabs The tabs.
+		 */
+		do_action( 'volumina_settings_tabs', $tabs );
+
+		// Ours again, in the place it already holds: an extension may add tabs, not take over General.
+		$tabs->add( 'general', __( 'General', 'volumina' ), array( $this, 'render_general' ) );
+
+		$all = $tabs->all();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Chooses which tab to draw; nothing is written.
+		$requested = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+		$current   = Tabs::current( array_column( $all, 'id' ), $requested );
 
 		echo '<div class="wrap volumina-presentation volumina-settings">';
 		printf( '<h1>%s</h1>', esc_html( $this->title() ) );
@@ -105,15 +131,43 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 		// it needs no nonce of its own.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['settings-updated'] ) ) {
-			add_settings_error(
-				$group->option(),
-				'volumina_settings_saved',
-				__( 'Settings saved.', 'volumina' ),
-				'success'
-			);
+			add_settings_error( $group->option(), 'volumina_settings_saved', __( 'Settings saved.', 'volumina' ), 'success' );
 		}
 
 		settings_errors( $group->option() );
+
+		if ( count( $all ) > 1 ) {
+			printf( '<nav class="nav-tab-wrapper volumina-settings-tabs" aria-label="%s">', esc_attr__( 'Settings sections', 'volumina' ) );
+			foreach ( $all as $tab ) {
+				$is_current = $tab['id'] === $current;
+				printf(
+					'<a href="%1$s" class="nav-tab%2$s"%3$s>%4$s</a>',
+					esc_url( self::url( $tab['id'] ) ),
+					$is_current ? ' nav-tab-active' : '',
+					$is_current ? ' aria-current="page"' : '',
+					esc_html( $tab['title'] )
+				);
+			}
+			echo '</nav>';
+		}
+
+		foreach ( $all as $tab ) {
+			if ( $tab['id'] !== $current ) {
+				continue;
+			}
+			printf( '<div class="volumina-settings-tab" id="%s">', esc_attr( 'volumina-settings-tab-' . $tab['id'] ) );
+			call_user_func( $tab['render'] );
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
+
+	/**
+	 * The `general` tab: Volumina's own settings, one card per section.
+	 */
+	public function render_general(): void {
+		$group = Settings::group();
 
 		printf(
 			'<p>%s</p>',
@@ -138,7 +192,7 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 
 		submit_button();
 
-		echo '</form></div>';
+		echo '</form>';
 	}
 
 	/**

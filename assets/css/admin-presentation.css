@@ -257,3 +257,8 @@
 		padding: 11px 16px;
 	}
 }
+
+/* Settings tabs: WordPress draws them; this only gives the first card room. */
+.volumina-settings-tabs {
+	margin-block-end: 1.25em;
+}
