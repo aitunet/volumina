@@ -10,11 +10,12 @@
 ## Right now
 
 **Current slice:** S10 — Settings tabs, added 2026-09-25 (branch `s10-settings-tabs`): a public way for an extension to add a tab to Settings, so Volumina Pro's settings live there instead of a second menu entry. **2026-09-25 (Task 1 done):** `TUNET\Volumina\Admin\Tabs::current()`, the `volumina_settings_tabs` action in `SettingsScreen::render()`, `render_general()` holding the plugin's own form, `SettingsScreen::url( $tab )`, tab-bar CSS and `docs/api.md` — see `docs/HISTORY.md`. Verified on `testing-site.local` with a throwaway mu-plugin: no tab bar with one tab, a tab bar with two, `aria-current` on the current tab's link, an unknown `tab` falling back to General, a save returning to General with its confirmation. Before it, S9 — The API Pro needs, added 2026-09-20. **Done**: `volumina_progress_saved` action, `volumina_stream_access` filter and `VOLUMINA_PRO_VERSION` constant documented in `docs/api.md`, decision recorded in `docs/decisions.md`, zip rebuilt. All earlier slices complete: S8 (Library block), S7 (Presentation), S6 (Release), S5 (Admin polish), S4 (Access layer), S3 (Blocks), S2 (Player), S1 (One audiobook), S0 (Scaffold).
-**Next action:** S10 remaining: the design of the tabs agreed in the Pro P3 mockups, axe on the settings screen with a real second tab, `.pot` regenerated, zip rebuilt — then Volumina Pro moves its settings into a tab through `volumina_settings_tabs`. After S10: the account holder's checks — the block's panel was looked at on 2026-09-20 and its one defect fixed — in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**2026-09-25 (Task 3 done):** `.pot` regenerated (349 entries, two new: "General", "Settings sections"), full suite green (PHPCS, PHPStan level 6, 149 PHPUnit tests/282 assertions, `npm run lint` all clean), zip rebuilt (122 files) and verified byte-for-byte against the tree with `diff -rq` (only `.gitkeep` differs). The Pro P3 mockups' tab design was accepted by the account holder 2026-09-25. See `docs/HISTORY.md`.
+**Next action:** S10's only open item is the axe (WCAG 2.1 AA) and keyboard check of the settings tab bar with two tabs, on `testing-site.local` — deferred to the final task, run with the account holder's own login rather than a materialised admin session here. Once that passes, Volumina Pro moves its settings into a tab through `volumina_settings_tabs`. After S10: the account holder's checks — the block's panel was looked at on 2026-09-20 and its one defect fixed — in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-25, TUNET, S10 Task 1 (settings tabs public API) done
+**Last updated:** 2026-09-25, TUNET, S10 Task 3 (`.pot`, full suite, zip) done — only the axe/keyboard check of the tab bar remains, deferred to the final task
 **File scope for this slice** — do not open files outside this list:
 `src/Admin/Tabs.php`, `src/Admin/SettingsScreen.php`, `src/Admin/Sections.php`, `tests/php/Admin/`, `assets/css/admin-presentation.css`, `docs/api.md`, `readme.txt`, `languages/`
 
@@ -166,10 +167,11 @@ Three things the account holder wants in the first version people see. Each begi
 
 ## S10 — Settings tabs (added 2026-09-25; see `docs/decisions.md`)
 
-- [ ] Design of the tabs agreed in the Pro P3 mockups
+- [x] Design of the tabs agreed in the Pro P3 mockups — accepted by the account holder 2026-09-25
 - [x] Public API: an action that hands a tab registry to extensions, same rules as `volumina_welcome_sections`; documented in `api.md` — `volumina_settings_tabs`, `TUNET\Volumina\Admin\Tabs::current()`, `docs/api.md` written
 - [x] Settings draws tabs only when there is more than one; the plugin's own settings are the first tab; each tab its own form — `SettingsScreen::render()` / `render_general()`, verified on `testing-site.local`
-- [ ] Tests; axe on the screen; `.pot`; zip rebuilt
+- [x] Tests; `.pot`; zip rebuilt — PHPCS and PHPStan level 6 silent, `npm run lint` clean, 149 tests/282 assertions; `.pot` regenerated at 349 entries, two new strings ("General", "Settings sections"); zip rebuilt, 122 files, `diff -rq` of the unzipped `src/ templates/ assets/ languages/` against the tree clean (only `.gitkeep` differs)
+- [ ] axe (WCAG 2.1 AA) and keyboard check on Audiobooks → Settings with two tabs — **moved to the final task, to run on the live site with the account holder's own login; not attempted here**
 
 **Done when:** a throwaway plugin adds a tab through `api.md` alone and Volumina Pro's settings move into one, with the release checklist still passing.
 
@@ -178,7 +180,7 @@ Three things the account holder wants in the first version people see. Each begi
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 143 tests, 274 assertions
+- [x] Full test suite green — 149 tests, 282 assertions
 - [x] Plugin Check (2026-09-20, 1.7, every check including experimental) against the release zip's contents — zero errors; the one warning is `load_plugin_textdomain()`, kept because the shipped translations need it
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
 - [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review

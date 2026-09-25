@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-20T15:45:15+00:00\n"
+"POT-Creation-Date: 2026-09-25T16:11:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -306,7 +306,7 @@ msgid "Note"
 msgstr ""
 
 #: src/Admin/LogScreen.php:166
-#: src/Admin/SettingsScreen.php:152
+#: src/Admin/SettingsScreen.php:206
 msgid "Overview"
 msgstr ""
 
@@ -556,56 +556,65 @@ msgstr ""
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:52
+#: src/Admin/SettingsScreen.php:56
 msgid "Volumina Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:59
+#: src/Admin/SettingsScreen.php:63
 #: src/Admin/WelcomeScreen.php:259
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:111
+#: src/Admin/SettingsScreen.php:104
+#: src/Admin/SettingsScreen.php:116
+msgid "General"
+msgstr ""
+
+#: src/Admin/SettingsScreen.php:134
 msgid "Settings saved."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:120
+#: src/Admin/SettingsScreen.php:140
+msgid "Settings sections"
+msgstr ""
+
+#: src/Admin/SettingsScreen.php:174
 msgid "Volumina works without changing any of this. These are here for when the defaults are not what you want."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:153
+#: src/Admin/SettingsScreen.php:207
 msgid "Nothing here needs to be changed for Volumina to work. Each setting says what it does underneath it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:156
+#: src/Admin/SettingsScreen.php:210
 msgid "New audiobooks are: what a book you add from now on starts as. It never changes a book that already exists."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:157
+#: src/Admin/SettingsScreen.php:211
 msgid "Book pages: turn this off if you place the Audiobook block yourself and do not want it added a second time."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:158
+#: src/Admin/SettingsScreen.php:212
 msgid "Log: records notable events. Turn it on while something is wrong and off again afterwards."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:164
+#: src/Admin/SettingsScreen.php:218
 msgid "Uninstalling"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:165
+#: src/Admin/SettingsScreen.php:219
 msgid "Deactivating the plugin never deletes anything. Deleting it removes your books, chapters and settings only if you have ticked the uninstall setting; otherwise everything is left where it is, including every listener's place in every book."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:166
+#: src/Admin/SettingsScreen.php:220
 msgid "Books and chapters are ordinary posts, so they go to the trash like any other post and can be restored from it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:169
+#: src/Admin/SettingsScreen.php:223
 msgid "More"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:170
+#: src/Admin/SettingsScreen.php:224
 msgid "Volumina documentation"
 msgstr ""
 
@@ -759,7 +768,7 @@ msgid "Choose an audiobook to list the chapters of."
 msgstr ""
 
 #. translators: %s: the narrator's name.
-#: src/Blocks/LibraryBlock.php:183
+#: src/Blocks/LibraryBlock.php:187
 #, php-format
 msgid "Narrated by %s"
 msgstr ""
@@ -796,7 +805,7 @@ msgid "Basic"
 msgstr ""
 
 #: src/Player/Player.php:82
-#: templates/player.php:98
+#: templates/player.php:99
 msgid "Play"
 msgstr ""
 
@@ -863,7 +872,7 @@ msgid "This chapter's audio could not be loaded. Check the address in the browse
 msgstr ""
 
 #: src/Player/Player.php:101
-#: templates/player.php:185
+#: templates/player.php:186
 msgid "Mute"
 msgstr ""
 
@@ -905,7 +914,7 @@ msgstr ""
 msgid "A listener was turned away from a chapter."
 msgstr ""
 
-#: src/Player/Stream.php:179
+#: src/Player/Stream.php:196
 msgid "A chapter's audio file is missing or unreadable."
 msgstr ""
 
@@ -1257,20 +1266,20 @@ msgstr ""
 msgid "No audiobooks published yet. Published ones will be listed here."
 msgstr ""
 
-#: templates/player.php:41
+#: templates/player.php:42
 msgid "Audiobook player"
 msgstr ""
 
-#: templates/player.php:56
+#: templates/player.php:57
 msgid "Now playing"
 msgstr ""
 
-#: templates/player.php:73
+#: templates/player.php:74
 msgid "Previous chapter"
 msgstr ""
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:82
+#: templates/player.php:83
 #, php-format
 msgid "Back %d second"
 msgid_plural "Back %d seconds"
@@ -1278,36 +1287,36 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:107
+#: templates/player.php:108
 #, php-format
 msgid "Forward %d second"
 msgid_plural "Forward %d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/player.php:116
+#: templates/player.php:117
 msgid "Next chapter"
 msgstr ""
 
-#: templates/player.php:122
+#: templates/player.php:123
 msgid "Position in this chapter"
 msgstr ""
 
-#: templates/player.php:143
+#: templates/player.php:144
 msgid "Speed"
 msgstr ""
 
 #. translators: %s: a playback speed, such as 1.5.
-#: templates/player.php:154
+#: templates/player.php:155
 #, php-format
 msgid "%s×"
 msgstr ""
 
-#: templates/player.php:165
+#: templates/player.php:166
 msgid "Sleep timer"
 msgstr ""
 
-#: templates/player.php:188
+#: templates/player.php:189
 msgid "Volume"
 msgstr ""
 
