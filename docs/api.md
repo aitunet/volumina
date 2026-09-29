@@ -264,11 +264,12 @@ registered is what a site starts on, and that is `basic`: do not rely on being f
 
 ```php
 final class Template {
-	public function __construct( string $id, string $label, string $style = '', array $defaults = array() );
+	public function __construct( string $id, string $label, string $style = '', array $defaults = array(), string $preview = '' );
 	public function id(): string;
 	public function label(): string;
 	public function style(): string;      // stylesheet handle, or ''
 	public function defaults(): array;    // { cover?, accent? }
+	public function preview(): string;    // http(s) picture URL, or ''
 	public static function covers(): array;
 }
 
@@ -487,6 +488,39 @@ add_action( 'volumina_settings_tabs', function ( $tabs ) {
 - The id becomes part of an `id` attribute (`volumina-settings-tab-<id>`): prefix it with
   your own slug. The callable escapes everything it echoes. The capability is the screen's,
   `manage_options`.
+- General is always the first tab and Appearance always the second; an extension's tabs
+  come after them.
+
+### The Appearance tab
+
+Audiobooks → Settings → Appearance holds how an audiobook looks: template, cover
+position and accent colour, with a preview beside them. One form saves all of it.
+
+- **The option group `volumina_appearance`.** The tab's form posts as this group, so
+  `options.php` writes every option registered in it. To have an option saved from the
+  tab, `register_setting( 'volumina_appearance', 'my_option', … )`. Every option in the
+  group must have its fields drawn in the form: an option registered there and not drawn
+  is saved empty.
+- **The action `volumina_appearance_sections`.** Fires while the tab is drawn, with a
+  `Sections` of cards; they are printed inside the form, after Presentation. A card is
+  the card markup of `volumina_settings_tabs` and has **no** `<form>` of its own.
+
+```php
+add_action( 'volumina_appearance_sections', function ( $cards ) {
+	$cards->add( 'my-plugin-look', __( 'My Plugin', 'my-plugin' ), function () {
+		echo '<section class="volumina-card volumina-settings-section"><h2>' . esc_html__( 'My Plugin', 'my-plugin' ) . '</h2>';
+		echo '<p class="volumina-settings-lede">' . esc_html__( 'What it is for.', 'my-plugin' ) . '</p>';
+		// …fields, named my_option[…]…
+		echo '</section>';
+	} );
+} );
+```
+
+- **Volumina's fields** are `volumina_settings[template]`, `volumina_settings[cover_position]`
+  and `volumina_settings[accent]`.
+- **A template's picture.** `Template` takes a fifth argument, `preview`: an http(s) URL of
+  a picture about 480x300, shown at 240x150 on the template's card. Anything else is dropped
+  and the card is drawn without a picture.
 
 ### `volumina_register_admin_screens`
 

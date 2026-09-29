@@ -262,3 +262,68 @@
 .volumina-settings-tabs {
 	margin-block-end: 1.25em;
 }
+
+/* Appearance tab: the form, and the preview beside it on a wide screen. */
+.volumina-appearance {
+	display: grid;
+	gap: 16px;
+	align-items: start;
+}
+
+@media (min-width: 960px) {
+
+	.volumina-appearance {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+	}
+
+	.volumina-appearance-aside {
+		position: sticky;
+		top: 48px;
+	}
+}
+
+/* Template cards: native radios, drawn as pictures with a name. */
+.volumina-card-choices {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.volumina-card-choice {
+	display: block;
+	border: 2px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.volumina-card-choice-picture {
+	display: block;
+	aspect-ratio: 8 / 5;
+	background: #f0f0f1;
+}
+
+.volumina-card-choice-picture img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top left;
+}
+
+.volumina-card-choice-name {
+	display: block;
+	padding: 8px 10px;
+	color: #1d2327;
+}
+
+.volumina-card-choice:has(input:checked) {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+.volumina-card-choice:has(input:focus-visible) {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}

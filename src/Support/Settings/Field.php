@@ -278,7 +278,7 @@ final class Field {
 				// The picture is decoration (empty alt): the name under it is the
 				// label, so nothing depends on seeing it. Arrow keys move between
 				// the choices, as they do for any radio group.
-				printf( '<fieldset class="volumina-cards"><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
+				printf( '<fieldset class="volumina-card-choices"><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
 
 				foreach ( $this->choices() as $choice => $card ) {
 					$label = is_array( $card ) ? (string) ( $card['label'] ?? $choice ) : (string) $card;

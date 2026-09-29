@@ -38,6 +38,12 @@ final class Settings implements Registrable {
 	public const OPTION = 'volumina_settings';
 
 	/**
+	 * The option group the Appearance tab's form posts as. Volumina's own
+	 * option is in it, and an extension adds its own with `register_setting()`.
+	 */
+	public const APPEARANCE_GROUP = 'volumina_appearance';
+
+	/**
 	 * The option the log lives in.
 	 */
 	public const LOG_OPTION = 'volumina_log';
@@ -61,6 +67,23 @@ final class Settings implements Registrable {
 		// filter, not the `update_option` action: the action only fires when the
 		// value changed, and saving the form as it stands is a decision too.
 		add_filter( 'pre_update_option_' . self::OPTION, array( $this, 'saved' ) );
+		add_filter( 'allowed_options', array( $this, 'allow_in_appearance' ) );
+	}
+
+	/**
+	 * Lets the Appearance form save Volumina's option too, without a second
+	 * `register_setting()` — which would attach the sanitize callback twice.
+	 *
+	 * @param mixed $allowed Option group => option names.
+	 * @return array<string, array<int, string>>
+	 */
+	public function allow_in_appearance( $allowed ): array {
+		$allowed = is_array( $allowed ) ? $allowed : array();
+
+		$allowed[ self::APPEARANCE_GROUP ]   = $allowed[ self::APPEARANCE_GROUP ] ?? array();
+		$allowed[ self::APPEARANCE_GROUP ][] = self::OPTION;
+
+		return $allowed;
 	}
 
 	/**
@@ -213,10 +236,10 @@ final class Settings implements Registrable {
 					'key'         => 'template',
 					'section'     => 'presentation',
 					'label'       => __( 'Template', 'volumina' ),
-					'type'        => 'radio',
+					'type'        => 'cards',
 					'default'     => Templates::BASIC,
-					'choices'     => array( Templates::class, 'choices' ),
-					'description' => __( 'How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own.', 'volumina' ),
+					'choices'     => array( Templates::class, 'cards' ),
+					'description' => __( 'How an audiobook is laid out and dressed: its cover, details, player and chapters. A block can choose its own.', 'volumina' ),
 				)
 			),
 			new Field(
