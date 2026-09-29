@@ -578,3 +578,7 @@ Decided with the account holder.
 **Consequence.** An addition, nothing breaks: a site without an extension sees Settings
 exactly as today. Pro drops its "Pro settings" menu entry and draws inside Volumina's
 cards, so it inherits their look instead of copying it.
+
+## 2026-09-29 — S11: an Appearance tab, owned by Volumina
+
+Everything visual moves out of General into Volumina's own second tab, "Appearance": template (cards with preview images when more than one template exists), cover, accent, and a live preview of a sample book drawn by the real partial. An extension joins that tab's single form through the option group `volumina_appearance` (`register_setting`) and the action `volumina_appearance_sections`; each option keeps its own sanitize callback. `Support\Settings\Group` learns partial saves (a form names the sections it drew; fields of other sections keep their stored value) so splitting one option across two tabs cannot reset either. `Template` gains an optional preview image. Asked for by the account holder after seeing Pro's separate "Player styles" tab live, which duplicated the accent as "Button colour". Spec: `volumina-pro/docs/superpowers/specs/2026-09-29-appearance-tab-design.md`.
