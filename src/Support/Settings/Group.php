@@ -26,6 +26,11 @@ defined( 'ABSPATH' ) || exit;
 final class Group {
 
 	/**
+	 * The key a form uses to say which sections it drew. Never stored.
+	 */
+	public const MARKER = '_sections';
+
+	/**
 	 * The option this group is stored in.
 	 *
 	 * @var string
@@ -66,10 +71,12 @@ final class Group {
 
 	/**
 	 * Registers the option with WordPress, so `options.php` will accept it.
+	 *
+	 * @param string $group The option group a form posts as `option_page`; the option's own name when empty.
 	 */
-	public function register(): void {
+	public function register( string $group = '' ): void {
 		register_setting(
-			$this->option,
+			'' !== $group ? $group : $this->option,
 			$this->option,
 			array(
 				'type'              => 'object',
@@ -146,11 +153,51 @@ final class Group {
 	 * @return array<string, mixed>
 	 */
 	public function sanitize( $input ): array {
-		$input = is_array( $input ) ? $input : array();
+		$input  = is_array( $input ) ? $input : array();
+		$stored = array();
+
+		// Only a form that drew some sections needs to know what was stored.
+		if ( isset( $input[ self::MARKER ] ) ) {
+			$stored = get_option( $this->option, array() );
+			$stored = is_array( $stored ) ? $stored : array();
+		}
+
+		return $this->merge( $input, $stored );
+	}
+
+	/**
+	 * What to store, from what arrived and what was stored.
+	 *
+	 * A key nobody declared is dropped. When the form says which sections it
+	 * drew (`MARKER`), a field from any other section keeps its stored value:
+	 * one option can then be edited by several forms, and saving one never
+	 * resets what another shows. For a drawn section — or when there is no
+	 * marker at all — an absent checkbox is false, because that is what a
+	 * browser does with an unticked box, and anything else absent keeps its
+	 * default.
+	 *
+	 * @param array<string, mixed> $input  What arrived.
+	 * @param array<string, mixed> $stored What is stored now.
+	 * @return array<string, mixed>
+	 */
+	public function merge( array $input, array $stored ): array {
+		$drawn = null;
+
+		if ( isset( $input[ self::MARKER ] ) && is_array( $input[ self::MARKER ] ) ) {
+			$drawn = array_values( array_filter( $input[ self::MARKER ], 'is_string' ) );
+		}
+
 		$clean = array();
 
 		foreach ( $this->fields as $field ) {
 			$key = $field->key();
+
+			if ( null !== $drawn && ! in_array( $field->section(), $drawn, true ) ) {
+				$clean[ $key ] = array_key_exists( $key, $stored )
+					? $field->sanitize( $stored[ $key ] )
+					: $field->default_value();
+				continue;
+			}
 
 			$clean[ $key ] = array_key_exists( $key, $input )
 				? $field->sanitize( $input[ $key ] )
@@ -158,6 +205,21 @@ final class Group {
 		}
 
 		return $clean;
+	}
+
+	/**
+	 * Tells `merge()` which sections this form drew. Print it inside the form.
+	 *
+	 * @param array<int, string> $sections The sections drawn.
+	 */
+	public function render_marker( array $sections ): void {
+		foreach ( $sections as $section ) {
+			printf(
+				'<input type="hidden" name="%1$s" value="%2$s" />',
+				esc_attr( $this->option . '[' . self::MARKER . '][]' ),
+				esc_attr( $section )
+			);
+		}
 	}
 
 	/**
@@ -180,15 +242,16 @@ final class Group {
 	/**
 	 * Draws the fields as a form table: all of them, or one section's.
 	 *
-	 * @param string $section A section, or empty for every field.
+	 * @param string             $section A section, or empty for every field.
+	 * @param array<int, string> $except  Keys not to draw.
 	 */
-	public function render_table( string $section = '' ): void {
+	public function render_table( string $section = '', array $except = array() ): void {
 		$values = $this->all();
 
 		echo '<table class="form-table" role="presentation"><tbody>';
 
 		foreach ( $this->fields as $field ) {
-			if ( '' !== $section && $section !== $field->section() ) {
+			if ( ( '' !== $section && $section !== $field->section() ) || in_array( $field->key(), $except, true ) ) {
 				continue;
 			}
 

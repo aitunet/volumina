@@ -178,4 +178,170 @@ final class GroupTest extends TestCase {
 		$this->assertSame( array( 'listening', 'housekeeping' ), $group->sections() );
 		$this->assertSame( array(), $this->group()->sections() );
 	}
+
+	/**
+	 * A group whose fields sit in two sections.
+	 */
+	private function sectioned(): Group {
+		return new Group(
+			'volumina_test_settings',
+			array(
+				new Field(
+					array(
+						'key'     => 'logging',
+						'section' => 'general',
+						'type'    => 'checkbox',
+						'default' => false,
+					)
+				),
+				new Field(
+					array(
+						'key'     => 'keep',
+						'section' => 'general',
+						'type'    => 'number',
+						'default' => 200,
+					)
+				),
+				new Field(
+					array(
+						'key'     => 'template',
+						'section' => 'look',
+						'type'    => 'radio',
+						'default' => 'basic',
+						'choices' => array(
+							'basic' => 'Basic',
+							'pulse' => 'Pulse',
+						),
+					)
+				),
+				new Field(
+					array(
+						'key'     => 'bars',
+						'section' => 'look',
+						'type'    => 'checkbox',
+						'default' => true,
+					)
+				),
+			)
+		);
+	}
+
+	/**
+	 * A form that drew one section leaves the other section as it was stored.
+	 */
+	public function test_an_undrawn_section_keeps_what_was_stored(): void {
+		$stored = array(
+			'logging'  => true,
+			'keep'     => 50,
+			'template' => 'pulse',
+			'bars'     => false,
+		);
+		$input  = array(
+			Group::MARKER => array( 'general' ),
+			'keep'        => '75',
+		);
+
+		$this->assertSame(
+			array(
+				'logging'  => false,
+				'keep'     => 75,
+				'template' => 'pulse',
+				'bars'     => false,
+			),
+			$this->sectioned()->merge( $input, $stored )
+		);
+	}
+
+	/**
+	 * An unticked checkbox in an undrawn section is not read as "unticked".
+	 */
+	public function test_a_checkbox_in_an_undrawn_section_keeps_true(): void {
+		$stored = array(
+			'logging'  => false,
+			'keep'     => 200,
+			'template' => 'basic',
+			'bars'     => true,
+		);
+		$input  = array( Group::MARKER => array( 'general' ) );
+
+		$this->assertTrue( $this->sectioned()->merge( $input, $stored )['bars'] );
+	}
+
+	/**
+	 * With nothing stored yet, an undrawn section gets its defaults.
+	 */
+	public function test_an_undrawn_section_with_nothing_stored_gets_defaults(): void {
+		$input = array(
+			Group::MARKER => array( 'look' ),
+			'template'    => 'pulse',
+			'bars'        => '1',
+		);
+
+		$this->assertSame(
+			array(
+				'logging'  => false,
+				'keep'     => 200,
+				'template' => 'pulse',
+				'bars'     => true,
+			),
+			$this->sectioned()->merge( $input, array() )
+		);
+	}
+
+	/**
+	 * Without the marker, the old rule holds: absent checkbox false, other absent default.
+	 */
+	public function test_no_marker_behaves_as_before(): void {
+		$stored = array(
+			'logging'  => true,
+			'keep'     => 50,
+			'template' => 'pulse',
+			'bars'     => true,
+		);
+
+		$this->assertSame(
+			array(
+				'logging'  => false,
+				'keep'     => 200,
+				'template' => 'basic',
+				'bars'     => false,
+			),
+			$this->sectioned()->merge( array(), $stored )
+		);
+	}
+
+	/**
+	 * Already-clean data with no marker — WordPress's second sanitize pass on add_option — is kept.
+	 */
+	public function test_clean_data_passes_through_unchanged(): void {
+		$clean = array(
+			'logging'  => true,
+			'keep'     => 50,
+			'template' => 'pulse',
+			'bars'     => false,
+		);
+
+		$this->assertSame( $clean, $this->sectioned()->merge( $clean, array() ) );
+	}
+
+	/**
+	 * A marker that is not a list of strings is ignored, and never stored.
+	 */
+	public function test_a_crafted_marker_is_ignored_and_never_stored(): void {
+		$stored = array(
+			'logging'  => true,
+			'keep'     => 50,
+			'template' => 'pulse',
+			'bars'     => false,
+		);
+
+		foreach ( array( 'general', array( array( 'general' ) ), array( 'nope' ) ) as $marker ) {
+			$out = $this->sectioned()->merge( array( Group::MARKER => $marker ), $stored );
+
+			$this->assertArrayNotHasKey( Group::MARKER, $out );
+		}
+
+		// A list naming no real section draws nothing: everything is kept.
+		$this->assertSame( $stored, $this->sectioned()->merge( array( Group::MARKER => array( 'nope' ) ), $stored ) );
+	}
 }

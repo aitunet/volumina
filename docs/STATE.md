@@ -11,7 +11,7 @@
 
 **Current slice:** S11 — Appearance tab (branch `s11-appearance` from `s10-settings-tabs`), plan `C:\Proyectos\volumina-pro\docs\superpowers\plans\2026-09-29-appearance-tab.md` (Part 1 = Tasks 1-5), spec approved by the account holder 2026-09-29, executed subagent-driven. S10 is done except the tab-bar keyboard check, which is folded into S11 Task 5.
 **2026-09-25 (Task 3 done):** `.pot` regenerated (349 entries, two new: "General", "Settings sections"), full suite green (PHPCS, PHPStan level 6, 149 PHPUnit tests/282 assertions, `npm run lint` all clean), zip rebuilt (122 files) and verified byte-for-byte against the tree with `diff -rq` (only `.gitkeep` differs). The Pro P3 mockups' tab design was accepted by the account holder 2026-09-25. See `docs/HISTORY.md`.
-**Next action (2026-09-29):** Task 1 — partial saves in `Support\Settings\Group`.
+**Next action (2026-09-29):** Task 2 — `cards` field type and Template preview picture.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
@@ -177,7 +177,7 @@ Three things the account holder wants in the first version people see. Each begi
 
 ## S11 — Appearance tab (added 2026-09-29)
 
-- [ ] Task 1 Partial saves in Support\Settings\Group
+- [x] Task 1 Partial saves in Support\Settings\Group
 - [ ] Task 2 cards field type and Template preview picture
 - [ ] Task 3 The Appearance tab
 - [ ] Task 4 The live preview
