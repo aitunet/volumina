@@ -9,15 +9,15 @@
 
 ## Right now
 
-**Current slice:** S10 — Settings tabs, added 2026-09-25 (branch `s10-settings-tabs`): a public way for an extension to add a tab to Settings, so Volumina Pro's settings live there instead of a second menu entry. **2026-09-25 (Task 1 done):** `TUNET\Volumina\Admin\Tabs::current()`, the `volumina_settings_tabs` action in `SettingsScreen::render()`, `render_general()` holding the plugin's own form, `SettingsScreen::url( $tab )`, tab-bar CSS and `docs/api.md` — see `docs/HISTORY.md`. Verified on `testing-site.local` with a throwaway mu-plugin: no tab bar with one tab, a tab bar with two, `aria-current` on the current tab's link, an unknown `tab` falling back to General, a save returning to General with its confirmation. Before it, S9 — The API Pro needs, added 2026-09-20. **Done**: `volumina_progress_saved` action, `volumina_stream_access` filter and `VOLUMINA_PRO_VERSION` constant documented in `docs/api.md`, decision recorded in `docs/decisions.md`, zip rebuilt. All earlier slices complete: S8 (Library block), S7 (Presentation), S6 (Release), S5 (Admin polish), S4 (Access layer), S3 (Blocks), S2 (Player), S1 (One audiobook), S0 (Scaffold).
+**Current slice:** S11 — Appearance tab (branch `s11-appearance` from `s10-settings-tabs`), plan `C:\Proyectos\volumina-pro\docs\superpowers\plans\2026-09-29-appearance-tab.md` (Part 1 = Tasks 1-5), spec approved by the account holder 2026-09-29, executed subagent-driven. S10 is done except the tab-bar keyboard check, which is folded into S11 Task 5.
 **2026-09-25 (Task 3 done):** `.pot` regenerated (349 entries, two new: "General", "Settings sections"), full suite green (PHPCS, PHPStan level 6, 149 PHPUnit tests/282 assertions, `npm run lint` all clean), zip rebuilt (122 files) and verified byte-for-byte against the tree with `diff -rq` (only `.gitkeep` differs). The Pro P3 mockups' tab design was accepted by the account holder 2026-09-25. See `docs/HISTORY.md`.
-**Next action (2026-09-29):** S10 on the live test site (`wp2.desarrollotunet.com/tunet-tests`, zip installed by upload): zero axe violations on all three settings tabs; the keyboard check of the tab bar is still open (automated run interrupted by page reloads). The account holder then decided **S11 — Appearance tab**: a Volumina-owned second tab holding Presentation (template as cards with preview images, cover, accent), a live sample-book preview, partial saves in `Support\Settings\Group`, option group `volumina_appearance` and action `volumina_appearance_sections` for extensions. Spec (covers both repos, kept with Pro's P3 work): `C:\Proyectos\volumina-pro\docs\superpowers\specs\2026-09-29-appearance-tab-design.md` — **awaiting the account holder's review**, then the plan, then S11 on branch `s11-appearance` from `s10-settings-tabs`. After S11: the account holder's checks — the block's panel was looked at on 2026-09-20 and its one defect fixed — in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**Next action (2026-09-29):** Task 1 — partial saves in `Support\Settings\Group`.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-29, TUNET, S11 (Appearance tab) decided, spec awaiting review. Before: 2026-09-25, S10 Task 3 (`.pot`, full suite, zip) done — only the axe/keyboard check of the tab bar remains, deferred to the final task
+**Last updated:** 2026-09-29
 **File scope for this slice** — do not open files outside this list:
-`src/Admin/Tabs.php`, `src/Admin/SettingsScreen.php`, `src/Admin/Sections.php`, `tests/php/Admin/`, `assets/css/admin-presentation.css`, `docs/api.md`, `readme.txt`, `languages/`
+`src/Support/Settings/`, `src/Admin/Settings.php`, `src/Admin/SettingsScreen.php`, `src/Admin/AppearancePreview.php`, `src/Frontend/Template.php`, `src/Frontend/Templates.php`, `assets/css/admin-presentation.css`, `assets/js/appearance-preview.js`, `assets/images/templates/`, `tests/php/`, `docs/api.md`, `languages/`, `readme.txt`
 
 ---
 
@@ -174,6 +174,14 @@ Three things the account holder wants in the first version people see. Each begi
 - [ ] axe (WCAG 2.1 AA) and keyboard check on Audiobooks → Settings with two tabs — **moved to the final task, to run on the live site with the account holder's own login; not attempted here**
 
 **Done when:** a throwaway plugin adds a tab through `api.md` alone and Volumina Pro's settings move into one, with the release checklist still passing.
+
+## S11 — Appearance tab (added 2026-09-29)
+
+- [ ] Task 1 Partial saves in Support\Settings\Group
+- [ ] Task 2 cards field type and Template preview picture
+- [ ] Task 3 The Appearance tab
+- [ ] Task 4 The live preview
+- [ ] Task 5 S11 wrap-up (.pot, readme, axe + keyboard incl. S10 open tab-bar check, zip)
 
 ---
 
