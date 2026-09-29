@@ -12,6 +12,8 @@ namespace TUNET\Volumina\Frontend;
 use TUNET\Volumina\Admin\Settings;
 use TUNET\Volumina\Support\Color;
 
+use const TUNET\Volumina\PLUGIN_FILE;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -38,6 +40,24 @@ final class Templates {
 	private static ?TemplateRegistry $registry = null;
 
 	/**
+	 * Template id => name and picture, for the Appearance tab's cards.
+	 *
+	 * @return array<string, array{label: string, image: string}>
+	 */
+	public static function cards(): array {
+		$cards = array();
+
+		foreach ( self::registry()->all() as $id => $template ) {
+			$cards[ $id ] = array(
+				'label' => $template->label(),
+				'image' => $template->preview(),
+			);
+		}
+
+		return $cards;
+	}
+
+	/**
 	 * The registry, with Basic and every extension's templates in it.
 	 */
 	public static function registry(): TemplateRegistry {
@@ -48,7 +68,8 @@ final class Templates {
 					self::BASIC,
 					__( 'Basic', 'volumina' ),
 					Assets::BOOK,
-					array( 'cover' => Template::COVER_SIDE )
+					array( 'cover' => Template::COVER_SIDE ),
+					plugins_url( 'assets/images/templates/basic.png', PLUGIN_FILE )
 				)
 			);
 

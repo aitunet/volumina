@@ -48,12 +48,20 @@ final class Template {
 	private array $defaults;
 
 	/**
+	 * A picture of the template, for choosing it: an http(s) URL, or ''.
+	 *
+	 * @var string
+	 */
+	private string $preview;
+
+	/**
 	 * Describes a template.
 	 *
 	 * @param string                $id       A slug: lower-case letters, digits and single dashes. Prefix it with your plugin's.
 	 * @param string                $label    Its name, already translated.
 	 * @param string                $style    A registered stylesheet handle, or empty for no stylesheet of its own.
 	 * @param array<string, string> $defaults `cover` (side, top or none) and `accent` (a palette slug).
+	 * @param string                $preview  A picture of it, an http(s) URL, for choosing it; empty for none.
 	 *
 	 * @throws InvalidArgumentException When the id is not a slug.
 	 */
@@ -61,7 +69,8 @@ final class Template {
 		string $id,
 		private string $label,
 		private string $style = '',
-		array $defaults = array()
+		array $defaults = array(),
+		string $preview = ''
 	) {
 		$id = strtolower( trim( $id ) );
 
@@ -71,6 +80,7 @@ final class Template {
 
 		$this->id       = $id;
 		$this->defaults = self::filter( $defaults );
+		$this->preview  = self::url( $preview );
 	}
 
 	/**
@@ -104,12 +114,35 @@ final class Template {
 	}
 
 	/**
+	 * The picture used to choose this template, or ''.
+	 */
+	public function preview(): string {
+		return $this->preview;
+	}
+
+	/**
 	 * The cover positions.
 	 *
 	 * @return array<int, string>
 	 */
 	public static function covers(): array {
 		return array( self::COVER_SIDE, self::COVER_TOP, self::COVER_NONE );
+	}
+
+	/**
+	 * An http(s) URL as given, anything else ''. Plain PHP, so it can be tested
+	 * without WordPress; the markup escapes it again with `esc_url()`.
+	 *
+	 * @param string $url What was given.
+	 */
+	private static function url( string $url ): string {
+		$url = trim( $url );
+
+		if ( 1 !== preg_match( '#^https?://#i', $url ) || false === filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return '';
+		}
+
+		return $url;
 	}
 
 	/**

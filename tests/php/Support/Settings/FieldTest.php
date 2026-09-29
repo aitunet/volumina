@@ -203,4 +203,31 @@ final class FieldTest extends TestCase {
 		$this->assertSame( 'Record notable events.', $field->description() );
 		$this->assertFalse( $field->default_value() );
 	}
+
+	/**
+	 * A cards field keeps a known choice and falls back to its default otherwise.
+	 */
+	public function test_cards_keep_a_known_choice(): void {
+		$field = new Field(
+			array(
+				'key'     => 'template',
+				'type'    => 'cards',
+				'default' => 'basic',
+				'choices' => array(
+					'basic' => array(
+						'label' => 'Basic',
+						'image' => '',
+					),
+					'pulse' => array(
+						'label' => 'Pulse',
+						'image' => 'https://example.com/p.png',
+					),
+				),
+			)
+		);
+
+		$this->assertSame( 'pulse', $field->sanitize( 'pulse' ) );
+		$this->assertSame( 'basic', $field->sanitize( 'nope' ) );
+		$this->assertTrue( $field->labels_itself() );
+	}
 }

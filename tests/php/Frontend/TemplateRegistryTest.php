@@ -129,4 +129,14 @@ final class TemplateRegistryTest extends TestCase {
 		$this->assertSame( array( 'basic', 'paper' ), array_keys( $registry->all() ) );
 		$this->assertSame( 'Basic, revised', $registry->get( 'basic' )?->label() );
 	}
+
+	/**
+	 * A preview is an http(s) URL or nothing.
+	 */
+	public function test_a_preview_is_an_http_url_or_nothing(): void {
+		$this->assertSame( 'https://example.com/a.png', ( new Template( 'a', 'A', '', array(), ' https://example.com/a.png ' ) )->preview() );
+		$this->assertSame( '', ( new Template( 'b', 'B', '', array(), 'javascript:alert(1)' ) )->preview() );
+		$this->assertSame( '', ( new Template( 'c', 'C', '', array(), 'not a url' ) )->preview() );
+		$this->assertSame( '', ( new Template( 'd', 'D' ) )->preview() );
+	}
 }

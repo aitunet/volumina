@@ -86,7 +86,7 @@ final class Field {
 	 * text beside it, or a fieldset of radios with each choice.
 	 */
 	public function labels_itself(): bool {
-		return in_array( $this->args['type'], array( 'checkbox', 'radio', 'swatches' ), true );
+		return in_array( $this->args['type'], array( 'checkbox', 'radio', 'swatches', 'cards' ), true );
 	}
 
 	/**
@@ -162,6 +162,7 @@ final class Field {
 			case 'select':
 			case 'radio':
 			case 'swatches':
+			case 'cards':
 				return array_key_exists( (string) $value, $this->choices() )
 					? (string) $value
 					: (string) $this->default_value();
@@ -265,6 +266,30 @@ final class Field {
 						esc_attr( (string) $choice ),
 						checked( (string) $value, (string) $choice, false ),
 						esc_attr( '' === $color ? 'transparent' : $color ),
+						esc_html( $label )
+					);
+				}
+
+				echo '</fieldset>';
+				break;
+
+			case 'cards':
+				// Radios drawn as cards, each with a picture of what it chooses.
+				// The picture is decoration (empty alt): the name under it is the
+				// label, so nothing depends on seeing it. Arrow keys move between
+				// the choices, as they do for any radio group.
+				printf( '<fieldset class="volumina-cards"><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
+
+				foreach ( $this->choices() as $choice => $card ) {
+					$label = is_array( $card ) ? (string) ( $card['label'] ?? $choice ) : (string) $card;
+					$image = is_array( $card ) ? (string) ( $card['image'] ?? '' ) : '';
+
+					printf(
+						'<label class="volumina-card-choice"><span class="volumina-card-choice-picture">%4$s</span><span class="volumina-card-choice-name"><input type="radio" name="%1$s" value="%2$s"%3$s /> %5$s</span></label>',
+						esc_attr( $name ),
+						esc_attr( (string) $choice ),
+						checked( (string) $value, (string) $choice, false ),
+						'' !== $image ? sprintf( '<img src="%s" alt="" width="240" height="150" loading="lazy" decoding="async" />', esc_url( $image ) ) : '',
 						esc_html( $label )
 					);
 				}
