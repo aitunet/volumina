@@ -521,6 +521,15 @@ add_action( 'volumina_appearance_sections', function ( $cards ) {
 - **A template's picture.** `Template` takes a fifth argument, `preview`: an http(s) URL of
   a picture about 480x300, shown at 240x150 on the template's card. Anything else is dropped
   and the card is drawn without a picture.
+- **The preview.** `.volumina-appearance-preview .volumina-book` is the newest published
+  book, drawn by `Audiobook::render()`. Its sample is inert: it is a picture of the
+  player, not a player. The preview's "Show it playing" button sets `data-volumina-state`
+  (`paused` or `playing`) on the sample's `.volumina-player`.
+- **The event `volumina:appearance-change`.** Dispatched on `document` on load and after
+  every change of the form, with `detail.template`, `detail.cover`, `detail.accent` (a
+  six-digit hex, or `''` for none) and `detail.ink` (the text colour that reads on it).
+  An extension's script may set custom properties and classes on the root and on its
+  `.volumina-player`, and should re-apply them on every event.
 
 ### `volumina_register_admin_screens`
 

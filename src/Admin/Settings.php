@@ -80,8 +80,13 @@ final class Settings implements Registrable {
 	public function allow_in_appearance( $allowed ): array {
 		$allowed = is_array( $allowed ) ? $allowed : array();
 
-		$allowed[ self::APPEARANCE_GROUP ]   = $allowed[ self::APPEARANCE_GROUP ] ?? array();
-		$allowed[ self::APPEARANCE_GROUP ][] = self::OPTION;
+		$list = isset( $allowed[ self::APPEARANCE_GROUP ] ) && is_array( $allowed[ self::APPEARANCE_GROUP ] ) ? $allowed[ self::APPEARANCE_GROUP ] : array();
+
+		if ( ! in_array( self::OPTION, $list, true ) ) {
+			$list[] = self::OPTION;
+		}
+
+		$allowed[ self::APPEARANCE_GROUP ] = $list;
 
 		return $allowed;
 	}

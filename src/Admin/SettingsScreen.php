@@ -9,6 +9,8 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Admin;
 
+use TUNET\Volumina\Frontend\Assets;
+use TUNET\Volumina\Frontend\Palette;
 use TUNET\Volumina\Frontend\Templates;
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\Support\Help;
@@ -92,6 +94,41 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
 			array(),
 			VERSION
+		);
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Chooses what to load; nothing is written.
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+
+		if ( self::APPEARANCE !== $tab ) {
+			return;
+		}
+
+		wp_enqueue_style( Assets::BOOK );
+		wp_enqueue_style( Assets::PLAYER );
+
+		$defaults = array();
+
+		foreach ( Templates::registry()->all() as $id => $template ) {
+			if ( '' !== $template->style() ) {
+				wp_enqueue_style( $template->style() );
+			}
+			$defaults[ $id ] = $template->defaults();
+		}
+
+		$palette = array();
+
+		foreach ( Palette::colors() as $slug => $color ) {
+			$palette[ $slug ] = $color['color'];
+		}
+
+		wp_enqueue_script( 'volumina-appearance-preview', plugins_url( 'assets/js/appearance-preview.js', PLUGIN_FILE ), array(), VERSION, true );
+		wp_localize_script(
+			'volumina-appearance-preview',
+			'voluminaAppearance',
+			array(
+				'palette'  => $palette,
+				'defaults' => $defaults,
+			)
 		);
 	}
 
