@@ -140,14 +140,7 @@ final class Group {
 	}
 
 	/**
-	 * Anything posted in, only known settings out.
-	 *
-	 * A key nobody declared is dropped rather than stored: an option that
-	 * accepts whatever arrives is an option that grows things nobody put there.
-	 * An absent checkbox is false, because that is what a browser does with an
-	 * unticked box. Anything else absent keeps its default rather than being
-	 * coerced from nothing, so a form that does not show a setting cannot
-	 * quietly reset it.
+	 * Anything posted in, only known settings out. See merge().
 	 *
 	 * @param mixed $input What arrived.
 	 * @return array<string, mixed>
@@ -157,7 +150,7 @@ final class Group {
 		$stored = array();
 
 		// Only a form that drew some sections needs to know what was stored.
-		if ( isset( $input[ self::MARKER ] ) ) {
+		if ( array_key_exists( self::MARKER, $input ) ) {
 			$stored = get_option( $this->option, array() );
 			$stored = is_array( $stored ) ? $stored : array();
 		}
@@ -171,10 +164,12 @@ final class Group {
 	 * A key nobody declared is dropped. When the form says which sections it
 	 * drew (`MARKER`), a field from any other section keeps its stored value:
 	 * one option can then be edited by several forms, and saving one never
-	 * resets what another shows. For a drawn section — or when there is no
-	 * marker at all — an absent checkbox is false, because that is what a
-	 * browser does with an unticked box, and anything else absent keeps its
-	 * default.
+	 * resets what another shows. A marker that is present but is not a list
+	 * counts as an empty list, and only its string entries count as sections,
+	 * so a crafted marker draws nothing and every field keeps what was stored.
+	 * For a drawn section — or when there is no marker at all — an absent
+	 * checkbox is false, because that is what a browser does with an unticked
+	 * box, and anything else absent keeps its default.
 	 *
 	 * @param array<string, mixed> $input  What arrived.
 	 * @param array<string, mixed> $stored What is stored now.
@@ -183,8 +178,10 @@ final class Group {
 	public function merge( array $input, array $stored ): array {
 		$drawn = null;
 
-		if ( isset( $input[ self::MARKER ] ) && is_array( $input[ self::MARKER ] ) ) {
-			$drawn = array_values( array_filter( $input[ self::MARKER ], 'is_string' ) );
+		if ( array_key_exists( self::MARKER, $input ) ) {
+			$drawn = is_array( $input[ self::MARKER ] )
+				? array_values( array_filter( $input[ self::MARKER ], 'is_string' ) )
+				: array();
 		}
 
 		$clean = array();

@@ -115,10 +115,10 @@ listener's place in every book.
 
 It is tested against a block theme and a classic one, and it declares no colours of
 its own: every piece of text inherits your theme's palette, and its contrast with
-it. If you want a colour, pick one of your theme's palette as an accent (Audiobooks,
-Settings, Appearance): it goes on
-the play button, the progress bar and the current chapter, never on text. The player
-is laid out for a phone first and adapts upward.
+it. If you want a colour, pick one of your theme's palette as an accent under
+Audiobooks, Settings, Appearance: it goes on the play button, the progress bar and
+the current chapter, never on text. The player is laid out for a phone first and
+adapts upward.
 
 = Is it accessible? =
 
@@ -139,8 +139,9 @@ one any other developer can use.
 2. The player, with speed, sleep timer and the chapter it is in.
 3. The four blocks in the editor, previewed exactly as the front end renders them.
 4. The audiobook screen, with its chapters ordered by dragging.
-5. Settings in three groups, each one explaining itself, with the theme's palette
-   offered as the accent.
+5. Settings in two tabs, each section explaining itself: General, for who may listen
+   and where the player appears, and Appearance, with the theme's palette offered as
+   the accent and a live preview.
 6. The welcome page, under Dashboard: what the plugin is and is not, and three steps
    to a first audiobook.
 
@@ -162,7 +163,7 @@ one any other developer can use.
   from the theme's palette, site-wide or per block, and a template registry for
   extensions.
 * Settings: an Appearance tab with template pictures and a live preview.
-* A welcome page under Dashboard, settings in three groups, a log of notable events,
+* A welcome page under Dashboard, settings in two tabs, a log of notable events,
   and help tabs on every screen.
 * Spanish and Brazilian Portuguese translations.
 

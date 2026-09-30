@@ -21,7 +21,9 @@ use const TUNET\Volumina\VERSION;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Four settings and a Save button.
+ * Volumina's settings in two tabs, General and Appearance (with a live
+ * preview), each its own form with its own Save button. An extension may add
+ * more tabs.
  *
  * The form posts to `options.php`, so the nonce, the capability check and the
  * redirect are WordPress's own. A settings screen is not the place to reinvent

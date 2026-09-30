@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-30T01:52:56+00:00\n"
+"POT-Creation-Date: 2026-09-30T02:32:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -55,16 +55,16 @@ msgstr ""
 msgid "Public books"
 msgstr ""
 
-#: src/Admin/AppearancePreview.php:31
-#: src/Admin/SettingsScreen.php:286
+#: src/Admin/AppearancePreview.php:32
+#: src/Admin/SettingsScreen.php:288
 msgid "Preview"
 msgstr ""
 
-#: src/Admin/AppearancePreview.php:44
+#: src/Admin/AppearancePreview.php:45
 msgid "Publish an audiobook to see it here."
 msgstr ""
 
-#: src/Admin/AppearancePreview.php:54
+#: src/Admin/AppearancePreview.php:50
 msgid "Show it playing"
 msgstr ""
 
@@ -319,7 +319,7 @@ msgid "Note"
 msgstr ""
 
 #: src/Admin/LogScreen.php:166
-#: src/Admin/SettingsScreen.php:301
+#: src/Admin/SettingsScreen.php:303
 msgid "Overview"
 msgstr ""
 
@@ -569,70 +569,70 @@ msgstr ""
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:64
+#: src/Admin/SettingsScreen.php:66
 msgid "Volumina Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:71
+#: src/Admin/SettingsScreen.php:73
 #: src/Admin/WelcomeScreen.php:259
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:147
-#: src/Admin/SettingsScreen.php:161
+#: src/Admin/SettingsScreen.php:149
+#: src/Admin/SettingsScreen.php:163
 msgid "General"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:148
-#: src/Admin/SettingsScreen.php:162
+#: src/Admin/SettingsScreen.php:150
+#: src/Admin/SettingsScreen.php:164
 msgid "Appearance"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:180
+#: src/Admin/SettingsScreen.php:182
 msgid "Settings saved."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:186
+#: src/Admin/SettingsScreen.php:188
 msgid "Settings sections"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:220
+#: src/Admin/SettingsScreen.php:222
 msgid "Volumina works without changing any of this. These are here for when the defaults are not what you want."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:302
+#: src/Admin/SettingsScreen.php:304
 msgid "Nothing here needs to be changed for Volumina to work. Each setting says what it does underneath it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:305
+#: src/Admin/SettingsScreen.php:307
 msgid "New audiobooks are: what a book you add from now on starts as. It never changes a book that already exists."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:306
+#: src/Admin/SettingsScreen.php:308
 msgid "Book pages: turn this off if you place the Audiobook block yourself and do not want it added a second time."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:307
+#: src/Admin/SettingsScreen.php:309
 msgid "Log: records notable events. Turn it on while something is wrong and off again afterwards."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:313
+#: src/Admin/SettingsScreen.php:315
 msgid "Uninstalling"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:314
+#: src/Admin/SettingsScreen.php:316
 msgid "Deactivating the plugin never deletes anything. Deleting it removes your books, chapters and settings only if you have ticked the uninstall setting; otherwise everything is left where it is, including every listener's place in every book."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:315
+#: src/Admin/SettingsScreen.php:317
 msgid "Books and chapters are ordinary posts, so they go to the trash like any other post and can be restored from it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:318
+#: src/Admin/SettingsScreen.php:320
 msgid "More"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:319
+#: src/Admin/SettingsScreen.php:321
 msgid "Volumina documentation"
 msgstr ""
 

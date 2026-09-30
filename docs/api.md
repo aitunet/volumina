@@ -496,6 +496,14 @@ add_action( 'volumina_settings_tabs', function ( $tabs ) {
 Audiobooks → Settings → Appearance holds how an audiobook looks: template, cover
 position and accent colour, with a preview beside them. One form saves all of it.
 
+- **Knowing the tab exists.** The class constant
+  `TUNET\Volumina\Admin\Settings::APPEARANCE_GROUP` (value `volumina_appearance`) exists
+  from the release that added this tab on. An extension tests
+  `defined( 'TUNET\Volumina\Admin\Settings::APPEARANCE_GROUP' )` before hooking into the
+  tab, and keeps working without it on an older Volumina.
+- **The form.** The tab's single form is `form.volumina-appearance-form`. A script finds
+  the form, and reads its fields, through that selector.
+
 - **The option group `volumina_appearance`.** The tab's form posts as this group, so
   `options.php` writes every option registered in it. To have an option saved from the
   tab, `register_setting( 'volumina_appearance', 'my_option', … )`. Every option in the
@@ -523,13 +531,17 @@ add_action( 'volumina_appearance_sections', function ( $cards ) {
   and the card is drawn without a picture.
 - **The preview.** `.volumina-appearance-preview .volumina-book` is the newest published
   book, drawn by `Audiobook::render()`. Its sample is inert: it is a picture of the
-  player, not a player. The preview's "Show it playing" button sets `data-volumina-state`
-  (`paused` or `playing`) on the sample's `.volumina-player`.
+  player, not a player. Its audio has no source and fetches nothing, the bare audio bar
+  is hidden, and only the first three chapters show. The preview's "Show it playing"
+  button, above the sample, sets `data-volumina-state` (`paused` or `playing`) on the
+  sample's `.volumina-player`.
 - **The event `volumina:appearance-change`.** Dispatched on `document` on load and after
   every change of the form, with `detail.template`, `detail.cover`, `detail.accent` (a
   six-digit hex, or `''` for none) and `detail.ink` (the text colour that reads on it).
   An extension's script may set custom properties and classes on the root and on its
-  `.volumina-player`, and should re-apply them on every event.
+  `.volumina-player`, and should re-apply them on every event. The first event fires on
+  `DOMContentLoaded`, so the listener must be attached before then: enqueue a normal
+  header or footer script for the Settings screen, not one loaded lazily or after load.
 
 ### `volumina_register_admin_screens`
 

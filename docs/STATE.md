@@ -9,15 +9,14 @@
 
 ## Right now
 
-**Current slice:** S11 — Appearance tab — DONE 2026-09-29 (branch `s11-appearance`, not merged), plan `C:/Proyectos/volumina-pro/docs/superpowers/plans/2026-09-29-appearance-tab.md`. Part 2 (Tasks 6-9) is Volumina Pro's.
-**2026-09-25 (Task 3 done):** `.pot` regenerated (349 entries, two new: "General", "Settings sections"), full suite green (PHPCS, PHPStan level 6, 149 PHPUnit tests/282 assertions, `npm run lint` all clean), zip rebuilt (122 files) and verified byte-for-byte against the tree with `diff -rq` (only `.gitkeep` differs). The Pro P3 mockups' tab design was accepted by the account holder 2026-09-25. See `docs/HISTORY.md`.
-**Next action (2026-09-29):** Volumina Pro Part 2 — Tasks 6–9 of the plan, in C:/Proyectos/volumina-pro. After that: the account holder's checks, the merge of `s11-appearance`, and the submission.
+**Current slice:** S11 — Appearance tab — DONE 2026-09-29, final-review fixes applied the same day (branch `s11-appearance`, not merged), plan `C:/Proyectos/volumina-pro/docs/superpowers/plans/2026-09-29-appearance-tab.md`. Part 2 (Tasks 6-9) is Volumina Pro's, done on its branch `p3-templates` (0.5.0 built, final-review fixes applied).
+**Next action (2026-09-29):** the live step of Pro Task 9 Step 4, in this order: upload **this** S11 zip (`dist/volumina-1.0.0.zip`, 125 files) to the live site **before** Pro 0.5.0 — Pro's player style settings need the Appearance tab — then Pro's `dist/volumina-pro-0.5.0.zip`. After that: the account holder's acceptance, the merge of `s11-appearance`, and the submission.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-29, TUNET, S11 done
+**Last updated:** 2026-09-29, TUNET, S11 final-review fixes
 **File scope for this slice** — do not open files outside this list:
-`src/Support/Settings/`, `src/Admin/Settings.php`, `src/Admin/SettingsScreen.php`, `src/Admin/AppearancePreview.php`, `src/Frontend/Template.php`, `src/Frontend/Templates.php`, `assets/css/admin-presentation.css`, `assets/js/appearance-preview.js`, `assets/images/templates/`, `tests/php/`, `docs/api.md`, `languages/`, `readme.txt`
+`src/Support/Settings/`, `src/Admin/Settings.php`, `src/Admin/SettingsScreen.php`, `src/Admin/AppearancePreview.php`, `src/Frontend/Template.php`, `src/Frontend/Templates.php`, `assets/css/admin-presentation.css`, `assets/js/appearance-preview.js`, `assets/images/templates/`, `tests/php/`, `docs/api.md`, `docs/decisions.md`, `docs/backlog.md`, `languages/`, `readme.txt`
 
 ---
 
@@ -182,17 +181,18 @@ Three things the account holder wants in the first version people see. Each begi
 - [x] Task 3 The Appearance tab (site check Step 7 passed 2026-09-29)
 - [x] Task 4 The live preview (site check done, sideways scroll fixed)
 - [x] Task 5 S11 wrap-up (.pot 353 entries, readme, axe zero violations + keyboard, zip 125 files)
+- [x] Final-review fixes: preview cut to a sample (no audio source, no audio bar, three chapters, button above), crafted `_sections` keeps stored values, api.md (form selector, `APPEARANCE_GROUP` marker, event timing), readme, decisions, backlog — zip 125 files
 
 ---
 
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 149 tests, 282 assertions
+- [x] Full test suite green — 164 tests, 312 assertions (2026-09-29, S11 final-review fixes)
 - [x] Plugin Check (2026-09-20, 1.7, every check including experimental) against the release zip's contents — zero errors; the one warning is `load_plugin_textdomain()`, kept because the shipped translations need it
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
 - [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review
-- [x] Every string translatable — 347 in the `.pot` after S8, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
+- [x] Every string translatable — 353 in the `.pot` after S11, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
 - [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database, again on 2026-09-14: zero left
 - [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls
 - [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places

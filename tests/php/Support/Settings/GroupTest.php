@@ -325,9 +325,11 @@ final class GroupTest extends TestCase {
 	}
 
 	/**
-	 * A marker that is not a list of strings is ignored, and never stored.
+	 * A marker that is present but names no real section — a string, a list of
+	 * lists, an unknown name — draws nothing: every field keeps what was
+	 * stored, and the marker itself is never stored.
 	 */
-	public function test_a_crafted_marker_is_ignored_and_never_stored(): void {
+	public function test_a_crafted_marker_keeps_what_was_stored(): void {
 		$stored = array(
 			'logging'  => true,
 			'keep'     => 50,
@@ -339,9 +341,7 @@ final class GroupTest extends TestCase {
 			$out = $this->sectioned()->merge( array( Group::MARKER => $marker ), $stored );
 
 			$this->assertArrayNotHasKey( Group::MARKER, $out );
+			$this->assertSame( $stored, $out );
 		}
-
-		// A list naming no real section draws nothing: everything is kept.
-		$this->assertSame( $stored, $this->sectioned()->merge( array( Group::MARKER => array( 'nope' ) ), $stored ) );
 	}
 }

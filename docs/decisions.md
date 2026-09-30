@@ -582,3 +582,22 @@ cards, so it inherits their look instead of copying it.
 ## 2026-09-29 — S11: an Appearance tab, owned by Volumina
 
 Everything visual moves out of General into Volumina's own second tab, "Appearance": template (cards with preview images when more than one template exists), cover, accent, and a live preview of a sample book drawn by the real partial. An extension joins that tab's single form through the option group `volumina_appearance` (`register_setting`) and the action `volumina_appearance_sections`; each option keeps its own sanitize callback. `Support\Settings\Group` learns partial saves (a form names the sections it drew; fields of other sections keep their stored value) so splitting one option across two tabs cannot reset either. `Template` gains an optional preview image. Asked for by the account holder after seeing Pro's separate "Player styles" tab live, which duplicated the accent as "Button colour". Spec: `volumina-pro/docs/superpowers/specs/2026-09-29-appearance-tab-design.md`.
+
+## 2026-09-29 — S11: the Appearance preview is the newest real book
+
+**Context.** The spec asked for a sample book of three chapters with no audio source. A
+`WP_Post` built in memory cannot carry what the partial draws from: the cover is an
+attachment (`_thumbnail_id`) and the durations are post meta of chapter posts, both read
+from the database. A fake book would show no cover and no times, which is not what a
+listener gets.
+
+**Decision.** The preview draws the site's newest published audiobook with
+`Audiobook::render()`, and is cut down to a sample: the audio loses its `src` (and any
+`<source>`) and gets `preload="none"` before it is printed, so loading the tab fetches no
+stream; the bare audio bar is hidden; only the first three chapters show; the "Show it
+playing" button sits above the sample, where it is seen. With no published book the card
+says to publish one. The preview's root, `.volumina-appearance-preview .volumina-book`, is
+contract in `docs/api.md`.
+
+**Consequence.** What the preview shows is what the front end draws, with a real cover
+and real durations, at the cost of needing one published book. No schema change.

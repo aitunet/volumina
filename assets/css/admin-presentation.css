@@ -337,3 +337,12 @@
 .volumina-appearance-preview .volumina-book {
 	margin: 0;
 }
+
+/* A sample, not the whole book: no bare audio bar, three chapters at most. */
+.volumina-appearance-preview .volumina-player-audio {
+	display: none;
+}
+
+.volumina-appearance-preview .volumina-chapter-list .volumina-chapter-item:nth-child(n+4) {
+	display: none;
+}
