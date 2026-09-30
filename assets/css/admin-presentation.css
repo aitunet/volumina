@@ -329,6 +329,15 @@
 	outline-offset: 2px;
 }
 
+/* Heading, button and sample each get their own room. */
+.volumina-settings .volumina-appearance-preview-card {
+	padding-bottom: 20px;
+}
+
+.volumina-settings .volumina-appearance-preview-card .volumina-appearance-preview-play {
+	margin: 12px 0 20px;
+}
+
 .volumina-appearance-preview {
 	max-width: 100%;
 	overflow: hidden;

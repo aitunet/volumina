@@ -199,6 +199,11 @@
 	margin: 0;
 }
 
+/* "Sleep timer" on one line: a label broken in two reads as two labels. */
+.volumina-player-option label {
+	white-space: nowrap;
+}
+
 .volumina-player-option select {
 	font: inherit;
 	min-height: 44px;
@@ -256,6 +261,12 @@
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 	cursor: pointer;
+
+	/*
+	 * A button's baseline is its last line; the list number would sit beside
+	 * the second line of a long title. Top keeps it beside the first.
+	 */
+	vertical-align: top;
 }
 
 .volumina-chapter-list .volumina-chapter-item .volumina-chapter-row .volumina-chapter-play:focus-visible {

@@ -116,6 +116,14 @@
 }
 
 /*
+ * A theme's prose rule (`.ts-prose li + li`, `.entry-content li + li`) would
+ * push every item but the first down; two classes outrank it.
+ */
+.volumina-chapter-list .volumina-chapter-item {
+	margin-block: 0;
+}
+
+/*
  * The accent, where there is one: a mark beside the chapter that is playing.
  * The text keeps the theme's colour; only the mark takes the accent, so no
  * pair of text colours is ever this plugin's to get wrong.
