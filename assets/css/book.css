@@ -263,3 +263,22 @@
 	margin: 0;
 	font-style: italic;
 }
+
+/*
+ * Basic with background colours chosen on the Appearance tab: the book on a
+ * panel of its own, a gradient from the first colour to the second. Its text
+ * takes the ink Volumina worked out to read on every part of the gradient;
+ * headings and links follow it rather than the theme's, which were chosen
+ * for the page's background, not this one. The same holds for a chapter
+ * list drawn alone.
+ */
+.volumina-template-basic.volumina-has-panel {
+	padding: clamp(20px, 5vw, 40px);
+	border-radius: 20px;
+	background: linear-gradient(160deg, var(--volumina-panel-start), var(--volumina-panel-end));
+	color: var(--volumina-panel-ink);
+}
+
+.volumina-template-basic.volumina-has-panel :is(h1, h2, h3, h4, a) {
+	color: inherit;
+}

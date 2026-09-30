@@ -109,9 +109,9 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 		wp_enqueue_style( Assets::BOOK );
 		wp_enqueue_style( Assets::PLAYER );
 
-		// The colour fields: WordPress's own picker, turned on by color-select.js.
+		// The colour fields: WordPress's own picker, turned on by color-field.js.
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'volumina-color-select', plugins_url( 'assets/js/color-select.js', PLUGIN_FILE ), array( 'wp-color-picker' ), AssetVersion::of( 'assets/js/color-select.js', PLUGIN_FILE, VERSION ), true );
+		wp_enqueue_script( 'volumina-color-field', plugins_url( 'assets/js/color-field.js', PLUGIN_FILE ), array( 'wp-color-picker' ), AssetVersion::of( 'assets/js/color-field.js', PLUGIN_FILE, VERSION ), true );
 
 		$defaults = array();
 

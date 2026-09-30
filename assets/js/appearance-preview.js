@@ -1,6 +1,6 @@
 /**
  * The Appearance tab's preview: the newest audiobook, restyled as the form
- * changes. Template, cover and accent are Volumina's; an extension listens
+ * changes. Template, cover, accent and panel are Volumina's; an extension listens
  * for `volumina:appearance-change` to add its own. See docs/api.md.
  */
 ( function () {
@@ -29,21 +29,21 @@
 		return '#' + hex.toLowerCase();
 	}
 
-	// The accent field: a select of named colours, or "custom" and a hex.
-	function accentOf( form, fallback ) {
-		const select = form.querySelector(
-			'[name="' + OPTION + '[accent][choice]"]'
+	// A colour field: a hex, or '' for the template's.
+	function colorOf( form, key ) {
+		const input = form.querySelector(
+			'[name="' + OPTION + '[' + key + ']"]'
 		);
-		const choice = select ? select.value : '';
+		return normalize( input ? input.value : '' );
+	}
 
-		if ( 'custom' === choice ) {
-			const custom = form.querySelector(
-				'[name="' + OPTION + '[accent][custom]"]'
-			);
-			return normalize( custom ? custom.value : '' );
+	// The controls' colour: the one chosen, else the template's palette slug.
+	function accentOf( form, fallback ) {
+		const chosen = colorOf( form, 'accent' );
+		if ( chosen ) {
+			return chosen;
 		}
-
-		const slug = choice || fallback || '';
+		const slug = fallback || '';
 		return 'none' === slug ? '' : config.palette[ slug ] || '';
 	}
 
@@ -77,6 +77,97 @@
 			? '#000000'
 			: '#ffffff';
 	}
+
+	// Same as Color::mix() in PHP: `color-mix(in srgb, one share, two)`.
+	function mix( one, two, share ) {
+		let out = '#';
+		for ( let i = 1; i < 7; i += 2 ) {
+			const a = parseInt( one.slice( i, i + 2 ), 16 );
+			const b = parseInt( two.slice( i, i + 2 ), 16 );
+			out += Math.round( a * share + b * ( 1 - share ) )
+				.toString( 16 )
+				.padStart( 2, '0' );
+		}
+		return out;
+	}
+
+	const INKS = [
+		[ '#16181d', '#f7f7f5' ],
+		[ '#000000', '#ffffff' ],
+	];
+	const AA = 4.5;
+
+	function points( one, two ) {
+		const out = [];
+		for ( let i = 0; i <= 20; i++ ) {
+			out.push( mix( one, two, i / 20 ) );
+		}
+		return out;
+	}
+
+	function worst( color, list ) {
+		return list.reduce( function ( low, point ) {
+			return Math.min( low, contrast( color, point ) );
+		}, 21 );
+	}
+
+	function bestInk( list ) {
+		let best = '';
+		for ( const pair of INKS ) {
+			best =
+				worst( pair[ 0 ], list ) >= worst( pair[ 1 ], list )
+					? pair[ 0 ]
+					: pair[ 1 ];
+			if ( worst( best, list ) >= AA ) {
+				return best;
+			}
+		}
+		return best;
+	}
+
+	// Same as Color::panel() in PHP.
+	function panel( start, end ) {
+		let first = start;
+		let list = [];
+		let text = '';
+		for ( let step = 20; step >= 0; step-- ) {
+			first = mix( start, end, step / 20 );
+			list = points( first, end );
+			text = bestInk( list );
+			if ( worst( text, list ) >= AA ) {
+				break;
+			}
+		}
+		let soft = text;
+		for ( let fade = 7; fade > 0; fade-- ) {
+			const candidate = mix( end, text, fade / 20 );
+			if ( worst( candidate, list ) >= AA ) {
+				soft = candidate;
+				break;
+			}
+		}
+		return {
+			start: first,
+			end,
+			ink: text,
+			soft,
+			line: mix( end, text, 0.78 ),
+		};
+	}
+
+	// Same as Templates::panel() in PHP: null when neither colour is chosen.
+	function panelOf( form, defaults ) {
+		let start = colorOf( form, 'panel_start' );
+		let end = colorOf( form, 'panel_end' );
+		if ( ! start && ! end ) {
+			return null;
+		}
+		start = start || normalize( defaults.panel_start ) || end;
+		end = end || normalize( defaults.panel_end ) || start;
+		return panel( start, end );
+	}
+
+	const PANEL = [ 'start', 'end', 'ink', 'soft', 'line' ];
 
 	function swap( el, prefix, value ) {
 		Array.prototype.slice.call( el.classList ).forEach( function ( name ) {
@@ -121,6 +212,19 @@
 			book.style.removeProperty( '--volumina-accent-ink' );
 		}
 
+		const colors = panelOf( form, defaults );
+		book.classList.toggle( 'volumina-has-panel', null !== colors );
+		PANEL.forEach( function ( part ) {
+			if ( colors ) {
+				book.style.setProperty(
+					'--volumina-panel-' + part,
+					colors[ part ]
+				);
+			} else {
+				book.style.removeProperty( '--volumina-panel-' + part );
+			}
+		} );
+
 		document.dispatchEvent(
 			new CustomEvent( 'volumina:appearance-change', {
 				detail: {
@@ -128,6 +232,7 @@
 					cover,
 					accent,
 					ink: accentInk,
+					panel: colors,
 				},
 			} )
 		);

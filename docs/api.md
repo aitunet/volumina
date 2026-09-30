@@ -257,8 +257,10 @@ add_action( 'volumina_register_templates', function ( $registry ) {
 ```
 
 `TUNET\Volumina\Frontend\Template` and `TemplateRegistry` are plain PHP. A template's id
-is a slug; its defaults hold only `cover` (`side`, `top` or `none`) and `accent` (a
-palette slug); anything else is dropped. The registry keeps insertion order and one
+is a slug; its defaults hold only `cover` (`side`, `top` or `none`), `accent` (a
+palette slug), and, since 2026-09-30, `panel_start` and `panel_end` (`#rrggbb`: the
+colours its panel is painted in when a site chooses only one of the two); anything else
+is dropped. The registry keeps insertion order and one
 template per id, so adding an id again replaces it where it stands. The first template
 registered is what a site starts on, and that is `basic`: do not rely on being first.
 
@@ -268,7 +270,7 @@ final class Template {
 	public function id(): string;
 	public function label(): string;
 	public function style(): string;      // stylesheet handle, or ''
-	public function defaults(): array;    // { cover?, accent? }
+	public function defaults(): array;    // { cover?, accent?, panel_start?, panel_end? }
 	public function preview(): string;    // http(s) picture URL, or ''
 	public static function covers(): array;
 }
@@ -293,7 +295,15 @@ The wrapper of every rendering — `.volumina-book` on an audiobook,
 - with an accent, `volumina-has-accent` and two custom properties in its `style`
   attribute: `--volumina-accent`, the colour as six-digit hex, and
   `--volumina-accent-ink`, `#000000` or `#ffffff`, whichever contrasts more with it —
-  one of the two always reaches 4.5:1.
+  one of the two always reaches 4.5:1;
+- with background colours chosen (since 2026-09-30), `volumina-has-panel` and five more:
+  `--volumina-panel-start` and `--volumina-panel-end`, the panel's two colours, and
+  `--volumina-panel-ink`, `--volumina-panel-soft` (labels) and `--volumina-panel-line`,
+  which `Color::panel()` works out so that ink and soft reach 4.5:1 on both colours and on
+  every mix of the two. A template spreads the two as it likes — a gradient, a glow over a
+  ground — and sets its text in the inks; without them it paints its own. One colour
+  chosen takes the other from the template's `panel_start` / `panel_end` defaults, or,
+  for a template without them, is used for both (`Templates::panel()`).
 
 Resolution is, lowest to highest: the template's defaults, the site's settings, the
 block's own attributes. The accent is stored as a palette slug, turned into a colour at
@@ -538,17 +548,15 @@ add_action( 'volumina_appearance_sections', function ( $cards ) {
 ```
 
 - **Volumina's fields** are `volumina_settings[template]`, `volumina_settings[cover_position]`
-  and the accent, a colour field: `volumina_settings[accent][choice]` (`''`, `none`, a
-  palette slug, or `custom`) and `volumina_settings[accent][custom]` (the hex, read only
-  for `custom`).
-- **Colour fields.** `Support\Settings\Field` type `color_select` is a select of named
-  colours (`choices`: value => `{ label, color }`) plus "Custom…", which stores a `#rrggbb`
-  picked with WordPress's colour picker. Its markup is
-  `span.volumina-color-select[data-volumina-color-select]` holding the select, a
-  `span.volumina-color-swatch` and `span.volumina-color-custom` with
-  `input.volumina-color-picker`; Volumina's `color-select.js` and `wp-color-picker` are
-  loaded on the Appearance tab, so an extension's own colour fields there need nothing
-  more.
+  and three colour fields: `volumina_settings[panel_start]` (the gradient's first colour, a
+  template's glow), `volumina_settings[panel_end]` (the second, the panel's ground) and
+  `volumina_settings[accent]` (the controls). Each holds a `#rrggbb`, or `''` for the
+  template's own.
+- **Colour fields.** `Support\Settings\Field` type `color` is a hex box,
+  `input.volumina-color-picker[data-volumina-color]`, that stores a `#rrggbb` or `''`. Its
+  `choices` (value => `{ label, color }`) become the picker's swatches, in `data-swatches` as
+  JSON. Volumina's `color-field.js` and `wp-color-picker` are loaded on the Appearance tab,
+  so an extension's own colour fields there need nothing more.
 - **A template's picture.** `Template` takes a fifth argument, `preview`: an http(s) URL of
   a picture about 480x300, shown at 240x150 on the template's card. Anything else is dropped
   and the card is drawn without a picture.
@@ -560,7 +568,9 @@ add_action( 'volumina_appearance_sections', function ( $cards ) {
   sample's `.volumina-player`.
 - **The event `volumina:appearance-change`.** Dispatched on `document` on load and after
   every change of the form, with `detail.template`, `detail.cover`, `detail.accent` (a
-  six-digit hex, or `''` for none) and `detail.ink` (the text colour that reads on it).
+  six-digit hex, or `''` for none), `detail.ink` (the text colour that reads on it) and
+  `detail.panel`: `null`, or `{ start, end, ink, soft, line }` as in the stylesheet
+  contract.
   An extension's script may set custom properties and classes on the root and on its
   `.volumina-player`, and should re-apply them on every event. The first event fires on
   `DOMContentLoaded`, so the listener must be attached before then: enqueue a normal

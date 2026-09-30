@@ -232,16 +232,15 @@ final class FieldTest extends TestCase {
 	}
 
 	/**
-	 * A colour field offering two named colours and a custom one.
+	 * A colour field: empty for "the template's", or a colour.
 	 */
 	private function colour_field(): Field {
 		return new Field(
 			array(
 				'key'     => 'accent',
-				'type'    => 'color_select',
+				'type'    => 'color',
 				'default' => '',
 				'choices' => array(
-					''      => array( 'label' => 'Template' ),
 					'amber' => array(
 						'label' => 'Amber',
 						'color' => '#e0a83a',
@@ -252,68 +251,39 @@ final class FieldTest extends TestCase {
 	}
 
 	/**
-	 * From the form: a named choice is kept as its key.
+	 * A colour is stored spelled one way.
 	 */
-	public function test_a_colour_field_keeps_a_named_choice(): void {
+	public function test_a_colour_field_stores_a_colour(): void {
 		$field = $this->colour_field();
 
-		$this->assertSame(
-			'amber',
-			$field->sanitize(
-				array(
-					'choice' => 'amber',
-					'custom' => '#123456',
-				)
-			)
-		);
-	}
-
-	/**
-	 * From the form: Custom stores the picked colour, spelled one way.
-	 */
-	public function test_a_colour_field_stores_a_custom_colour(): void {
-		$field = $this->colour_field();
-
-		$this->assertSame(
-			'#aabbcc',
-			$field->sanitize(
-				array(
-					'choice' => 'custom',
-					'custom' => 'ABC',
-				)
-			)
-		);
-	}
-
-	/**
-	 * Custom with no colour, or with something that is not one, stores the default.
-	 */
-	public function test_a_colour_field_refuses_a_custom_non_colour(): void {
-		$field = $this->colour_field();
-
-		$this->assertSame(
-			'',
-			$field->sanitize(
-				array(
-					'choice' => 'custom',
-					'custom' => 'red;background:url(x)',
-				)
-			)
-		);
-		$this->assertSame( '', $field->sanitize( array( 'choice' => 'custom' ) ) );
-		$this->assertSame( '', $field->sanitize( array( 'choice' => 'nope' ) ) );
-	}
-
-	/**
-	 * What was stored comes back through as it is: a key, or a colour.
-	 */
-	public function test_a_colour_field_keeps_what_it_stored(): void {
-		$field = $this->colour_field();
-
-		$this->assertSame( 'amber', $field->sanitize( 'amber' ) );
+		$this->assertSame( '#aabbcc', $field->sanitize( '#ABC' ) );
 		$this->assertSame( '#123456', $field->sanitize( '#123456' ) );
-		$this->assertSame( '', $field->sanitize( 'custom' ) );
-		$this->assertSame( '', $field->sanitize( 'nope' ) );
 		$this->assertFalse( $field->labels_itself() );
+	}
+
+	/**
+	 * Empty is a choice: the template's colour.
+	 */
+	public function test_a_colour_field_may_be_empty(): void {
+		$this->assertSame( '', $this->colour_field()->sanitize( '' ) );
+	}
+
+	/**
+	 * Anything that is not a colour — a palette's slug, CSS, an array — is empty.
+	 */
+	public function test_a_colour_field_refuses_anything_else(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame( '', $field->sanitize( 'amber' ) );
+		$this->assertSame( '', $field->sanitize( 'red;background:url(x)' ) );
+		$this->assertSame( '', $field->sanitize( 'ace' ) );
+		$this->assertSame( '', $field->sanitize( array( '#123456' ) ) );
+	}
+
+	/**
+	 * The swatches offered in the picker are the choices' colours.
+	 */
+	public function test_a_colour_field_offers_its_choices_as_swatches(): void {
+		$this->assertSame( array( '#e0a83a' ), $this->colour_field()->swatches() );
 	}
 }

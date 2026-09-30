@@ -10,6 +10,7 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\Frontend;
 
 use InvalidArgumentException;
+use TUNET\Volumina\Support\Color;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -60,7 +61,9 @@ final class Template {
 	 * @param string                $id       A slug: lower-case letters, digits and single dashes. Prefix it with your plugin's.
 	 * @param string                $label    Its name, already translated.
 	 * @param string                $style    A registered stylesheet handle, or empty for no stylesheet of its own.
-	 * @param array<string, string> $defaults `cover` (side, top or none) and `accent` (a palette slug).
+	 * @param array<string, string> $defaults `cover` (side, top or none), `accent` (a palette slug), and
+	 *                                        `panel_start` and `panel_end` (`#rrggbb`): the colours its
+	 *                                        panel is painted in when a site chooses only one of them.
 	 * @param string                $preview  A picture of it, an http(s) URL, for choosing it; empty for none.
 	 *
 	 * @throws InvalidArgumentException When the id is not a slug.
@@ -107,7 +110,7 @@ final class Template {
 	/**
 	 * What it prefers by default, for the keys it set validly.
 	 *
-	 * @return array{cover?: string, accent?: string}
+	 * @return array{cover?: string, accent?: string, panel_start?: string, panel_end?: string}
 	 */
 	public function defaults(): array {
 		return $this->defaults;
@@ -149,7 +152,7 @@ final class Template {
 	 * Keeps only what a template may decide, and only when it is valid.
 	 *
 	 * @param array<string, mixed> $defaults As given.
-	 * @return array{cover?: string, accent?: string}
+	 * @return array{cover?: string, accent?: string, panel_start?: string, panel_end?: string}
 	 */
 	private static function filter( array $defaults ): array {
 		$kept = array();
@@ -161,6 +164,14 @@ final class Template {
 		if ( isset( $defaults['accent'] ) && is_string( $defaults['accent'] )
 			&& 1 === preg_match( '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $defaults['accent'] ) ) {
 			$kept['accent'] = $defaults['accent'];
+		}
+
+		foreach ( array( 'panel_start', 'panel_end' ) as $key ) {
+			$color = is_string( $defaults[ $key ] ?? null ) ? Color::normalize( $defaults[ $key ] ) : '';
+
+			if ( '' !== $color ) {
+				$kept[ $key ] = $color;
+			}
 		}
 
 		return $kept;

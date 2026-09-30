@@ -335,30 +335,6 @@
 	max-width: 100%;
 }
 
-/* A colour field: a select, the named colour's swatch, a custom picker. */
-.volumina-color-select {
-	display: inline-flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	align-items: center;
-}
-
-.volumina-color-swatch {
-	width: 28px;
-	height: 28px;
-	border: 1px solid rgb(0 0 0 / 0.25);
-	border-radius: 50%;
-}
-
-.volumina-color-swatch[hidden],
-.volumina-color-custom[hidden] {
-	display: none;
-}
-
-.volumina-color-custom .wp-picker-container {
-	display: inline-block;
-}
-
 /* Heading, button and sample each get their own room. */
 .volumina-settings .volumina-appearance-preview-card {
 	padding-bottom: 20px;
