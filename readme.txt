@@ -115,7 +115,8 @@ listener's place in every book.
 
 It is tested against a block theme and a classic one, and it declares no colours of
 its own: every piece of text inherits your theme's palette, and its contrast with
-it. If you want a colour, pick one of your theme's palette as an accent: it goes on
+it. If you want a colour, pick one of your theme's palette as an accent (Audiobooks,
+Settings, Appearance): it goes on
 the play button, the progress bar and the current chapter, never on text. The player
 is laid out for a phone first and adapts upward.
 
@@ -160,6 +161,7 @@ one any other developer can use.
 * A Basic template with the cover beside or above the details and an accent colour
   from the theme's palette, site-wide or per block, and a template registry for
   extensions.
+* Settings: an Appearance tab with template pictures and a live preview.
 * A welcome page under Dashboard, settings in three groups, a log of notable events,
   and help tabs on every screen.
 * Spanish and Brazilian Portuguese translations.

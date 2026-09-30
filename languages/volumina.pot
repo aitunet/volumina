@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-25T16:11:54+00:00\n"
+"POT-Creation-Date: 2026-09-30T01:52:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -53,6 +53,19 @@ msgstr ""
 
 #: src/Access/PublicProvider.php:41
 msgid "Public books"
+msgstr ""
+
+#: src/Admin/AppearancePreview.php:31
+#: src/Admin/SettingsScreen.php:286
+msgid "Preview"
+msgstr ""
+
+#: src/Admin/AppearancePreview.php:44
+msgid "Publish an audiobook to see it here."
+msgstr ""
+
+#: src/Admin/AppearancePreview.php:54
+msgid "Show it playing"
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:52
@@ -265,7 +278,7 @@ msgid "Volumina Log"
 msgstr ""
 
 #: src/Admin/LogScreen.php:48
-#: src/Admin/Settings.php:253
+#: src/Admin/Settings.php:281
 msgid "Log"
 msgstr ""
 
@@ -306,7 +319,7 @@ msgid "Note"
 msgstr ""
 
 #: src/Admin/LogScreen.php:166
-#: src/Admin/SettingsScreen.php:206
+#: src/Admin/SettingsScreen.php:301
 msgid "Overview"
 msgstr ""
 
@@ -447,174 +460,179 @@ msgstr ""
 msgid "You are not allowed to view this page."
 msgstr ""
 
-#: src/Admin/Settings.php:148
+#: src/Admin/Settings.php:176
 msgid "Listening"
 msgstr ""
 
-#: src/Admin/Settings.php:149
+#: src/Admin/Settings.php:177
 msgid "Who may listen, and where the player appears."
 msgstr ""
 
-#: src/Admin/Settings.php:152
+#: src/Admin/Settings.php:180
 #: blocks/shared/presentation.js:62
 msgid "Presentation"
 msgstr ""
 
-#: src/Admin/Settings.php:153
+#: src/Admin/Settings.php:181
 msgid "How an audiobook looks on the page. A block can differ from these."
 msgstr ""
 
-#: src/Admin/Settings.php:156
+#: src/Admin/Settings.php:184
 msgid "Housekeeping"
 msgstr ""
 
-#: src/Admin/Settings.php:157
+#: src/Admin/Settings.php:185
 msgid "For when something goes wrong, and for when the plugin goes."
 msgstr ""
 
-#: src/Admin/Settings.php:169
+#: src/Admin/Settings.php:197
 msgid "What the template prefers"
 msgstr ""
 
-#: src/Admin/Settings.php:170
+#: src/Admin/Settings.php:198
 #: blocks/shared/presentation.js:111
 msgid "None"
 msgstr ""
 
-#: src/Admin/Settings.php:194
+#: src/Admin/Settings.php:222
 msgid "New audiobooks are"
 msgstr ""
 
-#: src/Admin/Settings.php:198
+#: src/Admin/Settings.php:226
 msgid "What a book you add from now on starts as. Every book can be changed on its own screen, and changing this never changes a book that already exists."
 msgstr ""
 
-#: src/Admin/Settings.php:205
+#: src/Admin/Settings.php:233
 msgid "Book pages"
 msgstr ""
 
-#: src/Admin/Settings.php:208
+#: src/Admin/Settings.php:236
 msgid "Show the player and the chapters on an audiobook page automatically."
 msgstr ""
 
-#: src/Admin/Settings.php:215
+#: src/Admin/Settings.php:243
 #: blocks/shared/presentation.js:65
 msgid "Template"
 msgstr ""
 
-#: src/Admin/Settings.php:219
-msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own."
+#: src/Admin/Settings.php:247
+msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. A block can choose its own."
 msgstr ""
 
-#: src/Admin/Settings.php:226
+#: src/Admin/Settings.php:254
 #: blocks/audiobook/index.js:27
 #: blocks/shared/presentation.js:80
 msgid "Cover"
 msgstr ""
 
-#: src/Admin/Settings.php:230
+#: src/Admin/Settings.php:258
 msgid "Where the template puts it"
 msgstr ""
 
-#: src/Admin/Settings.php:231
+#: src/Admin/Settings.php:259
 #: blocks/shared/presentation.js:86
 msgid "Beside the details"
 msgstr ""
 
-#: src/Admin/Settings.php:232
+#: src/Admin/Settings.php:260
 #: blocks/shared/presentation.js:90
 msgid "Above the details"
 msgstr ""
 
-#: src/Admin/Settings.php:233
+#: src/Admin/Settings.php:261
 #: blocks/shared/presentation.js:92
 msgid "Not shown"
 msgstr ""
 
-#: src/Admin/Settings.php:235
+#: src/Admin/Settings.php:263
 msgid "Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room."
 msgstr ""
 
-#: src/Admin/Settings.php:242
+#: src/Admin/Settings.php:270
 #: blocks/shared/presentation.js:105
 msgid "Accent colour"
 msgstr ""
 
-#: src/Admin/Settings.php:246
+#: src/Admin/Settings.php:274
 msgid "One colour from your theme's palette for the play button, the progress bar and the current chapter. Never for text, so the theme's contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box."
 msgstr ""
 
-#: src/Admin/Settings.php:256
+#: src/Admin/Settings.php:284
 msgid "Record notable events, such as a listener being turned away or an audio file that has gone missing. Useful when something is wrong and nobody can say quite what."
 msgstr ""
 
-#: src/Admin/Settings.php:263
+#: src/Admin/Settings.php:291
 msgid "On uninstall"
 msgstr ""
 
-#: src/Admin/Settings.php:266
+#: src/Admin/Settings.php:294
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:56
+#: src/Admin/SettingsScreen.php:64
 msgid "Volumina Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:63
+#: src/Admin/SettingsScreen.php:71
 #: src/Admin/WelcomeScreen.php:259
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:104
-#: src/Admin/SettingsScreen.php:116
+#: src/Admin/SettingsScreen.php:147
+#: src/Admin/SettingsScreen.php:161
 msgid "General"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:134
+#: src/Admin/SettingsScreen.php:148
+#: src/Admin/SettingsScreen.php:162
+msgid "Appearance"
+msgstr ""
+
+#: src/Admin/SettingsScreen.php:180
 msgid "Settings saved."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:140
+#: src/Admin/SettingsScreen.php:186
 msgid "Settings sections"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:174
+#: src/Admin/SettingsScreen.php:220
 msgid "Volumina works without changing any of this. These are here for when the defaults are not what you want."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:207
+#: src/Admin/SettingsScreen.php:302
 msgid "Nothing here needs to be changed for Volumina to work. Each setting says what it does underneath it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:210
+#: src/Admin/SettingsScreen.php:305
 msgid "New audiobooks are: what a book you add from now on starts as. It never changes a book that already exists."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:211
+#: src/Admin/SettingsScreen.php:306
 msgid "Book pages: turn this off if you place the Audiobook block yourself and do not want it added a second time."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:212
+#: src/Admin/SettingsScreen.php:307
 msgid "Log: records notable events. Turn it on while something is wrong and off again afterwards."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:218
+#: src/Admin/SettingsScreen.php:313
 msgid "Uninstalling"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:219
+#: src/Admin/SettingsScreen.php:314
 msgid "Deactivating the plugin never deletes anything. Deleting it removes your books, chapters and settings only if you have ticked the uninstall setting; otherwise everything is left where it is, including every listener's place in every book."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:220
+#: src/Admin/SettingsScreen.php:315
 msgid "Books and chapters are ordinary posts, so they go to the trash like any other post and can be restored from it."
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:223
+#: src/Admin/SettingsScreen.php:318
 msgid "More"
 msgstr ""
 
-#: src/Admin/SettingsScreen.php:224
+#: src/Admin/SettingsScreen.php:319
 msgid "Volumina documentation"
 msgstr ""
 
@@ -800,7 +818,7 @@ msgstr ""
 msgid "Narrated by"
 msgstr ""
 
-#: src/Frontend/Templates.php:49
+#: src/Frontend/Templates.php:69
 msgid "Basic"
 msgstr ""
 
