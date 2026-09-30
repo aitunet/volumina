@@ -329,6 +329,12 @@
 	outline-offset: 2px;
 }
 
+/* Room for the longest choice and the arrow, which otherwise overlap. */
+.volumina-settings .form-table select {
+	min-width: 14em;
+	max-width: 100%;
+}
+
 /* A colour field: a select, the named colour's swatch, a custom picker. */
 .volumina-color-select {
 	display: inline-flex;
