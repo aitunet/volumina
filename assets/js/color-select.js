@@ -1,8 +1,10 @@
 /**
  * The color_select settings field (Support\Settings\Field): WordPress's colour
- * picker for "Custom…", shown only while it is chosen, and a swatch that
- * follows the named choice. Without this script the field still works: a
- * select and a plain hex box.
+ * picker beside the select, always in view, so any colour is one click away.
+ * It shows the colour the select stands for; choosing a named colour moves
+ * the picker to it, and picking a colour in the picker turns the select to
+ * "Custom…". Clearing the picker goes back to the first choice. Without this
+ * script the field still works: a select and a plain hex box.
  *
  * Every change is announced as a bubbling `change` on the hex box, so a
  * form listening for changes — the Appearance preview — hears the picker too.
@@ -14,67 +16,91 @@
 
 	function init( wrap ) {
 		const select = wrap.querySelector( 'select' );
-		const custom = wrap.querySelector( '.volumina-color-custom' );
 		const input = wrap.querySelector( '.volumina-color-picker' );
-		const swatch = wrap.querySelector( '.volumina-color-swatch' );
-
-		if ( ! select || ! custom || ! input || ! swatch ) {
+		if ( ! select || ! input ) {
 			return;
 		}
 
-		// The last named colour shown, `#rrggbb` or '': where Custom… starts.
-		let lastNamed = '';
+		const swatch = wrap.querySelector( '.volumina-color-swatch' );
 
-		function paint() {
-			const isCustom = 'custom' === select.value;
-			const option = select.options[ select.selectedIndex ];
-			const color =
-				( option && option.getAttribute( 'data-color' ) ) || '';
+		const hasPicker = !! ( $ && $.fn && $.fn.wpColorPicker );
 
-			custom.hidden = ! isCustom;
-			// The picker's own button shows a custom colour; the swatch shows a named one.
-			swatch.hidden = isCustom;
-
-			if ( ! isCustom ) {
-				swatch.style.background = color || 'transparent';
-				lastNamed = color;
-			}
-		}
+		// True while this script moves the picker, so its change is not the user's.
+		let syncing = false;
 
 		function announce() {
 			input.dispatchEvent( new Event( 'change', { bubbles: true } ) );
 		}
 
-		if ( $ && $.fn && $.fn.wpColorPicker ) {
+		// The colour of the chosen option, `#rrggbb` or ''.
+		function named() {
+			const option = select.options[ select.selectedIndex ];
+			return ( option && option.getAttribute( 'data-color' ) ) || '';
+		}
+
+		// Shows a named choice's colour in the picker, or empties it.
+		function show( color ) {
+			syncing = true;
+			if ( hasPicker && color ) {
+				$( input ).wpColorPicker( 'color', color );
+			} else {
+				input.value = color;
+				if ( hasPicker ) {
+					$( input )
+						.closest( '.wp-picker-container' )
+						.find( '.wp-color-result' )
+						.css( 'background-color', '' );
+				}
+			}
+			syncing = false;
+		}
+
+		if ( hasPicker ) {
+			// The picker's own button shows the colour; the swatch is for the no-picker case.
+			if ( swatch ) {
+				swatch.hidden = true;
+			}
+
 			$( input ).wpColorPicker( {
 				change( event, ui ) {
 					input.value = ui.color.toString();
-					announce();
+					if ( ! syncing && 'custom' !== select.value ) {
+						select.value = 'custom';
+					}
+					if ( ! syncing ) {
+						announce();
+					}
 				},
 				clear() {
+					// The picker calls this again on the `change` announce() sends.
+					if ( syncing ) {
+						return;
+					}
 					input.value = '';
+					if ( 'custom' === select.value ) {
+						select.selectedIndex = 0;
+						show( named() );
+					}
+					syncing = true;
 					announce();
+					syncing = false;
 				},
 			} );
 		}
 
 		select.addEventListener( 'change', function () {
-			const from = lastNamed;
-
-			paint();
-
-			// Something to start from: the colour that was showing.
-			if ( 'custom' === select.value && '' === input.value && from ) {
-				if ( $ && $.fn && $.fn.wpColorPicker ) {
-					$( input ).wpColorPicker( 'color', from );
-				} else {
-					input.value = from;
-					announce();
-				}
+			if ( 'custom' !== select.value ) {
+				show( named() );
+			}
+			if ( swatch && ! hasPicker ) {
+				swatch.style.background = named() || 'transparent';
 			}
 		} );
 
-		paint();
+		// A named choice starts the picker at its colour; a custom one is already there.
+		if ( 'custom' !== select.value ) {
+			show( named() );
+		}
 	}
 
 	document.addEventListener( 'DOMContentLoaded', function () {
