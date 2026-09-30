@@ -266,6 +266,7 @@
 /* Appearance tab: the form, and the preview beside it on a wide screen. */
 .volumina-appearance {
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: 16px;
 	align-items: start;
 }

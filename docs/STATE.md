@@ -180,7 +180,7 @@ Three things the account holder wants in the first version people see. Each begi
 - [x] Task 1 Partial saves in Support\Settings\Group
 - [x] Task 2 cards field type and Template preview picture (basic.png made 2026-09-29, 480x300, 36 KB)
 - [x] Task 3 The Appearance tab (site check Step 7 passed 2026-09-29)
-- [ ] Task 4 The live preview — site check Step 6 passed except: at 390 px the page scrolls 6 px sideways (`.volumina-appearance` needs `grid-template-columns: minmax(0, 1fr)` in the base rule); fix, then re-check
+- [x] Task 4 The live preview (site check done, sideways scroll fixed)
 - [ ] Task 5 S11 wrap-up (.pot, readme, axe + keyboard incl. S10 open tab-bar check, zip)
 
 ---
