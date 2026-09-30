@@ -101,7 +101,7 @@
 	background: #fff;
 }
 
-.volumina-card img {
+.volumina-card img:not(:where(.volumina-appearance-preview *)) {
 	box-sizing: border-box;
 	width: 64px;
 	height: 64px;
@@ -113,12 +113,12 @@
 }
 
 .volumina-card h2,
-.volumina-card h3 {
+.volumina-card h3:not(:where(.volumina-appearance-preview *)) {
 	margin: 0 0 6px;
 	font-size: 15px;
 }
 
-.volumina-card p {
+.volumina-card p:not(:where(.volumina-appearance-preview *)) {
 	margin: 0;
 	color: #50575e;
 }
@@ -222,7 +222,7 @@
 	padding: 16px 20px 8px;
 }
 
-.volumina-settings .volumina-card h2 {
+.volumina-settings .volumina-card h2:not(:where(.volumina-appearance-preview *)) {
 	margin: 0 0 4px;
 	font-size: 16px;
 }
@@ -338,9 +338,29 @@
 	margin: 12px 0 20px;
 }
 
+/*
+ * The sample is front-end markup inside wp-admin. The card rules above leave
+ * it alone; these undo wp-admin's own element rules (13px paragraphs, a drawn
+ * select arrow a template's `background` erases), so it reads as a page
+ * would. Element weight only: any template rule still wins.
+ */
 .volumina-appearance-preview {
 	max-width: 100%;
 	overflow: hidden;
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+:where(.volumina-appearance-preview) :is(p, label, select, h2, h3, li, dt, dd) {
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+/* Past `.wp-core-ui select`; no template sets either property. */
+.volumina-settings .volumina-appearance-preview select {
+	appearance: auto;
+	background-image: none;
 }
 
 .volumina-appearance-preview .volumina-book {

@@ -11,7 +11,13 @@
  * no colour here that is known to be readable against an unknown background.
  */
 
+/*
+ * A size container, so a template sizes its buttons by the player's width
+ * rather than the screen's: a narrow column on a wide page, or the
+ * Appearance tab's preview, is narrow however wide the window.
+ */
 .volumina-player {
+	container: volumina-player / inline-size;
 	margin-block: 1.5em;
 	padding: 1em;
 	border: 1px solid;

@@ -313,6 +313,12 @@ while sound plays. A stylesheet may use it to animate with playback —
 `@media (prefers-reduced-motion: reduce)`. `is-playing` on a chapter means "the current
 chapter", sounding or not; `data-volumina-state` means sound.
 
+Two size containers (`container-type: inline-size`) let a stylesheet size by the space
+the book really has — a theme's content column, a sidebar, the Appearance tab's preview —
+rather than by the screen: `.volumina-book-head` (unnamed) and `.volumina-player`, named
+`volumina-player`, e.g. `@container volumina-player (max-width: 340px) { … }` to shrink
+the transport buttons. Both are part of the contract.
+
 **What a template is not:** behaviour. A template that needs JavaScript or data the
 plugin does not keep is a feature, not a stylesheet, and needs its own hooks.
 
