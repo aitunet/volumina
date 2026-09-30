@@ -11,6 +11,7 @@ namespace TUNET\Volumina\Admin;
 
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
+use TUNET\Volumina\Support\AssetVersion;
 use TUNET\Volumina\Support\Duration;
 use TUNET\Volumina\Support\Registrable;
 use WP_Post;
@@ -85,7 +86,7 @@ final class ChapterMetaBox implements Registrable {
 			'volumina-admin-chapter-audio',
 			plugins_url( 'assets/js/admin-chapter-audio.js', PLUGIN_FILE ),
 			array(),
-			VERSION,
+			AssetVersion::of( 'assets/js/admin-chapter-audio.js', PLUGIN_FILE, VERSION ),
 			true
 		);
 

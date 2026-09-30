@@ -13,6 +13,7 @@ use TUNET\Volumina\Frontend\Assets;
 use TUNET\Volumina\Frontend\Palette;
 use TUNET\Volumina\Frontend\Templates;
 use TUNET\Volumina\PostTypes\Book;
+use TUNET\Volumina\Support\AssetVersion;
 use TUNET\Volumina\Support\Help;
 
 use const TUNET\Volumina\PLUGIN_FILE;
@@ -95,7 +96,7 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 			'volumina-admin-presentation',
 			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/admin-presentation.css', PLUGIN_FILE, VERSION )
 		);
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Chooses what to load; nothing is written.
@@ -123,7 +124,7 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 			$palette[ $slug ] = $color['color'];
 		}
 
-		wp_enqueue_script( 'volumina-appearance-preview', plugins_url( 'assets/js/appearance-preview.js', PLUGIN_FILE ), array(), VERSION, true );
+		wp_enqueue_script( 'volumina-appearance-preview', plugins_url( 'assets/js/appearance-preview.js', PLUGIN_FILE ), array(), AssetVersion::of( 'assets/js/appearance-preview.js', PLUGIN_FILE, VERSION ), true );
 		wp_localize_script(
 			'volumina-appearance-preview',
 			'voluminaAppearance',

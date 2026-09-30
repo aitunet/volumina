@@ -601,3 +601,22 @@ contract in `docs/api.md`.
 
 **Consequence.** What the preview shows is what the front end draws, with a real cover
 and real durations, at the cost of needing one published book. No schema change.
+
+## 2026-09-30 — Asset versions follow the file, not only the plugin
+
+**Context.** Every script and stylesheet was enqueued with the plugin's version. The test
+site sits behind Cloudflare, and the host sends `Cache-Control: max-age=14400`: after a
+rebuilt zip of the same version, Cloudflare and every browser kept the old files for hours,
+and the account holder's review saw fixes that were not there. Nobody on the team can purge
+that Cloudflare; the habit elsewhere is to bump the version by hand.
+
+**Decision.** `Support\AssetVersion::of( $path, $plugin_file, $version )` returns the
+plugin's version, a dot, and the file's modification time (`1.0.0.1790777806`); the plugin
+version alone for a file that is not there or lies outside the plugin's folder. Every
+`wp_register_*` / `wp_enqueue_*` of a file of ours uses it, in Volumina and in Pro (the
+same class, copied into Pro's `Support/`). Block editor scripts keep the hash
+`@wordpress/scripts` writes.
+
+**Consequence.** A changed file gets a new URL on the next page load, whatever the version
+says, so no CDN or browser cache can serve a stale copy, and no version bump is needed to
+ship a CSS fix. One `filemtime()` per asset per request, from the stat cache.

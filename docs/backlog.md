@@ -164,7 +164,3 @@
   domain is dropped and its card is drawn without one. Punycode it, or accept IDN.
 - **Screenshot 5 predates the Appearance tab.** It still shows Presentation inside
   General; retake it on the Appearance tab (a site without Pro) before the next upload.
-- **Asset version strings do not change within a release.** Every script and style is
-  enqueued with the plugin version, so a CDN (Cloudflare on the test site) keeps serving
-  a stale `admin-presentation.css?ver=1.0.0` after a rebuilt zip of the same version.
-  Consider `filemtime()` or a build hash as the version during development builds.
