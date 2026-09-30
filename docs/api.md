@@ -301,6 +301,12 @@ render time so it follows the theme (a slug the active theme does not have means
 accent), or, since 2026-09-30, as a colour of the site's own, `#rrggbb`, used as it is.
 `none` means no accent. `Templates::accent( $stored )` does that resolution.
 
+`\TUNET\Volumina\Frontend\Templates::resolve( array $overrides = array() )` is part of the
+contract: with no argument it answers what a book with no block overrides uses —
+`array{ template: Template, cover: string, accent: string, ink: string }`, `accent` a
+`#rrggbb` or `''` for none, `ink` the text colour that reads on it. Volumina Pro reads the
+site's accent through it to measure its panel glows.
+
 Inside the wrapper the markup is: `.volumina-book-head` holding `.volumina-book-cover`
 and `dl.volumina-book-details`, then the player (`.volumina-player`, see its stylesheet
 for its classes), then `h2.volumina-book-heading` and `ol.volumina-chapter-list` with one
