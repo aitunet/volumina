@@ -91,4 +91,156 @@ final class Color {
 
 		return self::contrast( $on, '#000000' ) >= self::contrast( $on, '#ffffff' ) ? '#000000' : '#ffffff';
 	}
+
+	/**
+	 * The inks a panel tries, in pairs: softer than pure black and white
+	 * first, the pure ones when the soft ones cannot read.
+	 */
+	private const PANEL_INKS = array( array( '#16181d', '#f7f7f5' ), array( '#000000', '#ffffff' ) );
+
+	/**
+	 * The ratio every text on a panel must reach: WCAG AA.
+	 */
+	private const AA = 4.5;
+
+	/**
+	 * A panel painted from one colour to another, and the inks that read on
+	 * all of it: the text's, a softer one for labels, and a line.
+	 *
+	 * Every text reaches 4.5:1 on both colours and on every mix of the two,
+	 * so a template may spread them as a gradient, a glow or anything
+	 * between. When no ink can read on both as chosen, the first colour is
+	 * moved toward the second, step by step, until one does; the second,
+	 * the panel's ground, is always kept. Null when either is not a colour.
+	 *
+	 * @param string $start The first colour.
+	 * @param string $end   The second, the ground.
+	 * @return array{start: string, end: string, ink: string, soft: string, line: string}|null
+	 */
+	public static function panel( string $start, string $end ): ?array {
+		$start = self::normalize( $start );
+		$end   = self::normalize( $end );
+
+		if ( '' === $start || '' === $end ) {
+			return null;
+		}
+
+		for ( $step = 20; $step >= 0; $step-- ) {
+			$first  = self::mix( $start, $end, $step / 20 );
+			$points = self::points( $first, $end );
+			$ink    = self::best_ink( $points );
+
+			if ( self::worst( $ink, $points ) >= self::AA ) {
+				break;
+			}
+		}
+
+		$soft = $ink;
+
+		for ( $fade = 7; $fade > 0; $fade-- ) {
+			$candidate = self::mix( $end, $ink, $fade / 20 );
+
+			if ( self::worst( $candidate, $points ) >= self::AA ) {
+				$soft = $candidate;
+				break;
+			}
+		}
+
+		return array(
+			'start' => $first,
+			'end'   => $end,
+			'ink'   => $ink,
+			'soft'  => $soft,
+			'line'  => self::mix( $end, $ink, 0.78 ),
+		);
+	}
+
+	/**
+	 * Two colours mixed in sRGB, as CSS `color-mix(in srgb, …)` does.
+	 *
+	 * @param string $one   A colour `normalize()` accepts.
+	 * @param string $two   Another.
+	 * @param float  $share How much of `$one`, 0 to 1.
+	 */
+	public static function mix( string $one, string $two, float $share ): string {
+		$share = max( 0.0, min( 1.0, $share ) );
+		$a     = self::channels( $one );
+		$b     = self::channels( $two );
+		$out   = '#';
+
+		for ( $i = 0; $i < 3; $i++ ) {
+			$out .= str_pad( dechex( (int) round( $a[ $i ] * $share + $b[ $i ] * ( 1 - $share ) ) ), 2, '0', STR_PAD_LEFT );
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Both colours and nineteen mixes between them: where text may sit.
+	 *
+	 * @param string $one A `#rrggbb`.
+	 * @param string $two Another.
+	 * @return array<int, string>
+	 */
+	private static function points( string $one, string $two ): array {
+		$points = array();
+
+		for ( $i = 0; $i <= 20; $i++ ) {
+			$points[] = self::mix( $one, $two, $i / 20 );
+		}
+
+		return $points;
+	}
+
+	/**
+	 * The ink that reads best on every point: the softer pair when one of
+	 * them reaches AA, the pure pair otherwise.
+	 *
+	 * @param array<int, string> $points From `points()`.
+	 */
+	private static function best_ink( array $points ): string {
+		$best = '';
+
+		foreach ( self::PANEL_INKS as $pair ) {
+			$best = self::worst( $pair[0], $points ) >= self::worst( $pair[1], $points ) ? $pair[0] : $pair[1];
+
+			if ( self::worst( $best, $points ) >= self::AA ) {
+				return $best;
+			}
+		}
+
+		return $best;
+	}
+
+	/**
+	 * The lowest contrast an ink has on any of the points.
+	 *
+	 * @param string             $ink    The ink.
+	 * @param array<int, string> $points From `points()`.
+	 */
+	private static function worst( string $ink, array $points ): float {
+		$worst = 21.0;
+
+		foreach ( $points as $point ) {
+			$worst = min( $worst, self::contrast( $ink, $point ) );
+		}
+
+		return $worst;
+	}
+
+	/**
+	 * A colour as its three channels, 0 to 255; black for anything else.
+	 *
+	 * @param string $hex The colour.
+	 * @return array{int, int, int}
+	 */
+	private static function channels( string $hex ): array {
+		$hex = ltrim( self::normalize( $hex ), '#' );
+
+		if ( '' === $hex ) {
+			return array( 0, 0, 0 );
+		}
+
+		return array( (int) hexdec( substr( $hex, 0, 2 ) ), (int) hexdec( substr( $hex, 2, 2 ) ), (int) hexdec( substr( $hex, 4, 2 ) ) );
+	}
 }

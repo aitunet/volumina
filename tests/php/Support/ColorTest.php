@@ -112,4 +112,83 @@ final class ColorTest extends TestCase {
 		$this->assertSame( '', Color::ink( 'red' ) );
 		$this->assertSame( '', Color::ink( '' ) );
 	}
+
+	/**
+	 * A panel's texts read everywhere on it: the ink and the softer ink reach
+	 * 4.5:1 on both colours and on every mix of the two, whatever was chosen.
+	 *
+	 * @dataProvider panel_cases
+	 *
+	 * @param string $start The first colour of the gradient.
+	 * @param string $end   The second.
+	 */
+	public function test_panel_reads_everywhere( string $start, string $end ): void {
+		$panel = Color::panel( $start, $end );
+
+		$this->assertNotNull( $panel );
+
+		for ( $i = 0; $i <= 20; $i++ ) {
+			$point = Color::mix( $panel['start'], $panel['end'], $i / 20 );
+
+			$this->assertGreaterThanOrEqual( 4.5, Color::contrast( $panel['ink'], $point ), "ink on $point" );
+			$this->assertGreaterThanOrEqual( 4.5, Color::contrast( $panel['soft'], $point ), "soft on $point" );
+		}
+	}
+
+	/**
+	 * Pairs from easy to impossible.
+	 *
+	 * @return array<string, array{string, string}>
+	 */
+	public static function panel_cases(): array {
+		return array(
+			'purple on near black' => array( '#5b3fd0', '#0e1014' ),
+			'cream on cream'       => array( '#f4ecd8', '#f4f1ea' ),
+			'yellow on dark red'   => array( '#ffeb3b', '#5a1414' ),
+			'white to black'       => array( '#ffffff', '#000000' ),
+			'red to green'         => array( '#ff0000', '#00ff00' ),
+			'mid grey alone'       => array( '#767676', '#767676' ),
+		);
+	}
+
+	/**
+	 * Colours that already read are kept as chosen; the ink is the soft dark
+	 * or soft light one, and the labels' ink is softer than the text's.
+	 */
+	public function test_panel_keeps_readable_colours(): void {
+		$panel = Color::panel( '#5B3FD0', '#0e1014' );
+
+		$this->assertSame( '#5b3fd0', $panel['start'] );
+		$this->assertSame( '#0e1014', $panel['end'] );
+		$this->assertSame( '#f7f7f5', $panel['ink'] );
+		$this->assertNotSame( $panel['ink'], $panel['soft'] );
+	}
+
+	/**
+	 * Colours no ink can read on together: the first is moved toward the
+	 * second, never the other way, so the panel's ground stays as chosen.
+	 */
+	public function test_panel_tones_the_first_colour(): void {
+		$panel = Color::panel( '#ffeb3b', '#5a1414' );
+
+		$this->assertSame( '#5a1414', $panel['end'] );
+		$this->assertNotSame( '#ffeb3b', $panel['start'] );
+	}
+
+	/**
+	 * Something that is not a colour makes no panel.
+	 */
+	public function test_panel_of_nothing(): void {
+		$this->assertNull( Color::panel( 'red', '#000000' ) );
+		$this->assertNull( Color::panel( '#000000', '' ) );
+	}
+
+	/**
+	 * Mixing works as CSS `color-mix(in srgb, …)` does.
+	 */
+	public function test_mix(): void {
+		$this->assertSame( '#808080', Color::mix( '#ffffff', '#000000', 0.5 ) );
+		$this->assertSame( '#ffffff', Color::mix( '#ffffff', '#000000', 1.0 ) );
+		$this->assertSame( '#000000', Color::mix( '#ffffff', '#000000', 0.0 ) );
+	}
 }
