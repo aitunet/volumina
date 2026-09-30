@@ -296,9 +296,10 @@ The wrapper of every rendering — `.volumina-book` on an audiobook,
   one of the two always reaches 4.5:1.
 
 Resolution is, lowest to highest: the template's defaults, the site's settings, the
-block's own attributes. The accent is stored as a palette slug everywhere and turned into
-a colour at render time, so it follows the theme; a slug the active theme does not have
-means no accent.
+block's own attributes. The accent is stored as a palette slug, turned into a colour at
+render time so it follows the theme (a slug the active theme does not have means no
+accent), or, since 2026-09-30, as a colour of the site's own, `#rrggbb`, used as it is.
+`none` means no accent. `Templates::accent( $stored )` does that resolution.
 
 Inside the wrapper the markup is: `.volumina-book-head` holding `.volumina-book-cover`
 and `dl.volumina-book-details`, then the player (`.volumina-player`, see its stylesheet
@@ -531,7 +532,17 @@ add_action( 'volumina_appearance_sections', function ( $cards ) {
 ```
 
 - **Volumina's fields** are `volumina_settings[template]`, `volumina_settings[cover_position]`
-  and `volumina_settings[accent]`.
+  and the accent, a colour field: `volumina_settings[accent][choice]` (`''`, `none`, a
+  palette slug, or `custom`) and `volumina_settings[accent][custom]` (the hex, read only
+  for `custom`).
+- **Colour fields.** `Support\Settings\Field` type `color_select` is a select of named
+  colours (`choices`: value => `{ label, color }`) plus "Custom…", which stores a `#rrggbb`
+  picked with WordPress's colour picker. Its markup is
+  `span.volumina-color-select[data-volumina-color-select]` holding the select, a
+  `span.volumina-color-swatch` and `span.volumina-color-custom` with
+  `input.volumina-color-picker`; Volumina's `color-select.js` and `wp-color-picker` are
+  loaded on the Appearance tab, so an extension's own colour fields there need nothing
+  more.
 - **A template's picture.** `Template` takes a fifth argument, `preview`: an http(s) URL of
   a picture about 480x300, shown at 240x150 on the template's card. Anything else is dropped
   and the card is drawn without a picture.

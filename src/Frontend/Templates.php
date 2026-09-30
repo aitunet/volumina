@@ -107,6 +107,25 @@ final class Templates {
 	}
 
 	/**
+	 * An accent as stored — `none`, a palette slug, or a colour of the site's
+	 * own as `#rrggbb` — as a hex colour, or empty for none. A slug the active
+	 * theme does not have is none.
+	 *
+	 * @param string $accent The stored value.
+	 */
+	public static function accent( string $accent ): string {
+		if ( 'none' === $accent || '' === $accent ) {
+			return '';
+		}
+
+		if ( '#' === $accent[0] ) {
+			return Color::normalize( $accent );
+		}
+
+		return Palette::color( $accent );
+	}
+
+	/**
 	 * What one rendering should use.
 	 *
 	 * @param array<string, string> $overrides `template`, `cover` and `accent`; an empty value defers.
@@ -143,7 +162,7 @@ final class Templates {
 			$slug = $defaults['accent'] ?? '';
 		}
 
-		$accent = 'none' === $slug ? '' : Palette::color( $slug );
+		$accent = self::accent( $slug );
 
 		return array(
 			'template' => $template,

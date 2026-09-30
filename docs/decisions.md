@@ -620,3 +620,22 @@ same class, copied into Pro's `Support/`). Block editor scripts keep the hash
 **Consequence.** A changed file gets a new URL on the next page load, whatever the version
 says, so no CDN or browser cache can serve a stale copy, and no version bump is needed to
 ship a CSS fix. One `filemtime()` per asset per request, from the stat cache.
+
+## 2026-09-30 — The accent may be a colour of the site's own
+
+**Context.** The account holder's review of the Appearance tab: the accent offered only
+the theme's palette, as radios whose colour dot read as a second radio. Sites want their
+brand colour whatever the theme's palette holds.
+
+**Decision.** The accent is a `color_select` field (new in `Support\Settings\Field`): a
+select of *What the template prefers*, *None*, the palette, and *Custom…*, with a swatch
+beside it and WordPress's `wp-color-picker` for the custom colour. It stores a palette
+slug as before, or a `#rrggbb`; `Templates::accent()` resolves either, and the ink stays
+`Color::ink()`. The form posts `[choice]` and `[custom]`, so the field works without
+JavaScript. `wp-color-picker` brings jQuery into the admin only (core, no new
+dependency); the front end stays jQuery-free. Blocks keep choosing from the palette (a
+custom colour in the block sidebar is in the backlog). Everything else about colour —
+player background, panel base, gradients, contrast — belongs to Volumina Pro.
+
+**Consequence.** A stored slug keeps working and still follows the theme; a custom colour
+does not follow the theme, by definition. No schema change beyond the option's value.

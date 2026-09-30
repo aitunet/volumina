@@ -199,6 +199,12 @@ final class Settings implements Registrable {
 		);
 
 		foreach ( Palette::colors() as $slug => $color ) {
+			// A palette entry called "custom" would be read as the field's own
+			// "Custom…"; it is left out rather than shadowed.
+			if ( Field::CUSTOM === $slug ) {
+				continue;
+			}
+
 			$choices[ $slug ] = array(
 				'label' => $color['name'],
 				'color' => $color['color'],
@@ -268,10 +274,10 @@ final class Settings implements Registrable {
 					'key'         => 'accent',
 					'section'     => 'presentation',
 					'label'       => __( 'Accent colour', 'volumina' ),
-					'type'        => 'swatches',
+					'type'        => 'color_select',
 					'default'     => '',
 					'choices'     => array( self::class, 'accent_choices' ),
-					'description' => __( 'One colour from your theme\'s palette for the play button, the progress bar and the current chapter. Never for text, so the theme\'s contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box.', 'volumina' ),
+					'description' => __( 'One colour for the play button, the progress bar and the current chapter: one from your theme\'s palette, which follows the theme if its colours change, or one of your own. Never for text, so the theme\'s contrast is never at risk; the play button\'s icon turns black or white, whichever reads. With none, the player draws itself in the text colour, as it does out of the box.', 'volumina' ),
 				)
 			),
 			new Field(

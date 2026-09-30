@@ -164,3 +164,4 @@
   domain is dropped and its card is drawn without one. Punycode it, or accept IDN.
 - **Screenshot 5 predates the Appearance tab.** It still shows Presentation inside
   General; retake it on the Appearance tab (a site without Pro) before the next upload.
+- **Accent colour in the block sidebar.** Blocks still choose the accent from the theme's palette; the settings screen now also takes a custom colour (`color_select`). A block could offer the same, with `ColorPalette`'s custom picker.

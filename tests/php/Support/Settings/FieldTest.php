@@ -230,4 +230,90 @@ final class FieldTest extends TestCase {
 		$this->assertSame( 'basic', $field->sanitize( 'nope' ) );
 		$this->assertTrue( $field->labels_itself() );
 	}
+
+	/**
+	 * A colour field offering two named colours and a custom one.
+	 */
+	private function colour_field(): Field {
+		return new Field(
+			array(
+				'key'     => 'accent',
+				'type'    => 'color_select',
+				'default' => '',
+				'choices' => array(
+					''      => array( 'label' => 'Template' ),
+					'amber' => array(
+						'label' => 'Amber',
+						'color' => '#e0a83a',
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * From the form: a named choice is kept as its key.
+	 */
+	public function test_a_colour_field_keeps_a_named_choice(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame(
+			'amber',
+			$field->sanitize(
+				array(
+					'choice' => 'amber',
+					'custom' => '#123456',
+				)
+			)
+		);
+	}
+
+	/**
+	 * From the form: Custom stores the picked colour, spelled one way.
+	 */
+	public function test_a_colour_field_stores_a_custom_colour(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame(
+			'#aabbcc',
+			$field->sanitize(
+				array(
+					'choice' => 'custom',
+					'custom' => 'ABC',
+				)
+			)
+		);
+	}
+
+	/**
+	 * Custom with no colour, or with something that is not one, stores the default.
+	 */
+	public function test_a_colour_field_refuses_a_custom_non_colour(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame(
+			'',
+			$field->sanitize(
+				array(
+					'choice' => 'custom',
+					'custom' => 'red;background:url(x)',
+				)
+			)
+		);
+		$this->assertSame( '', $field->sanitize( array( 'choice' => 'custom' ) ) );
+		$this->assertSame( '', $field->sanitize( array( 'choice' => 'nope' ) ) );
+	}
+
+	/**
+	 * What was stored comes back through as it is: a key, or a colour.
+	 */
+	public function test_a_colour_field_keeps_what_it_stored(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame( 'amber', $field->sanitize( 'amber' ) );
+		$this->assertSame( '#123456', $field->sanitize( '#123456' ) );
+		$this->assertSame( '', $field->sanitize( 'custom' ) );
+		$this->assertSame( '', $field->sanitize( 'nope' ) );
+		$this->assertFalse( $field->labels_itself() );
+	}
 }

@@ -16,6 +16,37 @@
 		return input ? input.value : '';
 	}
 
+	// Same rule as Color::normalize() in PHP: `#rrggbb`, lower case, or ''.
+	function normalize( value ) {
+		const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(
+			( value || '' ).trim()
+		);
+		if ( ! m ) {
+			return '';
+		}
+		const hex =
+			3 === m[ 1 ].length ? m[ 1 ].replace( /./g, '$&$&' ) : m[ 1 ];
+		return '#' + hex.toLowerCase();
+	}
+
+	// The accent field: a select of named colours, or "custom" and a hex.
+	function accentOf( form, fallback ) {
+		const select = form.querySelector(
+			'[name="' + OPTION + '[accent][choice]"]'
+		);
+		const choice = select ? select.value : '';
+
+		if ( 'custom' === choice ) {
+			const custom = form.querySelector(
+				'[name="' + OPTION + '[accent][custom]"]'
+			);
+			return normalize( custom ? custom.value : '' );
+		}
+
+		const slug = choice || fallback || '';
+		return 'none' === slug ? '' : config.palette[ slug ] || '';
+	}
+
 	function channel( value ) {
 		const c = value / 255;
 		return c <= 0.03928
@@ -77,8 +108,7 @@
 		const defaults = config.defaults[ template ] || {};
 		const cover =
 			checked( form, 'cover_position' ) || defaults.cover || 'side';
-		const slug = checked( form, 'accent' ) || defaults.accent || '';
-		const accent = 'none' === slug ? '' : config.palette[ slug ] || '';
+		const accent = accentOf( form, defaults.accent );
 		const accentInk = accent ? ink( accent ) : '';
 
 		swap( book, 'volumina-template-', template );
@@ -127,6 +157,8 @@
 
 		if ( form ) {
 			form.addEventListener( 'change', update );
+			// A hex typed by hand restyles as it is typed.
+			form.addEventListener( 'input', update );
 		}
 		if ( button ) {
 			button.addEventListener( 'click', function () {

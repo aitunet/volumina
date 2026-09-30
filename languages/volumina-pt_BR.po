@@ -14,11 +14,6 @@ msgstr ""
 "X-Generator: hand translation, WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
 
-#. Plugin Name of the plugin
-#: volumina.php
-msgid "Volumina"
-msgstr ""
-
 #. Plugin URI of the plugin
 #: volumina.php
 msgid "https://tunetdesign.com/volumina"
@@ -107,13 +102,13 @@ msgstr "Duração total"
 msgid "Who can listen"
 msgstr "Quem pode ouvir"
 
-#: src/Admin/Settings.php:226
+#: src/Admin/Settings.php:260
 #: blocks/audiobook/index.js:27
 #: blocks/shared/presentation.js:80
 msgid "Cover"
 msgstr "Capa"
 
-#: src/Admin/ChapterList.php:57
+#: src/Admin/ChapterList.php:58
 #: src/Admin/PostScreenHelp.php:80
 #: src/Admin/PostScreenHelp.php:110
 #: src/Frontend/Audiobook.php:135
@@ -122,138 +117,138 @@ msgstr "Capa"
 msgid "Chapters"
 msgstr "Capítulos"
 
-#: src/Admin/ChapterList.php:101
+#: src/Admin/ChapterList.php:102
 msgid "The order could not be saved."
 msgstr "Não foi possível salvar a ordem."
 
 #. translators: 1: new position of the chapter, 2: total number of chapters.
-#: src/Admin/ChapterList.php:103
+#: src/Admin/ChapterList.php:104
 #, php-format
 msgid "Moved to position %1$d of %2$d."
 msgstr "Movido para a posição %1$d de %2$d."
 
-#: src/Admin/ChapterList.php:126
+#: src/Admin/ChapterList.php:127
 msgid "This book has no chapters yet. A chapter is a title and an audio file; add them in the order they should be heard, and drag them afterwards if you change your mind."
 msgstr "Este livro ainda não tem capítulos. Um capítulo é um título e um arquivo de áudio; adicione-os na ordem em que devem ser ouvidos e arraste-os depois se mudar de ideia."
 
-#: src/Admin/ChapterList.php:139
+#: src/Admin/ChapterList.php:140
 msgid "Drag a chapter to move it, or use the arrows. The order is saved as soon as you change it."
 msgstr "Arraste um capítulo para movê-lo, ou use as setas. A ordem é salva assim que você a altera."
 
-#: src/Admin/ChapterList.php:165
+#: src/Admin/ChapterList.php:166
 msgid "Save this audiobook first, and you can add its chapters here."
 msgstr "Salve este audiolivro primeiro e você poderá adicionar os capítulos dele aqui."
 
-#: src/Admin/ChapterList.php:182
+#: src/Admin/ChapterList.php:183
 msgid "Add a chapter"
 msgstr "Adicionar um capítulo"
 
-#: src/Admin/ChapterList.php:193
+#: src/Admin/ChapterList.php:194
 msgid "(untitled chapter)"
 msgstr "(capítulo sem título)"
 
 #. translators: %s: chapter title.
-#: src/Admin/ChapterList.php:223
+#: src/Admin/ChapterList.php:224
 #, php-format
 msgid "Move %s up"
 msgstr "Mover %s para cima"
 
-#: src/Admin/ChapterList.php:224
+#: src/Admin/ChapterList.php:225
 msgid "Up"
 msgstr "Para cima"
 
 #. translators: %s: chapter title.
-#: src/Admin/ChapterList.php:230
+#: src/Admin/ChapterList.php:231
 #, php-format
 msgid "Move %s down"
 msgstr "Mover %s para baixo"
 
-#: src/Admin/ChapterList.php:231
+#: src/Admin/ChapterList.php:232
 msgid "Down"
 msgstr "Para baixo"
 
-#: src/Admin/ChapterList.php:250
+#: src/Admin/ChapterList.php:251
 msgid "You cannot edit this book."
 msgstr "Você não pode editar este livro."
 
-#: src/Admin/ChapterList.php:279
+#: src/Admin/ChapterList.php:280
 msgid "Order saved."
 msgstr "Ordem salva."
 
-#: src/Admin/ChapterMetaBox.php:58
+#: src/Admin/ChapterMetaBox.php:59
 msgid "Chapter details"
 msgstr "Detalhes do capítulo"
 
-#: src/Admin/ChapterMetaBox.php:96
+#: src/Admin/ChapterMetaBox.php:97
 msgid "Choose an audio file"
 msgstr "Escolher um arquivo de áudio"
 
-#: src/Admin/ChapterMetaBox.php:97
+#: src/Admin/ChapterMetaBox.php:98
 msgid "Use this file"
 msgstr "Usar este arquivo"
 
-#: src/Admin/ChapterMetaBox.php:98
-#: src/Admin/ChapterMetaBox.php:379
+#: src/Admin/ChapterMetaBox.php:99
+#: src/Admin/ChapterMetaBox.php:393
 msgid "No audio file chosen yet."
 msgstr "Nenhum arquivo de áudio escolhido ainda."
 
-#: src/Admin/ChapterMetaBox.php:165
+#: src/Admin/ChapterMetaBox.php:166
 msgid "Book"
 msgstr "Livro"
 
-#: src/Admin/ChapterMetaBox.php:172
+#: src/Admin/ChapterMetaBox.php:173
 msgid "— Not part of a book yet —"
 msgstr "— Ainda não faz parte de nenhum livro —"
 
-#: src/Admin/ChapterMetaBox.php:176
+#: src/Admin/ChapterMetaBox.php:183
 msgid "(untitled book)"
 msgstr "(livro sem título)"
 
-#: src/Admin/ChapterMetaBox.php:190
+#: src/Admin/ChapterMetaBox.php:197
 msgid "A chapter belongs to one book. Choose it and the chapter joins the end of that book, ready to be dragged into place from the book screen."
 msgstr "Um capítulo pertence a um único livro. Escolha-o e o capítulo entra no fim desse livro, pronto para ser arrastado até seu lugar na tela do livro."
 
-#: src/Admin/ChapterMetaBox.php:203
+#: src/Admin/ChapterMetaBox.php:210
 msgid "Audio file"
 msgstr "Arquivo de áudio"
 
-#: src/Admin/ChapterMetaBox.php:218
+#: src/Admin/ChapterMetaBox.php:225
 msgid "Choose audio file"
 msgstr "Escolher arquivo de áudio"
 
-#: src/Admin/ChapterMetaBox.php:219
+#: src/Admin/ChapterMetaBox.php:226
 msgid "Remove audio file"
 msgstr "Remover arquivo de áudio"
 
-#: src/Admin/ChapterMetaBox.php:224
+#: src/Admin/ChapterMetaBox.php:231
 msgid "Only audio files can be attached. The running time is read from the file."
 msgstr "Só é possível anexar arquivos de áudio. A duração é lida do arquivo."
 
-#: src/Admin/ChapterMetaBox.php:237
+#: src/Admin/ChapterMetaBox.php:244
 #: src/Admin/PostScreenHelp.php:94
 #: src/Frontend/Audiobook.php:131
 #: blocks/library/index.js:145
 msgid "Running time"
 msgstr "Duração"
 
-#: src/Admin/ChapterMetaBox.php:267
+#: src/Admin/ChapterMetaBox.php:274
 msgid "Position"
 msgstr "Posição"
 
-#: src/Admin/ChapterMetaBox.php:273
+#: src/Admin/ChapterMetaBox.php:280
 msgid "Not placed yet"
 msgstr "Ainda sem posição"
 
-#: src/Admin/ChapterMetaBox.php:282
+#: src/Admin/ChapterMetaBox.php:289
 msgid "Reorder the chapters on the book screen."
 msgstr "Reordene os capítulos na tela do livro."
 
-#: src/Admin/ChapterMetaBox.php:287
+#: src/Admin/ChapterMetaBox.php:294
 msgid "Chapters are ordered on the book screen."
 msgstr "Os capítulos são ordenados na tela do livro."
 
 #. translators: 1: audio file name, 2: running time such as 1:02:05.
-#: src/Admin/ChapterMetaBox.php:390
+#: src/Admin/ChapterMetaBox.php:404
 #, php-format
 msgid "%1$s (%2$s)"
 msgstr "%1$s (%2$s)"
@@ -263,7 +258,7 @@ msgid "Volumina Log"
 msgstr "Registro do Volumina"
 
 #: src/Admin/LogScreen.php:48
-#: src/Admin/Settings.php:253
+#: src/Admin/Settings.php:287
 msgid "Log"
 msgstr "Registro"
 
@@ -304,7 +299,7 @@ msgid "Note"
 msgstr "Nota"
 
 #: src/Admin/LogScreen.php:166
-#: src/Admin/SettingsScreen.php:152
+#: src/Admin/SettingsScreen.php:308
 msgid "Overview"
 msgstr "Visão geral"
 
@@ -368,27 +363,27 @@ msgstr "Um capítulo é um título, um arquivo de áudio e um lugar dentro de um
 msgid "The running time is in whole seconds. Leave it at zero if you do not know it; the player still works, and the chapter simply shows no time next to it."
 msgstr "A duração vai em segundos inteiros. Deixe em zero se não souber; o reprodutor continua funcionando e o capítulo simplesmente não mostra tempo nenhum ao lado."
 
-#: src/Admin/ProScreen.php:47
+#: src/Admin/ProScreen.php:49
 msgid "Volumina Pro"
 msgstr "Volumina Pro"
 
-#: src/Admin/ProScreen.php:54
+#: src/Admin/ProScreen.php:56
 msgid "Pro"
 msgstr "Pro"
 
-#: src/Admin/ProScreen.php:140
+#: src/Admin/ProScreen.php:142
 msgid "What it does not do"
 msgstr "O que ele não faz"
 
-#: src/Admin/ProScreen.php:141
+#: src/Admin/ProScreen.php:143
 msgid "It does not protect audio from being copied, and neither does anything else. A browser has to be able to play a file to play it, and a file a browser can play can be saved. Pro signs its URLs so they expire, which discourages passing a link around; anyone who tells you they can do more than that is selling you something that does not exist."
 msgstr "Ele não impede que o áudio seja copiado, e nada impede. Um navegador precisa conseguir reproduzir um arquivo para reproduzi-lo, e um arquivo que um navegador reproduz pode ser salvo. O Pro assina suas URLs para que expirem, o que desestimula passar um link adiante; quem disser que faz mais do que isso está vendendo algo que não existe."
 
-#: src/Admin/ProScreen.php:190
+#: src/Admin/ProScreen.php:192
 msgid "Series and bundles"
 msgstr "Séries e pacotes"
 
-#: src/Admin/ProScreen.php:200
+#: src/Admin/ProScreen.php:202
 msgid "Listening reports"
 msgstr "Relatórios de escuta"
 
@@ -396,84 +391,84 @@ msgstr "Relatórios de escuta"
 msgid "You are not allowed to view this page."
 msgstr "Você não tem permissão para ver esta página."
 
-#: src/Admin/Settings.php:194
+#: src/Admin/Settings.php:228
 msgid "New audiobooks are"
 msgstr "Audiolivros novos são"
 
-#: src/Admin/Settings.php:198
+#: src/Admin/Settings.php:232
 msgid "What a book you add from now on starts as. Every book can be changed on its own screen, and changing this never changes a book that already exists."
 msgstr "O que um livro que você adicionar de agora em diante será. Cada livro pode ser alterado na própria tela, e mudar isto nunca muda um livro que já existe."
 
-#: src/Admin/Settings.php:205
+#: src/Admin/Settings.php:239
 msgid "Book pages"
 msgstr "Páginas de livro"
 
-#: src/Admin/Settings.php:208
+#: src/Admin/Settings.php:242
 msgid "Show the player and the chapters on an audiobook page automatically."
 msgstr "Mostrar automaticamente o reprodutor e os capítulos na página de um audiolivro."
 
-#: src/Admin/Settings.php:256
+#: src/Admin/Settings.php:290
 msgid "Record notable events, such as a listener being turned away or an audio file that has gone missing. Useful when something is wrong and nobody can say quite what."
 msgstr "Registrar eventos dignos de nota, como alguém ser impedido de ouvir ou um arquivo de áudio que sumiu. Útil quando algo está errado e ninguém sabe dizer o quê."
 
-#: src/Admin/Settings.php:263
+#: src/Admin/Settings.php:297
 msgid "On uninstall"
 msgstr "Ao desinstalar"
 
-#: src/Admin/Settings.php:266
+#: src/Admin/Settings.php:300
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr "Excluir as tabelas e as configurações deste plugin quando ele for desinstalado. Desligado significa que, se um dia você reinstalar, quem ouve mantém o seu lugar."
 
-#: src/Admin/SettingsScreen.php:52
+#: src/Admin/SettingsScreen.php:67
 msgid "Volumina Settings"
 msgstr "Configurações do Volumina"
 
-#: src/Admin/SettingsScreen.php:59
-#: src/Admin/WelcomeScreen.php:259
+#: src/Admin/SettingsScreen.php:74
+#: src/Admin/WelcomeScreen.php:260
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/Admin/SettingsScreen.php:111
+#: src/Admin/SettingsScreen.php:187
 msgid "Settings saved."
 msgstr "Configurações salvas."
 
-#: src/Admin/SettingsScreen.php:120
+#: src/Admin/SettingsScreen.php:227
 msgid "Volumina works without changing any of this. These are here for when the defaults are not what you want."
 msgstr "O Volumina funciona sem que nada disto seja alterado. Está aqui para quando os padrões não forem o que você quer."
 
-#: src/Admin/SettingsScreen.php:153
+#: src/Admin/SettingsScreen.php:309
 msgid "Nothing here needs to be changed for Volumina to work. Each setting says what it does underneath it."
 msgstr "Nada aqui precisa ser mudado para o Volumina funcionar. Cada configuração explica embaixo o que faz."
 
-#: src/Admin/SettingsScreen.php:156
+#: src/Admin/SettingsScreen.php:312
 msgid "New audiobooks are: what a book you add from now on starts as. It never changes a book that already exists."
 msgstr "Audiolivros novos são: o que um livro que você adicionar de agora em diante será. Nunca muda um livro que já existe."
 
-#: src/Admin/SettingsScreen.php:157
+#: src/Admin/SettingsScreen.php:313
 msgid "Book pages: turn this off if you place the Audiobook block yourself and do not want it added a second time."
 msgstr "Páginas de livro: desligue se você mesmo coloca o bloco Audiolivro e não quer que ele seja adicionado uma segunda vez."
 
-#: src/Admin/SettingsScreen.php:158
+#: src/Admin/SettingsScreen.php:314
 msgid "Log: records notable events. Turn it on while something is wrong and off again afterwards."
 msgstr "Registro: anota os eventos dignos de nota. Ligue enquanto algo está errado e desligue depois."
 
-#: src/Admin/SettingsScreen.php:164
+#: src/Admin/SettingsScreen.php:320
 msgid "Uninstalling"
 msgstr "Desinstalação"
 
-#: src/Admin/SettingsScreen.php:165
+#: src/Admin/SettingsScreen.php:321
 msgid "Deactivating the plugin never deletes anything. Deleting it removes your books, chapters and settings only if you have ticked the uninstall setting; otherwise everything is left where it is, including every listener's place in every book."
 msgstr "Desativar o plugin nunca exclui nada. Excluí-lo remove seus livros, capítulos e configurações apenas se você tiver marcado a opção de desinstalação; caso contrário, tudo fica onde está, inclusive o lugar de cada ouvinte em cada livro."
 
-#: src/Admin/SettingsScreen.php:166
+#: src/Admin/SettingsScreen.php:322
 msgid "Books and chapters are ordinary posts, so they go to the trash like any other post and can be restored from it."
 msgstr "Livros e capítulos são posts comuns, então vão para a lixeira como qualquer outro post e podem ser restaurados de lá."
 
-#: src/Admin/SettingsScreen.php:169
+#: src/Admin/SettingsScreen.php:325
 msgid "More"
 msgstr "Mais"
 
-#: src/Admin/SettingsScreen.php:170
+#: src/Admin/SettingsScreen.php:326
 msgid "Volumina documentation"
 msgstr "Documentação do Volumina"
 
@@ -503,24 +498,24 @@ msgid "Choose an audiobook to list the chapters of."
 msgstr "Escolha um audiolivro para listar os capítulos."
 
 #. translators: %s: chapter title.
-#: src/Frontend/Assets.php:129
+#: src/Frontend/Assets.php:132
 #, php-format
 msgid "In %s"
 msgstr "Em %s"
 
 #. translators: %s: a position in a chapter, as h:mm:ss.
 #. translators: %s: a position, as h:mm:ss.
-#: src/Frontend/Assets.php:131
+#: src/Frontend/Assets.php:134
 #: templates/continue.php:66
 #, php-format
 msgid "at %s"
 msgstr "em %s"
 
-#: src/Frontend/Assets.php:132
+#: src/Frontend/Assets.php:135
 msgid "Carry on listening"
 msgstr "Continuar ouvindo"
 
-#: src/Frontend/Assets.php:133
+#: src/Frontend/Assets.php:136
 #: templates/continue.php:79
 msgid "Nothing started yet. Books you begin will appear here."
 msgstr "Você ainda não começou nada. Os livros que começar aparecerão aqui."
@@ -530,7 +525,7 @@ msgid "Narrated by"
 msgstr "Narrado por"
 
 #: src/Player/Player.php:82
-#: templates/player.php:94
+#: templates/player.php:99
 msgid "Play"
 msgstr "Reproduzir"
 
@@ -616,11 +611,11 @@ msgstr[1] "%s minutos"
 msgid "End of chapter"
 msgstr "Fim do capítulo"
 
-#: src/Player/Stream.php:137
+#: src/Player/Stream.php:144
 msgid "A listener was turned away from a chapter."
 msgstr "Alguém foi impedido de ouvir um capítulo."
 
-#: src/Player/Stream.php:172
+#: src/Player/Stream.php:196
 msgid "A chapter's audio file is missing or unreadable."
 msgstr "O arquivo de áudio de um capítulo está faltando ou não pode ser lido."
 
@@ -806,19 +801,19 @@ msgstr "Capítulos"
 msgid "One chapter of an audiobook."
 msgstr "Um capítulo de um audiolivro."
 
-#: src/PostTypes/Chapter.php:211
+#: src/PostTypes/Chapter.php:239
 msgid "ID of the book this chapter belongs to."
 msgstr "ID do livro a que este capítulo pertence."
 
-#: src/PostTypes/Chapter.php:217
+#: src/PostTypes/Chapter.php:245
 msgid "Attachment ID of the audio file."
 msgstr "ID do anexo do arquivo de áudio."
 
-#: src/PostTypes/Chapter.php:223
+#: src/PostTypes/Chapter.php:251
 msgid "Running time in whole seconds."
 msgstr "Duração em segundos inteiros."
 
-#: src/PostTypes/Chapter.php:229
+#: src/PostTypes/Chapter.php:257
 msgid "Position within the book, counting from one."
 msgstr "Posição dentro do livro, contando a partir de um."
 
@@ -951,20 +946,20 @@ msgstr "Este audiolivro ainda não tem capítulos."
 msgid "In %1$s at %2$s"
 msgstr "Em %1$s, %2$s"
 
-#: templates/player.php:41
+#: templates/player.php:42
 msgid "Audiobook player"
 msgstr "Reprodutor de audiolivros"
 
-#: templates/player.php:52
+#: templates/player.php:57
 msgid "Now playing"
 msgstr "Reproduzindo"
 
-#: templates/player.php:69
+#: templates/player.php:74
 msgid "Previous chapter"
 msgstr "Capítulo anterior"
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:78
+#: templates/player.php:83
 #, php-format
 msgid "Back %d second"
 msgid_plural "Back %d seconds"
@@ -972,32 +967,32 @@ msgstr[0] "Voltar %d segundo"
 msgstr[1] "Voltar %d segundos"
 
 #. translators: %d: a number of seconds.
-#: templates/player.php:103
+#: templates/player.php:108
 #, php-format
 msgid "Forward %d second"
 msgid_plural "Forward %d seconds"
 msgstr[0] "Avançar %d segundo"
 msgstr[1] "Avançar %d segundos"
 
-#: templates/player.php:112
+#: templates/player.php:117
 msgid "Next chapter"
 msgstr "Próximo capítulo"
 
-#: templates/player.php:118
+#: templates/player.php:123
 msgid "Position in this chapter"
 msgstr "Posição neste capítulo"
 
-#: templates/player.php:139
+#: templates/player.php:144
 msgid "Speed"
 msgstr "Velocidade"
 
 #. translators: %s: a playback speed, such as 1.5.
-#: templates/player.php:150
+#: templates/player.php:155
 #, php-format
 msgid "%s×"
 msgstr "%s×"
 
-#: templates/player.php:161
+#: templates/player.php:166
 msgid "Sleep timer"
 msgstr "Timer para dormir"
 
@@ -1045,14 +1040,17 @@ msgid "Continue listening"
 msgstr "Continuar ouvindo"
 
 #: blocks/continue-listening/index.js:31
+#: blocks/library/index.js:80
 msgid "Books to show"
 msgstr "Livros a mostrar"
 
 #: blocks/continue-listening/index.js:42
+#: blocks/library/index.js:123
 msgid "Covers"
 msgstr "Capas"
 
 #: blocks/continue-listening/index.js:43
+#: blocks/library/index.js:124
 msgid "The cover of each book, small."
 msgstr "A capa de cada livro, pequena."
 
@@ -1077,6 +1075,7 @@ msgstr "Um audiolivro com sua capa, seus dados, seu reprodutor e seus capítulos
 #: blocks/audiobook/block.json
 #: blocks/chapter-list/block.json
 #: blocks/continue-listening/block.json
+#: blocks/library/block.json
 msgctxt "block keyword"
 msgid "audiobook"
 msgstr "audiolivro"
@@ -1113,6 +1112,7 @@ msgid "chapters"
 msgstr "capítulos"
 
 #: blocks/chapter-list/block.json
+#: blocks/library/block.json
 msgctxt "block keyword"
 msgid "list"
 msgstr "lista"
@@ -1155,214 +1155,206 @@ msgstr "Definir capa"
 msgid "Use as cover"
 msgstr "Usar como capa"
 
-#: src/Admin/ProScreen.php:122
+#: src/Admin/ProScreen.php:124
 msgid "Coming soon"
 msgstr "Em breve"
 
-#: src/Admin/ProScreen.php:126
+#: src/Admin/ProScreen.php:128
 msgid "Sell your audiobooks with the player you already have. A separate plugin; Volumina stays free."
 msgstr "Venda seus audiolivros com o player que você já tem. Um plugin separado; o Volumina continua gratuito."
 
-#: src/Admin/ProScreen.php:157
+#: src/Admin/ProScreen.php:159
 msgid "Tell me when it is ready"
 msgstr "Avise-me quando estiver pronto"
 
-#: src/Admin/ProScreen.php:158
-#: src/Admin/WelcomeScreen.php:250
+#: src/Admin/ProScreen.php:160
+#: src/Admin/WelcomeScreen.php:251
 msgid "(opens tunetdesign.com in a new tab)"
 msgstr "(abre tunetdesign.com em uma nova aba)"
 
-#: src/Admin/ProScreen.php:180
+#: src/Admin/ProScreen.php:182
 msgid "Sell with WooCommerce and EDD"
 msgstr "Venda com WooCommerce e EDD"
 
-#: src/Admin/ProScreen.php:181
+#: src/Admin/ProScreen.php:183
 msgid "Whoever buys, listens. Nothing more to set up."
 msgstr "Quem compra, escuta. Nada mais a configurar."
 
-#: src/Admin/ProScreen.php:185
+#: src/Admin/ProScreen.php:187
 msgid "Audio links that expire"
 msgstr "Links de áudio que expiram"
 
-#: src/Admin/ProScreen.php:186
+#: src/Admin/ProScreen.php:188
 msgid "Signed URLs: a shared link stops working within hours."
 msgstr "URLs assinadas: um link compartilhado deixa de funcionar em poucas horas."
 
-#: src/Admin/ProScreen.php:191
+#: src/Admin/ProScreen.php:193
 msgid "Sell a whole series in one purchase."
 msgstr "Venda uma série inteira em uma única compra."
 
-#: src/Admin/ProScreen.php:195
+#: src/Admin/ProScreen.php:197
 msgid "Templates and styles"
 msgstr "Modelos e estilos"
 
-#: src/Admin/ProScreen.php:196
+#: src/Admin/ProScreen.php:198
 msgid "Featured templates, colours, typography and layouts for the block and the player."
 msgstr "Modelos em destaque, cores, tipografia e layouts para o bloco e o player."
 
-#: src/Admin/ProScreen.php:201
+#: src/Admin/ProScreen.php:203
 msgid "Which books get finished, which get abandoned, and at which chapter."
 msgstr "Quais livros são terminados, quais são abandonados e em qual capítulo."
 
-#: src/Admin/WelcomeScreen.php:53
-#: src/Admin/WelcomeScreen.php:60
+#: src/Admin/WelcomeScreen.php:54
+#: src/Admin/WelcomeScreen.php:61
 msgid "Welcome to Volumina"
 msgstr "Bem-vindo ao Volumina"
 
-#: src/Admin/WelcomeScreen.php:109
+#: src/Admin/WelcomeScreen.php:110
 msgid "Three steps to your first audiobook"
 msgstr "Três passos até o seu primeiro audiolivro"
 
-#: src/Admin/WelcomeScreen.php:110
+#: src/Admin/WelcomeScreen.php:111
 msgid "What it is, and what it is not"
 msgstr "O que ele é, e o que não é"
 
-#: src/Admin/WelcomeScreen.php:111
+#: src/Admin/WelcomeScreen.php:112
 msgid "Where to go next"
 msgstr "Por onde seguir"
 
-#: src/Admin/WelcomeScreen.php:149
+#: src/Admin/WelcomeScreen.php:150
 msgid "Publish audiobooks on your site and give listeners a real listening experience: chapters, a position that is remembered, playback speed, a sleep timer."
 msgstr "Publique audiolivros no seu site e dê a quem ouve uma experiência de verdade: capítulos, uma posição que é lembrada, velocidade de reprodução, temporizador para dormir."
 
-#: src/Admin/WelcomeScreen.php:153
-#: src/Admin/WelcomeScreen.php:180
+#: src/Admin/WelcomeScreen.php:154
+#: src/Admin/WelcomeScreen.php:181
 msgid "Add an audiobook"
 msgstr "Adicionar um audiolivro"
 
-#: src/Admin/WelcomeScreen.php:170
+#: src/Admin/WelcomeScreen.php:171
 msgid "Set it up"
 msgstr "Configure"
 
-#: src/Admin/WelcomeScreen.php:173
+#: src/Admin/WelcomeScreen.php:174
 msgid "Done."
 msgstr "Feito."
 
-#: src/Admin/WelcomeScreen.php:177
+#: src/Admin/WelcomeScreen.php:178
 msgid "Add an audiobook and its chapters"
 msgstr "Adicione um audiolivro e seus capítulos"
 
-#: src/Admin/WelcomeScreen.php:178
+#: src/Admin/WelcomeScreen.php:179
 msgid "Title, cover, narrator and the rest on one screen. Each chapter is one audio file from the media library; drag the list to put them in order."
 msgstr "Título, capa, narrador e o resto em uma só tela. Cada capítulo é um arquivo de áudio da biblioteca de mídia; arraste a lista para colocá-los em ordem."
 
-#: src/Admin/WelcomeScreen.php:184
+#: src/Admin/WelcomeScreen.php:185
 msgid "Put it on a page"
 msgstr "Coloque em uma página"
 
-#: src/Admin/WelcomeScreen.php:185
+#: src/Admin/WelcomeScreen.php:186
 msgid "Every audiobook has its own page, player included. To place one anywhere else, use the Audiobook, Chapter list and Continue listening blocks in the editor."
 msgstr "Cada audiolivro tem sua própria página, com player. Para colocá-lo em qualquer outro lugar, use os blocos Audiolivro, Lista de capítulos e Continuar ouvindo no editor."
 
-#: src/Admin/WelcomeScreen.php:187
+#: src/Admin/WelcomeScreen.php:188
 msgid "All audiobooks"
 msgstr "Todos os audiolivros"
 
-#: src/Admin/WelcomeScreen.php:226
+#: src/Admin/WelcomeScreen.php:227
 msgid "It is"
 msgstr "O que ele é"
 
-#: src/Admin/WelcomeScreen.php:227
+#: src/Admin/WelcomeScreen.php:228
 msgid "Publishing and playback. A long-form listening experience that music players do not give: chapters, a position remembered for each listener, playback speed, a sleep timer, and blocks for any page."
 msgstr "Publicação e reprodução. Uma experiência de escuta longa que os players de música não dão: capítulos, uma posição lembrada para cada ouvinte, velocidade de reprodução, temporizador para dormir e blocos para qualquer página."
 
-#: src/Admin/WelcomeScreen.php:231
+#: src/Admin/WelcomeScreen.php:232
 msgid "It is not"
 msgstr "O que ele não é"
 
-#: src/Admin/WelcomeScreen.php:232
+#: src/Admin/WelcomeScreen.php:233
 msgid "A store. There is no cart, no checkout and no coupons; selling lives in Volumina Pro, a separate plugin."
 msgstr "Uma loja. Não há carrinho, nem checkout, nem cupons; vender é papel do Volumina Pro, um plugin separado."
 
-#: src/Admin/WelcomeScreen.php:233
+#: src/Admin/WelcomeScreen.php:234
 msgid "Nor is it copy protection. A browser has to be able to play a file to play it, so no plugin can stop a file from being saved. Anyone who promises otherwise is selling something that does not exist."
 msgstr "Também não é proteção contra cópia. Um navegador precisa conseguir reproduzir um arquivo para reproduzi-lo, então nenhum plugin pode impedir que um arquivo seja salvo. Quem prometer o contrário está vendendo algo que não existe."
 
-#: src/Admin/WelcomeScreen.php:246
+#: src/Admin/WelcomeScreen.php:247
 msgid "The guide"
 msgstr "O guia"
 
-#: src/Admin/WelcomeScreen.php:247
+#: src/Admin/WelcomeScreen.php:248
 msgid "Every screen, every field and the player from the listener's side, step by step."
 msgstr "Cada tela, cada campo e o player do lado de quem ouve, passo a passo."
 
-#: src/Admin/WelcomeScreen.php:249
+#: src/Admin/WelcomeScreen.php:250
 msgid "Read the guide"
 msgstr "Ler o guia"
 
-#: src/Admin/WelcomeScreen.php:254
+#: src/Admin/WelcomeScreen.php:255
 msgid "Help, where you are"
 msgstr "Ajuda, onde você estiver"
 
-#: src/Admin/WelcomeScreen.php:255
+#: src/Admin/WelcomeScreen.php:256
 msgid "Every Volumina screen has a Help tab at the top right that explains that screen."
 msgstr "Cada tela do Volumina tem uma aba Ajuda no canto superior direito que explica aquela tela."
 
-#: src/Admin/WelcomeScreen.php:260
+#: src/Admin/WelcomeScreen.php:261
 msgid "Who may listen by default, whether to keep a log, and what to remove on uninstall."
 msgstr "Quem pode ouvir por padrão, se um registro é mantido e o que remover ao desinstalar."
 
 #: src/Admin/SetupNotice.php:59
-#: src/Admin/WelcomeScreen.php:173
-#: src/Admin/WelcomeScreen.php:262
+#: src/Admin/WelcomeScreen.php:174
+#: src/Admin/WelcomeScreen.php:263
 msgid "Open the settings"
 msgstr "Abrir as configurações"
 
-#: src/Admin/Settings.php:169
+#: src/Admin/Settings.php:197
 msgid "What the template prefers"
 msgstr "O que o modelo preferir"
 
-#: src/Admin/Settings.php:170
+#: src/Admin/Settings.php:198
 #: blocks/shared/presentation.js:111
 msgid "None"
 msgstr "Nenhuma"
 
-#: src/Admin/Settings.php:215
+#: src/Admin/Settings.php:249
 #: blocks/shared/presentation.js:65
 msgid "Template"
 msgstr "Modelo"
 
-#: src/Admin/Settings.php:219
-msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own."
-msgstr "Como um audiolivro é disposto e vestido: capa, dados, player e capítulos. O Volumina traz um; uma extensão pode adicionar outros. Um bloco pode escolher o seu."
-
-#: src/Admin/Settings.php:230
+#: src/Admin/Settings.php:264
 msgid "Where the template puts it"
 msgstr "Onde o modelo a colocar"
 
-#: src/Admin/Settings.php:231
+#: src/Admin/Settings.php:265
 #: blocks/shared/presentation.js:86
 msgid "Beside the details"
 msgstr "Ao lado dos dados"
 
-#: src/Admin/Settings.php:232
+#: src/Admin/Settings.php:266
 #: blocks/shared/presentation.js:90
 msgid "Above the details"
 msgstr "Acima dos dados"
 
-#: src/Admin/Settings.php:233
+#: src/Admin/Settings.php:267
 #: blocks/shared/presentation.js:92
 msgid "Not shown"
 msgstr "Não exibida"
 
-#: src/Admin/Settings.php:235
+#: src/Admin/Settings.php:269
 msgid "Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room."
 msgstr "Onde a capa fica na página de um audiolivro. Em uma tela estreita, \"ao lado\" vira \"acima\" quando não há espaço."
 
-#: src/Admin/Settings.php:242
+#: src/Admin/Settings.php:276
 #: blocks/shared/presentation.js:105
 msgid "Accent colour"
 msgstr "Cor de destaque"
 
-#: src/Admin/Settings.php:246
-msgid "One colour from your theme's palette for the play button, the progress bar and the current chapter. Never for text, so the theme's contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box."
-msgstr "Uma cor da paleta do seu tema para o botão de reproduzir, a barra de progresso e o capítulo atual. Nunca para texto, então o contraste do tema nunca corre risco. Sem nenhuma, o player se desenha na cor do texto, como recém-instalado."
-
-#: src/Frontend/Templates.php:49
+#: src/Frontend/Templates.php:69
 msgid "Basic"
 msgstr "Básico"
 
-#: src/Admin/Settings.php:152
+#: src/Admin/Settings.php:180
 #: blocks/shared/presentation.js:62
 msgid "Presentation"
 msgstr "Apresentação"
@@ -1381,23 +1373,23 @@ msgstr "Da paleta do tema. Colore o botão de reproduzir, a barra de progresso e
 msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
 msgstr "Um livro restrito continua aparecendo no site com seus capítulos e sua capa; só o áudio fica retido. Quem pode editar o livro sempre pode ouvi-lo. Dá-lo a outros ouvintes é trabalho de uma extensão como o Volumina Pro, ou da linha de comando."
 
-#: src/Admin/Settings.php:148
+#: src/Admin/Settings.php:176
 msgid "Listening"
 msgstr "Escuta"
 
-#: src/Admin/Settings.php:149
+#: src/Admin/Settings.php:177
 msgid "Who may listen, and where the player appears."
 msgstr "Quem pode ouvir, e onde o player aparece."
 
-#: src/Admin/Settings.php:153
+#: src/Admin/Settings.php:181
 msgid "How an audiobook looks on the page. A block can differ from these."
 msgstr "Como um audiolivro aparece na página. Um bloco pode diferir disto."
 
-#: src/Admin/Settings.php:156
+#: src/Admin/Settings.php:184
 msgid "Housekeeping"
 msgstr "Manutenção"
 
-#: src/Admin/Settings.php:157
+#: src/Admin/Settings.php:185
 msgid "For when something goes wrong, and for when the plugin goes."
 msgstr "Para quando algo dá errado, e para quando o plugin vai embora."
 
@@ -1413,11 +1405,11 @@ msgstr "Manter os padrões"
 msgid "You cannot change these settings."
 msgstr "Você não pode alterar estas configurações."
 
-#: src/Admin/WelcomeScreen.php:155
+#: src/Admin/WelcomeScreen.php:156
 msgid "Open the settings — two of them matter"
 msgstr "Abrir as configurações: duas delas importam"
 
-#: src/Admin/WelcomeScreen.php:171
+#: src/Admin/WelcomeScreen.php:172
 msgid "Two settings decide how it behaves: who may listen by default, and whether book pages show the player. Save the settings once, or keep the defaults, and this step is done."
 msgstr "Duas configurações decidem como ele se comporta: quem pode ouvir por padrão e se as páginas de livro mostram o player. Salve as configurações uma vez, ou mantenha os padrões, e este passo está feito."
 
@@ -1425,7 +1417,7 @@ msgstr "Duas configurações decidem como ele se comporta: quem pode ouvir por p
 msgid "Leave it at zero and the chapters add up to it. To say otherwise, type it as h:mm:ss, like 9:30:00, or in whole seconds."
 msgstr "Deixe em zero e os capítulos somam a duração. Para indicar outra, escreva como h:mm:ss, por exemplo 9:30:00, ou em segundos inteiros."
 
-#: src/Admin/ChapterMetaBox.php:248
+#: src/Admin/ChapterMetaBox.php:255
 msgid "Filled in from the audio file. To correct it, type it as h:mm:ss, like 1:05:09, or in whole seconds."
 msgstr "Preenchida a partir do arquivo de áudio. Para corrigir, escreva como h:mm:ss, por exemplo 1:05:09, ou em segundos inteiros."
 
@@ -1434,7 +1426,7 @@ msgid "This chapter's audio could not be loaded. Check the address in the browse
 msgstr "Não foi possível carregar o áudio deste capítulo. Verifique o endereço no console do navegador."
 
 #: src/Player/Player.php:101
-#: templates/player.php:181
+#: templates/player.php:186
 msgid "Mute"
 msgstr "Silenciar"
 
@@ -1448,16 +1440,18 @@ msgstr "Ativar o som"
 msgid "Volume %d%%"
 msgstr "Volume %d%%"
 
-#: templates/player.php:184
+#: templates/player.php:189
 msgid "Volume"
 msgstr "Volume"
 
+#. Plugin Name of the plugin
 #: volumina.php
 msgid "Volumina — Audiobook Player and Library"
 msgstr "Volumina — Reprodutor e biblioteca de audiolivros"
 
-#: src/Blocks/LibraryBlock.php:183
 #. translators: %s: the narrator's name.
+#: src/Blocks/LibraryBlock.php:187
+#, php-format
 msgid "Narrated by %s"
 msgstr "Narrado por %s"
 
@@ -1513,3 +1507,46 @@ msgstr "livros"
 #: blocks/library/index.js:109
 msgid "Genre"
 msgstr "Gênero"
+
+#: src/Admin/AppearancePreview.php:32
+#: src/Admin/SettingsScreen.php:293
+msgid "Preview"
+msgstr "Pré-visualização"
+
+#: src/Admin/AppearancePreview.php:45
+msgid "Publish an audiobook to see it here."
+msgstr "Publique um audiolivro para vê-lo aqui."
+
+#: src/Admin/AppearancePreview.php:50
+msgid "Show it playing"
+msgstr "Ver tocando"
+
+#: src/Admin/Settings.php:253
+msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. A block can choose its own."
+msgstr "Como um audiolivro é organizado e vestido: a capa, os dados, o player e os capítulos. Um bloco pode escolher o seu."
+
+#: src/Admin/Settings.php:280
+msgid "One colour for the play button, the progress bar and the current chapter: one from your theme's palette, which follows the theme if its colours change, or one of your own. Never for text, so the theme's contrast is never at risk; the play button's icon turns black or white, whichever reads. With none, the player draws itself in the text colour, as it does out of the box."
+msgstr "Uma cor para o botão de reproduzir, a barra de progresso e o capítulo atual: uma da paleta do seu tema, que acompanha o tema se as cores dele mudarem, ou uma sua. Nunca para texto, então o contraste do tema nunca corre risco; o ícone do botão de reproduzir fica preto ou branco, o que for legível. Sem nenhuma, o player se desenha na cor do texto, como recém-instalado."
+
+#: src/Admin/SettingsScreen.php:154
+#: src/Admin/SettingsScreen.php:168
+msgid "General"
+msgstr "Geral"
+
+#: src/Admin/SettingsScreen.php:155
+#: src/Admin/SettingsScreen.php:169
+msgid "Appearance"
+msgstr "Aparência"
+
+#: src/Admin/SettingsScreen.php:193
+msgid "Settings sections"
+msgstr "Seções de configurações"
+
+#: src/Support/Settings/Field.php:278
+msgid "Custom…"
+msgstr "Personalizada…"
+
+#: src/Support/Settings/Field.php:289
+msgid "Custom colour"
+msgstr "Cor personalizada"
