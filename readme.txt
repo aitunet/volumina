@@ -117,8 +117,8 @@ It is tested against a block theme and a classic one, and it declares no colours
 its own: every piece of text inherits your theme's palette, and its contrast with
 it. If you want colour, choose it under Audiobooks, Settings, Appearance: one for
 the play button, the progress bar and the current chapter, and two for a background
-of its own, on which the text turns light or dark by itself so that it always reads. The player is laid out for a phone first and
-adapts upward.
+of its own, on which the text turns light or dark by itself so that it always reads.
+The player is laid out for a phone first and adapts upward.
 
 = Is it accessible? =
 
