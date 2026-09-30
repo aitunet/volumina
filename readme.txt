@@ -42,9 +42,9 @@ for somebody who never asked to be identified.
 * Four blocks: **Audiobook**, **Chapter list**, **Continue listening** and **Audiobook list**, all of
   which render the same markup the book page does.
 * Books that are public, or restricted to listeners you have given them to.
-* A choice of where the cover goes and an accent colour from your theme's palette,
-  for the whole site or for one block; and a template registry an extension can
-  add its own designs to.
+* A choice of where the cover goes, a colour for the controls, and two background
+  colours that give the book a gradient panel with text that always reads; and a
+  template registry an extension can add its own designs to.
 * HTTP range requests, so seeking in a long file works properly and a phone can
   resume mid-chapter without downloading what it already heard.
 
@@ -115,9 +115,9 @@ listener's place in every book.
 
 It is tested against a block theme and a classic one, and it declares no colours of
 its own: every piece of text inherits your theme's palette, and its contrast with
-it. If you want a colour, pick one of your theme's palette as an accent under
-Audiobooks, Settings, Appearance: it goes on the play button, the progress bar and
-the current chapter, never on text. The player is laid out for a phone first and
+it. If you want colour, choose it under Audiobooks, Settings, Appearance: one for
+the play button, the progress bar and the current chapter, and two for a background
+of its own, on which the text turns light or dark by itself so that it always reads. The player is laid out for a phone first and
 adapts upward.
 
 = Is it accessible? =
@@ -140,8 +140,8 @@ one any other developer can use.
 3. The four blocks in the editor, previewed exactly as the front end renders them.
 4. The audiobook screen, with its chapters ordered by dragging.
 5. Settings in two tabs, each section explaining itself: General, for who may listen
-   and where the player appears, and Appearance, with the theme's palette offered as
-   the accent and a live preview.
+   and where the player appears, and Appearance, with three colour pickers (the
+   theme's palette offered as swatches) and a live preview.
 6. The welcome page, under Dashboard: what the plugin is and is not, and three steps
    to a first audiobook.
 

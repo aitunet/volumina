@@ -102,7 +102,7 @@ msgstr "Duración total"
 msgid "Who can listen"
 msgstr "Quién puede escuchar"
 
-#: src/Admin/Settings.php:260
+#: src/Admin/Settings.php:251
 #: blocks/audiobook/index.js:27
 #: blocks/shared/presentation.js:80
 msgid "Cover"
@@ -258,7 +258,7 @@ msgid "Volumina Log"
 msgstr "Registro de Volumina"
 
 #: src/Admin/LogScreen.php:48
-#: src/Admin/Settings.php:287
+#: src/Admin/Settings.php:300
 msgid "Log"
 msgstr "Registro"
 
@@ -391,31 +391,31 @@ msgstr "Informes de escucha"
 msgid "You are not allowed to view this page."
 msgstr "No tienes permiso para ver esta página."
 
-#: src/Admin/Settings.php:228
+#: src/Admin/Settings.php:219
 msgid "New audiobooks are"
 msgstr "Los audiolibros nuevos son"
 
-#: src/Admin/Settings.php:232
+#: src/Admin/Settings.php:223
 msgid "What a book you add from now on starts as. Every book can be changed on its own screen, and changing this never changes a book that already exists."
 msgstr "Lo que será un libro que añadas a partir de ahora. Cada libro puede cambiarse en su propia pantalla, y cambiar esto nunca cambia un libro que ya existe."
 
-#: src/Admin/Settings.php:239
+#: src/Admin/Settings.php:230
 msgid "Book pages"
 msgstr "Páginas de libro"
 
-#: src/Admin/Settings.php:242
+#: src/Admin/Settings.php:233
 msgid "Show the player and the chapters on an audiobook page automatically."
 msgstr "Mostrar automáticamente el reproductor y los capítulos en la página de un audiolibro."
 
-#: src/Admin/Settings.php:290
+#: src/Admin/Settings.php:303
 msgid "Record notable events, such as a listener being turned away or an audio file that has gone missing. Useful when something is wrong and nobody can say quite what."
 msgstr "Registrar sucesos destacables, como que alguien no pudiera escuchar un libro o que falte un archivo de audio. Útil cuando algo va mal y nadie sabe decir qué."
 
-#: src/Admin/Settings.php:297
+#: src/Admin/Settings.php:310
 msgid "On uninstall"
 msgstr "Al desinstalar"
 
-#: src/Admin/Settings.php:300
+#: src/Admin/Settings.php:313
 msgid "Delete this plugin's tables and settings when it is uninstalled. Off means your listeners keep their places if you ever reinstall."
 msgstr "Borrar las tablas y los ajustes de este plugin cuando se desinstale. Desactivado significa que, si algún día lo reinstalas, quienes escuchan conservan su sitio."
 
@@ -1308,44 +1308,38 @@ msgstr "Quién puede escuchar por defecto, si se guarda un registro y qué borra
 msgid "Open the settings"
 msgstr "Abrir los ajustes"
 
-#: src/Admin/Settings.php:197
-msgid "What the template prefers"
-msgstr "Lo que prefiera la plantilla"
-
-#: src/Admin/Settings.php:198
 #: blocks/shared/presentation.js:111
 msgid "None"
 msgstr "Ninguno"
 
-#: src/Admin/Settings.php:249
+#: src/Admin/Settings.php:240
 #: blocks/shared/presentation.js:65
 msgid "Template"
 msgstr "Plantilla"
 
-#: src/Admin/Settings.php:264
+#: src/Admin/Settings.php:255
 msgid "Where the template puts it"
 msgstr "Donde la ponga la plantilla"
 
-#: src/Admin/Settings.php:265
+#: src/Admin/Settings.php:256
 #: blocks/shared/presentation.js:86
 msgid "Beside the details"
 msgstr "Al lado de la ficha"
 
-#: src/Admin/Settings.php:266
+#: src/Admin/Settings.php:257
 #: blocks/shared/presentation.js:90
 msgid "Above the details"
 msgstr "Encima de la ficha"
 
-#: src/Admin/Settings.php:267
+#: src/Admin/Settings.php:258
 #: blocks/shared/presentation.js:92
 msgid "Not shown"
 msgstr "Sin mostrar"
 
-#: src/Admin/Settings.php:269
+#: src/Admin/Settings.php:260
 msgid "Where the cover goes on an audiobook page. On a narrow screen, beside becomes above once there is no room."
 msgstr "Dónde va la portada en la página de un audiolibro. En una pantalla estrecha, «al lado» pasa a «encima» cuando no cabe."
 
-#: src/Admin/Settings.php:276
 #: blocks/shared/presentation.js:105
 msgid "Accent colour"
 msgstr "Color de acento"
@@ -1521,13 +1515,9 @@ msgstr "Publica un audiolibro para verlo aquí."
 msgid "Show it playing"
 msgstr "Verlo reproduciendo"
 
-#: src/Admin/Settings.php:253
+#: src/Admin/Settings.php:244
 msgid "How an audiobook is laid out and dressed: its cover, details, player and chapters. A block can choose its own."
 msgstr "Cómo se distribuye y se viste un audiolibro: su portada, sus datos, el reproductor y los capítulos. Un bloque puede elegir la suya."
-
-#: src/Admin/Settings.php:280
-msgid "One colour for the play button, the progress bar and the current chapter: one from your theme's palette, which follows the theme if its colours change, or one of your own. Never for text, so the theme's contrast is never at risk; the play button's icon turns black or white, whichever reads. With none, the player draws itself in the text colour, as it does out of the box."
-msgstr "Un color para el botón de reproducir, la barra de progreso y el capítulo actual: uno de la paleta de tu tema, que sigue al tema si cambian sus colores, o uno propio. Nunca para texto, así que el contraste del tema nunca corre peligro; el icono del botón de reproducir se vuelve negro o blanco, el que se lea. Sin ninguno, el reproductor se dibuja en el color del texto, como recién instalado."
 
 #: src/Admin/SettingsScreen.php:154
 #: src/Admin/SettingsScreen.php:168
@@ -1543,10 +1533,26 @@ msgstr "Apariencia"
 msgid "Settings sections"
 msgstr "Secciones de ajustes"
 
-#: src/Support/Settings/Field.php:278
-msgid "Custom…"
-msgstr "Personalizado…"
+#: src/Admin/Settings.php:267
+msgid "Background, first colour"
+msgstr "Fondo, primer color"
 
-#: src/Support/Settings/Field.php:289
-msgid "Custom colour"
-msgstr "Color personalizado"
+#: src/Admin/Settings.php:271
+msgid "Where the background's gradient starts; in Stage and Vinyl, the glow. Empty keeps the template's colour."
+msgstr "Donde empieza el degradado del fondo; en Stage y Vinyl, el resplandor. Vacío, se usa el color de la plantilla."
+
+#: src/Admin/Settings.php:278
+msgid "Background, second colour"
+msgstr "Fondo, segundo color"
+
+#: src/Admin/Settings.php:282
+msgid "Where the gradient ends: the ground most of the book sits on. Empty keeps the template's colour. With Basic, choosing either colour gives the book a background of its own. The text turns light or dark by itself so that it always reads; if no text could read on both colours, the first is softened toward the second."
+msgstr "Donde termina el degradado: el fondo sobre el que queda casi todo el libro. Vacío, se usa el color de la plantilla. Con Básica, elegir cualquiera de los dos colores le da al libro un fondo propio. El texto se vuelve claro u oscuro por sí solo para que siempre se lea; si ningún texto pudiera leerse sobre ambos colores, el primero se suaviza hacia el segundo."
+
+#: src/Admin/Settings.php:289
+msgid "Controls colour"
+msgstr "Color de los controles"
+
+#: src/Admin/Settings.php:293
+msgid "The play button, the progress bar and the current chapter. Empty keeps the template's colour. The play button's icon turns black or white, whichever reads."
+msgstr "El botón de reproducir, la barra de avance y el capítulo actual. Vacío, se usa el color de la plantilla. El icono del botón de reproducir se vuelve negro o blanco, el que se lea mejor."
