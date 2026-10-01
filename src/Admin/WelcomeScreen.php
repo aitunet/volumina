@@ -38,7 +38,7 @@ final class WelcomeScreen implements Screen, HasAssets, HasParent {
 	/**
 	 * Where "Read the guide" points. A page the account holder publishes.
 	 */
-	private const GUIDE_URL = 'https://tunetdesign.com/volumina/';
+	private const GUIDE_URL = 'https://www.tunetdesign.com/docs/volumina/';
 
 	/**
 	 * The page slug.

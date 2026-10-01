@@ -323,7 +323,7 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 				),
 			),
 			'<p><strong>' . esc_html__( 'More', 'volumina' ) . '</strong></p>'
-			. '<p><a href="https://tunetdesign.com/volumina/">' . esc_html__( 'Volumina documentation', 'volumina' ) . '</a></p>'
+			. '<p><a href="https://www.tunetdesign.com/docs/volumina/">' . esc_html__( 'Volumina documentation', 'volumina' ) . '</a></p>'
 		);
 	}
 }
