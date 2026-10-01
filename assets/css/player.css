@@ -11,7 +11,13 @@
  * no colour here that is known to be readable against an unknown background.
  */
 
+/*
+ * A size container, so a template sizes its buttons by the player's width
+ * rather than the screen's: a narrow column on a wide page, or the
+ * Appearance tab's preview, is narrow however wide the window.
+ */
 .volumina-player {
+	container: volumina-player / inline-size;
 	margin-block: 1.5em;
 	padding: 1em;
 	border: 1px solid;
@@ -199,6 +205,11 @@
 	margin: 0;
 }
 
+/* "Sleep timer" on one line: a label broken in two reads as two labels. */
+.volumina-player-option label {
+	white-space: nowrap;
+}
+
 .volumina-player-option select {
 	font: inherit;
 	min-height: 44px;
@@ -256,6 +267,12 @@
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 	cursor: pointer;
+
+	/*
+	 * A button's baseline is its last line; the list number would sit beside
+	 * the second line of a long title. Top keeps it beside the first.
+	 */
+	vertical-align: top;
 }
 
 .volumina-chapter-list .volumina-chapter-item .volumina-chapter-row .volumina-chapter-play:focus-visible {

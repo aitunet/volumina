@@ -11,6 +11,7 @@ namespace TUNET\Volumina\Admin;
 
 use TUNET\Volumina\PostTypes\Book;
 use TUNET\Volumina\PostTypes\Chapter;
+use TUNET\Volumina\Support\AssetVersion;
 use TUNET\Volumina\Support\Duration;
 use TUNET\Volumina\Support\Registrable;
 use WP_Post;
@@ -82,14 +83,14 @@ final class ChapterList implements Registrable {
 			'volumina-admin-chapters',
 			plugins_url( 'assets/css/admin-chapters.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/admin-chapters.css', PLUGIN_FILE, VERSION )
 		);
 
 		wp_enqueue_script(
 			'volumina-admin-chapters',
 			plugins_url( 'assets/js/admin-chapters.js', PLUGIN_FILE ),
 			array(),
-			VERSION,
+			AssetVersion::of( 'assets/js/admin-chapters.js', PLUGIN_FILE, VERSION ),
 			true
 		);
 

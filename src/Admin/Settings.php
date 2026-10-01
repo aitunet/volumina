@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * What the site has chosen, and what follows from it.
  *
- * Seven settings, and every one of them has to earn its place: a setting is a
+ * Nine settings, and every one of them has to earn its place: a setting is a
  * question asked of somebody who wanted to publish an audiobook. Anything with
  * an obviously right answer is not a setting, it is a decision this plugin
  * should have made.
@@ -36,6 +36,12 @@ final class Settings implements Registrable {
 	 * The option the settings live in.
 	 */
 	public const OPTION = 'volumina_settings';
+
+	/**
+	 * The option group the Appearance tab's form posts as. Volumina's own
+	 * option is in it, and an extension adds its own with `register_setting()`.
+	 */
+	public const APPEARANCE_GROUP = 'volumina_appearance';
 
 	/**
 	 * The option the log lives in.
@@ -61,6 +67,28 @@ final class Settings implements Registrable {
 		// filter, not the `update_option` action: the action only fires when the
 		// value changed, and saving the form as it stands is a decision too.
 		add_filter( 'pre_update_option_' . self::OPTION, array( $this, 'saved' ) );
+		add_filter( 'allowed_options', array( $this, 'allow_in_appearance' ) );
+	}
+
+	/**
+	 * Lets the Appearance form save Volumina's option too, without a second
+	 * `register_setting()` — which would attach the sanitize callback twice.
+	 *
+	 * @param mixed $allowed Option group => option names.
+	 * @return array<string, array<int, string>>
+	 */
+	public function allow_in_appearance( $allowed ): array {
+		$allowed = is_array( $allowed ) ? $allowed : array();
+
+		$list = isset( $allowed[ self::APPEARANCE_GROUP ] ) && is_array( $allowed[ self::APPEARANCE_GROUP ] ) ? $allowed[ self::APPEARANCE_GROUP ] : array();
+
+		if ( ! in_array( self::OPTION, $list, true ) ) {
+			$list[] = self::OPTION;
+		}
+
+		$allowed[ self::APPEARANCE_GROUP ] = $list;
+
+		return $allowed;
 	}
 
 	/**
@@ -160,24 +188,21 @@ final class Settings implements Registrable {
 	}
 
 	/**
-	 * The accent choices: none, what the template prefers, then the theme's palette.
+	 * The theme's palette, offered as swatches in the colour fields' picker.
 	 *
-	 * @return array<string, array{label: string, color?: string}>
+	 * @return array<string, array{label: string, color: string}>
 	 */
-	public static function accent_choices(): array {
-		$choices = array(
-			''     => array( 'label' => __( 'What the template prefers', 'volumina' ) ),
-			'none' => array( 'label' => __( 'None', 'volumina' ) ),
-		);
+	public static function swatches(): array {
+		$swatches = array();
 
 		foreach ( Palette::colors() as $slug => $color ) {
-			$choices[ $slug ] = array(
+			$swatches[ $slug ] = array(
 				'label' => $color['name'],
 				'color' => $color['color'],
 			);
 		}
 
-		return $choices;
+		return $swatches;
 	}
 
 	/**
@@ -213,10 +238,10 @@ final class Settings implements Registrable {
 					'key'         => 'template',
 					'section'     => 'presentation',
 					'label'       => __( 'Template', 'volumina' ),
-					'type'        => 'radio',
+					'type'        => 'cards',
 					'default'     => Templates::BASIC,
-					'choices'     => array( Templates::class, 'choices' ),
-					'description' => __( 'How an audiobook is laid out and dressed: its cover, details, player and chapters. Volumina brings one; an extension can add more. A block can choose its own.', 'volumina' ),
+					'choices'     => array( Templates::class, 'cards' ),
+					'description' => __( 'How an audiobook is laid out and dressed: its cover, details, player and chapters. A block can choose its own.', 'volumina' ),
 				)
 			),
 			new Field(
@@ -237,13 +262,35 @@ final class Settings implements Registrable {
 			),
 			new Field(
 				array(
+					'key'         => 'panel_start',
+					'section'     => 'presentation',
+					'label'       => __( 'Background, first colour', 'volumina' ),
+					'type'        => 'color',
+					'default'     => '',
+					'choices'     => array( self::class, 'swatches' ),
+					'description' => __( 'Where the background\'s gradient starts; in Stage and Vinyl, the glow. Empty keeps the template\'s colour.', 'volumina' ),
+				)
+			),
+			new Field(
+				array(
+					'key'         => 'panel_end',
+					'section'     => 'presentation',
+					'label'       => __( 'Background, second colour', 'volumina' ),
+					'type'        => 'color',
+					'default'     => '',
+					'choices'     => array( self::class, 'swatches' ),
+					'description' => __( 'Where the gradient ends: the ground most of the book sits on. Empty keeps the template\'s colour. With Basic, choosing either colour gives the book a background of its own. The text turns light or dark by itself so that it always reads; if no text could read on both colours, the first is softened toward the second.', 'volumina' ),
+				)
+			),
+			new Field(
+				array(
 					'key'         => 'accent',
 					'section'     => 'presentation',
-					'label'       => __( 'Accent colour', 'volumina' ),
-					'type'        => 'swatches',
+					'label'       => __( 'Controls colour', 'volumina' ),
+					'type'        => 'color',
 					'default'     => '',
-					'choices'     => array( self::class, 'accent_choices' ),
-					'description' => __( 'One colour from your theme\'s palette for the play button, the progress bar and the current chapter. Never for text, so the theme\'s contrast is never at risk. With none, the player draws itself in the text colour, as it does out of the box.', 'volumina' ),
+					'choices'     => array( self::class, 'swatches' ),
+					'description' => __( 'The play button, the progress bar and the current chapter. Empty keeps the template\'s colour. The play button\'s icon turns black or white, whichever reads.', 'volumina' ),
 				)
 			),
 			new Field(

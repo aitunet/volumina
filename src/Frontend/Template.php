@@ -10,6 +10,7 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\Frontend;
 
 use InvalidArgumentException;
+use TUNET\Volumina\Support\Color;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,12 +49,22 @@ final class Template {
 	private array $defaults;
 
 	/**
+	 * A picture of the template, for choosing it: an http(s) URL, or ''.
+	 *
+	 * @var string
+	 */
+	private string $preview;
+
+	/**
 	 * Describes a template.
 	 *
 	 * @param string                $id       A slug: lower-case letters, digits and single dashes. Prefix it with your plugin's.
 	 * @param string                $label    Its name, already translated.
 	 * @param string                $style    A registered stylesheet handle, or empty for no stylesheet of its own.
-	 * @param array<string, string> $defaults `cover` (side, top or none) and `accent` (a palette slug).
+	 * @param array<string, string> $defaults `cover` (side, top or none), `accent` (a palette slug), and
+	 *                                        `panel_start` and `panel_end` (`#rrggbb`): the colours its
+	 *                                        panel is painted in when a site chooses only one of them.
+	 * @param string                $preview  A picture of it, an http(s) URL, for choosing it; empty for none.
 	 *
 	 * @throws InvalidArgumentException When the id is not a slug.
 	 */
@@ -61,7 +72,8 @@ final class Template {
 		string $id,
 		private string $label,
 		private string $style = '',
-		array $defaults = array()
+		array $defaults = array(),
+		string $preview = ''
 	) {
 		$id = strtolower( trim( $id ) );
 
@@ -71,6 +83,7 @@ final class Template {
 
 		$this->id       = $id;
 		$this->defaults = self::filter( $defaults );
+		$this->preview  = self::url( $preview );
 	}
 
 	/**
@@ -97,10 +110,17 @@ final class Template {
 	/**
 	 * What it prefers by default, for the keys it set validly.
 	 *
-	 * @return array{cover?: string, accent?: string}
+	 * @return array{cover?: string, accent?: string, panel_start?: string, panel_end?: string}
 	 */
 	public function defaults(): array {
 		return $this->defaults;
+	}
+
+	/**
+	 * The picture used to choose this template, or ''.
+	 */
+	public function preview(): string {
+		return $this->preview;
 	}
 
 	/**
@@ -113,10 +133,26 @@ final class Template {
 	}
 
 	/**
+	 * An http(s) URL as given, anything else ''. Plain PHP, so it can be tested
+	 * without WordPress; the markup escapes it again with `esc_url()`.
+	 *
+	 * @param string $url What was given.
+	 */
+	private static function url( string $url ): string {
+		$url = trim( $url );
+
+		if ( 1 !== preg_match( '#^https?://#i', $url ) || false === filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return '';
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Keeps only what a template may decide, and only when it is valid.
 	 *
 	 * @param array<string, mixed> $defaults As given.
-	 * @return array{cover?: string, accent?: string}
+	 * @return array{cover?: string, accent?: string, panel_start?: string, panel_end?: string}
 	 */
 	private static function filter( array $defaults ): array {
 		$kept = array();
@@ -128,6 +164,14 @@ final class Template {
 		if ( isset( $defaults['accent'] ) && is_string( $defaults['accent'] )
 			&& 1 === preg_match( '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $defaults['accent'] ) ) {
 			$kept['accent'] = $defaults['accent'];
+		}
+
+		foreach ( array( 'panel_start', 'panel_end' ) as $key ) {
+			$color = is_string( $defaults[ $key ] ?? null ) ? Color::normalize( $defaults[ $key ] ) : '';
+
+			if ( '' !== $color ) {
+				$kept[ $key ] = $color;
+			}
 		}
 
 		return $kept;

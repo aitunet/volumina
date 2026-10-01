@@ -203,4 +203,87 @@ final class FieldTest extends TestCase {
 		$this->assertSame( 'Record notable events.', $field->description() );
 		$this->assertFalse( $field->default_value() );
 	}
+
+	/**
+	 * A cards field keeps a known choice and falls back to its default otherwise.
+	 */
+	public function test_cards_keep_a_known_choice(): void {
+		$field = new Field(
+			array(
+				'key'     => 'template',
+				'type'    => 'cards',
+				'default' => 'basic',
+				'choices' => array(
+					'basic' => array(
+						'label' => 'Basic',
+						'image' => '',
+					),
+					'pulse' => array(
+						'label' => 'Pulse',
+						'image' => 'https://example.com/p.png',
+					),
+				),
+			)
+		);
+
+		$this->assertSame( 'pulse', $field->sanitize( 'pulse' ) );
+		$this->assertSame( 'basic', $field->sanitize( 'nope' ) );
+		$this->assertTrue( $field->labels_itself() );
+	}
+
+	/**
+	 * A colour field: empty for "the template's", or a colour.
+	 */
+	private function colour_field(): Field {
+		return new Field(
+			array(
+				'key'     => 'accent',
+				'type'    => 'color',
+				'default' => '',
+				'choices' => array(
+					'amber' => array(
+						'label' => 'Amber',
+						'color' => '#e0a83a',
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * A colour is stored spelled one way.
+	 */
+	public function test_a_colour_field_stores_a_colour(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame( '#aabbcc', $field->sanitize( '#ABC' ) );
+		$this->assertSame( '#123456', $field->sanitize( '#123456' ) );
+		$this->assertFalse( $field->labels_itself() );
+	}
+
+	/**
+	 * Empty is a choice: the template's colour.
+	 */
+	public function test_a_colour_field_may_be_empty(): void {
+		$this->assertSame( '', $this->colour_field()->sanitize( '' ) );
+	}
+
+	/**
+	 * Anything that is not a colour — a palette's slug, CSS, an array — is empty.
+	 */
+	public function test_a_colour_field_refuses_anything_else(): void {
+		$field = $this->colour_field();
+
+		$this->assertSame( '', $field->sanitize( 'amber' ) );
+		$this->assertSame( '', $field->sanitize( 'red;background:url(x)' ) );
+		$this->assertSame( '', $field->sanitize( 'ace' ) );
+		$this->assertSame( '', $field->sanitize( array( '#123456' ) ) );
+	}
+
+	/**
+	 * The swatches offered in the picker are the choices' colours.
+	 */
+	public function test_a_colour_field_offers_its_choices_as_swatches(): void {
+		$this->assertSame( array( '#e0a83a' ), $this->colour_field()->swatches() );
+	}
 }

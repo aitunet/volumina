@@ -9,6 +9,8 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Support\Settings;
 
+use TUNET\Volumina\Support\Color;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -34,12 +36,15 @@ final class Field {
 	 *
 	 *     @type string   $key         Required. Key within the option array.
 	 *     @type string   $label       Required. What to call it.
-	 *     @type string   $type        text, textarea, number, checkbox, select, radio or swatches.
+	 *     @type string   $type        text, textarea, number, checkbox, select, radio, swatches, cards
+	 *                                 or color (a `#rrggbb` picked with WordPress's colour picker, or
+	 *                                 empty for none chosen).
 	 *     @type mixed    $default     What it holds when nobody has chosen.
 	 *     @type string   $description Shown under the control. Every field gets one.
 	 *     @type array    $choices     value => label, for select and radio; value => { label, color }
-	 *                                 for swatches. A callable returning that array is resolved when
-	 *                                 the choices are first needed, for lists that depend on the theme.
+	 *                                 for swatches, and for color, whose colours become the picker's
+	 *                                 swatches. A callable returning that array is resolved when the
+	 *                                 choices are first needed, for lists that depend on the theme.
 	 *     @type callable $sanitize    Overrides the default for the type.
 	 *     @type string   $section     Which section of the screen it belongs to; empty for none.
 	 * }
@@ -86,7 +91,7 @@ final class Field {
 	 * text beside it, or a fieldset of radios with each choice.
 	 */
 	public function labels_itself(): bool {
-		return in_array( $this->args['type'], array( 'checkbox', 'radio', 'swatches' ), true );
+		return in_array( $this->args['type'], array( 'checkbox', 'radio', 'swatches', 'cards' ), true );
 	}
 
 	/**
@@ -145,6 +150,10 @@ final class Field {
 			return call_user_func( $this->args['sanitize'], $value );
 		}
 
+		if ( 'color' === $this->args['type'] ) {
+			return $this->sanitize_color( $value );
+		}
+
 		// A form field arrives as a string or not at all. An array in its
 		// place — `name[]` typed into a crafted form — is nothing to store,
 		// and casting it to a string would only raise a warning.
@@ -162,6 +171,7 @@ final class Field {
 			case 'select':
 			case 'radio':
 			case 'swatches':
+			case 'cards':
 				return array_key_exists( (string) $value, $this->choices() )
 					? (string) $value
 					: (string) $this->default_value();
@@ -172,6 +182,61 @@ final class Field {
 			default:
 				return sanitize_text_field( (string) $value );
 		}
+	}
+
+	/**
+	 * A colour field's value: a `#rrggbb`, or empty for none chosen.
+	 *
+	 * Only a value spelled as a hex colour is one; a palette slug such as
+	 * `bad` or `ace` must not turn into a colour by accident.
+	 *
+	 * @param mixed $value Candidate value.
+	 */
+	private function sanitize_color( $value ): string {
+		if ( ! is_string( $value ) || 1 !== preg_match( '/^#(?:[0-9a-fA-F]{3}){1,2}$/', trim( $value ) ) ) {
+			return '';
+		}
+
+		return Color::normalize( $value );
+	}
+
+	/**
+	 * The colours a colour field offers as swatches in the picker: its
+	 * choices' colours, in order.
+	 *
+	 * @return array<int, string>
+	 */
+	public function swatches(): array {
+		$swatches = array();
+
+		foreach ( $this->choices() as $choice ) {
+			$color = Color::normalize( is_array( $choice ) ? (string) ( $choice['color'] ?? '' ) : '' );
+
+			if ( '' !== $color ) {
+				$swatches[] = $color;
+			}
+		}
+
+		return $swatches;
+	}
+
+	/**
+	 * A hex box that `color-field.js` turns into WordPress's colour picker,
+	 * with the choices' colours as swatches. Without JavaScript it is a plain
+	 * text box that works. Empty means none chosen.
+	 *
+	 * @param string $id    The box's id.
+	 * @param string $name  The name attribute, already namespaced by the group.
+	 * @param mixed  $value What it currently holds.
+	 */
+	private function render_color( string $id, string $name, $value ): void {
+		printf(
+			'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="volumina-color-picker" data-volumina-color data-swatches="%4$s" maxlength="7" size="8" placeholder="#rrggbb" />',
+			esc_attr( $id ),
+			esc_attr( $name ),
+			esc_attr( Color::normalize( is_string( $value ) ? $value : '' ) ),
+			esc_attr( (string) wp_json_encode( $this->swatches() ) )
+		);
 	}
 
 	/**
@@ -265,6 +330,34 @@ final class Field {
 						esc_attr( (string) $choice ),
 						checked( (string) $value, (string) $choice, false ),
 						esc_attr( '' === $color ? 'transparent' : $color ),
+						esc_html( $label )
+					);
+				}
+
+				echo '</fieldset>';
+				break;
+
+			case 'color':
+				$this->render_color( $id, $name, $value );
+				break;
+
+			case 'cards':
+				// Radios drawn as cards, each with a picture of what it chooses.
+				// The picture is decoration (empty alt): the name under it is the
+				// label, so nothing depends on seeing it. Arrow keys move between
+				// the choices, as they do for any radio group.
+				printf( '<fieldset class="volumina-card-choices"><legend class="screen-reader-text">%s</legend>', esc_html( $this->label() ) );
+
+				foreach ( $this->choices() as $choice => $card ) {
+					$label = is_array( $card ) ? (string) ( $card['label'] ?? $choice ) : (string) $card;
+					$image = is_array( $card ) ? (string) ( $card['image'] ?? '' ) : '';
+
+					printf(
+						'<label class="volumina-card-choice"><span class="volumina-card-choice-picture">%4$s</span><span class="volumina-card-choice-name"><input type="radio" name="%1$s" value="%2$s"%3$s /> %5$s</span></label>',
+						esc_attr( $name ),
+						esc_attr( (string) $choice ),
+						checked( (string) $value, (string) $choice, false ),
+						'' !== $image ? sprintf( '<img src="%s" alt="" width="240" height="150" loading="lazy" decoding="async" />', esc_url( $image ) ) : '',
 						esc_html( $label )
 					);
 				}

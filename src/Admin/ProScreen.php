@@ -9,6 +9,8 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Admin;
 
+use TUNET\Volumina\Support\AssetVersion;
+
 use const TUNET\Volumina\PLUGIN_FILE;
 use const TUNET\Volumina\VERSION;
 
@@ -76,7 +78,7 @@ final class ProScreen implements Screen, HasAssets {
 			'volumina-admin-presentation',
 			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/admin-presentation.css', PLUGIN_FILE, VERSION )
 		);
 	}
 

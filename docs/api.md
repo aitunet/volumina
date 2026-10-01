@@ -257,18 +257,21 @@ add_action( 'volumina_register_templates', function ( $registry ) {
 ```
 
 `TUNET\Volumina\Frontend\Template` and `TemplateRegistry` are plain PHP. A template's id
-is a slug; its defaults hold only `cover` (`side`, `top` or `none`) and `accent` (a
-palette slug); anything else is dropped. The registry keeps insertion order and one
+is a slug; its defaults hold only `cover` (`side`, `top` or `none`), `accent` (a
+palette slug), and, since 2026-09-30, `panel_start` and `panel_end` (`#rrggbb`: the
+colours its panel is painted in when a site chooses only one of the two); anything else
+is dropped. The registry keeps insertion order and one
 template per id, so adding an id again replaces it where it stands. The first template
 registered is what a site starts on, and that is `basic`: do not rely on being first.
 
 ```php
 final class Template {
-	public function __construct( string $id, string $label, string $style = '', array $defaults = array() );
+	public function __construct( string $id, string $label, string $style = '', array $defaults = array(), string $preview = '' );
 	public function id(): string;
 	public function label(): string;
 	public function style(): string;      // stylesheet handle, or ''
-	public function defaults(): array;    // { cover?, accent? }
+	public function defaults(): array;    // { cover?, accent?, panel_start?, panel_end? }
+	public function preview(): string;    // http(s) picture URL, or ''
 	public static function covers(): array;
 }
 
@@ -292,18 +295,46 @@ The wrapper of every rendering — `.volumina-book` on an audiobook,
 - with an accent, `volumina-has-accent` and two custom properties in its `style`
   attribute: `--volumina-accent`, the colour as six-digit hex, and
   `--volumina-accent-ink`, `#000000` or `#ffffff`, whichever contrasts more with it —
-  one of the two always reaches 4.5:1.
+  one of the two always reaches 4.5:1;
+- with background colours chosen (since 2026-09-30), `volumina-has-panel` and five more:
+  `--volumina-panel-start` and `--volumina-panel-end`, the panel's two colours, and
+  `--volumina-panel-ink`, `--volumina-panel-soft` (labels) and `--volumina-panel-line`,
+  which `Color::panel()` works out so that ink and soft reach 4.5:1 on both colours and on
+  every mix of the two. A template spreads the two as it likes — a gradient, a glow over a
+  ground — and sets its text in the inks; without them it paints its own. One colour
+  chosen takes the other from the template's `panel_start` / `panel_end` defaults, or,
+  for a template without them, is used for both (`Templates::panel()`).
 
 Resolution is, lowest to highest: the template's defaults, the site's settings, the
-block's own attributes. The accent is stored as a palette slug everywhere and turned into
-a colour at render time, so it follows the theme; a slug the active theme does not have
-means no accent.
+block's own attributes. The accent is stored as a palette slug, turned into a colour at
+render time so it follows the theme (a slug the active theme does not have means no
+accent), or, since 2026-09-30, as a colour of the site's own, `#rrggbb`, used as it is.
+`none` means no accent. `Templates::accent( $stored )` does that resolution.
+
+`\TUNET\Volumina\Frontend\Templates::resolve( array $overrides = array() )` is part of the
+contract: with no argument it answers what a book with no block overrides uses —
+`array{ template: Template, cover: string, accent: string, ink: string }`, `accent` a
+`#rrggbb` or `''` for none, `ink` the text colour that reads on it. Volumina Pro reads the
+site's accent through it to measure its panel glows.
 
 Inside the wrapper the markup is: `.volumina-book-head` holding `.volumina-book-cover`
 and `dl.volumina-book-details`, then the player (`.volumina-player`, see its stylesheet
 for its classes), then `h2.volumina-book-heading` and `ol.volumina-chapter-list` with one
 `li.volumina-chapter-item` per chapter, the one playing marked `is-playing`. These class
 names are part of the contract; the elements' order and nesting are too.
+
+The player, `.volumina-player`, carries `data-volumina-state`: `paused` in the markup and
+whenever nothing is sounding (before the first play, after a pause, at the end), `playing`
+while sound plays. A stylesheet may use it to animate with playback —
+`.volumina-player[data-volumina-state="playing"]` — and must stop every animation under
+`@media (prefers-reduced-motion: reduce)`. `is-playing` on a chapter means "the current
+chapter", sounding or not; `data-volumina-state` means sound.
+
+Two size containers (`container-type: inline-size`) let a stylesheet size by the space
+the book really has — a theme's content column, a sidebar, the Appearance tab's preview —
+rather than by the screen: `.volumina-book-head` (unnamed) and `.volumina-player`, named
+`volumina-player`, e.g. `@container volumina-player (max-width: 340px) { … }` to shrink
+the transport buttons. Both are part of the contract.
 
 **What a template is not:** behaviour. A template that needs JavaScript or data the
 plugin does not keep is a feature, not a stylesheet, and needs its own hooks.
@@ -445,6 +476,105 @@ final class Sections {
 	public function all(): array;   // [ { id, title, render }, … ] in order
 }
 ```
+
+### `volumina_settings_tabs`
+
+Action. Fires while Audiobooks → Settings is being drawn, with a `Sections` of its tabs
+as the only argument (the same class as `volumina_welcome_sections`, the same rules).
+Volumina's own settings are the tab `general`, always first; an extension cannot replace
+it. With two tabs or more the screen draws WordPress's tab bar; with one it draws none.
+
+```php
+add_action( 'volumina_settings_tabs', function ( $tabs ) {
+	$tabs->add( 'my-plugin', __( 'My Plugin', 'my-plugin' ), function () {
+		echo '<form action="options.php" method="post">';
+		settings_fields( 'my_plugin_settings' );
+		echo '<section class="volumina-card volumina-settings-section"><h2>' . esc_html__( 'Section', 'my-plugin' ) . '</h2>';
+		echo '<p class="volumina-settings-lede">' . esc_html__( 'What it is for.', 'my-plugin' ) . '</p>';
+		// …fields…
+		echo '</section>';
+		submit_button();
+		echo '</form>';
+	} );
+} );
+```
+
+- A tab's address is `edit.php?post_type=volumina_book&page=volumina-settings&tab=<id>`;
+  `general` has none. An unknown `tab` falls back to `general`.
+- Each tab draws its own form and saves its own option: saving one tab never touches
+  another's settings. `options.php` returns to the page it came from, tab included.
+- Volumina confirms a save ("Settings saved.") at the top of the screen for every tab;
+  a tab does not print its own confirmation. Errors a tab's sanitize callback adds with
+  `add_settings_error()` are shown by the tab itself (`settings_errors( 'my_plugin_settings' )`).
+- The card markup above — `section.volumina-card.volumina-settings-section`, its `h2` and
+  `p.volumina-settings-lede` — is part of this contract, so a tab looks like the rest.
+- The id becomes part of an `id` attribute (`volumina-settings-tab-<id>`): prefix it with
+  your own slug. The callable escapes everything it echoes. The capability is the screen's,
+  `manage_options`.
+- General is always the first tab and Appearance always the second; an extension's tabs
+  come after them.
+
+### The Appearance tab
+
+Audiobooks → Settings → Appearance holds how an audiobook looks: template, cover
+position and accent colour, with a preview beside them. One form saves all of it.
+
+- **Knowing the tab exists.** The class constant
+  `TUNET\Volumina\Admin\Settings::APPEARANCE_GROUP` (value `volumina_appearance`) exists
+  from the release that added this tab on. An extension tests
+  `defined( 'TUNET\Volumina\Admin\Settings::APPEARANCE_GROUP' )` before hooking into the
+  tab, and keeps working without it on an older Volumina.
+- **The form.** The tab's single form is `form.volumina-appearance-form`. A script finds
+  the form, and reads its fields, through that selector.
+
+- **The option group `volumina_appearance`.** The tab's form posts as this group, so
+  `options.php` writes every option registered in it. To have an option saved from the
+  tab, `register_setting( 'volumina_appearance', 'my_option', … )`. Every option in the
+  group must have its fields drawn in the form: an option registered there and not drawn
+  is saved empty.
+- **The action `volumina_appearance_sections`.** Fires while the tab is drawn, with a
+  `Sections` of cards; they are printed inside the form, after Presentation. A card is
+  the card markup of `volumina_settings_tabs` and has **no** `<form>` of its own.
+
+```php
+add_action( 'volumina_appearance_sections', function ( $cards ) {
+	$cards->add( 'my-plugin-look', __( 'My Plugin', 'my-plugin' ), function () {
+		echo '<section class="volumina-card volumina-settings-section"><h2>' . esc_html__( 'My Plugin', 'my-plugin' ) . '</h2>';
+		echo '<p class="volumina-settings-lede">' . esc_html__( 'What it is for.', 'my-plugin' ) . '</p>';
+		// …fields, named my_option[…]…
+		echo '</section>';
+	} );
+} );
+```
+
+- **Volumina's fields** are `volumina_settings[template]`, `volumina_settings[cover_position]`
+  and three colour fields: `volumina_settings[panel_start]` (the gradient's first colour, a
+  template's glow), `volumina_settings[panel_end]` (the second, the panel's ground) and
+  `volumina_settings[accent]` (the controls). Each holds a `#rrggbb`, or `''` for the
+  template's own.
+- **Colour fields.** `Support\Settings\Field` type `color` is a hex box,
+  `input.volumina-color-picker[data-volumina-color]`, that stores a `#rrggbb` or `''`. Its
+  `choices` (value => `{ label, color }`) become the picker's swatches, in `data-swatches` as
+  JSON. Volumina's `color-field.js` and `wp-color-picker` are loaded on the Appearance tab,
+  so an extension's own colour fields there need nothing more.
+- **A template's picture.** `Template` takes a fifth argument, `preview`: an http(s) URL of
+  a picture about 480x300, shown at 240x150 on the template's card. Anything else is dropped
+  and the card is drawn without a picture.
+- **The preview.** `.volumina-appearance-preview .volumina-book` is the newest published
+  book, drawn by `Audiobook::render()`. Its sample is inert: it is a picture of the
+  player, not a player. Its audio has no source and fetches nothing, the bare audio bar
+  is hidden, and only the first three chapters show. The preview's "Show it playing"
+  button, above the sample, sets `data-volumina-state` (`paused` or `playing`) on the
+  sample's `.volumina-player`.
+- **The event `volumina:appearance-change`.** Dispatched on `document` on load and after
+  every change of the form, with `detail.template`, `detail.cover`, `detail.accent` (a
+  six-digit hex, or `''` for none), `detail.ink` (the text colour that reads on it) and
+  `detail.panel`: `null`, or `{ start, end, ink, soft, line }` as in the stylesheet
+  contract.
+  An extension's script may set custom properties and classes on the root and on its
+  `.volumina-player`, and should re-apply them on every event. The first event fires on
+  `DOMContentLoaded`, so the listener must be attached before then: enqueue a normal
+  header or footer script for the Settings screen, not one loaded lazily or after load.
 
 ### `volumina_register_admin_screens`
 

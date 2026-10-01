@@ -101,7 +101,7 @@
 	background: #fff;
 }
 
-.volumina-card img {
+.volumina-card img:not(:where(.volumina-appearance-preview *)) {
 	box-sizing: border-box;
 	width: 64px;
 	height: 64px;
@@ -113,12 +113,12 @@
 }
 
 .volumina-card h2,
-.volumina-card h3 {
+.volumina-card h3:not(:where(.volumina-appearance-preview *)) {
 	margin: 0 0 6px;
 	font-size: 15px;
 }
 
-.volumina-card p {
+.volumina-card p:not(:where(.volumina-appearance-preview *)) {
 	margin: 0;
 	color: #50575e;
 }
@@ -222,7 +222,7 @@
 	padding: 16px 20px 8px;
 }
 
-.volumina-settings .volumina-card h2 {
+.volumina-settings .volumina-card h2:not(:where(.volumina-appearance-preview *)) {
 	margin: 0 0 4px;
 	font-size: 16px;
 }
@@ -256,4 +256,128 @@
 	.volumina-cta {
 		padding: 11px 16px;
 	}
+}
+
+/* Settings tabs: WordPress draws them; this only gives the first card room. */
+.volumina-settings-tabs {
+	margin-block-end: 1.25em;
+}
+
+/* Appearance tab: the form, and the preview beside it on a wide screen. */
+.volumina-appearance {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+}
+
+@media (min-width: 960px) {
+
+	.volumina-appearance {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+	}
+
+	.volumina-appearance-aside {
+		position: sticky;
+		top: 48px;
+	}
+}
+
+/* Template cards: native radios, drawn as pictures with a name. */
+.volumina-card-choices {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.volumina-card-choice {
+	display: block;
+	border: 2px solid #8c8f94;
+	border-radius: 8px;
+	background: #fff;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.volumina-card-choice-picture {
+	display: block;
+	aspect-ratio: 8 / 5;
+	background: #f0f0f1;
+}
+
+.volumina-card-choice-picture img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top left;
+}
+
+.volumina-card-choice-name {
+	display: block;
+	padding: 8px 10px;
+	color: #1d2327;
+}
+
+.volumina-card-choice:has(input:checked) {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+.volumina-card-choice:has(input:focus-visible) {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+/* Room for the longest choice and the arrow, which otherwise overlap. */
+.volumina-settings .form-table select {
+	min-width: 14em;
+	max-width: 100%;
+}
+
+/* Heading, button and sample each get their own room. */
+.volumina-settings .volumina-appearance-preview-card {
+	padding-bottom: 20px;
+}
+
+.volumina-settings .volumina-appearance-preview-card .volumina-appearance-preview-play {
+	margin: 12px 0 20px;
+}
+
+/*
+ * The sample is front-end markup inside wp-admin. The card rules above leave
+ * it alone; these undo wp-admin's own element rules (13px paragraphs, a drawn
+ * select arrow a template's `background` erases), so it reads as a page
+ * would. Element weight only: any template rule still wins.
+ */
+.volumina-appearance-preview {
+	max-width: 100%;
+	overflow: hidden;
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+:where(.volumina-appearance-preview) :is(p, label, select, h2, h3, li, dt, dd) {
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+/* Past `.wp-core-ui select`; no template sets either property. */
+.volumina-settings .volumina-appearance-preview select {
+	appearance: auto;
+	background-image: none;
+}
+
+.volumina-appearance-preview .volumina-book {
+	margin: 0;
+}
+
+/* A sample, not the whole book: no bare audio bar, three chapters at most. */
+.volumina-appearance-preview .volumina-player-audio {
+	display: none;
+}
+
+.volumina-appearance-preview .volumina-chapter-list .volumina-chapter-item:nth-child(n+4) {
+	display: none;
 }

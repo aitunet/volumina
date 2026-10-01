@@ -9,7 +9,11 @@ declare( strict_types = 1 );
 
 namespace TUNET\Volumina\Admin;
 
+use TUNET\Volumina\Frontend\Assets;
+use TUNET\Volumina\Frontend\Palette;
+use TUNET\Volumina\Frontend\Templates;
 use TUNET\Volumina\PostTypes\Book;
+use TUNET\Volumina\Support\AssetVersion;
 use TUNET\Volumina\Support\Help;
 
 use const TUNET\Volumina\PLUGIN_FILE;
@@ -18,7 +22,9 @@ use const TUNET\Volumina\VERSION;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Four settings and a Save button.
+ * Volumina's settings in two tabs, General and Appearance (with a live
+ * preview), each its own form with its own Save button. An extension may add
+ * more tabs.
  *
  * The form posts to `options.php`, so the nonce, the capability check and the
  * redirect are WordPress's own. A settings screen is not the place to reinvent
@@ -32,6 +38,11 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 	public const SLUG = 'volumina-settings';
 
 	/**
+	 * The id of the Appearance tab.
+	 */
+	public const APPEARANCE = 'appearance';
+
+	/**
 	 * The page slug.
 	 */
 	public function slug(): string {
@@ -40,9 +51,13 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 
 	/**
 	 * The page's address.
+	 *
+	 * @param string $tab A tab id, or '' for the page itself (`general`).
 	 */
-	public static function url(): string {
-		return admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
+	public static function url( string $tab = '' ): string {
+		$url = admin_url( 'edit.php?post_type=' . Book::POST_TYPE . '&page=' . self::SLUG );
+
+		return '' === $tab || 'general' === $tab ? $url : add_query_arg( 'tab', $tab, $url );
 	}
 
 	/**
@@ -81,18 +96,82 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 			'volumina-admin-presentation',
 			plugins_url( 'assets/css/admin-presentation.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/admin-presentation.css', PLUGIN_FILE, VERSION )
+		);
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Chooses what to load; nothing is written.
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+
+		if ( self::APPEARANCE !== $tab ) {
+			return;
+		}
+
+		wp_enqueue_style( Assets::BOOK );
+		wp_enqueue_style( Assets::PLAYER );
+
+		// The colour fields: WordPress's own picker, turned on by color-field.js.
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'volumina-color-field', plugins_url( 'assets/js/color-field.js', PLUGIN_FILE ), array( 'wp-color-picker' ), AssetVersion::of( 'assets/js/color-field.js', PLUGIN_FILE, VERSION ), true );
+
+		$defaults = array();
+
+		foreach ( Templates::registry()->all() as $id => $template ) {
+			if ( '' !== $template->style() ) {
+				wp_enqueue_style( $template->style() );
+			}
+			$defaults[ $id ] = $template->defaults();
+		}
+
+		$palette = array();
+
+		foreach ( Palette::colors() as $slug => $color ) {
+			$palette[ $slug ] = $color['color'];
+		}
+
+		wp_enqueue_script( 'volumina-appearance-preview', plugins_url( 'assets/js/appearance-preview.js', PLUGIN_FILE ), array(), AssetVersion::of( 'assets/js/appearance-preview.js', PLUGIN_FILE, VERSION ), true );
+		wp_localize_script(
+			'volumina-appearance-preview',
+			'voluminaAppearance',
+			array(
+				'palette'  => $palette,
+				'defaults' => $defaults,
+			)
 		);
 	}
 
 	/**
-	 * Draws the screen: one card per section, native controls inside.
+	 * Draws the screen: a tab bar when there is more than one tab, then the
+	 * current tab. Volumina's own settings are the `general` tab, always
+	 * first; an extension adds tabs of its own through `volumina_settings_tabs`.
 	 */
 	public function render(): void {
 		$group = Settings::group();
 
 		// Read again rather than trusting what was read before the save.
 		$group->forget();
+
+		$tabs = new Sections();
+		$tabs->add( 'general', __( 'General', 'volumina' ), array( $this, 'render_general' ) );
+		$tabs->add( self::APPEARANCE, __( 'Appearance', 'volumina' ), array( $this, 'render_appearance' ) );
+
+		/**
+		 * Fires while the settings screen is being drawn, with its tabs.
+		 *
+		 * Add a tab and it is drawn after the plugin's own. See docs/api.md.
+		 *
+		 * @param Sections $tabs The tabs.
+		 */
+		do_action( 'volumina_settings_tabs', $tabs );
+
+		// Ours again, in the places they already hold: an extension may add
+		// tabs, not take over General or Appearance.
+		$tabs->add( 'general', __( 'General', 'volumina' ), array( $this, 'render_general' ) );
+		$tabs->add( self::APPEARANCE, __( 'Appearance', 'volumina' ), array( $this, 'render_appearance' ) );
+
+		$all = $tabs->all();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Chooses which tab to draw; nothing is written.
+		$requested = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+		$current   = Tabs::current( array_column( $all, 'id' ), $requested );
 
 		echo '<div class="wrap volumina-presentation volumina-settings">';
 		printf( '<h1>%s</h1>', esc_html( $this->title() ) );
@@ -105,15 +184,43 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 		// it needs no nonce of its own.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['settings-updated'] ) ) {
-			add_settings_error(
-				$group->option(),
-				'volumina_settings_saved',
-				__( 'Settings saved.', 'volumina' ),
-				'success'
-			);
+			add_settings_error( $group->option(), 'volumina_settings_saved', __( 'Settings saved.', 'volumina' ), 'success' );
 		}
 
 		settings_errors( $group->option() );
+
+		if ( count( $all ) > 1 ) {
+			printf( '<nav class="nav-tab-wrapper volumina-settings-tabs" aria-label="%s">', esc_attr__( 'Settings sections', 'volumina' ) );
+			foreach ( $all as $tab ) {
+				$is_current = $tab['id'] === $current;
+				printf(
+					'<a href="%1$s" class="nav-tab%2$s"%3$s>%4$s</a>',
+					esc_url( self::url( $tab['id'] ) ),
+					$is_current ? ' nav-tab-active' : '',
+					$is_current ? ' aria-current="page"' : '',
+					esc_html( $tab['title'] )
+				);
+			}
+			echo '</nav>';
+		}
+
+		foreach ( $all as $tab ) {
+			if ( $tab['id'] !== $current ) {
+				continue;
+			}
+			printf( '<div class="volumina-settings-tab" id="%s">', esc_attr( 'volumina-settings-tab-' . $tab['id'] ) );
+			call_user_func( $tab['render'] );
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
+
+	/**
+	 * The `general` tab: Volumina's own settings, one card per section.
+	 */
+	public function render_general(): void {
+		$group = Settings::group();
 
 		printf(
 			'<p>%s</p>',
@@ -123,10 +230,11 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 		echo '<form action="options.php" method="post">';
 
 		settings_fields( $group->option() );
+		$group->render_marker( array( 'listening', 'housekeeping' ) );
 
 		$sections = Settings::sections();
 
-		foreach ( $group->sections() as $section ) {
+		foreach ( array( 'listening', 'housekeeping' ) as $section ) {
 			printf(
 				'<section class="volumina-card volumina-settings-section"><h2>%1$s</h2><p class="volumina-settings-lede">%2$s</p>',
 				esc_html( $sections[ $section ]['title'] ?? $section ),
@@ -138,7 +246,55 @@ final class SettingsScreen implements Screen, HasHelp, HasAssets {
 
 		submit_button();
 
-		echo '</form></div>';
+		echo '</form>';
+	}
+
+	/**
+	 * The `appearance` tab: how an audiobook looks. One form, which saves
+	 * Volumina's option and every extension option registered in
+	 * `Settings::APPEARANCE_GROUP`; the extensions' cards come after
+	 * Presentation, through `volumina_appearance_sections`. A preview beside it.
+	 */
+	public function render_appearance(): void {
+		$group    = Settings::group();
+		$sections = Settings::sections();
+		$cards    = new Sections();
+
+		/**
+		 * Fires while the Appearance tab is drawn, with the cards to add inside
+		 * its form, after Presentation. See docs/api.md.
+		 *
+		 * @param Sections $cards The cards.
+		 */
+		do_action( 'volumina_appearance_sections', $cards );
+
+		echo '<div class="volumina-appearance">';
+		echo '<form class="volumina-appearance-form" action="options.php" method="post">';
+
+		settings_fields( Settings::APPEARANCE_GROUP );
+		$group->render_marker( array( 'presentation' ) );
+
+		printf(
+			'<section class="volumina-card volumina-settings-section"><h2>%1$s</h2><p class="volumina-settings-lede">%2$s</p>',
+			esc_html( $sections['presentation']['title'] ),
+			esc_html( $sections['presentation']['description'] )
+		);
+		// With one template there is nothing to choose.
+		$group->render_table( 'presentation', count( Templates::cards() ) > 1 ? array() : array( 'template' ) );
+		echo '</section>';
+
+		foreach ( $cards->all() as $card ) {
+			call_user_func( $card['render'] );
+		}
+
+		submit_button();
+		echo '</form>';
+
+		echo '<aside class="volumina-appearance-aside" aria-label="' . esc_attr__( 'Preview', 'volumina' ) . '">';
+		AppearancePreview::render();
+		echo '</aside>';
+
+		echo '</div>';
 	}
 
 	/**

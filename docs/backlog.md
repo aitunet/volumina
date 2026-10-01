@@ -153,3 +153,15 @@
 
 - The player could fetch a fresh signed URL when one expires mid-listen (today: reload
   the page).
+
+## Found 2026-09-29, in the S11 final review
+
+- **`bin/build-release.php` should package from `git ls-files`.** It copies from the working
+  tree, so an untracked file in the repo root (a screenshot left there, say) lands in the
+  zip. Packaging only tracked files makes the zip the same on every machine.
+- **Template preview URLs reject non-ASCII (IDN) hosts.** The `preview` argument of
+  `Template` is validated as an ASCII http(s) URL, so a picture on an internationalised
+  domain is dropped and its card is drawn without one. Punycode it, or accept IDN.
+- **Screenshot 5 predates the Appearance tab.** It still shows Presentation inside
+  General; retake it on the Appearance tab (a site without Pro) before the next upload.
+- **Accent colour in the block sidebar.** Blocks still choose the accent from the theme's palette; the settings screen now also takes a custom colour (`color_select`). A block could offer the same, with `ColorPalette`'s custom picker.

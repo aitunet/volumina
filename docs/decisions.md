@@ -561,3 +561,81 @@ Shipping 1.0 without them would mean a 1.0.1 the day Pro appears.
 
 **Consequence.** No new strings, no schema change, no behaviour change for a site
 without Pro. The zip is rebuilt.
+
+## 2026-09-25 — S10: extensions add tabs to Settings, before submission
+
+**Context.** Volumina Pro has its own "Pro settings" menu entry (signed links, protected
+folder) and P3 adds player styles. Two settings entries under Audiobooks, styled
+separately, is what the account holder asked to avoid. Settings has no extension point:
+only the welcome page does (`volumina_welcome_sections`), and Pro may use only `api.md`.
+
+**Decision.** A public tab registry for Settings, modelled on `Sections`: an action hands
+it to extensions, each tab an id, a title and a render callback; Volumina's own settings
+are the first tab; tabs show only when there are two or more. Added now, before the zip
+goes to the directory, because an API added after 1.0 costs a release on both sides.
+Decided with the account holder.
+
+**Consequence.** An addition, nothing breaks: a site without an extension sees Settings
+exactly as today. Pro drops its "Pro settings" menu entry and draws inside Volumina's
+cards, so it inherits their look instead of copying it.
+
+## 2026-09-29 — S11: an Appearance tab, owned by Volumina
+
+Everything visual moves out of General into Volumina's own second tab, "Appearance": template (cards with preview images when more than one template exists), cover, accent, and a live preview of a sample book drawn by the real partial. An extension joins that tab's single form through the option group `volumina_appearance` (`register_setting`) and the action `volumina_appearance_sections`; each option keeps its own sanitize callback. `Support\Settings\Group` learns partial saves (a form names the sections it drew; fields of other sections keep their stored value) so splitting one option across two tabs cannot reset either. `Template` gains an optional preview image. Asked for by the account holder after seeing Pro's separate "Player styles" tab live, which duplicated the accent as "Button colour". Spec: `volumina-pro/docs/superpowers/specs/2026-09-29-appearance-tab-design.md`.
+
+## 2026-09-29 — S11: the Appearance preview is the newest real book
+
+**Context.** The spec asked for a sample book of three chapters with no audio source. A
+`WP_Post` built in memory cannot carry what the partial draws from: the cover is an
+attachment (`_thumbnail_id`) and the durations are post meta of chapter posts, both read
+from the database. A fake book would show no cover and no times, which is not what a
+listener gets.
+
+**Decision.** The preview draws the site's newest published audiobook with
+`Audiobook::render()`, and is cut down to a sample: the audio loses its `src` (and any
+`<source>`) and gets `preload="none"` before it is printed, so loading the tab fetches no
+stream; the bare audio bar is hidden; only the first three chapters show; the "Show it
+playing" button sits above the sample, where it is seen. With no published book the card
+says to publish one. The preview's root, `.volumina-appearance-preview .volumina-book`, is
+contract in `docs/api.md`.
+
+**Consequence.** What the preview shows is what the front end draws, with a real cover
+and real durations, at the cost of needing one published book. No schema change.
+
+## 2026-09-30 — Asset versions follow the file, not only the plugin
+
+**Context.** Every script and stylesheet was enqueued with the plugin's version. The test
+site sits behind Cloudflare, and the host sends `Cache-Control: max-age=14400`: after a
+rebuilt zip of the same version, Cloudflare and every browser kept the old files for hours,
+and the account holder's review saw fixes that were not there. Nobody on the team can purge
+that Cloudflare; the habit elsewhere is to bump the version by hand.
+
+**Decision.** `Support\AssetVersion::of( $path, $plugin_file, $version )` returns the
+plugin's version, a dot, and the file's modification time (`1.0.0.1790777806`); the plugin
+version alone for a file that is not there or lies outside the plugin's folder. Every
+`wp_register_*` / `wp_enqueue_*` of a file of ours uses it, in Volumina and in Pro (the
+same class, copied into Pro's `Support/`). Block editor scripts keep the hash
+`@wordpress/scripts` writes.
+
+**Consequence.** A changed file gets a new URL on the next page load, whatever the version
+says, so no CDN or browser cache can serve a stale copy, and no version bump is needed to
+ship a CSS fix. One `filemtime()` per asset per request, from the stat cache.
+
+## 2026-09-30 — The accent may be a colour of the site's own
+
+**Context.** The account holder's review of the Appearance tab: the accent offered only
+the theme's palette, as radios whose colour dot read as a second radio. Sites want their
+brand colour whatever the theme's palette holds.
+
+**Decision.** The accent is a `color_select` field (new in `Support\Settings\Field`): a
+select of *What the template prefers*, *None*, the palette, and *Custom…*, with a swatch
+beside it and WordPress's `wp-color-picker` for the custom colour. It stores a palette
+slug as before, or a `#rrggbb`; `Templates::accent()` resolves either, and the ink stays
+`Color::ink()`. The form posts `[choice]` and `[custom]`, so the field works without
+JavaScript. `wp-color-picker` brings jQuery into the admin only (core, no new
+dependency); the front end stays jQuery-free. Blocks keep choosing from the palette (a
+custom colour in the block sidebar is in the backlog). Everything else about colour —
+player background, panel base, gradients, contrast — belongs to Volumina Pro.
+
+**Consequence.** A stored slug keeps working and still follows the theme; a custom colour
+does not follow the theme, by definition. No schema change beyond the option's value.

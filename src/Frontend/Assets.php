@@ -10,6 +10,7 @@ declare( strict_types = 1 );
 namespace TUNET\Volumina\Frontend;
 
 use TUNET\Volumina\Player\Player;
+use TUNET\Volumina\Support\AssetVersion;
 use TUNET\Volumina\Support\Registrable;
 
 use const TUNET\Volumina\PLUGIN_FILE;
@@ -61,21 +62,21 @@ final class Assets implements Registrable {
 			self::BOOK,
 			plugins_url( 'assets/css/book.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/book.css', PLUGIN_FILE, VERSION )
 		);
 
 		wp_register_style(
 			self::PLAYER,
 			plugins_url( 'assets/css/player.css', PLUGIN_FILE ),
 			array(),
-			VERSION
+			AssetVersion::of( 'assets/css/player.css', PLUGIN_FILE, VERSION )
 		);
 
 		wp_register_script(
 			self::PLAYER,
 			plugins_url( 'assets/js/player.js', PLUGIN_FILE ),
 			array(),
-			VERSION,
+			AssetVersion::of( 'assets/js/player.js', PLUGIN_FILE, VERSION ),
 			true
 		);
 
@@ -85,7 +86,7 @@ final class Assets implements Registrable {
 			self::CONTINUE,
 			plugins_url( 'assets/js/continue.js', PLUGIN_FILE ),
 			array(),
-			VERSION,
+			AssetVersion::of( 'assets/js/continue.js', PLUGIN_FILE, VERSION ),
 			true
 		);
 

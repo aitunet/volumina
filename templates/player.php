@@ -37,6 +37,7 @@ foreach ( $volumina_chapters as $volumina_index => $volumina_candidate ) {
 <section
 	class="volumina-player"
 	data-volumina-player
+	data-volumina-state="paused"
 	data-book="<?php echo esc_attr( (string) (int) $data['book'] ); ?>"
 	aria-label="<?php echo esc_attr__( 'Audiobook player', 'volumina' ); ?>"
 >

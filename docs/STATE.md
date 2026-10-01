@@ -9,14 +9,16 @@
 
 ## Right now
 
-**Current slice:** S9 — The API Pro needs, added 2026-09-20. **Done**: `volumina_progress_saved` action, `volumina_stream_access` filter and `VOLUMINA_PRO_VERSION` constant documented in `docs/api.md`, decision recorded in `docs/decisions.md`, zip rebuilt. All earlier slices complete: S8 (Library block), S7 (Presentation), S6 (Release), S5 (Admin polish), S4 (Access layer), S3 (Blocks), S2 (Player), S1 (One audiobook), S0 (Scaffold).
-**Next action:** the account holder's checks — the block's panel was looked at on 2026-09-20 and its one defect fixed — in `Left for the account holder` below — the phone, the hosting, real audio files, a second person, PHP 8.1 — and, once tunetdesign.com is live, the guide's URL into `WelcomeScreen::GUIDE_URL` and a last zip. Then the submission.
+**Current slice:** S11 — Appearance tab — DONE 2026-09-29, final-review fixes applied the same day (branch `s11-appearance`, not merged), plan `C:/Proyectos/volumina-pro/docs/superpowers/plans/2026-09-29-appearance-tab.md`. Part 2 (Tasks 6-9) is Volumina Pro's, done on its branch `p3-templates` (0.5.0 built, final-review fixes applied).
+**Next action (2026-09-30):** **Three colours DONE and live** on wp2.desarrollotunet.com/tunet-tests (Volumina 127 files, Pro 0.5.0 76 files, uploaded with replace; nothing saved there). The Appearance tab has three colour pickers — Background first colour (`panel_start`), Background second colour (`panel_end`), Controls colour (`accent`), each empty = the template's — for Basic and the Pro templates. **Account holder checks them live**; then merge `s11-appearance` (and Pro's `p3-templates`), then the submission. Caution: Windows holds `phpstan.neon`'s name in this working tree again; never `git commit -a` / `git add -A` here until it is back on disk (run phpstan with a copy of the config).
+**Done 2026-09-30, agreed with the account holder before submission — custom colours:** free: the accent is a select (template's / none / palette / Custom… with WP's colour picker), stored as a slug or `#rrggbb`; Pro: Look fields as selects, Background with Custom… painting the whole panel in Pulse/Vinyl/Stage (player only elsewhere), inks computed to AA, glows toned down where text sits, Contrast card and preview in step. Verified on testing-site.local (dark red + yellow and cream on Stage, Vinyl, Pulse at 390/1280, axe 0) and live on wp2.desarrollotunet.com/tunet-tests (fields, saved values kept, preview and Contrast). Zips rebuilt and uploaded (Volumina 127 files, Pro 77).
+**Done 2026-09-30, account holder's review of S11 (polish):** all seven points fixed and verified on testing-site.local (tunet-starter 390/1280, Twenty Twenty-Five 390, all four templates, nothing outside the book; Appearance preview of all four inside its card; axe 0), both repos committed, zips rebuilt (Volumina 125 files, Pro 0.5.0 75 files). testing-site.local back on Basic and tunet-starter. WP-CLI tip: `option patch` needs `< /dev/null` or it hangs on stdin. **Open:** `phpstan.neon` is missing from both working trees (vanished mid-session, not by a command here; Windows refuses to recreate it, EPERM, a pending delete held by some process) — run `git restore -- phpstan.neon` in both repos after closing editors or a reboot; nothing committed deletes it. **Next:** upload both zips to wp2.desarrollotunet.com/tunet-tests and purge Cloudflare (the CSS keeps `?ver=1.0.0`, so the old files would be served), then the account holder's acceptance, then merge.
 **2026-09-20:** pre-submission security pass done and Plugin Check run against the release zip: zero errors, one warning kept on purpose (`load_plugin_textdomain`, needed for the shipped translations). Four security fixes landed — unpublished and trashed chapters no longer stream or list for listeners, a chapter joins a book only by somebody who may edit the book, chapters are out of REST, a crafted settings array no longer raises a warning. **One behaviour changed that the account holder should know:** a chapter saved as a draft is now invisible to listeners until published; the book's editors still see and hear it. See `docs/decisions.md`. Zip rebuilt, 114 files, `composer.json` now inside as the directory asks. Later the same day: the Live Link audio failure traced to `X-Local-Host` on the audio response, fixed with `header_remove()` in `Stream::headers()`, verified byte-for-byte through the tunnel; zip rebuilt with it (`bin/build-release.php --composer="C:/Users/mage2/tools/php83/php.exe C:/Users/mage2/tools/composer.phar"`).
 **Decided 2026-09-14:** the three ideas go into 1.0 before submission, as S7. See `docs/decisions.md`.
 **Blocked on:** nothing. `testing-site.local` (Local by Flywheel — nginx, MySQL, PHP 8.2) runs the current code, copied file by file from the working tree. WP-CLI reaches it from here with `php -d extension=mysqli -d mysqli.default_port=10053 wp-cli.phar` from the site's `public/`, read-only use only. Docker is still absent, so `wp-env` and the WordPress integration suite have never run; the PHPUnit suite is plain unit tests over `src/Support/` and `src/Access/`. See `docs/decisions.md`.
-**Last updated:** 2026-09-20, TUNET, S8 accepted; nothing left to build in 1.0
+**Last updated:** 2026-09-30, TUNET, three colours live
 **File scope for this slice** — do not open files outside this list:
-`blocks/library/`, `blocks/shared/`, `src/Blocks/`, `src/Frontend/Audiobook.php`, `templates/`, `assets/css/book.css`, `docs/api.md`, `readme.txt`, `languages/`, `tests/php/Blocks/`
+`src/Support/Settings/`, `src/Admin/Settings.php`, `src/Admin/SettingsScreen.php`, `src/Admin/AppearancePreview.php`, `src/Frontend/Template.php`, `src/Frontend/Templates.php`, `assets/css/admin-presentation.css`, `assets/js/appearance-preview.js`, `assets/images/templates/`, `tests/php/`, `docs/api.md`, `docs/decisions.md`, `docs/backlog.md`, `languages/`, `readme.txt`
 
 ---
 
@@ -25,7 +27,7 @@
 **v1.0 is finished when every slice below is checked and the release checklist passes.** S7 was added on 2026-09-14 by decision; see `docs/decisions.md`.
 Anything else belongs in `docs/backlog.md`. Nothing is added to a slice once it has started.
 
-Progress: 9 of 9 slices complete; S9 added 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
+Progress: 11 of 11 slices complete (S10 and S11 added after S9); S9 added 2026-09-20. What is left is the account holder's: their own checks, the guide's URL, and the submission.
 
 ---
 
@@ -164,16 +166,35 @@ Three things the account holder wants in the first version people see. Each begi
 
 **Done when:** all three are in `api.md` and the release checklist still passes.
 
+## S10 — Settings tabs (added 2026-09-25; see `docs/decisions.md`)
+
+- [x] Design of the tabs agreed in the Pro P3 mockups — accepted by the account holder 2026-09-25
+- [x] Public API: an action that hands a tab registry to extensions, same rules as `volumina_welcome_sections`; documented in `api.md` — `volumina_settings_tabs`, `TUNET\Volumina\Admin\Tabs::current()`, `docs/api.md` written
+- [x] Settings draws tabs only when there is more than one; the plugin's own settings are the first tab; each tab its own form — `SettingsScreen::render()` / `render_general()`, verified on `testing-site.local`
+- [x] Tests; `.pot`; zip rebuilt — PHPCS and PHPStan level 6 silent, `npm run lint` clean, 149 tests/282 assertions; `.pot` regenerated at 349 entries, two new strings ("General", "Settings sections"); zip rebuilt, 122 files, `diff -rq` of the unzipped `src/ templates/ assets/ languages/` against the tree clean (only `.gitkeep` differs)
+- [x] axe (WCAG 2.1 AA) and keyboard check on Audiobooks → Settings with several tabs — done 2026-09-29 in S11 Task 5: zero violations on General and Appearance, keyboard passes
+
+**Done when:** a throwaway plugin adds a tab through `api.md` alone and Volumina Pro's settings move into one, with the release checklist still passing.
+
+## S11 — Appearance tab (added 2026-09-29)
+
+- [x] Task 1 Partial saves in Support\Settings\Group
+- [x] Task 2 cards field type and Template preview picture (basic.png made 2026-09-29, 480x300, 36 KB)
+- [x] Task 3 The Appearance tab (site check Step 7 passed 2026-09-29)
+- [x] Task 4 The live preview (site check done, sideways scroll fixed)
+- [x] Task 5 S11 wrap-up (.pot 353 entries, readme, axe zero violations + keyboard, zip 125 files)
+- [x] Final-review fixes: preview cut to a sample (no audio source, no audio bar, three chapters, button above), crafted `_sections` keeps stored values, api.md (form selector, `APPEARANCE_GROUP` marker, event timing), readme, decisions, backlog — zip 125 files
+
 ---
 
 ## Release checklist
 
 - [x] `composer lint` and `npm run lint` clean — PHPCS and PHPStan level 6 both silent
-- [x] Full test suite green — 143 tests, 274 assertions
+- [x] Full test suite green — 164 tests, 312 assertions (2026-09-29, S11 final-review fixes)
 - [x] Plugin Check (2026-09-20, 1.7, every check including experimental) against the release zip's contents — zero errors; the one warning is `load_plugin_textdomain()`, kept because the shipped translations need it
 - [x] Zero PHP notices on a clean install — `debug.log` absent after exercising the front end, the admin and WP-CLI
 - [x] Zero axe violations on all front-end output — WCAG 2.1 AA, block theme and classic, 390px and desktop; the Pro screen, the welcome page and the settings screen too, zero to review
-- [x] Every string translatable — 347 in the `.pot` after S8, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
+- [x] Every string translatable — 353 in the `.pot` after S11, JSON for the block editor, and forced-locale renders of the front end, the settings, the notice and the welcome page left nothing in English
 - [x] Uninstall removes tables and options behind the opt-in — run both ways against a copy of the database, again on 2026-09-14: zero left
 - [x] No functionality locked behind payment inside this plugin — the Pro screen has zero inputs and zero disabled controls
 - [x] Version bumped in header and `readme.txt`, changelog written — 1.0.0 in four places
