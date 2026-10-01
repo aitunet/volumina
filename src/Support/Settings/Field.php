@@ -223,7 +223,8 @@ final class Field {
 	/**
 	 * A hex box that `color-field.js` turns into WordPress's colour picker,
 	 * with the choices' colours as swatches. Without JavaScript it is a plain
-	 * text box that works. Empty means none chosen.
+	 * text box that works. Empty means none chosen. The stored value is shown
+	 * by the same rule it is saved by, so an old slug never shows as a colour.
 	 *
 	 * @param string $id    The box's id.
 	 * @param string $name  The name attribute, already namespaced by the group.
@@ -234,7 +235,7 @@ final class Field {
 			'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="volumina-color-picker" data-volumina-color data-swatches="%4$s" maxlength="7" size="8" placeholder="#rrggbb" />',
 			esc_attr( $id ),
 			esc_attr( $name ),
-			esc_attr( Color::normalize( is_string( $value ) ? $value : '' ) ),
+			esc_attr( $this->sanitize_color( $value ) ),
 			esc_attr( (string) wp_json_encode( $this->swatches() ) )
 		);
 	}

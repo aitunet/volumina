@@ -25,6 +25,19 @@ major version bump and an entry in `docs/decisions.md`.
   `plugins_loaded` at the earliest. It costs one `require_once` and it is also what
   keeps your plugin alive when Volumina is deactivated.
 
+### Is Volumina here, and which version
+
+`TUNET\Volumina\VERSION` is the running version, as a string (`'1.0.0'`). Check for it
+with `defined()` and compare with `version_compare()`; together with
+`class_exists( 'TUNET\Volumina\Plugin' )` it tells an extension that Volumina is active
+and new enough. Only the name of `Plugin` is part of the contract, not its methods.
+
+```php
+$ready = class_exists( 'TUNET\Volumina\Plugin' )
+	&& defined( 'TUNET\Volumina\VERSION' )
+	&& version_compare( TUNET\Volumina\VERSION, '1.0.0', '>=' );
+```
+
 ---
 
 ## Access
