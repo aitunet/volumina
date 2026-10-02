@@ -234,7 +234,7 @@ checked out beside this one — which extends this plugin only through `docs/api
 
 ## S12 — Listeners box (added 2026-10-02; see `docs/decisions.md`)
 
-- [x] `Administenersbox`: list, give access by e-mail or username, remove; admin-ajax, nonce, `edit_post` + `list_users`
+- [x] `Admin\ListenersBox`: list, give access by e-mail or username, remove; admin-ajax, nonce, `edit_post` + `list_users`
 - [x] `assets/js/admin-listeners.js` (no jQuery), live region
 - [x] Access field description and book help tab no longer send people to Pro or the command line; readme
 - [x] Pro screen: "Listening reports" card removed
