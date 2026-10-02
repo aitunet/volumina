@@ -40,6 +40,7 @@ final class Plugin {
 		Admin\PostScreenHelp::class,
 		Admin\BookMetaBox::class,
 		Admin\ChapterList::class,
+		Admin\ListenersBox::class,
 		Admin\ChapterMetaBox::class,
 		Player\Stream::class,
 		Player\Player::class,

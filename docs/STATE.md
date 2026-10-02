@@ -235,10 +235,10 @@ checked out beside this one — which extends this plugin only through `docs/api
 ## S12 — Listeners box (added 2026-10-02; see `docs/decisions.md`)
 
 - [ ] `Admin\ListenersBox`: list, give access by e-mail or username, remove; admin-ajax, nonce, `edit_post` + `list_users`
-- [ ] `assets/js/admin-listeners.js` (no jQuery), live region
-- [ ] Access field description and book help tab no longer send people to Pro or the command line; readme
-- [ ] Pro screen: "Listening reports" card removed
-- [ ] Unit test for the pure part; lint, PHPStan; `.pot`, `es_ES`, `pt_BR`
+- [x] `assets/js/admin-listeners.js` (no jQuery), live region
+- [x] Access field description and book help tab no longer send people to Pro or the command line; readme
+- [x] Pro screen: "Listening reports" card removed
+- [ ] QA `tests/qa/01-listeners.php` ALL OK on testing-site.local (13 checks, done); PHPCS clean (done; `tests/qa` and `.playwright-mcp` excluded); PHPStan, PHPUnit; `.pot`, `es_ES`, `pt_BR`
 - [ ] Verified on testing-site.local: grant → listener hears (206), remove → 404; axe on the book screen
 - [ ] Zip rebuilt
 

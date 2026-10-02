@@ -58,3 +58,43 @@
 .volumina-chapters-status:empty {
 	display: none;
 }
+
+/**
+ * Listeners box, on the same screen.
+ */
+
+.volumina-listeners {
+	margin: 0 0 1em;
+	padding: 0;
+	list-style: none;
+}
+
+.volumina-listener {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px 12px;
+	margin: 0;
+	padding: 8px 12px;
+	border: 1px solid #dcdcde;
+	border-bottom: none;
+	background: #fff;
+}
+
+.volumina-listener:last-child {
+	border-bottom: 1px solid #dcdcde;
+}
+
+.volumina-listener-name {
+	font-weight: 600;
+}
+
+.volumina-listener-email {
+	flex: 1 1 auto;
+	color: #50575e;
+	overflow-wrap: anywhere;
+}
+
+.volumina-listeners-status:empty {
+	display: none;
+}

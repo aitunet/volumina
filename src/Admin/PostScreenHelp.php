@@ -86,7 +86,8 @@ final class PostScreenHelp implements Registrable {
 				'id'      => 'volumina-book-access',
 				'title'   => __( 'Who can listen', 'volumina' ),
 				'content' => Help::p( __( 'A public audiobook can be heard by anyone who finds it. A restricted one still appears on your site with its cover, its details and its chapter list, and only the audio is held back.', 'volumina' ) )
-					. Help::p( __( 'You can always hear your own books, whatever this says, so that you can check them.', 'volumina' ) ),
+					. Help::p( __( 'You can always hear your own books, whatever this says, so that you can check them.', 'volumina' ) )
+					. Help::p( __( 'To give a restricted book to somebody, type their e-mail address or username in the Listeners box and choose Give access. They listen signed in to that account. Only administrators see the box.', 'volumina' ) ),
 			);
 
 			$tabs[] = array(
