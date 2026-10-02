@@ -115,7 +115,7 @@ final class ChapterList implements Registrable {
 		$chapters = Chapter::for_book( $post->ID );
 
 		printf(
-			'<div id="volumina-chapter-list" data-book="%1$d" data-nonce="%2$s" data-ajax-action="%3$s">',
+			'<div id="volumina-chapter-list-app" data-book="%1$d" data-nonce="%2$s" data-ajax-action="%3$s">',
 			(int) $post->ID,
 			esc_attr( wp_create_nonce( self::NONCE_ACTION ) ),
 			esc_attr( self::AJAX_ACTION )

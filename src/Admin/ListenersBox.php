@@ -129,7 +129,7 @@ final class ListenersBox implements Registrable {
 		}
 
 		printf(
-			'<div id="volumina-listeners" data-book="%1$d" data-nonce="%2$s" data-give="%3$s" data-take="%4$s">',
+			'<div id="volumina-listeners-app" data-book="%1$d" data-nonce="%2$s" data-give="%3$s" data-take="%4$s">',
 			(int) $post->ID,
 			esc_attr( wp_create_nonce( self::NONCE_ACTION ) ),
 			esc_attr( self::AJAX_GIVE ),

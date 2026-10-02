@@ -8,7 +8,7 @@
 	'use strict';
 
 	document.addEventListener( 'DOMContentLoaded', function () {
-		const root = document.getElementById( 'volumina-listeners' );
+		const root = document.getElementById( 'volumina-listeners-app' );
 
 		if ( ! root ) {
 			return;
