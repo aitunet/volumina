@@ -639,3 +639,22 @@ player background, panel base, gradients, contrast — belongs to Volumina Pro.
 
 **Consequence.** A stored slug keeps working and still follows the theme; a custom colour
 does not follow the theme, by definition. No schema change beyond the option's value.
+
+## 2026-10-02 — The free plugin gives a restricted book to listeners by hand (S12)
+
+**Context.** A restricted book could be heard only by its editors: grants existed
+(`Storage\Grants`, `ManualProvider`) but no screen made one, and the book's own help text
+sent the reader to "an extension such as Volumina Pro, or the command line". Read by a
+directory reviewer, that is a mode which works only once something is bought — the
+trialware the guidelines forbid — and the readme promised "listeners you have given them to".
+
+**Decision.** A **Listeners** box on the book screen: an e-mail or username, *Give access*,
+and a *Remove* button on each listener, saved at once over admin-ajax like the chapter order
+(nonce + `edit_post` on the book + `list_users`). Only people who may list users see the box:
+finding an account by its e-mail is managing people, not editing a book. No schema change.
+Pro keeps what a seller needs and the free plugin does not do: access granted and withdrawn
+by purchases and refunds, series and bundles, links that expire, the protected folder,
+templates.
+
+**Consequence.** `Restricted` is useful on its own (a class, a club, a family). The Pro
+screen also loses its "Listening reports" card until Pro ships reports.

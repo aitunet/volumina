@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-30T21:58:28+00:00\n"
+"POT-Creation-Date: 2026-10-02T15:15:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: volumina\n"
@@ -121,12 +121,12 @@ msgid "Who can listen"
 msgstr ""
 
 #: src/Admin/BookMetaBox.php:219
-msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
+msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Give it to other listeners in the Listeners box below."
 msgstr ""
 
 #: src/Admin/ChapterList.php:58
 #: src/Admin/PostScreenHelp.php:80
-#: src/Admin/PostScreenHelp.php:110
+#: src/Admin/PostScreenHelp.php:111
 #: src/Frontend/Audiobook.php:135
 #: src/PostTypes/Chapter.php:58
 #: templates/book.php:75
@@ -241,7 +241,7 @@ msgid "Only audio files can be attached. The running time is read from the file.
 msgstr ""
 
 #: src/Admin/ChapterMetaBox.php:244
-#: src/Admin/PostScreenHelp.php:94
+#: src/Admin/PostScreenHelp.php:95
 #: src/Frontend/Audiobook.php:131
 #: blocks/library/index.js:145
 msgid "Running time"
@@ -271,6 +271,88 @@ msgstr ""
 #: src/Admin/ChapterMetaBox.php:404
 #, php-format
 msgid "%1$s (%2$s)"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:75
+msgid "Listeners"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:112
+#: src/Admin/ListenersBox.php:237
+#: src/Admin/ListenersBox.php:262
+msgid "That could not be saved. Reload the page and try again."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:126
+msgid "Save the book first. Then you can give it to listeners here."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:141
+msgid "The people who may listen to this book while it is restricted. Each one needs an account on this site and listens signed in. While the book is public, everybody can listen and this list simply waits."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:157
+msgid "Nobody has been given this book yet."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:170
+msgid "E-mail address or username"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:171
+msgid "Give access"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:176
+msgid "Saved at once; there is no need to update the book. Nobody is sent an e-mail."
+msgstr ""
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:196
+#, php-format
+msgid "Remove %s"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:197
+msgid "Remove"
+msgstr ""
+
+#: src/Admin/ListenersBox.php:215
+msgid "Type an e-mail address or a username."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:228
+msgid "No account on this site has that e-mail address or username. The listener needs an account first."
+msgstr ""
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:233
+#, php-format
+msgid "%s already had access."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:241
+msgid "A listener was given an audiobook by hand."
+msgstr ""
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:250
+#, php-format
+msgid "%s can now listen."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:266
+msgid "A listener lost an audiobook given by hand."
+msgstr ""
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:278
+#, php-format
+msgid "%s can no longer listen."
+msgstr ""
+
+#: src/Admin/ListenersBox.php:332
+msgid "You cannot give this book to listeners."
 msgstr ""
 
 #: src/Admin/LogScreen.php:41
@@ -371,15 +453,19 @@ msgstr ""
 msgid "You can always hear your own books, whatever this says, so that you can check them."
 msgstr ""
 
-#: src/Admin/PostScreenHelp.php:95
+#: src/Admin/PostScreenHelp.php:90
+msgid "To give a restricted book to somebody, type their e-mail address or username in the Listeners box and choose Give access. They listen signed in to that account. Only administrators see the box."
+msgstr ""
+
+#: src/Admin/PostScreenHelp.php:96
 msgid "Leave the total at zero and the chapters answer for it: the book shows however long its chapters add up to. Fill it in only when you want to say something different."
 msgstr ""
 
-#: src/Admin/PostScreenHelp.php:111
+#: src/Admin/PostScreenHelp.php:112
 msgid "A chapter is a title, an audio file and a place in a book. It is easier to add chapters from the book they belong to, where you can also drag them into order."
 msgstr ""
 
-#: src/Admin/PostScreenHelp.php:112
+#: src/Admin/PostScreenHelp.php:113
 msgid "The running time is in whole seconds. Leave it at zero if you do not know it; the player still works, and the chapter simply shows no time next to it."
 msgstr ""
 
@@ -446,14 +532,6 @@ msgstr ""
 
 #: src/Admin/ProScreen.php:198
 msgid "Featured templates, colours, typography and layouts for the block and the player."
-msgstr ""
-
-#: src/Admin/ProScreen.php:202
-msgid "Listening reports"
-msgstr ""
-
-#: src/Admin/ProScreen.php:203
-msgid "Which books get finished, which get abandoned, and at which chapter."
 msgstr ""
 
 #: src/Admin/ScreenRegistry.php:120

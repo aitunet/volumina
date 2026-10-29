@@ -110,7 +110,7 @@ msgstr "Portada"
 
 #: src/Admin/ChapterList.php:58
 #: src/Admin/PostScreenHelp.php:80
-#: src/Admin/PostScreenHelp.php:110
+#: src/Admin/PostScreenHelp.php:111
 #: src/Frontend/Audiobook.php:135
 #: src/PostTypes/Chapter.php:58
 #: templates/book.php:75
@@ -225,7 +225,7 @@ msgid "Only audio files can be attached. The running time is read from the file.
 msgstr "Solo se pueden adjuntar archivos de audio. La duración se lee del archivo."
 
 #: src/Admin/ChapterMetaBox.php:244
-#: src/Admin/PostScreenHelp.php:94
+#: src/Admin/PostScreenHelp.php:95
 #: src/Frontend/Audiobook.php:131
 #: blocks/library/index.js:145
 msgid "Running time"
@@ -351,15 +351,15 @@ msgstr "Un audiolibro público puede escucharlo cualquiera que lo encuentre. Uno
 msgid "You can always hear your own books, whatever this says, so that you can check them."
 msgstr "Tus propios libros siempre puedes escucharlos, diga lo que diga esto, para que puedas comprobarlos."
 
-#: src/Admin/PostScreenHelp.php:95
+#: src/Admin/PostScreenHelp.php:96
 msgid "Leave the total at zero and the chapters answer for it: the book shows however long its chapters add up to. Fill it in only when you want to say something different."
 msgstr "Deja el total en cero y responderán por él los capítulos: el libro muestra lo que sumen. Rellénalo solo cuando quieras decir otra cosa."
 
-#: src/Admin/PostScreenHelp.php:111
+#: src/Admin/PostScreenHelp.php:112
 msgid "A chapter is a title, an audio file and a place in a book. It is easier to add chapters from the book they belong to, where you can also drag them into order."
 msgstr "Un capítulo es un título, un archivo de audio y un lugar dentro de un libro. Es más cómodo añadir capítulos desde el libro al que pertenecen, donde además puedes arrastrarlos para ordenarlos."
 
-#: src/Admin/PostScreenHelp.php:112
+#: src/Admin/PostScreenHelp.php:113
 msgid "The running time is in whole seconds. Leave it at zero if you do not know it; the player still works, and the chapter simply shows no time next to it."
 msgstr "La duración va en segundos enteros. Déjala en cero si no la sabes; el reproductor sigue funcionando y el capítulo simplemente no muestra ningún tiempo al lado."
 
@@ -382,10 +382,6 @@ msgstr "No impide que se copie el audio, y nada lo impide. Un navegador tiene qu
 #: src/Admin/ProScreen.php:192
 msgid "Series and bundles"
 msgstr "Series y packs"
-
-#: src/Admin/ProScreen.php:202
-msgid "Listening reports"
-msgstr "Informes de escucha"
 
 #: src/Admin/ScreenRegistry.php:120
 msgid "You are not allowed to view this page."
@@ -1200,10 +1196,6 @@ msgstr "Plantillas y estilos"
 msgid "Featured templates, colours, typography and layouts for the block and the player."
 msgstr "Plantillas destacadas, colores, tipografía y disposiciones para el bloque y el reproductor."
 
-#: src/Admin/ProScreen.php:203
-msgid "Which books get finished, which get abandoned, and at which chapter."
-msgstr "Qué libros se terminan, cuáles se abandonan y en qué capítulo."
-
 #: src/Admin/WelcomeScreen.php:54
 #: src/Admin/WelcomeScreen.php:61
 msgid "Welcome to Volumina"
@@ -1362,10 +1354,6 @@ msgstr "Ajuste del sitio"
 #: blocks/shared/presentation.js:118
 msgid "From the theme’s palette. It colours the play button, the progress bar and the current chapter, never text."
 msgstr "De la paleta del tema. Colorea el botón de reproducir, la barra de progreso y el capítulo actual, nunca texto."
-
-#: src/Admin/BookMetaBox.php:219
-msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Giving it to other listeners is the work of an extension such as Volumina Pro, or of the command line."
-msgstr "Un libro restringido sigue apareciendo en el sitio con sus capítulos y su portada; solo se retiene el audio. Quien puede editar el libro siempre puede escucharlo. Dárselo a otros oyentes es cosa de una extensión como Volumina Pro, o de la línea de comandos."
 
 #: src/Admin/Settings.php:176
 msgid "Listening"
@@ -1556,3 +1544,93 @@ msgstr "Color de los controles"
 #: src/Admin/Settings.php:293
 msgid "The play button, the progress bar and the current chapter. Empty keeps the template's colour. The play button's icon turns black or white, whichever reads."
 msgstr "El botón de reproducir, la barra de avance y el capítulo actual. Vacío, se usa el color de la plantilla. El icono del botón de reproducir se vuelve negro o blanco, el que se lea mejor."
+
+#: src/Admin/BookMetaBox.php:219
+msgid "A restricted book still appears on the site with its chapters and its cover; only the audio is kept back. Anyone who can edit the book can always listen. Give it to other listeners in the Listeners box below."
+msgstr "Un libro restringido sigue apareciendo en el sitio con sus capítulos y su portada; solo se retiene el audio. Quien puede editar el libro siempre puede escucharlo. Dáselo a otros oyentes en la caja Oyentes, más abajo."
+
+#: src/Admin/ListenersBox.php:75
+msgid "Listeners"
+msgstr "Oyentes"
+
+#: src/Admin/ListenersBox.php:112
+#: src/Admin/ListenersBox.php:237
+#: src/Admin/ListenersBox.php:262
+msgid "That could not be saved. Reload the page and try again."
+msgstr "No se pudo guardar. Recarga la página e inténtalo de nuevo."
+
+#: src/Admin/ListenersBox.php:126
+msgid "Save the book first. Then you can give it to listeners here."
+msgstr "Guarda el libro primero. Después podrás dárselo a oyentes aquí."
+
+#: src/Admin/ListenersBox.php:141
+msgid "The people who may listen to this book while it is restricted. Each one needs an account on this site and listens signed in. While the book is public, everybody can listen and this list simply waits."
+msgstr "Las personas que pueden escuchar este libro mientras está restringido. Cada una necesita una cuenta en este sitio y escucha con la sesión iniciada. Mientras el libro es público, todo el mundo puede escucharlo y esta lista simplemente espera."
+
+#: src/Admin/ListenersBox.php:157
+msgid "Nobody has been given this book yet."
+msgstr "Todavía no se ha dado este libro a nadie."
+
+#: src/Admin/ListenersBox.php:170
+msgid "E-mail address or username"
+msgstr "Correo electrónico o nombre de usuario"
+
+#: src/Admin/ListenersBox.php:171
+msgid "Give access"
+msgstr "Dar acceso"
+
+#: src/Admin/ListenersBox.php:176
+msgid "Saved at once; there is no need to update the book. Nobody is sent an e-mail."
+msgstr "Se guarda al momento; no hace falta actualizar el libro. No se envía ningún correo."
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:196
+#, php-format
+msgid "Remove %s"
+msgstr "Quitar a %s"
+
+#: src/Admin/ListenersBox.php:197
+msgid "Remove"
+msgstr "Quitar"
+
+#: src/Admin/ListenersBox.php:215
+msgid "Type an e-mail address or a username."
+msgstr "Escribe un correo electrónico o un nombre de usuario."
+
+#: src/Admin/ListenersBox.php:228
+msgid "No account on this site has that e-mail address or username. The listener needs an account first."
+msgstr "Ninguna cuenta de este sitio tiene ese correo o nombre de usuario. El oyente necesita una cuenta primero."
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:233
+#, php-format
+msgid "%s already had access."
+msgstr "%s ya tenía acceso."
+
+#: src/Admin/ListenersBox.php:241
+msgid "A listener was given an audiobook by hand."
+msgstr "Se dio un audiolibro a mano a un oyente."
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:250
+#, php-format
+msgid "%s can now listen."
+msgstr "%s ya puede escuchar."
+
+#: src/Admin/ListenersBox.php:266
+msgid "A listener lost an audiobook given by hand."
+msgstr "Un oyente perdió un audiolibro dado a mano."
+
+#. translators: %s: the listener's name.
+#: src/Admin/ListenersBox.php:278
+#, php-format
+msgid "%s can no longer listen."
+msgstr "%s ya no puede escuchar."
+
+#: src/Admin/ListenersBox.php:332
+msgid "You cannot give this book to listeners."
+msgstr "No puedes dar este libro a oyentes."
+
+#: src/Admin/PostScreenHelp.php:90
+msgid "To give a restricted book to somebody, type their e-mail address or username in the Listeners box and choose Give access. They listen signed in to that account. Only administrators see the box."
+msgstr "Para dar un libro restringido a alguien, escribe su correo o su nombre de usuario en la caja Oyentes y elige Dar acceso. Escucha con la sesión iniciada en esa cuenta. Solo los administradores ven la caja."

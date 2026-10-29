@@ -41,7 +41,8 @@ for somebody who never asked to be identified.
 * Audio attached from the media library, with the running time read out of the file.
 * Four blocks: **Audiobook**, **Chapter list**, **Continue listening** and **Audiobook list**, all of
   which render the same markup the book page does.
-* Books that are public, or restricted to listeners you have given them to.
+* Books that are public, or restricted to the listeners you give them to: type an
+  e-mail address or username in the book's Listeners box, and take it back the same way.
 * A choice of where the cover goes, a colour for the controls, and two background
   colours that give the book a gradient panel with text that always reads; and a
   template registry an extension can add its own designs to.
@@ -126,6 +127,12 @@ The player is fully keyboard-operable, announces what it is doing to a screen
 reader, and passes an automated WCAG 2.1 AA check with no violations on both a
 block and a classic theme. Every touch target in the transport controls is at least
 44 pixels.
+
+= How do I give a restricted book to somebody? =
+
+They need an account on your site. Open the book, type their e-mail address or username
+in the Listeners box and choose Give access; they listen signed in. Remove takes it back.
+Only administrators see the box. Nobody is sent an e-mail.
 
 = Can I sell audiobooks with it? =
 

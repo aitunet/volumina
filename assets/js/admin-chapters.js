@@ -9,7 +9,7 @@
 	'use strict';
 
 	document.addEventListener( 'DOMContentLoaded', function () {
-		const root = document.getElementById( 'volumina-chapter-list' );
+		const root = document.getElementById( 'volumina-chapter-list-app' );
 
 		if ( ! root ) {
 			return;

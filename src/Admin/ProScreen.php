@@ -197,11 +197,6 @@ final class ProScreen implements Screen, HasAssets {
 				__( 'Templates and styles', 'volumina' ),
 				__( 'Featured templates, colours, typography and layouts for the block and the player.', 'volumina' ),
 			),
-			array(
-				'report',
-				__( 'Listening reports', 'volumina' ),
-				__( 'Which books get finished, which get abandoned, and at which chapter.', 'volumina' ),
-			),
 		);
 	}
 }
