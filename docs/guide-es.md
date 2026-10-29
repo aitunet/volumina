@@ -5,6 +5,22 @@
 > botones son los que muestra un sitio en español; entre paréntesis, la primera
 > vez, el nombre en inglés, por si el sitio está en ese idioma. Cuando esta
 > guía se publique, su dirección va en `WelcomeScreen::GUIDE_URL`.
+>
+> **Cambios respecto a la versión publicada en tunetdesign.com (2026-10-29)**,
+> para quien actualice el sitio:
+>
+> 1. **Menú › Ajustes** y **Ajustes y registro**: ahora son nueve ajustes en
+>    dos pestañas, *General* y *Apariencia*; el «Color de acento» pasó a ser
+>    tres colores (fondo primero, fondo segundo, controles) con vista previa.
+> 2. **Paso 4 del primer audiolibro**: un capítulo en borrador ya no se
+>    escucha; hay que publicarlo.
+> 3. **Quién puede escuchar**: la nota de WP-CLI se sustituye por la caja
+>    **Oyentes** del libro.
+> 4. **Los bloques**: son cuatro; se añade **Lista de audiolibros**, y el
+>    bloque Audiolibro tiene el panel **Presentación**.
+> 5. **Sobre Pro**: ya no menciona informes de escucha; el botón lleva a
+>    tunetdesign.com.
+> 6. El índice cambia «Los tres bloques» por «Los cuatro bloques».
 
 **Volumina 1.0 · WordPress 6.6 o superior · PHP 8.1 o superior**
 
@@ -21,7 +37,7 @@ escuchar, retomar y compartir.
 4. [Tu primer audiolibro, paso a paso](#tu-primer-audiolibro-paso-a-paso)
 5. [El reproductor](#el-reproductor-visto-por-quien-escucha)
 6. [Quién puede escuchar](#quién-puede-escuchar)
-7. [Los tres bloques](#los-tres-bloques)
+7. [Los cuatro bloques](#los-cuatro-bloques)
 8. [Géneros y series](#géneros-y-series)
 9. [Ajustes y registro](#ajustes-y-registro)
 10. [El idioma](#el-idioma)
@@ -55,7 +71,7 @@ escritorio, con el icono de los cinco lomos. Todo el plugin vive ahí.
 | **Añadir nuevo audiolibro** (*Add New Audiobook*) | Crear un libro. Empieza aquí. |
 | **Géneros** y **Series** (*Genres*, *Series*) | Etiquetas para agrupar libros. Funcionan como las categorías de las entradas. |
 | **Capítulos** (*Chapters*) | Todos los capítulos de todos los libros, en una lista. Casi nunca hace falta entrar: los capítulos se manejan desde el libro. |
-| **Ajustes** (*Settings*) | Siete ajustes en tres grupos. El plugin funciona sin tocar ninguno. |
+| **Ajustes** (*Settings*) | Nueve ajustes en dos pestañas, *General* y *Apariencia*. El plugin funciona sin tocar ninguno. |
 | **Registro** (*Log*) | Solo aparece si activas el registro en Ajustes. |
 | **Pro** | Una página informativa sobre el plugin de pago. No tiene botones ni funciones bloqueadas; es una descripción. Desaparece cuando Pro está instalado. |
 
@@ -75,7 +91,7 @@ la primera vez; después la página sigue en Escritorio.
 
 El botón de la bienvenida —y un aviso azul en las pantallas del plugin:
 *«Volumina está instalado. Dos ajustes deciden cómo se comporta»*— te llevan a
-**Ajustes**, donde los dos primeros son los que importan:
+**Ajustes**, pestaña **General**, donde los dos primeros son los que importan:
 
 - **Los audiolibros nuevos son** (*New audiobooks are*) — cómo nace cada
   libro nuevo: **Público — cualquiera puede escucharlo** o **Restringido —
@@ -147,8 +163,9 @@ capítulo** (*Chapter details*):
 - **Posición** (*Position*) — informativo. El orden se decide en la pantalla
   del libro.
 
-Pulsa **Publicar**. Los capítulos no necesitan publicarse «aparte»: si el
-libro está publicado, sus capítulos se escuchan.
+Pulsa **Publicar**. **Un capítulo en borrador no lo escucha nadie**: los
+oyentes no lo ven en la lista ni pueden reproducirlo hasta que lo publiques.
+Quien puede editar el libro sí lo ve y lo oye, para poder revisarlo antes.
 
 ### 5. Repite por cada archivo
 
@@ -223,32 +240,40 @@ posiciones:
   está disponible en tu cuenta»*. Quien puede editar el libro siempre lo
   escucha, para poder comprobarlo.
 
-> **Ojo.** En la versión gratuita todavía no hay una pantalla para dar acceso
-> a un usuario concreto. El mecanismo existe y funciona, pero solo se alcanza
-> desde código o desde WP-CLI. Hasta que exista esa pantalla, para darle un
-> libro restringido a alguien:
->
-> ```
-> wp eval 'TUNET\Volumina\Storage\Grants::grant( ID_USUARIO, ID_LIBRO );'
-> wp eval 'TUNET\Volumina\Storage\Grants::revoke( ID_USUARIO, ID_LIBRO );'
-> ```
->
-> Los ID se ven en la URL al editar el usuario (`user_id=`) y el libro
-> (`post=`). Vender libros —que es el caso real de «restringido»— es trabajo
-> de Volumina Pro, con WooCommerce o Easy Digital Downloads decidiendo quién
-> pagó.
+### Dar un libro restringido a alguien: la caja Oyentes
 
-## Los tres bloques
+En la pantalla del libro, debajo del editor, está la caja **Oyentes**
+(*Listeners*): la lista de personas que pueden escuchar ese libro mientras es
+restringido.
+
+1. Escribe su **correo electrónico o nombre de usuario** (*E-mail address or
+   username*) y pulsa **Dar acceso** (*Give access*).
+2. Aparece en la lista al instante. **Se guarda al momento**: no hace falta
+   actualizar el libro. No se le envía ningún correo; avísale tú.
+3. Para retirárselo, pulsa **Quitar** (*Remove*) junto a su nombre.
+
+Cada oyente **necesita una cuenta en el sitio** y escucha con la sesión
+iniciada. Si el correo o el usuario no existen, la caja lo dice y no añade a
+nadie: crea antes la cuenta en **Usuarios › Añadir nuevo**. Mientras el libro
+es público, todo el mundo escucha y esta lista no se usa, pero se conserva para
+cuando lo vuelvas restringido. La caja aparece cuando el libro ya está
+guardado.
+
+Vender libros —que es el caso típico de «restringido»— es trabajo de Volumina
+Pro, con WooCommerce o Easy Digital Downloads decidiendo quién pagó.
+
+## Los cuatro bloques
 
 Con **Páginas de libro** activado no necesitas ningún bloque: cada página de
 audiolibro ya trae todo. Los bloques sirven para poner audiolibros **en otras
 páginas**: una portada, una página de «biblioteca», la home. Se buscan en el
-editor escribiendo `/audiolibro`, `/capítulos` o `/seguir` (en inglés,
-`/audiobook`, `/chapter`, `/continue`).
+editor escribiendo `/audiolibro`, `/capítulos`, `/seguir` o `/lista` (en
+inglés, `/audiobook`, `/chapter`, `/continue`, `/list`).
 
 | Bloque | Qué muestra | Opciones (panel lateral) |
 |---|---|---|
-| **Audiolibro** (*Audiobook*) | Un libro completo: portada, ficha, reproductor y capítulos. | **Audiolibro**: elige el libro, o «el libro del que trata esta página» si el bloque va en la plantilla de audiolibro. **Partes que se muestran**: Portada, Ficha, Reproductor, Capítulos, Encabezado de capítulos. |
+| **Audiolibro** (*Audiobook*) | Un libro completo: portada, ficha, reproductor y capítulos. | **Audiolibro**: elige el libro, o «el libro del que trata esta página» si el bloque va en la plantilla de audiolibro. **Partes que se muestran**: Portada, Ficha, Reproductor, Capítulos, Encabezado de capítulos. **Presentación**: plantilla, posición de la portada y color de acento solo para este bloque; por defecto, lo que diga Ajustes. |
+| **Lista de audiolibros** (*Audiobook list*) | Los audiolibros publicados, en filas: portada, título con enlace a su página, narrador y duración. La página de «biblioteca». | **Libros que mostrar** (12 por defecto), **Orden** (más recientes primero o por título), filtro por **Género** y por **Serie**, y qué se ve en cada fila: **Portadas**, **Narrador**, **Duración**. |
 | **Lista de capítulos** (*Chapter list*) | Solo la lista de capítulos, en orden. | Libro, y **Duraciones** para mostrar u ocultar la de cada uno. |
 | **Seguir escuchando** (*Continue listening*) | Los libros que este oyente ha empezado y por dónde va, con enlace para seguir. A quien no ha empezado ninguno le dice *«Todavía no has empezado nada»*. | **Libros que mostrar** (3 por defecto) y **Portadas**. |
 
@@ -268,8 +293,11 @@ el sitio (`/genre/novela/`, `/series/clasicos-en-espanol/`), útil para menús.
 
 ## Ajustes y registro
 
-**Audiolibros › Ajustes**. Siete ajustes en tres grupos, cada uno con su
-explicación debajo.
+**Audiolibros › Ajustes**. Nueve ajustes repartidos en dos pestañas, cada uno
+con su explicación debajo. Cada pestaña se guarda por separado, con su propio
+botón.
+
+### Pestaña General
 
 **Escucha** (*Listening*):
 
@@ -277,20 +305,6 @@ explicación debajo.
   cambia uno existente.
 - **Páginas de libro** — reproductor y capítulos automáticos en la página del
   libro.
-
-**Presentación** (*Presentation*), cómo se ve un audiolibro en la página:
-
-- **Plantilla** (*Template*) — cómo se dispone y se viste: portada, ficha,
-  reproductor y capítulos. Volumina trae una, *Básica*; una extensión puede
-  añadir más.
-- **Portada** (*Cover*) — al lado de la ficha, encima, o sin mostrar. En una
-  pantalla estrecha, «al lado» pasa a «encima» cuando no cabe.
-- **Color de acento** (*Accent colour*) — un color de la paleta de tu tema para
-  el botón de reproducir, la barra de progreso y el capítulo en curso. Nunca
-  para texto. Sin ninguno, el reproductor se dibuja en el color del texto.
-
-Los tres se pueden cambiar también bloque a bloque, en el panel **Presentación**
-del bloque *Audiolibro*.
 
 **Mantenimiento** (*Housekeeping*):
 
@@ -304,6 +318,34 @@ Con el registro activo aparece **Audiolibros › Registro**: guarda los últimos
 200 sucesos, como un oyente rechazado en un libro restringido o un archivo de
 audio que ya no está donde el capítulo dice. No registra quién escucha qué.
 **Vaciar el registro** (*Empty the log*) lo vacía.
+
+### Pestaña Apariencia
+
+**Presentación** (*Presentation*), cómo se ve un audiolibro en la página. A la
+derecha, una **vista previa** con un libro de ejemplo cambia a medida que
+eliges, antes de guardar.
+
+- **Plantilla** (*Template*) — cómo se dispone y se viste: portada, ficha,
+  reproductor y capítulos. Se elige con una tarjeta con su imagen. Volumina
+  trae una, *Básica*; una extensión puede añadir más.
+- **Portada** (*Cover*) — **donde la ponga la plantilla**, **al lado de la
+  ficha**, **encima de la ficha** o **sin mostrar**. En una pantalla estrecha,
+  «al lado» pasa a «encima» cuando no cabe.
+- **Fondo, primer color** y **Fondo, segundo color** (*Background, first
+  colour* / *second colour*) — el degradado sobre el que se dibuja el libro:
+  el primero es donde empieza y el segundo, el fondo de casi todo el libro.
+  Con *Básica*, elegir cualquiera de los dos le da al libro un fondo propio.
+  El texto se vuelve claro u oscuro solo, para que siempre se lea.
+- **Color de los controles** (*Controls colour*) — el botón de reproducir, la
+  barra de progreso y el capítulo en curso. El icono del botón se pone negro o
+  blanco, el que se lea mejor.
+
+Los tres colores se eligen con el selector de color de WordPress, que ofrece
+la paleta de tu tema como muestras; también admite cualquier color a mano.
+**Vacío** conserva el color de la plantilla.
+
+La plantilla, la portada y el color de los controles se pueden cambiar también
+bloque a bloque, en el panel **Presentación** del bloque *Audiolibro*.
 
 > **Nota.** Desactivar el plugin no borra nada. Los libros y capítulos son
 > entradas: van a la papelera como cualquier otra y se recuperan desde ahí.
@@ -322,9 +364,9 @@ idioma en su perfil, y el escritorio le hará caso.
 - **La página del libro da «Página no encontrada».** WordPress no ha registrado
   las direcciones nuevas. Ve a **Ajustes › Enlaces permanentes** y pulsa
   **Guardar cambios** sin cambiar nada.
-- **No aparece el reproductor.** O el libro no tiene ningún capítulo con audio,
-  o **Páginas de libro** está apagado, o el libro es restringido y no has
-  iniciado sesión.
+- **No aparece el reproductor.** O el libro no tiene ningún capítulo
+  publicado con audio (los borradores no cuentan), o **Páginas de libro** está
+  apagado, o el libro es restringido y no te lo han dado en **Oyentes**.
 - **El archivo no sube.** Límite del hosting. Conviértelo a MP3 o pide subir el
   límite (`upload_max_filesize`).
 - **La duración sale 0.** WordPress no pudo leer el archivo (pasa con algunos
@@ -341,8 +383,9 @@ idioma en su perfil, y el escritorio le hará caso.
 
 La pantalla **Audiolibros › Pro** describe el plugin de pago, que se instala
 aparte y amplía este: venta con WooCommerce o Easy Digital Downloads, enlaces
-de audio firmados que caducan, series como un solo producto, plantillas y
-estilos, e informes de escucha. En el plugin gratuito esa pantalla es solo
+de audio firmados que caducan, series y packs en una sola compra, y
+plantillas y estilos. El botón **Avísame cuando esté listo** abre
+tunetdesign.com en otra pestaña. En el plugin gratuito esa pantalla es solo
 texto e ilustraciones, a propósito: el directorio de WordPress no permite
 incluir funciones bloqueadas a la espera de un pago, y no las hay. Cuando Pro
 no está instalado, la pantalla se ve; cuando lo está, desaparece.

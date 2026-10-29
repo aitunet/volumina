@@ -224,3 +224,7 @@
 ## 2026-10-29 — Pre-submission status check
 
 Checked, no code changed. Zip `dist/volumina-1.0.0.zip` (128 files) matches the working tree byte for byte (src, templates, assets, languages, blocks, build). PHPCS clean, PHPStan level 6 no errors, PHPUnit 190/867 green. `.wordpress-org/`: icon 128 and 256 (GIF), banner 1544×500, six screenshots, all six captioned in `readme.txt`; no low-res `banner-772x250.png` (optional). `Tested up to: 7.1` matches the current release (7.1.4). Slug `volumina` is free on wordpress.org. es_ES/pt_BR: only the three header strings (URLs, author) untranslated, by design. Guide URL answers 200; `ProScreen::URL` redirects to the generic `/products/` page, not a Volumina Pro page. Still open: colleague's test report, account holder's look at the Listeners box, merge `s12-listeners` → `main`, push, guide update for S10–S12, real-hosting install, submission.
+
+## 2026-10-29 — S12 merged; release resources
+
+The colleague's tests passed (account holder, 2026-10-29). `s12-listeners` merged into `main` (f3bf767). `ProScreen::URL` → `https://tunetdesign.com/` until Pro's product page exists. `docs/guide-es.md` brought up to date (nine settings in two tabs, three colours with preview, draft chapters unheard, the Listeners box instead of WP-CLI, four blocks with the Audiobook list, Pro without reports) with a change list in its header for whoever updates the site. `.wordpress-org/banner-772x250.png` made from the 1544×500 one. Zip rebuilt, 128 files, new URL inside; PHPCS clean on the changed file.

@@ -33,7 +33,7 @@ final class ProScreen implements Screen, HasAssets {
 	 * Where the call to action points. A link, never a form: the screen asks
 	 * for nothing and sends nothing.
 	 */
-	private const URL = 'https://tunetdesign.com/volumina/pro/';
+	private const URL = 'https://tunetdesign.com/';
 
 	/**
 	 * The page slug.
